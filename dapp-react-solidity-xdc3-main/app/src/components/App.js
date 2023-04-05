@@ -72,13 +72,13 @@ function App() {
 //                     <button style={{borderRadius:"20px", width:"200px", backgroundColor:"red"}} onClick={connect} disabled={connecting}>{connecting ? 'Connected...' : 'Connect Wallet'}
 //                     </button>
 // </div>
-<div className="App">
-      { /* Render the connect button only if not in OpenPage component */ }
-      { window.location.pathname !== '/' &&  '/login'
+ <div className="App">
+     
+      { !(window.location.pathname === '/login' || window.location.pathname === '/' || window.location.pathname === '/logincomp' || window.location.pathname === '/register'|| window.location.pathname === '/userprofile' || window.location.pathname === '/registercomp') &&
         <div className="connect-button-container" style={{marginTop:"30px", position: "absolute", top: 0, right: 0, padding: "10px", zIndex: 999, textAlign: "right" }}>
           <button style={{borderRadius:"20px", width:"200px", backgroundColor:"red"}} onClick={connect} disabled={connecting}>{connecting ? 'Connected...' : 'Connect Wallet'}
           </button>
-        </div>}
+        </div>} 
       <section>
         <EthereumContext.Provider value={ethereumContext}>
           <Router>

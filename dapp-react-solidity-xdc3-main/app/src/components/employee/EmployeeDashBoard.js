@@ -13,6 +13,7 @@ const { executeTransaction, EthereumContext, log, queryData } = require('react-s
 
 const Card = (props) => {
   
+  
   return (
     <div
       style={{
@@ -46,39 +47,69 @@ const Card = (props) => {
 };
 
 const EmployeeDashboard = (props) => {
+  
   const[balanceToken, setBalanceToken] = useState();
   const [open, setOpen] = useState(false);
   const togglePopup = (task) => {
     setSelectedTasks(task);
     setOpen(true);
   };
+  const balanceOf = async (event) => {
+  
+  
+    event.preventDefault();
+    setSubmitting(true);
+    
+    let account = toke.wallet.replace("xdc", "0x");
+    console.log(account)
+    
+    let balance = await erc.balanceOf(account);
+    
+    console.log(`Account balance: ${balance.toString()}`);
+    alert(`Account balance: ${balance.toString()}`);
+    
+    setSubmitting(false);
+  }
   
   const MarkasCompleted = (taskk) => {
     const confirmed = window.confirm(
       "Clicking on mark as completed notifies the admin. Are you sure you want to continue?"
     );
     if (confirmed) {
+      const date = new Date().toLocaleDateString("en-GB"); // get current date in dd/mm/yy format
       axios
         .put(
           `${API_URL}/updatetask/${taskk._id}`,
           { status: "Waiting For Approval" },
           { withCredentials: true }
         )
-        .then((response) => {
-          const updatedTask = response.data.updatedTask;
-          console.log(response.data.updatedTask);
-          // update tasks state
-          setTasks(
-            tasks.map((t) => {
-              if (t._id === updatedTask._id) {
-                window.location.reload();
-                return updatedTask;
-              } else {
-                window.location.reload();
-                return t;
-              }
+        .then(() => {
+          axios
+            .put(
+              `${API_URL}/completion/${taskk._id}`,
+              { completion : date },
+              { withCredentials: true }
+            )
+            .then((response) => {
+              window.location.reload();
+              const updatedTask = response.data.updatedTask;
+              console.log(response.data.updatedTask);
+              // update tasks state
+              setTasks(
+                tasks.map((t) => {
+                  if (t._id === updatedTask._id) {
+                    window.location.reload();
+                    return updatedTask;
+                  } else {
+                    window.location.reload();
+                    return t;
+                  }
+                })
+              );
             })
-          );
+            .catch((error) => {
+              console.log(error);
+            });
         })
         .catch((error) => {
           console.log(error);
@@ -150,7 +181,7 @@ const EmployeeDashboard = (props) => {
       });
   }, []);
     
- 
+
   const [submitting, setSubmitting] = useState(false);
 const { provider, erc } = useContext(EthereumContext);
 console.log("sample", erc)
@@ -199,7 +230,13 @@ console.log("sample", erc)
           alignItems: "center",
           fontStyle: "kanit",
         }}
-      >
+      ><button
+      onClick={balanceOf}
+      className="btn btn-primary"
+      style={{ margin: "1rem", marginLeft: "100px" }}
+    >
+       Check balance
+    </button>
          {/* <button
                 onClick={balanceOf}
                 className="btn btn-primary"

@@ -491,7 +491,7 @@ const ProfilePage = (props) => {
         >
           Employee Profile
         </h1>
-        <img
+        {/* <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s"
           alt="User Avatar"
           style={{
@@ -500,7 +500,7 @@ const ProfilePage = (props) => {
             width: "50px",
             height: "50px",
           }}
-        />
+        /> */}
         <p
           style={{
             margin: "0",
@@ -592,6 +592,9 @@ const ProfilePage = (props) => {
                       bottom: "50px",
                       width: "150px",
                       right: "30px",
+                      marginTop:"-40px",
+                      marginLeft:"00px",
+                     
                     }}
                   >
                     <AiOutlineUserAdd
@@ -608,14 +611,16 @@ const ProfilePage = (props) => {
                     </a>
                   </Button>
                 {/* </Link> */}
+                {/* <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
                 <Button
                   onClick={getAllEmployees}
                     variant="contained"
                     color="primary"
-                    style={{ margin: "1rem",position:"relative",bottom:"50px",width:"150px",right:"30px"}}
+                    style={{marginTop:"10px",marginBottom:"0px", margin: "1rem",position:"relative",bottom:"50px",width:"150px",right:"30px", marginLeft:"-170px"}}
                   >
                      <AiOutlineUserAdd style={{width:"30px",height:"30px",position:"relative",right:"20px"}}/> <a> <b> Get </b>  </a>
                   </Button>
+                  </div> */}
               </CardActions>
 
 

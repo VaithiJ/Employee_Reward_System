@@ -40,7 +40,7 @@ const regCompany = async(event, company) =>{
           log("Registered company","hash", resp.txHash)
           setSubmitting(false);
       }
-
+   
   const Verify = async(comp) => {
 
     
@@ -95,19 +95,33 @@ const regCompany = async(event, company) =>{
     log("sending to company ","hash", resp.txHash)
     setSubmitting(false);
   }
+  const balanceOf = async (event,company) => {
+    event.preventDefault();
+    setSubmitting(true);
+    console.log(company)
+    let account = company.walletAddress.replace("xdc","0x");
+    console.log(account)
+    let balance = await erc.balanceOf(account);
+    
+    console.log(`Account balance: ${balance.toString()}`);
+    alert(`Account balance: ${balance.toString()}`)
+    
+    setSubmitting(false);
+  }
+
   
 
   return (
     <div style={{ textAlign: "center", overflowX: "auto" }}>
       <h1
-        style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "2rem" }}
+        style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "2rem" , marginTop:"50px"}}
       >
         Platform Admin
       </h1>
       <div
         style={{
           margin: "0 auto",
-          width: "1000px",
+          width: "1400px",
           border: "1px solid #ccc",
           borderRadius: "5px",
           overflow: "hidden",
@@ -120,6 +134,7 @@ const regCompany = async(event, company) =>{
               <th style={{ padding: "1rem" }}>Company Name</th>
               <th style={{ padding: "1rem" }}>Wallet Address</th>
               <th style={{ padding: "1rem" }}>Reward</th>
+              <th style={{ padding: "1rem" }}>Balance Tokens</th>
               <th style={{ padding: "1rem" }}>Verify</th>
               <th style={{ padding: "1rem" }}>Register</th>
             </tr>
@@ -148,6 +163,24 @@ const regCompany = async(event, company) =>{
                     Give Tokens
                   </button>
                 </td>
+                <td style={{ padding: "1rem" }}>
+                 
+                 <button
+                   onClick={(e) => balanceOf(e,company)}
+                   style={{
+                     backgroundColor: "#00FFFF",
+                     color: "white",
+                     border: "none",
+                     borderRadius: "5px",
+                     padding: "0.5rem 1rem",
+                   }}
+                 >
+                   Balance
+                 </button>
+                 
+                 
+               
+               </td>
                 <td style={{ padding: "1rem" }}>
                   {admin ? <p style={{color:"#00FF00"}}><b> VERIFIED </b> </p> : (
                   <button

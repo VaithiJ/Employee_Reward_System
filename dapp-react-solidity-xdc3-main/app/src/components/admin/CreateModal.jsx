@@ -299,30 +299,53 @@ const CreateModal = (props) => {
   };
 
 
+  // const handleAddModel = async (event) => {
+  //   event.preventDefault();
+  
+  //   try {
+  //     const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
+  //     const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
+  
+  //     const response = await axios.post(
+  //       `${API_URL}/assigntask/${employeeName}/${compName}/${empAddress}`,
+  //       { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
+  //       { withCredentials: true }
+  //     );
+  
+  //     console.log(response.data);
+  //     console.log(employeeName);
+  //     console.log(compName);
+  
+  //     history.push("/real");
+  //   } catch (error) {
+  //     console.log("wrongyyyy");
+  //     console.error(error);
+  //   }
+  // };
+  
   const handleAddModel = async (event) => {
-    event.preventDefault();
+  event.preventDefault();
   
-    try {
-      const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
-      const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
-  
-      const response = await axios.post(
-        `${API_URL}/assigntask/${employeeName}/${compName}/${empAddress}`,
-        { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
-        { withCredentials: true }
-      );
-  
-      console.log(response.data);
-      console.log(employeeName);
-      console.log(compName);
-  
-      history.push("/real");
-    } catch (error) {
-      console.log("wrongyyyy");
-      console.error(error);
-    }
-  };
-  
+  try {
+    const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
+    const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
+
+    const response = await axios.post(
+      `${API_URL}/assigntask/${employeeName}/${compName}/${empAddress}`,
+      { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
+      { withCredentials: true }
+    );
+
+    console.log(response.data);
+    console.log(employeeName);
+    console.log(compName);
+
+    history.push("/real");
+  } catch (error) {
+    console.log("wrongyyyy");
+    console.error(error);
+  }
+};
 
 
   return (

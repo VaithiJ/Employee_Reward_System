@@ -34,7 +34,7 @@ const TaskSchema = new mongoose.Schema({
         default:false,
     },
     deadline:{
-        type : Date,
+        type : String,
         required : true,
     },
     rewards:{
