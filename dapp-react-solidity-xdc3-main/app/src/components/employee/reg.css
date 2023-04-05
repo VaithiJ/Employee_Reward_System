@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .form-label {
+    flex-basis: 30%;
+    margin-right: 1rem;
+  }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital@1&display=swap');
+
+
+
+.fonty{
+  font-family: 'Bebas Neue', cursive;
+  font-size: 5em;
+}
