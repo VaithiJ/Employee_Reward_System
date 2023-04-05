@@ -69,12 +69,12 @@ const SidebarMenu = () => {
         <div className="sidebar-header" ></div>
         <ul className="list-unstyled" >
         <li id="fonnn">
-    <Link to="/real"style={{marginLeft:"-200px", fontSize:"18px"}}>
+    <Link to="/real"style={{marginLeft:"-200px", fontSize:"14px"}}>
       <FaHome className="fonnn"  /> Home
     </Link>
   </li>
   <li id="fonnn">
-    <Link to="/admindash" style={{marginLeft:"-100px",fontSize:"18px"}}>
+    <Link to="/admindash" style={{marginLeft:"-120px",fontSize:"14px"}}>
       <FaHome className="fonnn"  /> Onboard Employees
     </Link>
   </li>
@@ -84,7 +84,7 @@ const SidebarMenu = () => {
             </a>
           </li> */}
          <li id="fonnn">
-    <Link to="/reward" style={{marginLeft:"-200px",fontSize:"18px"}}>
+    <Link to="/reward" style={{marginLeft:"-200px",fontSize:"14px"}}>
       <FaHome className="fonnn"  /> Reward
     </Link>
   </li>
@@ -95,7 +95,7 @@ const SidebarMenu = () => {
               onMouseOut={(e) => (e.target.style.color = "#FFFFFF")}
               onClick={handleLogout}
             >
-              <FiPower style={{fontSize:"20px"}} className="icon" id="fonnn" /> <b style={{fontSize:"18px"}}>Logout </b>
+              <FiPower style={{fontSize:"20px",marginLeft:"-100px"}} className="icon" id="fonnn" /> <b style={{fontSize:"18px", }}>Logout </b>
             </a>
           </li>
         </ul>

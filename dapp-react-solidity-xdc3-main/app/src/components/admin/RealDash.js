@@ -91,11 +91,13 @@ function AdminDashBoard() {
       const getCompanyEmployees = async(event) =>{
         event.preventDefault();
         setSubmitting(true);
-        // let companyaddress = tokenn.wallet.replace("xdc", "0x");
-        let companyaddress = "9fe6366315d0dfebd2fee73fdcc638806a1fc2c8";
+        let companyaddress = tokenn.wallet.replace("xdc", "0x");
+        // let companyaddress = "9fe6366315d0dfebd2fee73fdcc638806a1fc2c8";
+        
     
         let respp = await queryData(erc,provider,"getCompanyEmployees",[companyaddress]);
         log("Registered company","hash", respp)
+        alert(respp)
         setSubmitting(false);
       }
     
@@ -113,10 +115,11 @@ function AdminDashBoard() {
         event.preventDefault();
         setSubmitting(true);
         
-        let account = "0xced4b32fa8745f1de58a96555803d9724c637af8";
+        let account = tokenn.wallet.replace("xdc","0x");
         let balance = await erc.balanceOf(account);
         
         console.log(`Account balance: ${balance.toString()}`);
+        alert(`Account balance: ${balance.toString()} tokens`)
         
         setSubmitting(false);
       }
@@ -216,8 +219,15 @@ function AdminDashBoard() {
           
           
           <div className={styles.span} style={{marginLeft:"80px", backgroundColor:"#00F1C3"}}>
-          <div style={{marginTop:"0px", marginLeft:"-800px", backgroundColor:"#00F1C3"}}><SidebarMenu /></div>
-           <div style={{marginTop:"-60px", marginLeft:"370px"}}> WELCOME {tokenn.name.toUpperCase()}'s ADMIN
+          <div style={{marginTop:"0px", marginLeft:"-1000px", backgroundColor:"#00F1C3"}}><SidebarMenu /></div>
+           <div style={{marginTop:"-60px", marginLeft:"370px",fontFamily: "Montserrat",fontSize:"30px",fontWeight: "1000",}}> WELCOME {tokenn.name.toUpperCase()}'s ADMIN
+           <button
+                onClick={balanceOf}
+                className="btn btn-primary"
+                style={{ margin: "1rem", marginLeft: "100px", marginTop:"-0px", borderRadius:"20px", height:"60px", backgroundColor:"red" }}
+              >
+                <FaSignOutAlt /> Balance
+              </button>
             
             {/* <Link to="/logincomp">
               <button
@@ -237,13 +247,14 @@ function AdminDashBoard() {
              
             
           </div>
-          <div style={{display:"flex", flexDirection:"row", marginLeft:"-600px", marginTop:"60px"}}><button
+          <div style={{display:"flex", flexDirection:"row", marginLeft:"-600px", marginTop:"60px"}}>
+            {/* <button
           onClick={getCompanyEmployees}
           className="btn btn-primary"
           style={{ margin: "1rem", marginLeft: "300px" }}
         >
           <FaSignOutAlt /> employees added by you
-      </button>
+      </button> */}
       {/* <button
                 onClick={regCompany}
                 className="btn btn-primary"
@@ -272,13 +283,7 @@ function AdminDashBoard() {
               >
                 <FaSignOutAlt /> Reward
               </button> */}
-              <button
-                onClick={balanceOf}
-                className="btn btn-primary"
-                style={{ margin: "1rem", marginLeft: "100px" }}
-              >
-                <FaSignOutAlt /> Check balance
-              </button></div>
+             </div>
 
             
           <div
@@ -480,6 +485,7 @@ function AdminDashBoard() {
                     padding: "20px",
                     // backgroundColor: "#CAFFF5",
                     color: "black",
+                    fontWeight:"1000"
                   }}
                 >
                   Employees
@@ -522,11 +528,12 @@ function AdminDashBoard() {
                                 style={{
                                   fontFamily: "Montserrat",
                                   marginTop: "20px",
+                                  fontWeight:"1000"
                                 }}
                               >
                                 {employee.Name}
                               </h6>
-                              <small>{employee.comId}</small>
+                              <small style={{fontWeight:"1000"}}>{employee.comId}</small>
                             </div>
                             <Link
                               to={`/assigntask/${employee.Name}/${tokenn.name}/${employee.Wallet}`}
@@ -537,6 +544,7 @@ function AdminDashBoard() {
                                 style={{
                                   fontFamily: "Montserrat",
                                   marginTop: "7px",
+                                  fontWeight:"1000"
                                 }}
                               >
                                 Assign Tasks
@@ -576,6 +584,7 @@ function AdminDashBoard() {
                     padding: "20px",
                     // backgroundColor: "#17A2B8",
                     color: "black",
+                    fontWeight:"1000"
                   }}
                 >
                   Pending Tasks
@@ -618,19 +627,20 @@ function AdminDashBoard() {
                                 style={{
                                   fontFamily: "Montserrat",
                                   marginTop: "20px",
+                                  fontWeight:"1000"
                                 }}
                               >
                                 {task.empName}
                               </h6>
-                              <small>{task.task}</small>
+                              <small style={{fontWeight:"1000"}}>{task.task}</small>
                             </div>
                             <div style={{ textAlign: "center" }}>
                       <p
-                        style={{ display: "inline-block", marginRight: "10px" }}
+                        style={{ display: "inline-block", marginRight: "10px",fontWeight:"1000" }}
                       >
                         Status:
                       </p>
-                      <p style={{ display: "inline-block", color: "#ff0000" }}>
+                      <p style={{ display: "inline-block", color: "#ff0000",fontWeight:"1000" }}>
                         <b>{task.status}</b> </p>
                         </div>
                         <button
@@ -638,6 +648,7 @@ function AdminDashBoard() {
                                 style={{
                                   fontFamily: "Montserrat",
                                   marginTop: "20px",
+                                  fontWeight:"1000"
                                 }}
                                 onClick={() => {
                                   history.push(

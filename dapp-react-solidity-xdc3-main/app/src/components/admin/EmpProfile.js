@@ -443,6 +443,7 @@ const ProfilePage = (props) => {
           let resp = await executeTransaction(erc,provider,"regEmployee",[employeeaddress, employeename]);
           log("Registered Employee","hash", resp.txHash)
           setSubmitting(false);
+          
   };
   useEffect(() => {
     axios
