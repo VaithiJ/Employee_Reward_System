@@ -122,42 +122,45 @@ console.log(tasks)
 
   return (
     <div className="container">
-            <div className="main">
+            <div className="main"  >
               
         <h1>Task Management</h1>
         <div style={{position:"relative",right:"550px",bottom:"70px"}}> <SidebarMenu/> </div>
         <div className="summary">
         
-  <div className="summary-card" style={{ backgroundColor: "#fff", padding: "20px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)", borderRadius: "5px", marginBottom: "20px" }}>
+  <div className="summary-card" style={{ backgroundColor: "#fff", padding: "20px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)", borderRadius: "5px", marginBottom: "20px" , marginLeft:"-00px"}}>
     <h2 style={{ fontSize: "1.2rem", fontWeight: "bold", margin: "0" }}>Approved Employees</h2>
     <p style={{ fontSize: "1.5rem", fontWeight: "bold", margin: "10px 0 0 0" }}>{tasks.length}</p>
   </div>
-  <div className="summary-card" style={{ backgroundColor: "#fff", padding: "20px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)", borderRadius: "5px", marginBottom: "20px" }}>
+  {/* <div className="summary-card" style={{ backgroundColor: "#fff", padding: "20px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)", borderRadius: "5px", marginBottom: "20px" }}>
     <h2 style={{ fontSize: "1.2rem", fontWeight: "bold", margin: "0" }}>Token Balance</h2>
     <p style={{ fontSize: "1.5rem", fontWeight: "bold", margin: "10px 0 0 0" }}>1000000</p>
-  </div>
-  <div className="summary-card" style={{ backgroundColor: "#fff", padding: "20px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)", borderRadius: "5px", marginBottom: "20px" }}>
+  </div> */}
+  <div className="summary-card" style={{ backgroundColor: "#fff", padding: "20px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)", borderRadius: "5px", marginBottom: "20px",marginRight:"-00px" }}>
     <h2 style={{ fontSize: "1.2rem", fontWeight: "bold", margin: "0" }}> Rewarded Employees</h2>
     <p style={{ fontSize: "1.5rem", fontWeight: "bold", margin: "10px 0 0 0" }}>{rewardedemp.length}</p>
   </div>
 </div>
 
-<div className="tasks" style={{ 
+<div  style={{ 
   background: 'white', 
   padding: '20px', 
   borderRadius: '8px', 
   boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.6)', 
   border: '1px solid #ccc',
   marginBottom: '20px',
+  width:"1300px",
+ 
   }}>
   <h2>Tasks</h2>
-  <div className="task-list">
+  <div className="task-list" style={{width:"1200px"}}>
   <div className="task-list">
     <div className="task-list-header">
-      <div className="task-name" style={{ width: '25%' }}>Task Name</div>
+      <div className="task-name" style={{ width: '5%' }}>Task Name</div>
+      <div className="task-name" style={{ width: '20%' }}> Name</div>
       <div className="task-name" style={{ width: '25%' }}>Wallet Address</div>
-      <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div>
-      <div className="task-due-date" style={{ width: '10%' }}>Due Date</div>
+      {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
+      <div className="task-due-date" style={{ width: '20%' }}>Due Date</div>
       <div className="task-progress" style={{ width: '10%' }}>Rewards</div>
       
       <div className="task-status" style={{ width: '15%', paddingLeft: "30px" }}>Actions</div>
@@ -170,11 +173,11 @@ console.log(tasks)
         borderBottom: '1px solid #ccc',
         paddingBottom: '10px',
       }}>
-        <div className="task-name" style={{ width: '25%' }}>{task.task}</div>
-        <div className="task-assigned-to" style={{ width: '20%' }}>{task.empName}</div>
-        <div className="task-assigned-to" style={{ width: '20%' }}>{task.empWalletAddress}</div>
-        <div className="task-due-date" style={{ width: '10%', marginLeft:"80px" }}>{task.deadline}</div>
-        <div className="task-progress" style={{ width: '10%' ,marginLeft:"40px"}}>{task.rewards}
+        <div className="task-name" style={{ width: '15%' }}>{task.task}</div>
+        <div className="task-assigned-to" style={{ width: '10%' }}>{task.empName}</div>
+        <div className="task-assigned-to" style={{ width: '30%' }}>{task.empWalletAddress}</div>
+        <div className="task-due-date" style={{ width: '20%', marginLeft:"80px" }}>{task.deadline.slice(0,-39)}</div>
+        <div className="task-progress" style={{ width: '-10%' ,marginLeft:"40px"}}>{task.rewards}
         </div>
         
         <div className="task-status" style={{ 
