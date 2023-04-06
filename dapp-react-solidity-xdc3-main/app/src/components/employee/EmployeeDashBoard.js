@@ -208,14 +208,21 @@ console.log("sample", erc)
         <div style={{ position: "relative", bottom: "10px" }}>
           <SidebarMenu12 />{" "}
         </div>
-        <h1 style={{ color: "white" }}>Employee Dashboard</h1>
+        <button
+      onClick={balanceOf}
+      className="btn btn-primary"
+      style={{ margin: "1rem", marginLeft: "-100px" }}
+    >
+       Check balance
+    </button>
+        <h1 style={{ color: "white", marginLeft:"00px", fontFamily:"Montserrat"}}>Employee Dashboard</h1>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ marginRight: "10px" }}>
             <span style={{ color: "white", marginRight: "20px" }}>
               {toke.name.toUpperCase()}
             </span>
             <a href="/userprofile">
-              <FaUser style={{ color: "orange", marginRight: "20px" }} />{" "}
+              <FaUser style={{ color: "orange", marginRight: "200px" }} />{" "}
             </a>
           </div>
           <FaBell style={{ color: "white" }} />
@@ -230,13 +237,7 @@ console.log("sample", erc)
           alignItems: "center",
           fontStyle: "kanit",
         }}
-      ><button
-      onClick={balanceOf}
-      className="btn btn-primary"
-      style={{ margin: "1rem", marginLeft: "100px" }}
-    >
-       Check balance
-    </button>
+      >
          {/* <button
                 onClick={balanceOf}
                 className="btn btn-primary"

@@ -433,77 +433,44 @@ const CreateModal = (props) => {
   }, [empName]);
 
   return (
-    <div className="modal-container">
-  <header
-    style={{
-      backgroundColor: "#333333",
-      padding: "1.5rem 0",
-      height: "100px",
-      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
-      color: "#F2F2F2",
-    }}
-  >
-    <div style={{ position: "relative", bottom: "20px", left: "20px" }}>
-      <SidebarMenu />
-    </div>
-    <h2
-      className="heading"
-      style={{
-        fontFamily: "Axiforma",
-        fontSize: "2.5rem",
-        marginBottom: "1.5rem",
-        color: "#F2F2F2",
-        textAlign: "center",
-        textTransform: "uppercase",
-        position: "relative",
-        bottom: "60px",
-      }}
-    >
-      VIEW TASK
-    </h2>
-  </header>
-  <div
-    className="Add-list"
-    style={{
-      backgroundColor: "#FFFFFF",
-      color: "#333333",
-      margin: "0 auto",
-      width: "1000px",
-      textAlign: "center",
-      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
-      borderRadius: "12px",
-      padding: "2rem",
-      marginLeft: "250px",
-    }}
-  >
-    <form className="modal-form" style={{ height: "500px" }}>
-    <div style={{ display: "flex",textAlign:"center"}}>
-  <h3 style={{position:"relative",left:"90px"}}>Employee Name</h3>
-  <h3 style={{position:"relative",left:"175px"}}> :</h3>
-  <h3 style={{position:"relative",left:"260px"}}>{task.empName}</h3>
-</div>
-<div style={{ display: "flex",textAlign:"center"}}>
-      <p style={{position:"relative",left:"90px",fontSize:"1.4rem"}}> Task</p> <p style={{fontSize:"1.4rem",position:"relative",left:"333px"}}> : </p> <p style={{position:"relative",left:"420px",fontSize:"1.4rem"}}>{task.task}</p>
+    <div className="modal-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <header style={{ backgroundColor: "#333333", padding: "1.5rem 0", height: "100px", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)", color: "#F2F2F2", width: "100%" }}>
+      <div style={{ position: "relative", bottom: "20px", right:"600px" }}>
+        <SidebarMenu />
       </div>
-      <div style={{ display: "flex",textAlign:"center"}}>
-      <p style={{position:"relative",left:"90px",fontSize:"1.4rem"}}>Name </p> <p style={{fontSize:"1.4rem",position:"relative",left:"321px"}}> : </p>  <p style={{position:"relative",left:"412px",fontSize:"1.4rem"}}> {task.taskName}</p>
-      </div>
-      <div style={{ display: "flex",textAlign:"center"}}>
-      <p style={{position:"relative",left:"90px",fontSize:"1.4rem"}}>Description </p> <p style={{fontSize:"1.4rem",position:"relative",left:"268px"}}>: </p>  <p style={{position:"relative",left:"358px",fontSize:"1.4rem"}}>{task.taskDescription}</p>
-      </div>
-      <div style={{ display: "flex",textAlign:"center"}}>
-      <p style={{position:"relative",left:"90px",fontSize:"1.4rem"}}>Deadline</p> <p style={{fontSize:"1.4rem",position:"relative",left:"295px"}}> : </p> <p style={{position:"relative",left:"385px",fontSize:"1.4rem"}}> {task.deadline}</p>
-      </div>
-      <div style={{ display: "flex",textAlign:"center"}}>
-      <p style={{position:"relative",left:"90px",fontSize:"1.4rem"}}>Completion Date </p><p style={{fontSize:"1.4rem",position:"relative",left:"215.5px"}}> : </p> <p style={{position:"relative",left:"305px",fontSize:"1.4rem"}}>{task.completion}</p>
-      </div>
-      <div style={{ display: "flex",textAlign:"center"}}>
-      <p style={{position:"relative",left:"90px",fontSize:"1.4rem"}}>Rewards </p><p style={{fontSize:"1.4rem",position:"relative",left:"295.5px"}}> : </p> <p style={{position:"relative",left:"385px",fontSize:"1.4rem"}}> {task.rewards}</p>
-      </div>
-      <div style={{ display: "flex",textAlign:"center"}}>
-      <p style={{position:"relative",left:"90px",fontSize:"1.4rem"}}>Status </p><p style={{fontSize:"1.4rem",position:"relative",left:"317px"}}> : </p> <p style={{position:"relative",left:"405px",fontSize:"1.4rem"}}> {task.status}</p>
-      </div>
-      {status === "Waiting For Approval" ? (
+      <h2 className="heading" style={{ fontFamily: "Axiforma", fontSize: "2.5rem", marginBottom: "1.5rem", color: "#F2F2F2", textAlign: "center", textTransform: "uppercase", position: "relative", bottom: "60px" }}>VIEW TASK</h2>
+    </header>
+    <div className="Add-list" style={{ backgroundColor: "#FFFFFF", color: "#333333", margin: "0 auto", width: "1000px", textAlign: "center", boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)", borderRadius: "12px", padding: "2rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <form className="modal-form" style={{ height: "500px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <h3 style={{ marginRight: "10px" }}>Employee Name:</h3>
+          <h3>{task.empName}</h3>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ marginRight: "10px", fontSize: "1.4rem" }}>Task:</p>
+          <p style={{ fontSize: "1.4rem" }}>{task.task}</p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ marginRight: "10px", fontSize: "1.4rem" }}>Name:</p>
+          <p style={{ fontSize: "1.4rem" }}>{task.taskName}</p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ marginRight: "10px", fontSize: "1.4rem" }}>Description:</p>
+          <p style={{ fontSize: "1.4rem" }}>{task.taskDescription}</p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ marginRight: "10px", fontSize: "1.4rem" }}>Deadline:</p>
+          <p style={{ fontSize: "1.4rem" }}>{task.deadline}</p>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p style={{ marginRight: "10px", fontSize: "1.4rem" }}>Completion Date:</p>
+          <p style={{ fontSize: "1.4rem" }}>{task.completion}</p>
+        </div>
+        <div style={{ display: "flex", alignItems  : "center" }}>
+    <p style={{ marginRight: "10px", fontSize: "1.4rem" }}>Status:</p>
+    <p style={{ fontSize: "1.4rem", fontWeight: "bold", color: task.status === "Completed" ? "green" : "red" }}>{task.status}</p>
+  </div>
+  {status === "Waiting For Approval" ? (
         <div style={{ display: "flex", flexDirection: "row" }}>
           <Link to={`/real`}>
             <button
@@ -513,7 +480,7 @@ const CreateModal = (props) => {
                 color: "#F2F2F2",
                 borderRadius: "5px",
                 padding: "0.5rem 1rem",
-                marginRight: "1rem",
+                marginRight: "5rem",
                 border: "none",
                 cursor: "pointer",
                 boxShadow: "0 2px 5px rgba(0, 0, 0, 1.0)",
@@ -537,8 +504,8 @@ const CreateModal = (props) => {
               border: "none",
               cursor: "pointer",
               boxShadow: "0 2px 5px rgba(0, 0, 0,1.0)",
-              marginTop:"10px"
-            }}
+              marginTop:"10px",
+              marginRight:"5rem"}}
           >
             Reject
           </button>
@@ -549,6 +516,7 @@ const CreateModal = (props) => {
   <br />
   <br />
 </div>
+
   );
 };
 

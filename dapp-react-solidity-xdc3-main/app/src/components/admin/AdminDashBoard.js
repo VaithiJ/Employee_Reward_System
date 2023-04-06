@@ -63,9 +63,9 @@ function AdminDashBoard() {
   });
 
   return (
-    <div>
+    <div style={{height:"800px"}}>
       <div className="row">
-        <div style={{backgroundColor:"#00F1C3"}}>
+        <div style={{backgroundColor:"#00F1C3", height:"120px"}}>
         <div className="col-md-3">
           
           <div
@@ -77,10 +77,11 @@ function AdminDashBoard() {
         <div
             className={styles.span}
             style={{
-              fontSize: "2.9em",
-              // fontFamily: "Roboto Condensed",
+              fontSize: "2em",
+              fontFamily: "Montserrat",
               marginLeft: "-70px",
-              marginTop:"-50px"
+              marginTop:"-50px",
+
             }}
           >
             WELCOME {tokenn.name.toUpperCase()}'s ADMIN
@@ -200,6 +201,7 @@ function AdminDashBoard() {
                     color: "black",
                     fontFamily: "Montserrat",
                     padding: "20px",
+                    fontWeight:"1000"
                   }}
                 >
                   Employee Onboarding
@@ -249,14 +251,15 @@ function AdminDashBoard() {
                                 style={{
                                   fontFamily: "Montserrat",
                                   marginTop: "15px",
+                                  fontWeight:"1000"
                                 }}
                               >
                                 {employee.name}
                               </h6>
-                              <small>{employee._id}</small>
+                              <small style={{fontWeight:"1000"}}>{employee._id}</small>
                             </div>
                             <Link to={`/empprofile/${employee._id}`}>
-                              <button className="btn btn-primary">
+                              <button className="btn btn-primary" style={{fontWeight:"1000"}}>
                                 View Profile
                               </button>
                             </Link>

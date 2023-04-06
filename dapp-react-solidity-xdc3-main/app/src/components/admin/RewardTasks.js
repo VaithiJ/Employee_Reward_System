@@ -124,7 +124,7 @@ console.log(tasks)
     <div className="container">
             <div className="main"  >
               
-        <h1>Task Management</h1>
+        <h1>Reward</h1>
         <div style={{position:"relative",right:"550px",bottom:"70px"}}> <SidebarMenu/> </div>
         <div className="summary">
         
