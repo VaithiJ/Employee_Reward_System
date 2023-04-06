@@ -176,7 +176,7 @@ console.log(tasks)
         <div className="task-name" style={{ width: '15%' }}>{task.task}</div>
         <div className="task-assigned-to" style={{ width: '10%' }}>{task.empName}</div>
         <div className="task-assigned-to" style={{ width: '30%' }}>{task.empWalletAddress}</div>
-        <div className="task-due-date" style={{ width: '20%', marginLeft:"80px" }}>{task.deadline.slice(0,-39)}</div>
+        <div className="task-due-date" style={{ width: '20%', marginLeft:"80px" }}>{task.completion}</div>
         <div className="task-progress" style={{ width: '-10%' ,marginLeft:"40px"}}>{task.rewards}
         </div>
         
