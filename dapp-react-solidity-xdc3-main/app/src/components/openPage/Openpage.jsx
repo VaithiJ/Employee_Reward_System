@@ -176,9 +176,9 @@ const Openpage = () => {
             qualifications.
           </p>
 
-          <Link to="/about">
+          {/* <Link to="/about">
             <button className={styles.btn}>Learn More</button>
-          </Link>
+          </Link> */}
           <br />
         </div>
         <div className="int">
@@ -187,9 +187,10 @@ const Openpage = () => {
             style={{
               marginLeft: "550px",
               marginTop: "100px",
-              boxShadow: "0 0 10px rgba(10,100,0,0.3)",
+              boxShadow: "0 0 10px rgba(10,100,0,0.7)",
               width: "300px",
               height: "300px",
+              marginBottom:"40px"
             }}
           >
             <h3 className={styles.a1} style={{}}>
