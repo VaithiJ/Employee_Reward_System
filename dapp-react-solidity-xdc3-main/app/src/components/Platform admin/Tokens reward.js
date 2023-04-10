@@ -18,6 +18,7 @@ const PlatformAdmin = () => {
   const [submitting, setSubmitting] = useState(false);
   const { provider, erc } = useContext(EthereumContext);
   console.log("sample", erc)
+  console.log(provider)
   useEffect(() => {
     axios
       .get(`${API_URL}/admin`, { withCredentials: true })
@@ -29,72 +30,115 @@ const PlatformAdmin = () => {
         console.log(error);
       });
   }, []);
-const regCompany = async(event, company) =>{
-      // event.preventDefault();
-    
-            setSubmitting(true);
-          let companyaddress = company.walletAddress.replace("xdc","0x");
-          let companyname = company.comName;
-      
-          let resp = await executeTransaction(erc,provider,"regCompany",[companyaddress, companyname]);
-          log("Registered company","hash", resp.txHash)
-          setSubmitting(false);
+  const regCompany = async (event, company) => {
+    event.preventDefault();
+  
+    try {
+      setSubmitting(true);
+  
+      let companyaddress = company.walletAddress.replace("xdc", "0x");
+      let companyname = company.comName;
+  
+      // Register the company
+      let resp = await executeTransaction(erc, provider, "regCompany", [
+        companyaddress,
+        companyname,
+      ]);
+      log("Registered company", "hash", resp.txHash);
+  
+      // Check console for confirmation message
+      console.log("Please approve this company.");
+  
+      // Wait for user to confirm in console
+      let consoleConfirmation = await new Promise((resolve, reject) => {
+        let interval = setInterval(() => {
+          if (console.log.toString().includes("Company approved.")) {
+            clearInterval(interval);
+            resolve(true);
+          }
+        }, 1000);
+      });
+  
+      // If user confirmed, approve the company
+      if (consoleConfirmation) {
+        axios
+          .put(
+            `${API_URL}/verifycom/${company._id}`,
+            { isAdmin: true },
+            { withCredentials: true }
+          )
+          .then((response) => {
+            const compp = response.data.savedUser;
+            window.location.reload();
+            console.log("red", response.data.savedUser);
+  
+            // Update tasks state
+            setupdatecompanies(
+              Array.isArray(compp)
+                ? compp.map((t) => {
+                    if (t._id === company._id) {
+                      window.location.reload();
+                      console.log("m");
+                      return compp;
+                    } else {
+                      window.location.reload();
+                      console.log("m");
+                      return t;
+                    }
+                  })
+                : []
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-   
-  const Verify = async(comp) => {
-
-    
-    const confirmed = window.confirm(
-      "Approve this Company?"
-    );
-    if (confirmed) {
-      axios
-        .put(
-          `${API_URL}/verifycom/${comp._id}`,
-          { isAdmin: true },
-          { withCredentials: true }
-        )
-        .then((response) => {
-
-          const compp = response.data.savedUser;
-          window.location.reload();
-          console.log("red", response.data.savedUser);
-          // update tasks state
-          setupdatecompanies(
-            Array.isArray(compp)
-              ? compp.map((t) => {
-                  if (t._id === comp._id) {
-                    window.location.reload();
-                    console.log("m")
-                    return compp;
-                  } else {
-                    window.location.reload();
-                    console.log("m")
-                    return t;
-                    
-                  }
-                })
-              : []
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+  
+      setSubmitting(false);
+    } catch (error) {
+      console.error(error);
     }
   };
-
-  const sendToCompany = async(event, company) =>{
+  
+  const sendToCompany = async(event, company) => {
     event.preventDefault();
     setSubmitting(true);
-    // let to = tokenn.wallet.replace("xdc", "0x");
-    let companyaddress = company.walletAddress.replace("xdc","0x");
+    
+    // Replace the "xdc" with "0x" in the company's wallet address
+    let companyAddress = company.walletAddress.replace("xdc", "0x");
+    console.log(companyAddress)
+    
+    // Define the amount to be sent
     let amount = "20";
-    console.log(amount)
-
-    let resp = await executeTransaction(erc,provider,"sendToCompany",[amount,companyaddress]);
-    log("sending to company ","hash", resp.txHash)
+    console.log(amount);
+  
+    try {
+      // Execute the transaction
+      let resp = await executeTransaction(erc, provider, "sendToCompany", [amount, companyAddress]);
+      
+      
+      // Log the transaction hash
+      log("sending to company", "hash", resp.txHash);
+      
+     // Listen to the Transfer event emitted by the ercContract instance
+      // erc.events.Transfer({
+      //   filter: { from: myAddress, to: companyAddress },
+      //   fromBlock: 0
+      // })
+      // .on('data', function(event) {
+      //   console.log(`Token sent to ${company.name} with transaction hash: ${resp.txHash}`);
+      // })
+      // .on('error', function(error) {
+      //   console.error(error);
+      // });
+  
+    } catch(error) {
+      console.error(error);
+    }
+  
     setSubmitting(false);
   }
+  
   const balanceOf = async (event,company) => {
     event.preventDefault();
     setSubmitting(true);
@@ -181,7 +225,7 @@ const regCompany = async(event, company) =>{
                  
                
                </td>
-                <td style={{ padding: "1rem" }}>
+                {/* <td style={{ padding: "1rem" }}>
                   {admin ? <p style={{color:"#00FF00"}}><b> VERIFIED </b> </p> : (
                   <button
                     onClick={() => Verify(company)}
@@ -198,7 +242,7 @@ const regCompany = async(event, company) =>{
                   
                   
                 )} 
-                </td>
+                </td> */}
                 <td style={{ padding: "1rem" }}>
                  
                   <button
