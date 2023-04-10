@@ -218,133 +218,67 @@ const RewardTasks = (props) => {
           </div>
         </div>
 
-        <div
-          style={{
-            background: "white",
-            padding: "20px",
-            borderRadius: "8px",
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.6)",
-            border: "1px solid #ccc",
-            marginBottom: "20px",
-            width: "1300px",
-          }}
-        >
-          <h2>Tasks</h2>
-          <div className="task-list" style={{ width: "1200px" }}>
-            <div className="task-list">
-              <div className="task-list-header">
-                <div className="task-name" style={{ width: "5%" }}>
-                  Task Name
-                </div>
-                <div className="task-name" style={{ width: "20%" }}>
-                  {" "}
-                  Name
-                </div>
-                <div className="task-name" style={{ width: "25%" }}>
-                  Wallet Address
-                </div>
-                {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
-                <div className="task-due-date" style={{ width: "20%" }}>
-                  Due Date
-                </div>
-                <div className="task-progress" style={{ width: "10%" }}>
-                  Rewards
-                </div>
-
-                <div
-                  className="task-status"
-                  style={{ width: "15%", paddingLeft: "30px" }}
-                >
-                  Actions
-                </div>
-              </div>
-              {tasks.map((task) => (
-                <div
-                  className="task-list-item"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginTop: "10px",
-                    borderBottom: "1px solid #ccc",
-                    paddingBottom: "10px",
-                  }}
-                >
-                  <div className="task-name" style={{ width: "15%" }}>
-                    {task.task}
-                  </div>
-                  <div className="task-assigned-to" style={{ width: "10%" }}>
-                    {task.empName}
-                  </div>
-                  <div className="task-assigned-to" style={{ width: "30%" }}>
-                    {task.empWalletAddress}
-                  </div>
-                  <div
-                    className="task-due-date"
-                    style={{ width: "20%", marginLeft: "80px" }}
-                  >
-                    {task.deadline}
-                  </div>
-                  <div
-                    className="task-progress"
-                    style={{ width: "-10%", marginLeft: "40px" }}
-                  >
-                    {task.rewards}
-                  </div>
-
-                  <div
-                    className="task-status"
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginLeft: "auto",
-                      width: "15%",
-                    }}
-                  >
-                    {!task.approved ? (
-                      <div>
-                        <button
-                          style={{
-                            marginRight: "10px",
-                            padding: "8px 16px",
-                            background: "green",
-                            color: "white",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => Rewarded(task)}
-                        >
-                          Reward
-                        </button>
-                        <input
-        type="file"
-        onChange={(event) => {
-          setFileUpload(event.target.files[0]);
-        }}
-      />
-                        <button
-                          style={{
-                            marginRight: "10px",
-                            padding: "8px 16px",
-                            background: "green",
-                            color: "white",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            marginTop: "30px",
-                          }}
-                          onClick={uploadFile}
-                        >
-                          Upload Certificate
-                        </button>
-                      </div>
-                    ) : (
-                      <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-                        Rewarded
-                      </div>
-                    )}
-                    {/* {!task.rejected ? (
+<div  style={{ 
+  background: 'white', 
+  padding: '20px', 
+  borderRadius: '8px', 
+  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.6)', 
+  border: '1px solid #ccc',
+  marginBottom: '20px',
+  width:"1300px",
+ 
+  }}>
+  <h2>Tasks</h2>
+  <div className="task-list" style={{width:"1200px"}}>
+  <div className="task-list">
+    <div className="task-list-header">
+      <div className="task-name" style={{ width: '5%' }}>Task Name</div>
+      <div className="task-name" style={{ width: '20%' }}> Name</div>
+      <div className="task-name" style={{ width: '25%' }}>Wallet Address</div>
+      {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
+      <div className="task-due-date" style={{ width: '20%' }}>Due Date</div>
+      <div className="task-progress" style={{ width: '10%' }}>Rewards</div>
+      
+      <div className="task-status" style={{ width: '15%', paddingLeft: "30px" }}>Actions</div>
+    </div>
+    {tasks.map((task) => (
+      <div className="task-list-item"  style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        marginTop: '10px', 
+        borderBottom: '1px solid #ccc',
+        paddingBottom: '10px',
+      }}>
+        <div className="task-name" style={{ width: '15%' }}>{task.task}</div>
+        <div className="task-assigned-to" style={{ width: '10%' }}>{task.empName}</div>
+        <div className="task-assigned-to" style={{ width: '30%' }}>{task.empWalletAddress}</div>
+        <div className="task-due-date" style={{ width: '20%', marginLeft:"80px" }}>{task.deadline.slice(0,-39)}</div>
+        <div className="task-progress" style={{ width: '-10%' ,marginLeft:"40px"}}>{task.rewards}
+        </div>
+        
+        <div className="task-status" style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          marginLeft: 'auto',
+          width: '15%',
+        }}>
+          {!task.approved ? (
+            <div>
+              <button style={{ 
+                marginRight: '10px', 
+                padding: '8px 16px', 
+                background: 'green', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '4px', 
+                cursor: 'pointer' 
+              }} onClick={() => Rewarded(task)}>Reward</button> 
+            </div>
+          ) : (
+            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Rewarded</div>
+          )}
+          {/* {!task.rejected ? (
             <div>
               <button style={{ 
                 padding: '8px 16px', 
