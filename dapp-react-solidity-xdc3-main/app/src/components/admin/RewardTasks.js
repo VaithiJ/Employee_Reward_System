@@ -292,6 +292,20 @@ const RewardTasks = (props) => {
           ) : (
             <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Rejected</div>
           )} */}
+           <div>
+           <input type="file" onChange={(e) => setFileUpload(e.target.files[0])} />
+{/* <button onClick={uploadFile}>Upload Certificates</button> */}
+
+              <button style={{ 
+                marginRight: '10px', 
+                padding: '8px 16px', 
+                background: 'green', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '4px', 
+                cursor: 'pointer' 
+              }} onClick={() => uploadFile()}>Upload Certificates</button> 
+            </div>
                   </div>
                 </div>
               ))}
