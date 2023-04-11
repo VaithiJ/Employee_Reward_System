@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef  } from "react";
 import "./task.css"
 import Footercr from "../footer/footercr";
 import { useCookies } from "react-cookie";
@@ -8,6 +8,15 @@ import { Table } from "react-bootstrap";
 import SidebarMenu12 from "./side1";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { storage } from "../../firebase.js";
+import { v4 as uuidv4 } from "uuid";
 
 const ProfilePage = (props) => {
   const [progressWidth, setProgressWidth] = useState(0);
@@ -17,14 +26,14 @@ const ProfilePage = (props) => {
   const [tasks, setTasks] = useState([]);
   const [boxVisible, setBoxVisible] = useState(false);
   const API_URL = "http://localhost:8800";
-  const handlePursuingClick = () => {
-    if (progressWidth < 100) {
-      setProgressWidth(progressWidth + 10);
-    }
-  };
-  const handleLogout = () => {
-    removeCookie("employee_token");
-  };
+  // const [profilepic, Setprofilepic] = useState(null);
+  // const [fileList, setFileList] = useState([]);
+  // const handlePursuingClick = () => {
+  //   if (progressWidth < 100) {
+  //     setProgressWidth(progressWidth + 10);
+  //   }
+  // };
+  const toke = jwt_decode(cookies.employee_token);
   const handleBoxClick = () => {
     setBoxVisible(!boxVisible);
   };
@@ -32,8 +41,96 @@ const ProfilePage = (props) => {
   setEmployees(data)
   console.log('function',employees)
  }
-  const toke = jwt_decode(cookies.employee_token);
-  console.log(toke)
+ const [showButton, setShowButton] = useState(false);
+ const [delay, setDelay] = useState(200);
+ const [avatarUrl, setAvatarUrl] = useState("");
+ const [red, setred] = useState([]);
+ const [fileList, setFileList] = useState([]);
+
+
+const uploadFile = (fileUpload) => {
+  if (fileUpload == null) return;
+  const fileName = fileUpload.name + uuidv4();
+  const fileRef = ref(storage, `UserProfile/${toke.name}/${fileName}`);
+  uploadBytes(fileRef, fileUpload).then((snapshot) => {
+    getDownloadURL(snapshot.ref).then((url) => {
+      setFileList((prev) => [...prev, { name: fileName, url: url }]);
+      setAvatarUrl(url);
+      const red = fileName;
+      console.log(fileName);
+      
+      axios
+        .put(
+          `${API_URL}/updateprofile/${toke.name}`,
+          { profile: fileName },
+          { withCredentials: true }
+        )
+        .then((response) => {
+          const updated = response.data.updatedprofile;
+          
+        });
+    });
+  });
+};
+
+useEffect(() => {
+  const fetchProfile = async () => {
+    try {
+      const response = await axios.put(`${API_URL}/updateprofile/${toke.name}`);
+      const red = response.data.updatedprofile;
+      setred(red);
+
+      const storageRef = ref(storage, `UserProfile/${toke.name}`);
+      const listResult = await listAll(storageRef);
+
+      const itemRef = listResult.items.find((ref) => ref.name === red.profile);
+      if (itemRef) {
+        const url = await getDownloadURL(itemRef);
+        setAvatarUrl(url);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchProfile();
+}, []);
+
+ 
+ const handleMouseEnter = () => {
+   setShowButton(true);
+ };
+ 
+ const handleMouseLeave = (event) => {
+  // Check if the mouse has moved over the button
+  const relatedTarget = event.relatedTarget;
+  const button = document.querySelector("button");
+  if (button && button.contains(relatedTarget)) {
+    return;
+  }
+  
+  // If the mouse is not over the button, hide the button
+  setDelay(700); // set a delay of 200ms
+  setTimeout(() => {
+    setShowButton(false);
+  }, delay);
+};
+
+const buttonRef = useRef(null);
+
+const handleButtonClick = () => {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/jpeg";
+  input.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    uploadFile(file);
+  });
+  input.click();
+};
+
+  
+
   useEffect(() => {
   axios
       .get(`${API_URL}/viewtask`, { withCredentials: true })
@@ -44,11 +141,11 @@ const ProfilePage = (props) => {
         );
         console.log(response.data.tasks);
       })
-      // const red= response.data.tasks.filter((tasks) => tasks.empName == toke.name)
-      // console.log(rd)
+ 
       .catch((error) => {
         console.log(error);
       });
+      
       
   }, []);
   console.log(tasks);
@@ -63,6 +160,8 @@ const ProfilePage = (props) => {
         console.log(error);
       });
     },[])
+
+console.log("mm",avatarUrl)
   return (
     <div style={{ height: "auto" }}>
       <header style={{ 
@@ -87,7 +186,7 @@ const ProfilePage = (props) => {
       }}>
         Employee Profile</h1>
         
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s" alt="User Avatar" style={{ 
+        <img src={avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
         borderRadius: '50%',
         marginRight: '20px',
         width:"50px",
@@ -105,7 +204,7 @@ const ProfilePage = (props) => {
         className="card"
         style={{
           width: "900px",
-          height: "140px",
+          height: "170px",
           flexDirection: "row",
           background: "#FFFFFF",
           margintop: "100px",
@@ -114,20 +213,48 @@ const ProfilePage = (props) => {
           left: "240px",
         }}
       >
-        <img
-          src="https://img.freepik.com/free-icon/user_318-159711.jpg"
-          alt="Avatar"
-          style={{
-            border: "3px solid #ccc",
-            boxShadow: "0px 0px 10px #ccc",
-            borderRadius: "50%",
-            marginLeft: "5%",
-            width: "120px",
-            height: "120px",
-            position: "relative",
-            top: "10px",
-          }}
-        />
+       <div style={{ position: "relative", display: "inline-block" }}>
+  <img src={avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'}
+  alt="User Avatar" 
+    style={{
+      border: "3px solid #ccc",
+      boxShadow: "0px 0px 10px #ccc",
+      borderRadius: "50%",
+      width: "120px",
+      height: "120px",
+      zIndex: 1,
+    }}
+    onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}
+  />
+  {showButton && (
+    <button
+      ref={buttonRef}
+      onClick={handleButtonClick}
+      style={{
+        position: "absolute",
+        top: "80%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundColor: "#007bff",
+        borderRadius: "50%",
+        width: "30px",
+        height: "30px",
+        border: "none",
+        boxShadow: "0px 0px 10px #ccc",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "pointer",
+        zIndex: 1,
+      }}
+    >
+      Edit 
+    </button>
+  )}
+</div>
+
+  
 
         <div
           classname="red"
@@ -311,5 +438,5 @@ const ProfilePage = (props) => {
       {/* <Footercr/> */}
     </div>
   );
-};
+              }
 export default ProfilePage;

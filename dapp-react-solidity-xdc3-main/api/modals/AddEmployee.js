@@ -43,7 +43,12 @@ const AddEmployee = new mongoose.Schema({
     type : Boolean,
     ref : User,
     default: false
-  }
+  },
+  profile:{
+    type: String,
+    unique: true
+}
+
 });
 
 export default mongoose.model("AddEmployee", AddEmployee);
