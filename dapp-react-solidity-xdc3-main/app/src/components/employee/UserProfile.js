@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./task.css"
 import Footercr from "../footer/footercr";
 import { useCookies } from "react-cookie";
@@ -8,6 +8,10 @@ import { Table } from "react-bootstrap";
 import SidebarMenu12 from "./side1";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import {storage} from "../../firebase.js"
+import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
+const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
+
 
 const ProfilePage = (props) => {
   const [progressWidth, setProgressWidth] = useState(0);
@@ -17,13 +21,67 @@ const ProfilePage = (props) => {
   const [tasks, setTasks] = useState([]);
   const [boxVisible, setBoxVisible] = useState(false);
   const API_URL = "http://localhost:8800";
+  const [submitting, setSubmitting] = useState(false);
+  const { provider, erc } = useContext(EthereumContext);
+  console.log("sample", erc)
   const handlePursuingClick = () => {
     if (progressWidth < 100) {
       setProgressWidth(progressWidth + 10);
     }
   };
+  // const viewCertificate = async (token) => {
+  //   let taskId = (token._id).slice(-5);
+  //   console.log(taskId);
+  //   setSubmitting(true);
+  //   let response = await queryData(erc, provider, 'getFileHash', [taskId]);
+  //   log("Returned hash", "hash", response);
+  //   setSubmitting(false);
+  //   const fileName = "b8a47cf35a3a9b8c0e36908becf9f2f6b306d233740356582fe37c80055db180";
+  //   const fileListRef = ref(storage,'certificates')
+  
+  // };
+  const viewCertificate = async (token) => {
+    let taskId = (token._id).slice(-5);
+    console.log(taskId);
+    setSubmitting(true);
+    let response = await queryData(erc, provider, 'getFileHash', [taskId]);
+    log("Returned hash", "hash", response);
+    setSubmitting(false);
+    const fileListRef = ref(storage, 'certificates');
+    listAll(fileListRef)
+      .then((res) => {
+        res.items.forEach((itemRef) => {
+          if (itemRef.name.slice(-64) === response) {
+            console.log(itemRef.fullPath);
+            getDownloadURL(itemRef)
+              .then((url) => {
+                console.log(url);
+                window.open(url, '_blank');
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
+  
   const handleLogout = () => {
     removeCookie("employee_token");
+    // if (response === fileName) {
+    //   const fileRef = fileName.slice(0, fileName.indexOf("_"));
+    //   try {
+    //     const url = await getDownloadURL(fileRef);
+    //     console.log(url);
+    //     window.open(url, "_blank");
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
   };
   const handleBoxClick = () => {
     setBoxVisible(!boxVisible);
@@ -217,16 +275,28 @@ const ProfilePage = (props) => {
                 <th style={{ color: "#537FE7", textAlign: "center" }}>
                   Tokens Earned
                 </th>
+                <th style={{ color: "#537FE7", textAlign: "center" }}>
+                  Certificates
+                </th>
               </tr>
             </thead>
             <tbody>
               {tasks.map((token, index) => (
                 <tr key={index}>
-                  <td align="center">{token.companyName}</td>
-                  <td align="center">{token.task}</td>
+                  <td >{token.companyName}</td>
+                  <td >{token.task}</td>
                   <td align="center">{token.deadline}</td>
                   {/* <td align="center">{token.rating}</td> */}
                   <td align="center">{token.rewards}</td>
+                  <td align="center"><button style={{ 
+                marginRight: '10px', 
+                padding: '8px 16px', 
+                background: 'blue', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '4px', 
+                cursor: 'pointer' 
+              }}onClick={() => viewCertificate(token)}>View</button></td>
                 </tr>
               ))}
             </tbody>

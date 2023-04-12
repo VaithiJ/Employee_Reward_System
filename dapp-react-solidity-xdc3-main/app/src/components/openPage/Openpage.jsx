@@ -10,6 +10,8 @@ import Slideshow from "./carousel/car";
 import "./openpage.module.css";
 import bg from "./y.svg";
 import g from "./sc.svg";
+import roadmap from "./roadmap.svg";
+import road from "./road1.png"
 
 const Openpage = () => {
   useEffect(() => {
@@ -199,7 +201,18 @@ const Openpage = () => {
             <Slideshow />
           </div>
         </div>
-        <Footer />
+        <div ><img
+              src={road}
+              style={{
+                width: "1200px",
+                height: "600px",
+                marginTop: "-00px",
+                marginLeft: "0px",
+                
+              }}
+              alt="Employee"
+            /></div>
+        {/* <Footer /> */}
       </div>
     </div>
     // </div>

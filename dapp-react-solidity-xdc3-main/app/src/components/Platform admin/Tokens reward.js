@@ -4,7 +4,8 @@ import { useCookies } from "react-cookie";
 import { Link, useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
+const { executeTransaction, EthereumContext, log, queryData, queryEvents } = require('react-solidity-xdc3');
+import jet from "./jet.gif";
 
 
 const PlatformAdmin = () => {
@@ -17,6 +18,7 @@ const PlatformAdmin = () => {
   const [updatecompanies, setupdatecompanies] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const { provider, erc } = useContext(EthereumContext);
+
   console.log("sample", erc)
   console.log(provider)
   useEffect(() => {
@@ -38,6 +40,7 @@ const PlatformAdmin = () => {
   
       let companyaddress = company.walletAddress.replace("xdc", "0x");
       let companyname = company.comName;
+      console.log(erc)
   
       // Register the company
       let resp = await executeTransaction(erc, provider, "regCompany", [
@@ -106,19 +109,19 @@ const PlatformAdmin = () => {
     
     // Replace the "xdc" with "0x" in the company's wallet address
     let companyAddress = company.walletAddress.replace("xdc", "0x");
-    console.log(companyAddress)
+    console.log("kasdlkaskdajsld",companyAddress)
     
     // Define the amount to be sent
     let amount = "20";
     console.log(amount);
   
-    try {
+    // try {
       // Execute the transaction
       let resp = await executeTransaction(erc, provider, "sendToCompany", [amount, companyAddress]);
       
       
       // Log the transaction hash
-      log("sending to company", "hash", resp.txHash);
+      console.log("sending to company", "hash", resp.txHash);
       
      // Listen to the Transfer event emitted by the ercContract instance
       // erc.events.Transfer({
@@ -131,12 +134,42 @@ const PlatformAdmin = () => {
       // .on('error', function(error) {
       //   console.error(error);
       // });
-  
-    } catch(error) {
-      console.error(error);
-    }
-  
+      // erc.events.Transfer({}, (error, event) => {
+      //   if (!error) {
+      //     console.log(event.returnValues);
+      //   } else {
+      //     console.error(error);
+      //   }
+      // });
+    // } catch(error) {
+    //    console.error(error);
+    // }
+      //   erc.events.Transfer({
+      //   // filter: { from: myAddress, to: companyAddress },
+      //   fromBlock: 0
+      // })
+      // .on('data', function(event) {
+      //   console.log(`Token sent to ${company.name} with transaction hash: `);
+      // })
+      // .on('error', function(error) {
+      //   console.error(error);
+      // });
+      // erc.events.Transfer({}, (error, event) => {
+      //   if (!error) {
+      //     console.log(event.returnValues);
+      //   } else {
+      //     console.error(error);
+      //   }
+      // });
+     
+
     setSubmitting(false);
+  }
+
+  const transfer = async() =>{
+    let events = await queryEvents(erc, provider, "Transfer",47600814);
+    console.log(events)
+    console.log("asassadas")
   }
   
   const balanceOf = async (event,company) => {
@@ -156,31 +189,45 @@ const PlatformAdmin = () => {
   
 
   return (
-    <div style={{ textAlign: "center", overflowX: "auto" }}>
+    <div style={{backgroundColor:"#2051E9", textAlign: "center", overflowX: "auto" }}>
       <h1
-        style={{ fontSize: "2.5rem", fontWeight: "bold", marginBottom: "2rem" , marginTop:"50px"}}
+        style={{ color : "white",fontFamily:"Montserrat",fontSize: "2.5rem", fontWeight: "bold", marginBottom: "2rem" , marginTop:"50px"}}
       >
-        Platform Admin
+         EMPLOYEE REWARD SYSTEM
       </h1>
+      <div style={{display:"flex", flexDirection:"row"}}>
+      <div style={{fontSize:"40px",fontFamily:"Montserrat",backgroundColor:"#2051E9", height:"400px",marginLeft:"80px",marginTop:"80px", width:"400px",color:"white", borderRadius:"20px", boxShadow: "0px 0px 30px rgba(255, 255, 255, 1)"}}>
+<div style={{marginTop:"20px", fontFamily:"Montserrat"}}>Welcome Admin</div>
+<ul style={{marginTop:"40px",fontFamily:"Montserrat", fontSize:"20px"}}>Manage the platform</ul>
+<ul style={{fontFamily:"Montserrat", fontSize:"20px"}}>Verify and Register the company to blockchain</ul>
+<ul style={{fontFamily:"Montserrat", fontSize:"20px"}}>Send tokens to companies</ul>
+
+</div>
+
+      <div><img style={{marginLeft:"30px"}} src={jet}/></div>
+      </div>
       <div
         style={{
           margin: "0 auto",
-          width: "1400px",
+          width: "1000px",
           border: "1px solid #ccc",
-          borderRadius: "5px",
+          borderRadius: "20px",
           overflow: "hidden",
           height: "auto",
+          boxShadow: "0px 0px 30px rgba(255, 255, 255, 1)",
+          marginTop:"30px",
+          
         }}
       >
-        <table style={{ minWidth: "100%", height: "auto" }}>
+        <table style={{ minWidth: "100%",height:"auto", borderRadius:"20px"}}>
           <thead>
-            <tr style={{ backgroundColor: "#f0f0f0" }}>
+            <tr style={{ backgroundColor: "#2051E9", border: "1px solid red" , color:"white"}}>
               <th style={{ padding: "1rem" }}>Company Name</th>
               <th style={{ padding: "1rem" }}>Wallet Address</th>
               <th style={{ padding: "1rem" }}>Reward</th>
               <th style={{ padding: "1rem" }}>Balance Tokens</th>
-              <th style={{ padding: "1rem" }}>Verify</th>
               <th style={{ padding: "1rem" }}>Register</th>
+              {/* <th style={{ padding: "1rem" }}>Register</th> */}
             </tr>
           </thead>
           <tbody>
@@ -189,9 +236,9 @@ const PlatformAdmin = () => {
               console.log(admin)
               return (
               <tr key={index} style={{ borderBottom: "1px solid #ccc" }}>
-                <td style={{ padding: "1rem" }}>{company.comName}</td>
-                <td style={{ padding: "1rem" }}>{company.walletAddress}</td>
-                <td style={{ padding: "1rem" }}>
+                <td style={{ padding: "1rem" , color:"white"}}>{company.comName}</td>
+                <td style={{ padding: "1rem", color:"white" }}>xdc....{company.walletAddress.slice(-10)}</td>
+                <td style={{ padding: "1rem" , color:"white"}}>
                   
                   <button
                     style={{
@@ -244,6 +291,7 @@ const PlatformAdmin = () => {
                 )} 
                 </td> */}
                 <td style={{ padding: "1rem" }}>
+                  {/* <button onClick={transfer}>Query Data</button> */}
                  
                   <button
                     onClick={(e) => regCompany(e,company)}

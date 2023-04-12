@@ -532,6 +532,7 @@ function AdminDashBoard() {
                                 }}
                               >
                                 {employee.Name}
+                              
                               </h6>
                               <small style={{fontWeight:"1000"}}>{employee.comId}</small>
                             </div>

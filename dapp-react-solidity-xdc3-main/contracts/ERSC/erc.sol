@@ -10,6 +10,9 @@ contract ERC {
     mapping(address => mapping(address => uint256)) public allowances;
     mapping(address => uint256) public balances;
     mapping(address => string) public companyNames;
+    mapping(string => bool) public fileHashes; // changed mapping key type to bytes32
+mapping(string => string) public taskFileMapping; // new mapping to store taskId for each file hash
+
     struct Employee {
         address employeeAddress;
         string name;
@@ -92,6 +95,21 @@ contract ERC {
 function getEmployeeCount(address companyaddress) public view returns (uint256) {
     return companyEmployees[companyaddress].length;
 }
+// function registerFile(bytes32 filehash, uint256 taskId) public onlyAdmin {
+//     require(!fileHashes[filehash], "File hash is already registered.");
+//      require(taskFileMapping[taskId] != filehash, "A file with the same task ID is already registered.");
+//     fileHashes[filehash] = true;
+//     taskFileMapping[taskId] = filehash;
+// }
+function registerFile(string memory fileHash, string memory taskId) public onlyAdmin {
+    require(!fileHashes[fileHash], "File hash is already registered.");
+    require(keccak256(abi.encodePacked(taskFileMapping[fileHash])) != keccak256(abi.encodePacked(taskId)), "A file with the same task ID is already registered.");
+
+    fileHashes[fileHash] = true;
+    taskFileMapping[taskId] = fileHash;
+}
+
+
 
 function getCompanyEmployees(address companyaddress) public view returns (Employee[] memory) {
     Employee[] memory result = new Employee[](companyEmployees[companyaddress].length);
@@ -106,6 +124,9 @@ function isCompanyRegistered(address companyaddress) public view returns (bool) 
 
 function isEmployeeRegistered(address employeeaddress) public view returns (bool) {
     return employees[employeeaddress];
+}
+function getFileHash(string memory taskId) public view returns (string memory) {
+    return taskFileMapping[taskId];
 }
 }
 

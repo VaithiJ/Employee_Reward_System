@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import SidebarMenu from "./side";
+import crypto from "crypto";
 import {
   ref,
   uploadBytes,
@@ -32,19 +33,44 @@ const RewardTasks = (props) => {
   ]);
   const [fileUpload, setFileUpload] = useState(null);
   const [fileList, setFileList] = useState([]);
+  const [taskId, setTaskId] = useState(null);
 
   const fileListRef = ref(storage,'certificates');
+  function generateHash(data) {
+    const hash = crypto.createHash('sha256');
+    hash.update(data);
+    return hash.digest('hex');
+  }
 
-  const uploadFile = () => {
+  const uploadFile = async(taskkk) => {
     if (fileUpload == null) return;
-    const fileName = fileUpload.name + uuidv4();
+    const fileName = fileUpload.name + generateHash(fileUpload.name);
+    const hashName = fileName.slice(-64);
+
+
+    console.log(hashName)
     const fileRef = ref(storage, `certificates/${fileName}`);
     uploadBytes(fileRef, fileUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setFileList((prev) => [...prev, { name: fileName, url: url }]);
       });
     });
+
+    console.log(taskkk._id.slice(-5))
+
+   
+
+
+    
+   
+    setSubmitting(true);
+    let filehash = hashName;
+    let resp = await executeTransaction(erc,provider,"registerFile",[filehash, taskkk._id.slice(-5)]);
+    log("Registered","hash", resp.txHash)
+    setSubmitting(false);
+  
   };
+  
 
   useEffect(() => {
     listAll(fileListRef).then((response) => {
@@ -128,6 +154,7 @@ const RewardTasks = (props) => {
             task.map((t) => {
               if (t._id === updatedTask._id) {
                 return updatedTask;
+                setTaskId(updatedTask._id)
               } else {
                 return t;
               }
@@ -232,6 +259,7 @@ const RewardTasks = (props) => {
   <div className="task-list" style={{width:"1200px"}}>
   <div className="task-list">
     <div className="task-list-header">
+    <div className="task-name" style={{ width: '5%' }}>UID</div>
       <div className="task-name" style={{ width: '5%' }}>Task Name</div>
       <div className="task-name" style={{ width: '20%' }}> Name</div>
       <div className="task-name" style={{ width: '25%' }}>Wallet Address</div>
@@ -249,6 +277,7 @@ const RewardTasks = (props) => {
         borderBottom: '1px solid #ccc',
         paddingBottom: '10px',
       }}>
+        <div className="task-name" style={{ width: '15%' }}>{(task._id).slice(-5)}</div>
         <div className="task-name" style={{ width: '15%' }}>{task.task}</div>
         <div className="task-assigned-to" style={{ width: '10%' }}>{task.empName}</div>
         <div className="task-assigned-to" style={{ width: '30%' }}>{task.empWalletAddress}</div>
@@ -293,18 +322,19 @@ const RewardTasks = (props) => {
             <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Rejected</div>
           )} */}
            <div>
-           <input type="file" onChange={(e) => setFileUpload(e.target.files[0])} />
+           <input style={{opacity: submitting ? 0.5 : 1}} disabled={submitting} type="file" onChange={(e) => setFileUpload(e.target.files[0])} />
 {/* <button onClick={uploadFile}>Upload Certificates</button> */}
 
               <button style={{ 
                 marginRight: '10px', 
                 padding: '8px 16px', 
-                background: 'green', 
+                background: submitting ?'red' : "green", 
                 color: 'white', 
                 border: 'none', 
                 borderRadius: '4px', 
-                cursor: 'pointer' 
-              }} onClick={() => uploadFile()}>Upload Certificates</button> 
+                cursor: 'pointer' ,
+                opacity: submitting ? 0.5 : 1
+              }} onClick={()=>uploadFile(task)} disabled={submitting}> {submitting ? "Uploaded..." : "Upload Certificate"}</button> 
             </div>
                   </div>
                 </div>

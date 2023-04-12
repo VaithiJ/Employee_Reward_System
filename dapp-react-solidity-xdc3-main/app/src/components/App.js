@@ -74,7 +74,7 @@ function App() {
 // </div>
  <div className="App">
      
-      { !(window.location.pathname === '/login' || window.location.pathname === '/' || window.location.pathname === '/logincomp' || window.location.pathname === '/register'|| window.location.pathname === '/userprofile' || window.location.pathname === '/registercomp') &&
+      { !(window.location.pathname === '/login' || window.location.pathname === '/' || window.location.pathname === '/logincomp' || window.location.pathname === '/register' || window.location.pathname === '/registercomp') &&
         <div className="connect-button-container" style={{marginTop:"30px", position: "absolute", top: 0, right: 160, padding: "10px", zIndex: 999, textAlign: "right" }}>
           <button style={{borderRadius:"20px", width:"200px", backgroundColor:"red"}} onClick={connect} disabled={connecting}>{connecting ? 'Connected...' : 'Connect Wallet'}
           </button>

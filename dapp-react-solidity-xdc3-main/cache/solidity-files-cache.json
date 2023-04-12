@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\reactt\\dapp-react-solidity-xdc3-main\\dapp-react-solidity-xdc3-main\\contracts\\ERSC\\erc.sol": {
-      "lastModificationDate": 1680604477567,
-      "contentHash": "5e89b44a2132df1767d939bb9ae484da",
+      "lastModificationDate": 1681208560770,
+      "contentHash": "6b5dd49218953464041eecf0bc5a45ba",
       "sourceName": "contracts/ERSC/erc.sol",
       "solcConfig": {
         "version": "0.8.4",
