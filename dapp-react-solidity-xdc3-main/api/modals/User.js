@@ -41,12 +41,12 @@ const UserSchema = new mongoose.Schema({
     isAdmin:{
         type:Boolean,
         default: false,
+    },
+    profile:{
+        type: String,
+        unique: true,
+        
     }
-    
-    // proof:{
-    //     type:Document,
-    //     required: true
-    // }
 
 
 },{timestamps:true})
