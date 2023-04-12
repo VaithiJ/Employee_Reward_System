@@ -4,8 +4,9 @@ import { useCookies } from "react-cookie";
 import { Link, useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-const { executeTransaction, EthereumContext, log, queryData, queryEvents } = require('react-solidity-xdc3');
 import jet from "./jet.gif";
+
+const { executeTransaction, EthereumContext, log, queryData, queryEvents } = require('react-solidity-xdc3');
 
 
 const PlatformAdmin = () => {

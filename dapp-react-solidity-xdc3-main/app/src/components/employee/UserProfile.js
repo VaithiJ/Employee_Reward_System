@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import "./task.css"
 import Footercr from "../footer/footercr";
 import { useCookies } from "react-cookie";
@@ -8,6 +8,11 @@ import { Table } from "react-bootstrap";
 import SidebarMenu12 from "./side1";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import {storage} from "../../firebase.js"
+import {v4 as uuidv4} from "uuid";
+import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
+const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
+
 
 const ProfilePage = (props) => {
   const [progressWidth, setProgressWidth] = useState(0);
@@ -17,13 +22,71 @@ const ProfilePage = (props) => {
   const [tasks, setTasks] = useState([]);
   const [boxVisible, setBoxVisible] = useState(false);
   const API_URL = "http://localhost:8800";
+  const [submitting, setSubmitting] = useState(false);
+  const { provider, erc } = useContext(EthereumContext);
+  console.log("sample", erc)
   const handlePursuingClick = () => {
     if (progressWidth < 100) {
       setProgressWidth(progressWidth + 10);
     }
   };
+  // const viewCertificate = async (token) => {
+  //   let taskId = (token._id).slice(-5);
+  //   console.log(taskId);
+  //   setSubmitting(true);
+  //   let response = await queryData(erc, provider, 'getFileHash', [taskId]);
+  //   log("Returned hash", "hash", response);
+  //   setSubmitting(false);
+  //   const fileName = "b8a47cf35a3a9b8c0e36908becf9f2f6b306d233740356582fe37c80055db180";
+  //   const fileListRef = ref(storage,'certificates')
+  
+  // };
+  const viewCertificate = async (token) => {
+    let taskId = (token._id).slice(-5);
+    console.log(taskId);
+    setSubmitting(true);
+    let response = await queryData(erc, provider, 'getFileHash', [taskId]);
+    log("Returned hash", "hash", response);
+    setSubmitting(false);
+    const fileListRef = ref(storage, 'certificates');
+    listAll(fileListRef)
+      .then((res) => {
+        res.items.forEach((itemRef) => {
+          if (itemRef.name.slice(-64) === response) {
+            console.log(itemRef.fullPath);
+            getDownloadURL(itemRef)
+              .then((url) => {
+                console.log(url);
+                window.open(url, '_blank');
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+   const [showButton, setShowButton] = useState(false);
+ const [delay, setDelay] = useState(200);
+ const [avatarUrl, setAvatarUrl] = useState("");
+ const [red, setred] = useState([]);
+ const [fileList, setFileList] = useState([]);
+  
   const handleLogout = () => {
     removeCookie("employee_token");
+    // if (response === fileName) {
+    //   const fileRef = fileName.slice(0, fileName.indexOf("_"));
+    //   try {
+    //     const url = await getDownloadURL(fileRef);
+    //     console.log(url);
+    //     window.open(url, "_blank");
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
   };
   const handleBoxClick = () => {
     setBoxVisible(!boxVisible);
@@ -32,14 +95,7 @@ const ProfilePage = (props) => {
   setEmployees(data)
   console.log('function',employees)
  }
- const [showButton, setShowButton] = useState(false);
- const [delay, setDelay] = useState(200);
- const [avatarUrl, setAvatarUrl] = useState("");
- const [red, setred] = useState([]);
- const [fileList, setFileList] = useState([]);
-
-
-const uploadFile = (fileUpload) => {
+ const uploadFile = (fileUpload) => {
   if (fileUpload == null) return;
   const fileName = fileUpload.name + uuidv4();
   const fileRef = ref(storage, `UserProfile/${toke.name}/${fileName}`);
@@ -122,6 +178,8 @@ const handleButtonClick = () => {
 
   
 
+  const toke = jwt_decode(cookies.employee_token);
+  console.log(toke)
   useEffect(() => {
   axios
       .get(`${API_URL}/viewtask`, { withCredentials: true })
@@ -132,11 +190,11 @@ const handleButtonClick = () => {
         );
         console.log(response.data.tasks);
       })
- 
+      // const red= response.data.tasks.filter((tasks) => tasks.empName == toke.name)
+      // console.log(rd)
       .catch((error) => {
         console.log(error);
       });
-      
       
   }, []);
   console.log(tasks);
@@ -151,8 +209,6 @@ const handleButtonClick = () => {
         console.log(error);
       });
     },[])
-
-console.log("mm",avatarUrl)
   return (
     <div style={{ height: "auto" }}>
       <header style={{ 
@@ -177,7 +233,7 @@ console.log("mm",avatarUrl)
       }}>
         Employee Profile</h1>
         
-        <img src={avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
+                <img src={avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
         borderRadius: '50%',
         marginRight: '20px',
         width:"50px",
@@ -195,7 +251,7 @@ console.log("mm",avatarUrl)
         className="card"
         style={{
           width: "900px",
-          height: "170px",
+          height: "140px",
           flexDirection: "row",
           background: "#FFFFFF",
           margintop: "100px",
@@ -204,7 +260,7 @@ console.log("mm",avatarUrl)
           left: "240px",
         }}
       >
-       <div style={{ position: "relative", display: "inline-block" }}>
+          <div style={{ position: "relative", display: "inline-block" }}>
   <img src={avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'}
   alt="User Avatar" 
     style={{
@@ -244,8 +300,20 @@ console.log("mm",avatarUrl)
     </button>
   )}
 </div>
-
-  
+        {/* <img
+          src="https://img.freepik.com/free-icon/user_318-159711.jpg"
+          alt="Avatar"
+          style={{
+            border: "3px solid #ccc",
+            boxShadow: "0px 0px 10px #ccc",
+            borderRadius: "50%",
+            marginLeft: "5%",
+            width: "120px",
+            height: "120px",
+            position: "relative",
+            top: "10px",
+          }}
+        /> */}
 
         <div
           classname="red"
@@ -441,5 +509,5 @@ console.log("mm",avatarUrl)
       {/* <Footercr/> */}
     </div>
   );
-              }
+};
 export default ProfilePage;
