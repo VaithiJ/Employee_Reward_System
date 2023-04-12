@@ -1,5 +1,5 @@
 import React, { useState, useEffect , useContext} from "react";
-import { FaBell, FaUser } from "react-icons/fa";
+import { FaBell, FaUser,FaTimes } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileText } from "@fortawesome/free-solid-svg-icons";
 import styles from "../admin/dash.module.css";
@@ -121,6 +121,7 @@ const EmployeeDashboard = (props) => {
   const [search, setSearch] = useState("");
   const [employees, setEmployees] = useState([]);
   const [selectedTasks, setSelectedTasks] = useState(null);
+  const [compemployees,setcompemployees] = useState([]);
 
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
@@ -135,29 +136,7 @@ const EmployeeDashboard = (props) => {
   // console.log(toke)
   const API_URL = "http://localhost:8800";
   useEffect(() => {
-    // console.log("fshjkl")
-    // setSubmitting(true);
-    // const balanceOf = async (event) => {
-    
-    // let account = toke.wallet.replace("xdc","0x");
-    // console.log(account)
-    // let balance =  erc.balanceOf(account);
-    
-    // console.log(`Account balance: ${balance.toString()}`);
-    // setBalanceToken(balance.toString());
-    
-    // setSubmitting(false);
-    // }
    
-    // setSubmitting(true);
-    
-    //  let account = toke.wallet.replace("xdc","0x");
-    // let response1 =  queryData(erc, provider, 'balanceOf', [account]);
-    // log("submitClaim", "hash", response1)
-    //  console.log(`Account balance: ${response1.toString()}`);
-    // setSubmitting(false); 
-    // setBalanceToken(response1)
-    
     axios
       .get(`${API_URL}/viewtask`, { withCredentials: true })
       .then((response) => {
@@ -174,20 +153,38 @@ const EmployeeDashboard = (props) => {
       .then((response) => {
         const userData = response.data.user.filter((user) => user.name === toke.name);
         setEmployees(userData);
-        console.log(userData);
+        console.log("mm",userData);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+
+      axios
+      .get(`${API_URL}/comemps`, { withCredentials: true })
+      .then((response) => {
+        const empdata = response.data.details.filter((details) => details.Name === toke.name);
+        setcompemployees(empdata);
+        console.log("compemployees",empdata);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     
+  }, []);
+console.log("name stored in token", toke.name)
 
   const [submitting, setSubmitting] = useState(false);
 const { provider, erc } = useContext(EthereumContext);
 console.log("sample", erc)
 
+  const [showBox, setShowBox] = useState(false);
 
-
+  const handleClick = () => {
+    setShowBox(!showBox);
+  };
+  const handleClose = () => {
+    setShowBox(false);
+  };
   console.log(tasks);
   const status = tasks.status;
   const onboarded = employees && employees[0] && employees[0].isOnboarded;
@@ -197,37 +194,103 @@ console.log("sample", erc)
   return (
     <div>
       <header
-        style={{
-          backgroundColor: "navy",
-          padding: "30px",
-          display: "flex",
-          justifyContent: "space-between",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ position: "relative", bottom: "10px" }}>
-          <SidebarMenu12 />{" "}
+  style={{
+    backgroundColor: "navy",
+    padding: "30px",
+    display: "flex",
+    justifyContent: "space-between",
+    textAlign: "center",
+  }}
+>
+  <div style={{ position: "relative", bottom: "10px" }}>
+    <SidebarMenu12 />
+  </div>
+  <button
+    onClick={balanceOf}
+    className="btn btn-primary"
+    style={{ margin: "1rem", marginLeft: "-100px" }}
+  >
+    Check balance
+  </button>
+  <h1 style={{ color: "white", marginLeft:"0px", fontFamily:"Montserrat" }}>Employee Dashboard</h1>
+  <div style={{ display: "flex", alignItems: "center" }}>
+    <div style={{ position:"relative", left:"170px"}}>
+      <span style={{ color: "white", marginRight: "20px" ,fontSize:"1.3rem"}}>
+        {toke.name.toUpperCase()}
+      </span>
+      <a href="/userprofile">
+        <FaUser style={{ color: "orange", marginRight: "200px",height:"30px", width:"30px"}} />{" "}
+      </a>
+    </div>
+    <div>
+      
+    <FaBell
+  onClick={handleClick}
+  style={{ color: "white", position: "relative", zIndex: 1, height: "35px", width: "35px",top:"15px" }}
+/>
+{onboarded ? (
+<p style={{ color: "#FFFFFF", position: "relative", top: "-45px", right: "-30px", background:"#FF0000", borderRadius: "50%", width: "10px", height: "10px", textAlign: "center"}}></p>
+): null}
+
+  {showBox && (
+    <div>
+      {compemployees.map((comp) => (
+        <div
+          style={{
+            backgroundColor: "#fff",
+            boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.2)",
+            borderRadius: "8px",
+            padding: "16px",
+            position: "absolute",
+            top: "100px",
+            right: "0px",
+            zIndex: 2,
+          }}
+        >
+          <FaTimes
+            onClick={handleClose}
+            style={{
+              position: "absolute",
+              top: "8px",
+              right: "8px",
+              cursor: "pointer",
+            }}
+          />
+          {onboarded ? (
+            <p
+              style={{
+                border: "1px solid black",
+                padding: "10px",
+                borderRadius: "10px",
+                boxShadow: "2px 2px 5px grey",
+                background: "#f2f2f2",
+              }}
+            >
+              You have been Onboarded by {comp.comName}
+            </p>
+          ) : null}
+          {pendingTasks === "0" ? (
+          <p
+            style={{
+              border: "1px solid black",
+              padding: "10px",
+              borderRadius: "10px",
+              boxShadow: "2px 2px 5px grey",
+              background: "#f2f2f2",
+            }}
+          >
+            You have been assigned with {pendingTasks} tasks
+          </p>
+) : null}
         </div>
-        <button
-      onClick={balanceOf}
-      className="btn btn-primary"
-      style={{ margin: "1rem", marginLeft: "-100px" }}
-    >
-       Check balance
-    </button>
-        <h1 style={{ color: "white", marginLeft:"00px", fontFamily:"Montserrat"}}>Employee Dashboard</h1>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ marginRight: "10px" }}>
-            <span style={{ color: "white", marginRight: "20px" }}>
-              {toke.name.toUpperCase()}
-            </span>
-            <a href="/userprofile">
-              <FaUser style={{ color: "orange", marginRight: "200px" }} />{" "}
-            </a>
-          </div>
-          <FaBell style={{ color: "white" }} />
-        </div>
-      </header>
+      ))}
+    </div>
+  )}
+</div>
+
+  </div>
+</header>
+
 
       <main
         style={{
@@ -308,7 +371,7 @@ console.log("sample", erc)
             e.target.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
           }}
           title="Approved"
-          count={balanceToken}
+          count={Approved}
         />
 
         <Card
