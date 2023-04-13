@@ -222,7 +222,7 @@ const PlatformAdmin = () => {
       >
         <table style={{ minWidth: "100%",height:"auto", borderRadius:"20px"}}>
           <thead>
-            <tr style={{ backgroundColor: "#2051E9", border: "1px solid red" , color:"white"}}>
+            <tr style={{ backgroundColor: "#2051E9", border: "1px solid white" , color:"white"}}>
               <th style={{ padding: "1rem" }}>Company Name</th>
               <th style={{ padding: "1rem" }}>Wallet Address</th>
               <th style={{ padding: "1rem" }}>Reward</th>
