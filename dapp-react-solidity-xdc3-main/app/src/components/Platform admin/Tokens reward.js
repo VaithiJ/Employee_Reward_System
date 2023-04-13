@@ -268,6 +268,7 @@ const PlatformAdmin = () => {
           style={{ minWidth: "100%", height: "auto", borderRadius: "20px" }}
         >
           <thead>
+<<<<<<< HEAD
             <tr
               style={{
                 backgroundColor: "#2051E9",
@@ -275,6 +276,9 @@ const PlatformAdmin = () => {
                 color: "white",
               }}
             >
+=======
+            <tr style={{ backgroundColor: "#2051E9", border: "1px solid white" , color:"white"}}>
+>>>>>>> 1a4de7f947ba6682dd51471051f57dc08fa19915
               <th style={{ padding: "1rem" }}>Company Name</th>
               <th style={{ padding: "1rem" }}>Wallet Address</th>
               <th style={{ padding: "1rem" }}>Reward</th>

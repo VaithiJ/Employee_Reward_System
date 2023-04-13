@@ -11,7 +11,7 @@ import "./openpage.module.css";
 import bg from "./y.svg";
 import g from "./sc.svg";
 import roadmap from "./roadmap.svg";
-import road from "./road1.png"
+import road from "./mm.png"
 
 const Openpage = () => {
   useEffect(() => {
@@ -178,11 +178,25 @@ const Openpage = () => {
             qualifications.
           </p>
 
-          {/* <Link to="/about">
+          <Link to="/about">
             <button className={styles.btn}>Learn More</button>
-          </Link> */}
+          </Link>
           <br />
         </div>
+        <div style={{}} ><div><img
+              src={road}
+              style={{
+                width: "700px",
+                height: "1000px",
+                marginTop: "70px",
+                marginLeft: "-600px",
+                // boxShadow: "2px 2px 27px -1px rgba(0,0,0,0.41)",
+                // boxShadow: "0px 24px 64px rgba(38, 33, 74,0.1)"
+                
+                
+              }}
+              alt="Employee"
+            /></div>
         <div className="int">
           <div
             className={styles.open}
@@ -201,17 +215,7 @@ const Openpage = () => {
             <Slideshow />
           </div>
         </div>
-        <div ><img
-              src={road}
-              style={{
-                width: "1200px",
-                height: "600px",
-                marginTop: "-00px",
-                marginLeft: "0px",
-                
-              }}
-              alt="Employee"
-            /></div>
+       
         {/* <Footer /> */}
       </div>
     </div>
