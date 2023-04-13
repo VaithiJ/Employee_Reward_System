@@ -26,6 +26,16 @@ const SidebarMenu12 = () => {
   };
   const handleLogout = () => {
     removeCookie("employee_token");
+    axios
+      .put(
+        `${API_URL}/condition/${toke.name}`,
+        { condition: "offline" },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        const condition = response.data.UpdatedCondition;
+        console.log(response.data.UpdatedCondition);
+      });
   };
 
 

@@ -26,6 +26,7 @@ import company from "./routes/admin/admin.js"
 import verifycom from "./routes/admin/verifycomp.js"
 import completionDate from "./routes/company/CompletionDate.js"
 import Updateprofile from "./routes/employee/updateprofile.js"
+import Updatedcondition from "./routes/employee/condition.js"
 const app = express()
 dotenv.config();
 
@@ -69,6 +70,7 @@ app.use("/", company)
 app.use("/", verifycom)
 app.use("/", completionDate)
 app.use("/",Updateprofile)
+app.use("/", Updatedcondition)
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Credentials", true);

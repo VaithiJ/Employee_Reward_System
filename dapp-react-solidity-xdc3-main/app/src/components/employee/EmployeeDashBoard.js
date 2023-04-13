@@ -136,7 +136,7 @@ const EmployeeDashboard = (props) => {
   // console.log(toke)
   const API_URL = "http://localhost:8800";
   useEffect(() => {
-   
+
     axios
       .get(`${API_URL}/viewtask`, { withCredentials: true })
       .then((response) => {
@@ -148,29 +148,42 @@ const EmployeeDashboard = (props) => {
       .catch((error) => {
         console.log(error);
       });
-      axios
+  
+    axios
       .get(`${API_URL}/empdetails`, { withCredentials: true })
       .then((response) => {
         const userData = response.data.user.filter((user) => user.name === toke.name);
         setEmployees(userData);
-        console.log("mm",userData);
+        console.log("mm", userData);
       })
       .catch((error) => {
         console.log(error);
       });
-
-      axios
+  
+    axios
       .get(`${API_URL}/comemps`, { withCredentials: true })
       .then((response) => {
         const empdata = response.data.details.filter((details) => details.Name === toke.name);
         setcompemployees(empdata);
-        console.log("compemployees",empdata);
+        console.log("compemployees", empdata);
       })
       .catch((error) => {
         console.log(error);
       });
-    
+  
+    // here is the online profile update
+    axios
+      .put(
+        `${API_URL}/condition/${toke.name}`,
+        { condition: "online" },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        const condition = response.data.UpdatedCondition;
+        console.log("vanthuraa junni",response.data.UpdatedCondition);
+      });
   }, []);
+  
 console.log("name stored in token", toke.name)
 
   const [submitting, setSubmitting] = useState(false);

@@ -46,6 +46,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         unique: true,
         
+    },
+    condition:{
+        type:String,
+        default:"offline"
     }
 
 
