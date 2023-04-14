@@ -1,5 +1,5 @@
-import React, { useState, useEffect , useContext} from "react";
-import { FaBell, FaUser,FaTimes } from "react-icons/fa";
+import React, { useState, useEffect, useContext } from "react";
+import { FaBell, FaUser, FaTimes } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileText } from "@fortawesome/free-solid-svg-icons";
 import styles from "../admin/dash.module.css";
@@ -9,11 +9,14 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import SidebarMenu12 from "./side1";
 import { Link } from "react-router-dom";
-const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
+const {
+  executeTransaction,
+  EthereumContext,
+  log,
+  queryData,
+} = require("react-solidity-xdc3");
 
 const Card = (props) => {
-  
-  
   return (
     <div
       style={{
@@ -47,30 +50,27 @@ const Card = (props) => {
 };
 
 const EmployeeDashboard = (props) => {
-  
-  const[balanceToken, setBalanceToken] = useState();
+  const [balanceToken, setBalanceToken] = useState();
   const [open, setOpen] = useState(false);
   const togglePopup = (task) => {
     setSelectedTasks(task);
     setOpen(true);
   };
   const balanceOf = async (event) => {
-  
-  
     event.preventDefault();
     setSubmitting(true);
-    
+
     let account = toke.wallet.replace("xdc", "0x");
-    console.log(account)
-    
+    console.log(account);
+
     let balance = await erc.balanceOf(account);
-    
+
     console.log(`Account balance: ${balance.toString()}`);
     alert(`Account balance: ${balance.toString()}`);
-    
+
     setSubmitting(false);
-  }
-  
+  };
+
   const MarkasCompleted = (taskk) => {
     const confirmed = window.confirm(
       "Clicking on mark as completed notifies the admin. Are you sure you want to continue?"
@@ -87,7 +87,7 @@ const EmployeeDashboard = (props) => {
           axios
             .put(
               `${API_URL}/completion/${taskk._id}`,
-              { completion : date },
+              { completion: date },
               { withCredentials: true }
             )
             .then((response) => {
@@ -121,7 +121,7 @@ const EmployeeDashboard = (props) => {
   const [search, setSearch] = useState("");
   const [employees, setEmployees] = useState([]);
   const [selectedTasks, setSelectedTasks] = useState(null);
-  const [compemployees,setcompemployees] = useState([]);
+  const [compemployees, setcompemployees] = useState([]);
 
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
@@ -136,7 +136,6 @@ const EmployeeDashboard = (props) => {
   // console.log(toke)
   const API_URL = "http://localhost:8800";
   useEffect(() => {
-
     axios
       .get(`${API_URL}/viewtask`, { withCredentials: true })
       .then((response) => {
@@ -148,29 +147,33 @@ const EmployeeDashboard = (props) => {
       .catch((error) => {
         console.log(error);
       });
-  
+
     axios
       .get(`${API_URL}/empdetails`, { withCredentials: true })
       .then((response) => {
-        const userData = response.data.user.filter((user) => user.name === toke.name);
+        const userData = response.data.user.filter(
+          (user) => user.name === toke.name
+        );
         setEmployees(userData);
         console.log("mm", userData);
       })
       .catch((error) => {
         console.log(error);
       });
-  
+
     axios
       .get(`${API_URL}/comemps`, { withCredentials: true })
       .then((response) => {
-        const empdata = response.data.details.filter((details) => details.Name === toke.name);
+        const empdata = response.data.details.filter(
+          (details) => details.Name === toke.name
+        );
         setcompemployees(empdata);
         console.log("compemployees", empdata);
       })
       .catch((error) => {
         console.log(error);
       });
-  
+
     // here is the online profile update
     axios
       .put(
@@ -180,15 +183,15 @@ const EmployeeDashboard = (props) => {
       )
       .then((response) => {
         const condition = response.data.UpdatedCondition;
-        console.log("vanthuraa junni",response.data.UpdatedCondition);
+        console.log(response.data.UpdatedCondition);
       });
   }, []);
-  
-console.log("name stored in token", toke.name)
+
+  console.log("name stored in token", toke.name);
 
   const [submitting, setSubmitting] = useState(false);
-const { provider, erc } = useContext(EthereumContext);
-console.log("sample", erc)
+  const { provider, erc } = useContext(EthereumContext);
+  console.log("sample", erc);
 
   const [showBox, setShowBox] = useState(false);
 
@@ -203,107 +206,152 @@ console.log("sample", erc)
   const onboarded = employees && employees[0] && employees[0].isOnboarded;
 
   console.log("vanakam", onboarded);
- 
+
+  const getTextColor = (status) => {
+    switch (status) {
+      case "Pending":
+        return "#ED2B2A";
+      case "Waiting For Approval":
+        return "#F99417";
+      case "Approved":
+        return "#16FF00";
+      case "Rewarded":
+        return "#865DFF";
+      default:
+        return "black"; // Default color if status is not recognized
+    }
+  };
+
   return (
     <div>
       <header
-  style={{
-    backgroundColor: "navy",
-    padding: "30px",
-    display: "flex",
-    justifyContent: "space-between",
-    textAlign: "center",
-  }}
->
-  <div style={{ position: "relative", bottom: "10px" }}>
-    <SidebarMenu12 />
-  </div>
-  <button
-    onClick={balanceOf}
-    className="btn btn-primary"
-    style={{ margin: "1rem", marginLeft: "-100px" }}
-  >
-    Check balance
-  </button>
-  <h1 style={{ color: "white", marginLeft:"0px", fontFamily:"Montserrat" }}>Employee Dashboard</h1>
-  <div style={{ display: "flex", alignItems: "center" }}>
-    <div style={{ position:"relative", left:"170px"}}>
-      <span style={{ color: "white", marginRight: "20px" ,fontSize:"1.3rem"}}>
-        {toke.name.toUpperCase()}
-      </span>
-      <a href="/userprofile">
-        <FaUser style={{ color: "orange", marginRight: "200px",height:"30px", width:"30px"}} />{" "}
-      </a>
-    </div>
-    <div>
-      
-    <FaBell
-  onClick={handleClick}
-  style={{ color: "white", position: "relative", zIndex: 1, height: "35px", width: "35px",top:"15px" }}
-/>
-{onboarded ? (
-<p style={{ color: "#FFFFFF", position: "relative", top: "-45px", right: "-30px", background:"#FF0000", borderRadius: "50%", width: "10px", height: "10px", textAlign: "center"}}></p>
-): null}
-
-  {showBox && (
-    <div>
-      {compemployees.map((comp) => (
-        <div
+        style={{
+          backgroundColor: "navy",
+          padding: "30px",
+          display: "flex",
+          justifyContent: "space-between",
+          textAlign: "center",
+        }}
+      >
+        <div style={{ position: "relative", bottom: "10px" }}>
+          <SidebarMenu12 />
+        </div>
+        <button
+          onClick={balanceOf}
+          className="btn btn-primary"
           style={{
-            backgroundColor: "#fff",
-            boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.2)",
-            borderRadius: "8px",
-            padding: "16px",
-            position: "absolute",
-            top: "100px",
-            right: "0px",
-            zIndex: 2,
+            margin: "1rem",
+            marginLeft: "-100px",
+            position: "relative",
+            top: 0,
+            right: 40,
           }}
         >
-          <FaTimes
-            onClick={handleClose}
-            style={{
-              position: "absolute",
-              top: "8px",
-              right: "8px",
-              cursor: "pointer",
-            }}
-          />
-          {onboarded ? (
-            <p
+          Check balance
+        </button>
+
+        <h1
+          style={{
+            color: "white",
+            fontFamily: "Montserrat",
+            textAlign:"center",
+            position:"relative",
+            right:"150px"
+            
+          }}
+        >
+          Employee Dashboard
+        </h1>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ position: "relative", left: "170px" }}>
+            
+            
+          </div>
+          <div>
+            <FaBell
+              onClick={handleClick}
               style={{
-                border: "1px solid black",
-                padding: "10px",
-                borderRadius: "10px",
-                boxShadow: "2px 2px 5px grey",
-                background: "#f2f2f2",
+                color: "white",
+                position: "relative",
+                zIndex: 1,
+                height: "35px",
+                width: "35px",
+                top: "4px",
               }}
-            >
-              You have been Onboarded by {comp.comName}
-            </p>
-          ) : null}
-          {pendingTasks === "0" ? (
-          <p
-            style={{
-              border: "1px solid black",
-              padding: "10px",
-              borderRadius: "10px",
-              boxShadow: "2px 2px 5px grey",
-              background: "#f2f2f2",
-            }}
-          >
-            You have been assigned with {pendingTasks} tasks
-          </p>
-) : null}
+            />
+            {onboarded ? (
+              <p
+                style={{
+                  color: "#FFFFFF",
+                  position: "relative",
+                  top: "-45px",
+                  right: "-30px",
+                  background: "#FF0000",
+                  borderRadius: "50%",
+                  width: "10px",
+                  height: "10px",
+                  textAlign: "center",
+                }}
+              ></p>
+            ) : null}
+
+            {showBox && (
+              <div>
+                {compemployees.map((comp) => (
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.2)",
+                      borderRadius: "8px",
+                      padding: "16px",
+                      position: "absolute",
+                      top: "100px",
+                      right: "0px",
+                      zIndex: 2,
+                    }}
+                  >
+                    <FaTimes
+                      onClick={handleClose}
+                      style={{
+                        position: "absolute",
+                        top: "8px",
+                        right: "8px",
+                        cursor: "pointer",
+                      }}
+                    />
+                    {onboarded ? (
+                      <p
+                        style={{
+                          border: "1px solid black",
+                          padding: "10px",
+                          borderRadius: "10px",
+                          boxShadow: "2px 2px 5px grey",
+                          background: "#f2f2f2",
+                        }}
+                      >
+                        You have been Onboarded by {comp.comName}
+                      </p>
+                    ) : null}
+                    {pendingTasks !== "0" ? (
+                      <p
+                        style={{
+                          border: "1px solid black",
+                          padding: "10px",
+                          borderRadius: "10px",
+                          boxShadow: "2px 2px 5px grey",
+                          background: "#f2f2f2",
+                        }}
+                      >
+                        You have been assigned with {pendingTasks} tasks
+                      </p>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      ))}
-    </div>
-  )}
-</div>
-
-  </div>
-</header>
-
+      </header>
 
       <main
         style={{
@@ -314,7 +362,7 @@ console.log("sample", erc)
           fontStyle: "kanit",
         }}
       >
-         {/* <button
+        {/* <button
                 onClick={balanceOf}
                 className="btn btn-primary"
                 style={{ margin: "1rem", marginLeft: "100px" }}
@@ -494,8 +542,9 @@ console.log("sample", erc)
             boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
             marginBottom: "40px",
             width: "845px",
-            marginLeft: "auto",
-            marginRight: "auto",
+            // marginLeft: "auto",
+            position:"relative",
+            right:"-50px"
           }}
         >
           <h5
@@ -527,7 +576,7 @@ console.log("sample", erc)
                     }}
                   >
                     <div className="d-flex justify-content-between align-items-center">
-                      <div>
+                      <div style={{ textAlign: "left" }}>
                         <h6
                           className="font-weight-bold mb-0"
                           style={{
@@ -535,23 +584,52 @@ console.log("sample", erc)
                             marginTop: "20px",
                           }}
                         >
-                          {task.task}
+                          <b>
+                            {task.task.toUpperCase()}{" "}
+                            {/* Convert task.task to uppercase */}
+                          </b>
                         </h6>
-                        <small>{task.deadline}</small>
+
+                        <small>Deadline: {task.deadline}</small>
                       </div>
-                      <div style={{ textAlign: "center" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          borderRadius: "4px",
+                          boxShadow: "0 3px 8px rgba(0,0,0,0.3)", // updated boxShadow with rgba for a more realistic effect
+                          width: "auto",
+                          height: "40px",
+                          alignItems: "center",
+                          textAlign: "center",
+                          background:
+                            "#FEFBE9", 
+                            position:"relative",
+                            top:"10px"
+                        }}
+                      >
                         <p
                           style={{
-                            display: "inline-block",
                             marginRight: "10px",
+                            fontFamily: "Montserrat",
+                            position: "relative",
+                            top: "7px",
+                            color: "#000000", // updated text color
                           }}
                         >
                           Status:
                         </p>
                         <p
-                          style={{ display: "inline-block", color: "#ff0000" }}
+                          style={{
+                            marginBottom: "0",
+                            color: getTextColor(task.status),
+                            textAlign: "center",
+                            fontFamily: "Montserrat",
+                            fontWeight: "bold", // updated font weight for better readability
+                            textTransform: "uppercase", // updated text transform to uppercase for a more stylish look
+                          }}
                         >
-                          <b>{task.status}</b>
+                          {task.status}
                         </p>
                       </div>
 
@@ -576,8 +654,8 @@ console.log("sample", erc)
             </div>
           </div>
         </div>
-      ) :  (
-        <div style={{textAlign:"center"}}>
+      ) : (
+        <div style={{ textAlign: "center" }}>
           <h2>You haven't joined the company yet!</h2>
         </div>
       )}
