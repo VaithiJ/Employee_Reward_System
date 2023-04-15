@@ -45,6 +45,10 @@ const TaskSchema = new mongoose.Schema({
         type:Boolean,
         default:true
     },
+    certificates:{
+        type : String,
+        default : false
+    },
 
    
   

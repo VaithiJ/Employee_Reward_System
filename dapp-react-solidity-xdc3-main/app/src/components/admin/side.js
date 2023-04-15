@@ -76,13 +76,13 @@ const SidebarMenu = () => {
         width:"150px",
         height:"150px"
 
-      }} />
+      }} />  </li>
+
       <li style={{color:"white", marginLeft:"-20px"}}>{toke.name}</li>
 
     <Link to="/real"style={{marginLeft:"-200px", fontSize:"14px"}}>
       <FaHome className="fonnn"  /> Home
     </Link>
-  </li>
   <li id="fonnn">
     <Link to="/admindash" style={{marginLeft:"-120px",fontSize:"14px"}}>
       <FaHome className="fonnn"  /> Onboard Employees

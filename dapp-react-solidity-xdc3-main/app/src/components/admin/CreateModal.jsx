@@ -9,6 +9,8 @@ import SidebarMenu from "./side";
 import { useHistory } from "react-router-dom";
 import bg from "./lay.svg"
 
+
+
 const CreateModal = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",

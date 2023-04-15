@@ -18,6 +18,8 @@
     "big-number": "^2.0.0",
     "bignumber": "^1.1.0",
     "bootstrap": "^5.2.3",
+    "canvasjs-react-charts": "^1.0.5",
+    "chart.js": "^2.9.4",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "eth-sig-util": "^3.0.1",

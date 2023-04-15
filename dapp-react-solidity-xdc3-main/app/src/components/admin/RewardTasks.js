@@ -2,10 +2,16 @@ import React, { useState, useEffect, useContext } from "react";
 import "./task.css";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import { FaSignOutAlt , FaSquare} from "react-icons/fa";
+
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import SidebarMenu from "./side";
 import crypto from "crypto";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart   } from 'recharts';
+import bg from "./grid3.png"
+
+
 import {
   ref,
   uploadBytes,
@@ -43,6 +49,17 @@ const RewardTasks = (props) => {
   }
 
   const uploadFile = async(taskkk) => {
+    axios
+        .put(
+          `${API_URL}/updateetask/${taskkk._id}`,
+          { certificates: "Certified" },
+          { withCredentials: true }
+        )
+        .then(async (responsee) => {
+          const updateFile = responsee.data.updatedTask;
+          console.log(responsee.data.updateFile);
+          setSubmitting(true);
+        
     if (fileUpload == null) return;
     const fileName = fileUpload.name + generateHash(fileUpload.name);
     const hashName = fileName.slice(-64);
@@ -67,9 +84,42 @@ const RewardTasks = (props) => {
     let filehash = hashName;
     let resp = await executeTransaction(erc,provider,"registerFile",[filehash, taskkk._id.slice(-5)]);
     log("Registered","hash", resp.txHash)
-    setSubmitting(false);
-  
+    if (fileUpload && fileUpload.type === "application/pdf") {
+      // TODO: Upload the file
+      console.log("File uploaded successfully.");
+    } else {
+      // Show an alert or a notification message
+      alert("Please select a PDF file.");
+    
+    }
+    let taskId = (taskkk._id).slice(-5);
+    console.log(taskId);
+    let response = await queryData(erc, provider, 'getFileHash', [taskId]);
+    log("Returned hash", "hash", response);
+    const fileListRef = ref(storage, 'certificates');
+    listAll(fileListRef)
+      .then((res) => {
+        res.items.forEach((itemRef) => {
+          if (itemRef.name.slice(-64) === response) {
+            console.log(itemRef.fullPath);
+            getDownloadURL(itemRef)
+              .then((url) => {
+                console.log(url);
+                window.open(url, '_blank');
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      setSubmitting(false);
+    })
   };
+  
   
 
   useEffect(() => {
@@ -94,6 +144,7 @@ const RewardTasks = (props) => {
 
   
   const compName = tokenn.name;
+  
   const [task, setTask] = useState([]);
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
@@ -181,93 +232,47 @@ const RewardTasks = (props) => {
     //  const delete = await axios.get()
   };
 
+  const data = [
+    { name: 'Approved Employees', value: tasks.length },
+    { name: 'Rewarded Employees', value: rewardedemp.length },
+  
+  ];
+  const COLORS = ['red', '#F3DA06'];
   return (
     <div className="container">
       <div className="main">
-        <h1>Reward</h1>
-        <div style={{ position: "relative", right: "550px", bottom: "70px" }}>
+        <h1 style={{fontFamily:"Algeria", fontSize:"50px"}}>REWARD EMPLOYEES</h1>
+        <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-180px"}}>
           {" "}
           <SidebarMenu />{" "}
-        </div>
-        <div className="summary">
-          <div
-            className="summary-card"
-            style={{
-              backgroundColor: "#fff",
-              padding: "20px",
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)",
-              borderRadius: "5px",
-              marginBottom: "20px",
-              marginLeft: "-00px",
-            }}
-          >
-            <h2 style={{ fontSize: "1.2rem", fontWeight: "bold", margin: "0" }}>
-              Approved Employees
-            </h2>
-            <p
-              style={{
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                margin: "10px 0 0 0",
-              }}
-            >
-              {tasks.length}
-            </p>
-          </div>
-          {/* <div className="summary-card" style={{ backgroundColor: "#fff", padding: "20px", boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)", borderRadius: "5px", marginBottom: "20px" }}>
-    <h2 style={{ fontSize: "1.2rem", fontWeight: "bold", margin: "0" }}>Token Balance</h2>
-    <p style={{ fontSize: "1.5rem", fontWeight: "bold", margin: "10px 0 0 0" }}>1000000</p>
-  </div> */}
-          <div
-            className="summary-card"
-            style={{
-              backgroundColor: "#fff",
-              padding: "20px",
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.6)",
-              borderRadius: "5px",
-              marginBottom: "20px",
-              marginRight: "-00px",
-            }}
-          >
-            <h2 style={{ fontSize: "1.2rem", fontWeight: "bold", margin: "0" }}>
-              {" "}
-              Rewarded Employees
-            </h2>
-            <p
-              style={{
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                margin: "10px 0 0 0",
-              }}
-            >
-              {rewardedemp.length}
-            </p>
-          </div>
-        </div>
+</div>
 
 <div  style={{ 
   background: 'white', 
   padding: '20px', 
   borderRadius: '8px', 
-  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.6)', 
+  boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
   border: '1px solid #ccc',
   marginBottom: '20px',
   width:"1300px",
+  backgroundImage: `url(${bg})`
  
   }}>
   <h2>Tasks</h2>
-  <div className="task-list" style={{width:"1200px"}}>
+  <div className="task-list" style={{width:"1250px"}}>
   <div className="task-list">
     <div className="task-list-header">
-    <div className="task-name" style={{ width: '5%' }}>UID</div>
-      <div className="task-name" style={{ width: '5%' }}>Task Name</div>
-      <div className="task-name" style={{ width: '20%' }}> Name</div>
-      <div className="task-name" style={{ width: '25%' }}>Wallet Address</div>
+    <div className="task-name" style={{marginLeft:"-30px"}} >UID</div>
+      <div className="task-name" >Task Name</div>
+      <div className="task-name" > Name</div>
+      <div className="task-name" >Wallet Address</div>
       {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
-      <div className="task-due-date" style={{ width: '20%' }}>Due Date</div>
-      <div className="task-progress" style={{ width: '10%' }}>Rewards</div>
+      <div className="task-due-date" >Due Date</div>
+      <div className="task-due-date" >Reward</div>
+
+      <div className="task-progress">Actions</div>
       
-      <div className="task-status" style={{ width: '15%', paddingLeft: "30px" }}>Actions</div>
+      <div className="task-status" style={{ width: '15%', paddingLeft: "30px" }}>Rewards</div>
     </div>
     {tasks.map((task) => (
       <div className="task-list-item"  style={{ 
@@ -277,20 +282,43 @@ const RewardTasks = (props) => {
         borderBottom: '1px solid #ccc',
         paddingBottom: '10px',
       }}>
-        <div className="task-name" style={{ width: '15%' }}>{(task._id).slice(-5)}</div>
-        <div className="task-name" style={{ width: '15%' }}>{task.task}</div>
-        <div className="task-assigned-to" style={{ width: '10%' }}>{task.empName}</div>
-        <div className="task-assigned-to" style={{ width: '30%' }}>{task.empWalletAddress}</div>
-        <div className="task-due-date" style={{ width: '20%', marginLeft:"80px" }}>{task.deadline.slice(0,-39)}</div>
-        <div className="task-progress" style={{ width: '-10%' ,marginLeft:"40px"}}>{task.rewards}
+        <div className="task-name" >{(task._id).slice(-5)}</div>
+        <div className="task-name">{task.task}</div>
+        <div className="task-assigned-to"> {task.empName}</div>
+        <div className="task-assigned-to" >xdc...{task.empWalletAddress.slice(-5)}</div>
+        <div className="task-due-date">{task.deadline}</div>
+        <div className="task-progress" >{task.rewards}
         </div>
+        {!task.certificates ? (
+        <div>
+           <input
+    style={{ opacity: submitting ? 0.5 : 1 , marginRight:"-30px"}}
+    disabled={submitting}
+    type="file"
+    accept=".pdf"
+    onChange={(e) => setFileUpload(e.target.files[0])}/>
+              <button style={{ 
+                marginRight: '-40px', 
+                padding: '8px 16px', 
+                background: submitting ?'red' : "green", 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '4px', 
+                cursor: 'pointer' ,
+                opacity: submitting ? 0.5 : 1
+              }}
+              onClick={()=>uploadFile(task)}> Upload Certificates</button> 
+            </div>) : (
+            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Uploaded</div>
+          )}
         
         <div className="task-status" style={{ 
           display: 'flex', 
           justifyContent: 'center', 
           alignItems: 'center', 
-          marginLeft: 'auto',
+          
           width: '15%',
+          marginRight:"-20px"
         }}>
           {!task.approved ? (
             <div>
@@ -302,40 +330,12 @@ const RewardTasks = (props) => {
                 border: 'none', 
                 borderRadius: '4px', 
                 cursor: 'pointer' 
-              }} onClick={() => Rewarded(task)}>Reward</button> 
+              }}
+               onClick={() => Rewarded(task)}>Reward</button> 
             </div>
           ) : (
             <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Rewarded</div>
-          )}
-          {/* {!task.rejected ? (
-            <div>
-              <button style={{ 
-                padding: '8px 16px', 
-                background: 'red', 
-                color: 'white', 
-                border: 'none', 
-                borderRadius: '4px', 
-                cursor: 'pointer' 
-              }} onClick={() => handleRejectTask(index)}>Reject</button>
-            </div>
-          ) : (
-            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Rejected</div>
-          )} */}
-           <div>
-           <input style={{opacity: submitting ? 0.5 : 1}} disabled={submitting} type="file" onChange={(e) => setFileUpload(e.target.files[0])} />
-{/* <button onClick={uploadFile}>Upload Certificates</button> */}
-
-              <button style={{ 
-                marginRight: '10px', 
-                padding: '8px 16px', 
-                background: submitting ?'red' : "green", 
-                color: 'white', 
-                border: 'none', 
-                borderRadius: '4px', 
-                cursor: 'pointer' ,
-                opacity: submitting ? 0.5 : 1
-              }} onClick={()=>uploadFile(task)} disabled={submitting}> {submitting ? "Uploaded..." : "Upload Certificate"}</button> 
-            </div>
+          )}           
                   </div>
                 </div>
               ))}
