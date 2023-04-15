@@ -222,11 +222,12 @@ console.log("rowwwww",Alltasks)
 
   const data = [
     { name: 'pending',value:pendingTasks },
+    {name: 'Waiting for Approval', value:waitingforapproval},
     { name: 'Approved Tasks', value: Approved },
     { name: 'Rewarded Tasks', value: Rewarded },
     { name: 'Total Tasks', value: Alltasks},
   ];
-  const COLORS = ['red', '#32CD32', '#FFD700', '#27E1C1'];
+  const COLORS = ['red','#FFD700', '#32CD32', '#4F200D', '#27E1C1'];
   const getTextColor = (status) => {
     switch (status) {
       case "Pending":
@@ -565,9 +566,10 @@ console.log("rowwwww",Alltasks)
     
     <p style={{marginLeft:"-10px", fontFamily:"Montserrat"}}>TOTAL : <FaSquare style={{backgroundColor:"#27E1C1 ", color:"#27E1C1 "}}/></p>
     <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>PENDING : <FaSquare style={{color:"red", backgroundColor:"red"}}/></p>
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>APPROVAL <FaSquare style={{color:"#FFD700", backgroundColor:"#FFD700"}}/></p>
     <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>APPROVED : <FaSquare style={{backgroundColor:"#32CD32", color:"#32CD32"}}/></p>
 
-    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>REWARDED :<FaSquare style={{backgroundColor:"#F3DA06", color:"#F3DA06"}}/></p>
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>REWARDED :<FaSquare style={{backgroundColor:"#4F200D", color:"#4F200D"}}/></p>
 
 
   </div>
