@@ -682,7 +682,7 @@ const ProfilePage = (props) => {
             <h6 style={{ color: "#537FE7", marginRight: "20px" }}>
               Wallet Address:
             </h6>
-            <p className="text-muted  mb-6">{employee.Wallet}</p>
+            <p className="text-muted  mb-6">{employee.wallet}</p>
           </div>
           <div
             className="col-6 mb-3 d-flex align-items-left"

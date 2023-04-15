@@ -10,6 +10,7 @@ import SidebarMenu from "./side";
 import crypto from "crypto";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart   } from 'recharts';
 import bg from "./grid3.png"
+import ss from "./ss.svg"
 
 
 import {
@@ -239,8 +240,9 @@ const RewardTasks = (props) => {
   ];
   const COLORS = ['red', '#F3DA06'];
   return (
-    <div className="container">
-      <div className="main">
+    <div style={{backgroundImage: `url(${ss})`, height:"800px"}}>
+    <div className="container" >
+      <div className="main" >
         <h1 style={{fontFamily:"Algeria", fontSize:"50px"}}>REWARD EMPLOYEES</h1>
         <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-180px"}}>
           {" "}
@@ -343,6 +345,7 @@ const RewardTasks = (props) => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

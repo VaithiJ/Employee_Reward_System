@@ -84,7 +84,7 @@ const CreateModal = (props) => {
   }, [empName]);
 
   return (
-    <div style={{backgroundImage: `url(${stack})`}}>
+    <div style={{backgroundImage: `url(${stack})`, height:"800px"}}>
   <div className="me" >
 <div className="modal-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
      <header style={{ backgroundColor: "#69C5FA", padding: "1.5rem 0", height: "100px", color: "#F2F2F2", width: "100%" }}>
@@ -196,7 +196,7 @@ const CreateModal = (props) => {
       </div>
       
     </div>
-    <br />
+    {/* <br />
     <br />
     
     <br />
@@ -205,7 +205,7 @@ const CreateModal = (props) => {
     <br />
     <br />
     <br />
-    <br />
+    <br /> */}
     {/* <div className="head2" style={{ fontFamily: "Axiforma" }}>
       Copyright &copy; 2023 | Asset Warranty
     </div> */}

@@ -645,7 +645,7 @@ function AdminDashBoard() {
               <div className="row mt-">
                 <div
                   className="col-md-10 "
-                  style={{ marginTop: "50px", marginLeft: "-290px" }}
+                  style={{ marginTop: "-400px", marginLeft: "130px" }}
                 >
                   <div
                     className="card"

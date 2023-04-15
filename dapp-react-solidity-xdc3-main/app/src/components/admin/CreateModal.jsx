@@ -7,7 +7,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import SidebarMenu from "./side";
 import { useHistory } from "react-router-dom";
-import bg from "./lay.svg"
+import bg from "./ss.svg"
 
 
 
@@ -228,10 +228,10 @@ const CreateModal = (props) => {
             Submit
           </button>
           </Link>
-          <br />
+          {/* <br /> */}
         </form>
      </div>
-      <br />
+      {/* <br /> */}
       {/* <div className="head2" style={{ fontFamily: "Axiforma" }}>
         Copyright &copy; 2023 | Asset Warrenty
       </div>
