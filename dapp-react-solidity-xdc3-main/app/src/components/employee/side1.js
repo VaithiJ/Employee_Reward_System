@@ -139,7 +139,7 @@ const SidebarMenu12 = () => {
      {employees.map((comp) => (
     <li style={{fontSize:"0.8rem",position:"relative",top:"6px",color:"white",right:"10px"}}>{comp.comName} </li>
 ))}
-<Link to="/employeehome" style={{marginLeft:"-200px", fontSize:"14px",position:"relative",top:"20px"}}>
+<Link to="/employeehome" style={{marginLeft:"-200px", fontSize:"20px",position:"relative",top:"20px"}}>
       <FaHome className="fonnn"  /> Home
     </Link>
 </li>

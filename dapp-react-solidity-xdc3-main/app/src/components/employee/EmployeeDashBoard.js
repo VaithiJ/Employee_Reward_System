@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FaBell, FaUser, FaTimes } from "react-icons/fa";
+import {MdAccountBalanceWallet} from "react-icons/md"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileText } from "@fortawesome/free-solid-svg-icons";
 import styles from "../admin/dash.module.css";
@@ -226,7 +227,7 @@ const EmployeeDashboard = (props) => {
     <div>
       <header
         style={{
-          backgroundColor: "navy",
+          backgroundColor: "#009FBD",
           padding: "30px",
           display: "flex",
           justifyContent: "space-between",
@@ -244,29 +245,36 @@ const EmployeeDashboard = (props) => {
             marginLeft: "-100px",
             position: "relative",
             top: 0,
-            right: 40,
+            right: "auto",
+            backgroundColor: "#008B9E", // Updated color
+            color: "#fff", // Text color
+            borderRadius: "4px",
+            border: "none",
+            padding: "10px 20px",
+            cursor: "pointer",
+            transition: "0.3s",
+            outline: "none",
+            width:"auto",
+            fontFamily:"Montserrat"
           }}
-        >
-          Check balance
+        ><MdAccountBalanceWallet style={{position:"relative", right:"8px",bottom:"1px",height:"30px",width:"30px"}}/>
+          Check Balance
         </button>
 
         <h1
           style={{
             color: "white",
             fontFamily: "Montserrat",
-            textAlign:"center",
-            position:"relative",
-            right:"150px"
-            
+            textAlign: "center",
+            position: "relative",
+            right: "150px",
+            top:"15px"
           }}
         >
           Employee Dashboard
         </h1>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ position: "relative", left: "170px" }}>
-            
-            
-          </div>
+          <div style={{ position: "relative", left: "170px" }}></div>
           <div>
             <FaBell
               onClick={handleClick}
@@ -377,19 +385,24 @@ const EmployeeDashboard = (props) => {
             textAlign: "center",
             borderRadius: "5px",
             padding: "20px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3), 0 0 5px #17A2B8",
             transition: "box-shadow 0.3s ease-in-out",
             cursor: "pointer",
+            position: "relative",
+            overflow: "hidden",
           }}
           onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+            e.target.style.boxShadow = "0 5px 10px rgba(0, 0, 0, 0.5)";
           }}
           onMouseLeave={(e) => {
-            e.target.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
+            e.target.style.boxShadow =
+              "0 2px 5px rgba(0, 0, 0, 0.3), 0 0 5px #17A2B8";
           }}
           title="Rewarded"
           count={Rewarded}
-        />
+        >
+          {/* Card content */}
+        </Card>
 
         <Card
           style={{
@@ -468,7 +481,8 @@ const EmployeeDashboard = (props) => {
             padding: "20px",
             position: "relative",
             backgroundColor: "#fff",
-            borderRadius: "5px",
+            borderRadius: "10px",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
           }}
         >
           <div
@@ -479,7 +493,16 @@ const EmployeeDashboard = (props) => {
               cursor: "pointer",
             }}
           >
-            <span onClick={() => setOpen(false)}> X </span>
+            <span
+              onClick={() => setOpen(false)}
+              style={{
+                fontSize: "20px",
+                color: "#aaa",
+                cursor: "pointer",
+              }}
+            >
+              X
+            </span>
           </div>
           {selectedTasks && (
             <div style={{ padding: "20px", textAlign: "center" }}>
@@ -488,11 +511,20 @@ const EmployeeDashboard = (props) => {
                   fontSize: "24px",
                   fontWeight: "bold",
                   marginBottom: "20px",
+                  color: "#333",
                 }}
               >
-                {selectedTasks.task}
+                {selectedTasks.task.toUpperCase()}
               </div>
-              <div style={{ fontSize: "16px", marginBottom: "20px" }}>
+              <div
+                style={{
+                  fontSize: "16px",
+                  marginBottom: "20px",
+                  color: "#555",
+                  fontFamily: "Montserrat",
+                  fontWeight: "bolder",
+                }}
+              >
                 {selectedTasks.taskDescription}
               </div>
               <div
@@ -501,12 +533,21 @@ const EmployeeDashboard = (props) => {
                   justifyContent: "flex-start",
                   alignItems: "center",
                   marginBottom: "20px",
+                  color: "#777",
                 }}
               >
-                <div style={{ fontSize: "14px", marginRight: "10px" }}>
+                <div
+                  style={{
+                    fontSize: "16px",
+                    marginRight: "10px",
+                    fontWeight: "bolder",
+                  }}
+                >
                   Deadline:
                 </div>
-                <div style={{ fontSize: "14px" }}>{selectedTasks.deadline}</div>
+                <div style={{ fontSize: "16px", color: "red" }}>
+                  {selectedTasks.deadline}
+                </div>
               </div>
               <div
                 style={{
@@ -517,13 +558,24 @@ const EmployeeDashboard = (props) => {
               >
                 <button
                   style={{
-                    padding: "10px 20px",
-                    backgroundColor: "#4CAF50",
-                    color: "#fff",
-                    borderRadius: "4px",
-                    border: "none",
+                    background:
+                      "linear-gradient(to left, #52c234 20%, #061700  0%, #52c234  0%)",
+                    margin: "10px",
+                    padding: "15px 45px",
+                    textAlign: "center",
+                    textTransform: "uppercase",
+                    transition: "0.5s",
+                    backgroundSize: "200% auto",
+                    color: "white",
+                    boxShadow: "0 0 20px #eee",
+                    borderRadius: "10px",
+                    display: "block",
                     cursor: "pointer",
-                    // marginLeft:"150px"
+                    width: "auto",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    letterSpacing: "1px",
+                    outline: "none",
                   }}
                   onClick={() => MarkasCompleted(selectedTasks)}
                 >
@@ -543,8 +595,8 @@ const EmployeeDashboard = (props) => {
             marginBottom: "40px",
             width: "845px",
             // marginLeft: "auto",
-            position:"relative",
-            right:"-50px"
+            position: "relative",
+            right: "-50px",
           }}
         >
           <h5
@@ -602,10 +654,9 @@ const EmployeeDashboard = (props) => {
                           height: "40px",
                           alignItems: "center",
                           textAlign: "center",
-                          background:
-                            "#FEFBE9", 
-                            position:"relative",
-                            top:"10px"
+                          background: "#FEFBE9",
+                          position: "relative",
+                          top: "10px",
                         }}
                       >
                         <p
