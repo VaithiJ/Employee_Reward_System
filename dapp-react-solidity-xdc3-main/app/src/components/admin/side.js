@@ -6,6 +6,7 @@ import { IoMdAddCircle } from 'react-icons/io';
 import { BiTask } from 'react-icons/bi';
 import { FiGift ,FiPower} from 'react-icons/fi';
 import './SidebarMenu.css';
+
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -69,6 +70,15 @@ const SidebarMenu = () => {
         <div className="sidebar-header" ></div>
         <ul className="list-unstyled" >
         <li id="fonnn">
+        <img src={ 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
+           borderRadius: '50%',
+        marginRight: '20px',
+        width:"150px",
+        height:"150px"
+
+      }} />
+      <li style={{color:"white", marginLeft:"-20px"}}>{toke.name}</li>
+
     <Link to="/real"style={{marginLeft:"-200px", fontSize:"14px"}}>
       <FaHome className="fonnn"  /> Home
     </Link>
