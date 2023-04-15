@@ -289,7 +289,7 @@ const handleButtonClick = () => {
       style={{
         position: "absolute",
         top: "80%",
-        left: "50%",
+        left: "60%",
         transform: "translate(-50%, -50%)",
         backgroundColor: "#007bff",
         borderRadius: "50%",
@@ -334,12 +334,12 @@ const handleButtonClick = () => {
           }}
         >
           <p style={{ display: "inline-block" }}>
-            <b style={{ color: "#537FE7", display: "inline" }}>Name : </b> {toke.name}
+            <b style={{ color: "#537FE7", display: "inline",position:"relative",right:"197px" }}>Name :<b style={{color:"#000000",position:"relative",left:"10px"}}>{toke.name} </b> </b> 
           </p>
 
           <p>
             {" "}
-            <b style={{ color: "#537FE7" }}> Wallet Address: </b> {toke.wallet}
+            <b style={{ color: "#537FE7" }}> Wallet Address: <b style={{color:"#000000",position:"relative",left:"10px"}}> {toke.wallet} </b></b>
           </p>
         </div>
         <div>
