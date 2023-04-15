@@ -270,6 +270,9 @@ const handleButtonClick = () => {
       width: "120px",
       height: "120px",
       zIndex: 1,
+      position:"relative",
+      top:"8px",
+      left:"10px"
     }}
     onMouseEnter={handleMouseEnter}
     onMouseLeave={handleMouseLeave}
