@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FaBell, FaUser, FaTimes } from "react-icons/fa";
-import {MdAccountBalanceWallet} from "react-icons/md"
+import { FaBell, FaUser, FaTimes, FaHome } from "react-icons/fa";
+import { MdAccountBalanceWallet } from "react-icons/md";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileText } from "@fortawesome/free-solid-svg-icons";
 import styles from "../admin/dash.module.css";
@@ -8,6 +8,7 @@ import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import "../admin/real.css"
 import SidebarMenu12 from "./side1";
 import { Link } from "react-router-dom";
 const {
@@ -225,7 +226,6 @@ const EmployeeDashboard = (props) => {
 
   return (
     <div>
-      
       <header
         style={{
           backgroundColor: "#009FBD",
@@ -233,33 +233,47 @@ const EmployeeDashboard = (props) => {
           display: "flex",
           justifyContent: "space-between",
           textAlign: "center",
+          height:"130px",
+          boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
         }}
       >
-          <div style={{ position: "relative", bottom: "10px"}}>
-    <SidebarMenu12 style={{ color: "#fff",backgroundColor:"#009FBD" }} /> {/* Updated color */}
-  </div>
+        
+        <div style={{ position: "relative", bottom: "10px" }}>
+          <SidebarMenu12
+            style={{ color: "#fff", backgroundColor: "#009FBD" }}
+          />{" "}
+          {/* Updated color */}
+        </div>
         <button
           onClick={balanceOf}
           className="btn btn-primary"
           style={{
             margin: "1rem",
-            marginLeft: "-100px",
-            position: "relative",
-            top: 0,
-            right: "auto",
-            backgroundColor: "#008B9E", // Updated color
-            color: "#fff", // Text color
-            borderRadius: "4px",
-            border: "none",
-            padding: "10px 20px",
-            cursor: "pointer",
-            transition: "0.3s",
-            outline: "none",
-            width:"auto",
-            fontFamily:"Montserrat"
+            marginLeft: "500px",
+            marginTop: "30px",
+            borderRadius: "20px",
+            height: "50px",
+            backgroundColor: "#1196B0",
+            width: "130px",
+            boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+            position:"relative",
+            right:"450px",
+            bottom:"10px"
+
           }}
-        ><MdAccountBalanceWallet style={{position:"relative", right:"8px",bottom:"1px",height:"30px",width:"30px"}}/>
-          Check Balance
+          onMouseEnter={(e) => {
+            e.target.style.background = "#330078";
+            // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+            e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = "#1196B0";
+            e.target.style.border = "none";
+            e.target.style.boxShadow = "0 2px 5px rgba(0, 0, 0,1.0)";
+          }}
+        >
+          <MdAccountBalanceWallet style={{position:"relative", right:"15px",height:"30px",width:"30px"}}/>
+          Balance
         </button>
 
         <h1
@@ -268,12 +282,12 @@ const EmployeeDashboard = (props) => {
             fontFamily: "Montserrat",
             textAlign: "center",
             position: "relative",
-            right: "150px",
-            top:"15px",
-            fontWeight:"bolder"
+            right: "330px",
+            top: "15px",
+            fontWeight: "bolder",
           }}
         >
-          Employee Dashboard
+          EMPLOYEE DASHBOARD
         </h1>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ position: "relative", left: "170px" }}></div>
@@ -286,7 +300,7 @@ const EmployeeDashboard = (props) => {
                 zIndex: 1,
                 height: "35px",
                 width: "35px",
-                top: "12px",
+                top: "17px",
               }}
             />
             {onboarded ? (
@@ -364,114 +378,169 @@ const EmployeeDashboard = (props) => {
       </header>
 
       <main
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          padding: "30px",
-          alignItems: "center",
-          fontStyle: "kanit",
-        }}
-      >
-        {/* <button
-                onClick={balanceOf}
-                className="btn btn-primary"
-                style={{ margin: "1rem", marginLeft: "100px" }}
-              >
-                 Check balance
-              </button> */}
-        <Card
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    padding: "30px",
+    alignItems: "center",
+    fontStyle: "kanit",
+    flexWrap: "wrap", // Add this line
+    width: "100%", // Add this line to occupy full width of the page
+  }}
+>
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "row",
+      // marginLeft: "-600px",
+      marginTop: "60px",
+      width: "100%", // Add this line to occupy full width of the page
+    }}
+  >
+    <div
+      className="row"
+      style={{ marginTop: "0px", marginLeft: "-330px", width: "100%" }} // Add this line to occupy full width of the page
+    >
+      <div className="col-md-4">
+        <div
+          className="card"
           style={{
-            backgroundColor: "#17A2B8",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-            borderRadius: "5px",
-            padding: "20px",
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3), 0 0 5px #17A2B8",
-            transition: "box-shadow 0.3s ease-in-out",
-            cursor: "pointer",
-            position: "relative",
-            overflow: "hidden",
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 5px 10px rgba(0, 0, 0, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow =
-              "0 2px 5px rgba(0, 0, 0, 0.3), 0 0 5px #17A2B8";
-          }}
-          title="Rewarded"
-          count={Rewarded}
-        >
-          {/* Card content */}
-        </Card>
-
-        <Card
-          style={{
+            color: "white",
+            height: "150px",
+            marginBottom: "20px",
+            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            border: "0px",
             backgroundColor: "#32CD32",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-            borderRadius: "5px",
-            padding: "20px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
-            transition: "box-shadow 0.3s ease-in-out",
-            cursor: "pointer",
+            flex: "1",
+            width: "100%",
+            position:'relative',
+            left:"350px" // Add this line to occupy full width of the card
           }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
-          }}
-          title="Pending"
-          count={pendingTasks}
-        />
-
-        <Card
+        >
+          <div className={styles.txt} style={{ marginTop: "20px" }}>
+            <h3>
+              <b
+                style={{
+                  marginLeft: "90px",
+                  marginBottom: "100px",
+                  marginLeft: "",
+                  fontSize: "70px",
+                }}
+              >
+                {pendingTasks}
+              </b>
+            </h3>
+            <FaHome
+              style={{
+                marginLeft: "200px",
+                marginTop: "-120px",
+                height: "70px",
+                width: "80px",
+                opacity: "0.5",
+              }}
+            />
+            <br />
+            <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+              Pending
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="col-md-4">
+        <div
+          className="card"
           style={{
+            color: "white",
+            height: "150px",
+            marginBottom: "20px",
+            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            border: "0px",
             backgroundColor: "orange",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-            borderRadius: "5px",
-            padding: "20px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
-            transition: "box-shadow 0.3s ease-in-out",
-            cursor: "pointer",
+            flex: "1",
+            width: "100%",
+            position:'relative',
+            left:"350px" // Add this line to occupy full width of the card
           }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
-          }}
-          title="Approved"
-          count={Approved}
-        />
-
-        <Card
+        >
+          <div className={styles.txt} style={{ marginTop: "20px" }}>
+            <h3>
+              <b
+                style={{
+                  marginLeft: "90px",
+                  marginBottom: "100px",
+                  marginLeft: "-0px",
+                  fontSize: "70px",
+                }}
+              >
+                {Approved}
+              </b>
+            </h3>
+            <FaHome
+              style={{
+                marginLeft: "200px",
+                marginTop: "-120px",
+                height: "70px",
+                width: "80px",
+                opacity: "0.5",
+              }}
+            />
+            <br />
+            <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+              Approved
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="col-md-4">
+        <div
+          className="card"
+          
           style={{
-            backgroundColor: "#d21f3c",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-            borderRadius: "5px",
-            padding: "20px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
-            transition: "box-shadow 0.3s ease-in-out",
-            cursor: "pointer",
+            color: "white",
+            height: "150px",
+            marginBottom: "20px",
+            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            border: "0px",
+            backgroundColor: "red",
+            flex: "1",
+            width: "100%",
+            position:'relative',
+            left:"350px" // Add this line to occupy full width of the card
           }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
-          }}
-          title="All Tasks"
-          count={Alltasks}
-        />
-      </main>
+        >
+          <div className={styles.txt} style={{ marginTop: "20px" }}>
+            <h3>
+              <b
+                style={{
+                  marginLeft: "90px",
+                  marginBottom: "100px",
+                  marginLeft: "",
+                  fontSize: "70px",
+                }}
+              >
+                {Alltasks}
+              </b>
+            </h3>
+            <FaHome
+              style={{
+                marginLeft: "200px",
+                marginTop: "-120px",
+                height: "70px",
+                width: "80px",
+                opacity: "0.5",
+              }}
+            />
+            <br />
+            <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+              All Tasks
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -593,24 +662,26 @@ const EmployeeDashboard = (props) => {
         <div
           className="card"
           style={{
-            boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
-            marginBottom: "40px",
-            width: "845px",
-            // marginLeft: "auto",
-            position: "relative",
-            right: "-50px",
-          }}
-        >
+              boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+              // backgroundColor: "#17A2B8",
+              marginBottom: "40px",
+              width: "845px",
+              position:"relative",
+              left:"60px"
+          }}>
           <h5
-            className="card-header font-weight-bold"
-            style={{
-              textAlign: "center",
-              fontFamily: "Montserrat",
-              padding: "20px",
-              color: "black",
+             className="card-header font-weight-bold"
+             style={{
+               textAlign: "center",
+               fontFamily: "Algeria",
+               padding: "20px",
+               // backgroundColor: "#17A2B8",
+               color: "black",
+               fontWeight: "1000",
+               fontSize: "30px",
             }}
           >
-            Pending Tasks
+            PENDING TASKS
           </h5>
           <div className={`${styles.cardBody}`}>
             <div

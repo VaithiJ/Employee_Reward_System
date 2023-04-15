@@ -212,13 +212,30 @@ const handleButtonClick = () => {
   return (
     <div style={{ height: "auto" }}>
       <header style={{ 
-      backgroundColor: '#f5f5f5',
+      backgroundColor: '#009FBD',
       padding: '20px',
       borderBottom: '1px solid #ddd',
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
     }}>  <div style={{display:"flex",position:"relative",bottom:"10px"}}> <SidebarMenu12/></div>
-      
+      <img src={avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
+        borderRadius: '50%',
+        marginRight: '20px',
+        width:"50px",
+        height:"50px",
+        position:"relative",
+        left:"40px"
+
+      }} />
+      <p style={{ 
+        margin: '0',
+        fontSize: '16px',
+        color: '#ffffff',
+        position:"relative",
+        left:"40px"
+
+      }}>{toke.name}</p>
       <h1 style={{ 
         margin: '0',
         fontSize: '35px',
@@ -227,24 +244,12 @@ const handleButtonClick = () => {
         flex: 4,
         textAlign:"center",
         position:"relative",
-        left:"30px"
-        
-
+        right:"80px",
+        color:"#FFFFFF"
       }}>
-        Employee Profile</h1>
+        USER PROFILE</h1>
         
-                <img src={avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
-        borderRadius: '50%',
-        marginRight: '20px',
-        width:"50px",
-        height:"50px"
-
-      }} />
-      <p style={{ 
-        margin: '0',
-        fontSize: '16px',
-        color: '#777'
-      }}>{toke.name}</p>
+                
     </header>
       
       <div
