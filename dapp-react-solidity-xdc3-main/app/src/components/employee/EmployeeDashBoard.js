@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FaBell, FaUser, FaTimes } from "react-icons/fa";
-import {MdAccountBalanceWallet} from "react-icons/md"
+import { FaBell, FaUser, FaTimes, FaHome,FaSquare } from "react-icons/fa";
+import { MdAccountBalanceWallet } from "react-icons/md";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileText } from "@fortawesome/free-solid-svg-icons";
 import styles from "../admin/dash.module.css";
@@ -8,6 +8,17 @@ import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import axios from "axios";
+import "../admin/real.css";
+import Footercr from "../footer/footercr.js"
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart,
+  Line,
+  Area,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,BarChart
+   } from 'recharts';
 import SidebarMenu12 from "./side1";
 import { Link } from "react-router-dom";
 const {
@@ -131,8 +142,9 @@ const EmployeeDashboard = (props) => {
   const Approved = tasks.filter((task) => task.status === "Approved").length;
   const pendingTasks = tasks.filter((task) => task.status === "Pending").length;
   const Rewarded = tasks.filter((task) => task.status === "Rewarded").length;
+  const waitingforapproval = tasks.filter((task) => task.status === "Waiting For Approval").length;
   const Alltasks = tasks.length;
-
+console.log("rowwwww",Alltasks)
   const toke = jwt_decode(cookies.employee_token);
   // console.log(toke)
   const API_URL = "http://localhost:8800";
@@ -208,6 +220,14 @@ const EmployeeDashboard = (props) => {
 
   console.log("vanakam", onboarded);
 
+  const data = [
+    { name: 'pending',value:pendingTasks },
+    {name: 'Waiting for Approval', value:waitingforapproval},
+    { name: 'Approved Tasks', value: Approved },
+    { name: 'Rewarded Tasks', value: Rewarded },
+    { name: 'Total Tasks', value: Alltasks},
+  ];
+  const COLORS = ['red','#FFD700', '#32CD32', '#4F200D', '#27E1C1'];
   const getTextColor = (status) => {
     switch (status) {
       case "Pending":
@@ -232,33 +252,47 @@ const EmployeeDashboard = (props) => {
           display: "flex",
           justifyContent: "space-between",
           textAlign: "center",
+          height:"130px",
+          boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
         }}
       >
+        
         <div style={{ position: "relative", bottom: "10px" }}>
-          <SidebarMenu12 />
+          <SidebarMenu12
+            style={{ color: "#fff", backgroundColor: "#009FBD" }}
+          />{" "}
+          {/* Updated color */}
         </div>
         <button
           onClick={balanceOf}
           className="btn btn-primary"
           style={{
             margin: "1rem",
-            marginLeft: "-100px",
-            position: "relative",
-            top: 0,
-            right: "auto",
-            backgroundColor: "#008B9E", // Updated color
-            color: "#fff", // Text color
-            borderRadius: "4px",
-            border: "none",
-            padding: "10px 20px",
-            cursor: "pointer",
-            transition: "0.3s",
-            outline: "none",
-            width:"auto",
-            fontFamily:"Montserrat"
+            marginLeft: "500px",
+            marginTop: "30px",
+            borderRadius: "20px",
+            height: "50px",
+            backgroundColor: "#1196B0",
+            width: "130px",
+            boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+            position:"relative",
+            right:"450px",
+            bottom:"10px"
+
           }}
-        ><MdAccountBalanceWallet style={{position:"relative", right:"8px",bottom:"1px",height:"30px",width:"30px"}}/>
-          Check Balance
+          onMouseEnter={(e) => {
+            e.target.style.background = "#330078";
+            // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+            e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = "#1196B0";
+            e.target.style.border = "none";
+            e.target.style.boxShadow = "0 2px 5px rgba(0, 0, 0,1.0)";
+          }}
+        >
+          <MdAccountBalanceWallet style={{position:"relative", right:"15px",height:"30px",width:"30px"}}/>
+          Balance
         </button>
 
         <h1
@@ -267,11 +301,12 @@ const EmployeeDashboard = (props) => {
             fontFamily: "Montserrat",
             textAlign: "center",
             position: "relative",
-            right: "150px",
-            top:"15px"
+            right: "330px",
+            top: "15px",
+            fontWeight: "bolder",
           }}
         >
-          Employee Dashboard
+          EMPLOYEE DASHBOARD
         </h1>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ position: "relative", left: "170px" }}></div>
@@ -284,7 +319,7 @@ const EmployeeDashboard = (props) => {
                 zIndex: 1,
                 height: "35px",
                 width: "35px",
-                top: "4px",
+                top: "17px",
               }}
             />
             {onboarded ? (
@@ -292,7 +327,7 @@ const EmployeeDashboard = (props) => {
                 style={{
                   color: "#FFFFFF",
                   position: "relative",
-                  top: "-45px",
+                  top: "-40px",
                   right: "-30px",
                   background: "#FF0000",
                   borderRadius: "50%",
@@ -362,114 +397,208 @@ const EmployeeDashboard = (props) => {
       </header>
 
       <main
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          padding: "30px",
-          alignItems: "center",
-          fontStyle: "kanit",
-        }}
-      >
-        {/* <button
-                onClick={balanceOf}
-                className="btn btn-primary"
-                style={{ margin: "1rem", marginLeft: "100px" }}
-              >
-                 Check balance
-              </button> */}
-        <Card
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    padding: "30px",
+    alignItems: "center",
+    fontStyle: "kanit",
+    flexWrap: "wrap", // Add this line
+    width: "100%", // Add this line to occupy full width of the page
+  }}
+>
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "row",
+      // marginLeft: "-600px",
+      marginTop: "60px",
+      width: "100%", // Add this line to occupy full width of the page
+    }}
+  >
+    <div
+      className="row"
+      style={{ marginTop: "0px", marginLeft: "-330px", width: "100%" }} // Add this line to occupy full width of the page
+    >
+      <div className="col-md-4">
+        <div
+          className="card"
           style={{
-            backgroundColor: "#17A2B8",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-            borderRadius: "5px",
-            padding: "20px",
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3), 0 0 5px #17A2B8",
-            transition: "box-shadow 0.3s ease-in-out",
-            cursor: "pointer",
-            position: "relative",
-            overflow: "hidden",
+            color: "white",
+            height: "150px",
+            marginBottom: "20px",
+            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            border: "0px",
+            backgroundColor: "red",
+            flex: "1",
+            width: "100%",
+            position:'relative',
+            left:"350px" // Add this line to occupy full width of the card
           }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 5px 10px rgba(0, 0, 0, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow =
-              "0 2px 5px rgba(0, 0, 0, 0.3), 0 0 5px #17A2B8";
-          }}
-          title="Rewarded"
-          count={Rewarded}
         >
-          {/* Card content */}
-        </Card>
-
-        <Card
+          <div className={styles.txt} style={{ marginTop: "20px" }}>
+            <h3>
+              <b
+                style={{
+                  marginLeft: "90px",
+                  marginBottom: "100px",
+                  marginLeft: "",
+                  fontSize: "70px",
+                }}
+              >
+                {pendingTasks}
+              </b>
+            </h3>
+            <FaHome
+              style={{
+                marginLeft: "200px",
+                marginTop: "-120px",
+                height: "70px",
+                width: "80px",
+                opacity: "0.5",
+              }}
+            />
+            <br />
+            <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily:"Algeria",fontSize:"1.2rem",fontWeight:"bolder"}}>
+              Pending
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="col-md-4">
+        <div
+          className="card"
           style={{
+            color: "white",
+            height: "150px",
+            marginBottom: "20px",
+            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            border: "0px",
             backgroundColor: "#32CD32",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-            borderRadius: "5px",
-            padding: "20px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
-            transition: "box-shadow 0.3s ease-in-out",
-            cursor: "pointer",
+            flex: "1",
+            width: "100%",
+            position:'relative',
+            left:"350px" // Add this line to occupy full width of the card
           }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
-          }}
-          title="Pending"
-          count={pendingTasks}
-        />
-
-        <Card
+        >
+          <div className={styles.txt} style={{ marginTop: "20px" }}>
+            <h3>
+              <b
+                style={{
+                  marginLeft: "90px",
+                  marginBottom: "100px",
+                  marginLeft: "-0px",
+                  fontSize: "70px",
+                }}
+              >
+                {Approved}
+              </b>
+            </h3>
+            <FaHome
+              style={{
+                marginLeft: "200px",
+                marginTop: "-120px",
+                height: "70px",
+                width: "80px",
+                opacity: "0.5",
+              }}
+            />
+            <br />
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Algeria" ,fontSize:"1.2rem",fontWeight:"bolder"}}>
+              Approved
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="col-md-4">
+        <div
+          className="card"
+          
           style={{
-            backgroundColor: "orange",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-            borderRadius: "5px",
-            padding: "20px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
-            transition: "box-shadow 0.3s ease-in-out",
-            cursor: "pointer",
+            color: "white",
+            height: "150px",
+            marginBottom: "20px",
+            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            border: "0px",
+            backgroundColor: "#27E1C1",
+            flex: "1",
+            width: "100%",
+            position:'relative',
+            left:"350px" // Add this line to occupy full width of the card
           }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
-          }}
-          title="Approved"
-          count={Approved}
-        />
+        >
+          <div className={styles.txt} style={{ marginTop: "20px" }}>
+            <h3>
+              <b
+                style={{
+                  marginLeft: "90px",
+                  marginBottom: "100px",
+                  marginLeft: "",
+                  fontSize: "70px",
+                }}
+              >
+                {Alltasks}
+              </b>
+            </h3>
+            <FaHome
+              style={{
+                marginLeft: "200px",
+                marginTop: "-120px",
+                height: "70px",
+                width: "80px",
+                opacity: "0.5",
+              }}
+            />
+            <br />
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Algeria",fontSize:"1.2rem",fontWeight:"bolder" }}>
+              All Tasks
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {onboarded ? (
+  <div style={{ display: 'flex', alignItems: 'center' ,position:"relative",left:"700px",top:"100px",width:"350px"}}>
+                <ul style={{marginTop:"-300px", fontSize:"30px", marginLeft:"-180px", fontFamily:"Montserrat", fontWeight:"1000"}}>
+                TASKS</ul>
+  <div style={{ marginRight: '-70px' }}>
+    
+    <p style={{marginLeft:"-10px", fontFamily:"Montserrat"}}>TOTAL : <FaSquare style={{backgroundColor:"#27E1C1 ", color:"#27E1C1 "}}/></p>
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>PENDING : <FaSquare style={{color:"red", backgroundColor:"red"}}/></p>
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>APPROVAL <FaSquare style={{color:"#FFD700", backgroundColor:"#FFD700"}}/></p>
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>APPROVED : <FaSquare style={{backgroundColor:"#32CD32", color:"#32CD32"}}/></p>
 
-        <Card
-          style={{
-            backgroundColor: "#d21f3c",
-            color: "#fff",
-            fontWeight: "bold",
-            textAlign: "center",
-            borderRadius: "5px",
-            padding: "20px",
-            boxShadow: "0 0 5px rgba(0, 0, 0, 0.3)",
-            transition: "box-shadow 0.3s ease-in-out",
-            cursor: "pointer",
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.3)";
-          }}
-          title="All Tasks"
-          count={Alltasks}
-        />
-      </main>
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>REWARDED :<FaSquare style={{backgroundColor:"#4F200D", color:"#4F200D"}}/></p>
+
+
+  </div>
+ 
+  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"-310px"}} width={800} height={400} >
+        <Pie
+          data={data}
+          cx={120}
+          cy={200}
+          innerRadius={60}
+          outerRadius={80}
+          fill="#8884d8"
+          paddingAngle={5}
+          dataKey="value"
+          style={{color:"black"}}
+        >   
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        
+        </Pie> 
+        <Tooltip/>
+      </PieChart>
+      </div>
+  ): null }
+</main>
+
+
+    
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -591,24 +720,28 @@ const EmployeeDashboard = (props) => {
         <div
           className="card"
           style={{
-            boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
-            marginBottom: "40px",
-            width: "845px",
-            // marginLeft: "auto",
-            position: "relative",
-            right: "-50px",
-          }}
-        >
+              boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+              // backgroundColor: "#17A2B8",
+              marginBottom: "40px",
+              width: "800px",
+              position:"relative",
+              left:"60px",
+              bottom:"330px",
+              height:"400px"
+          }}>
           <h5
-            className="card-header font-weight-bold"
-            style={{
-              textAlign: "center",
-              fontFamily: "Montserrat",
-              padding: "20px",
-              color: "black",
+             className="card-header font-weight-bold"
+             style={{
+               textAlign: "center",
+               fontFamily: "Algeria",
+               padding: "20px",
+               // backgroundColor: "#17A2B8",
+               color: "black",
+               fontWeight: "1000",
+               fontSize: "30px",
             }}
           >
-            Pending Tasks
+            PENDING TASKS
           </h5>
           <div className={`${styles.cardBody}`}>
             <div
@@ -665,7 +798,9 @@ const EmployeeDashboard = (props) => {
                             fontFamily: "Montserrat",
                             position: "relative",
                             top: "7px",
-                            color: "#000000", // updated text color
+                            color: "#000000",
+                            fontFamily: "Algeria",
+                            fontSize:'1.2rem' // updated text color
                           }}
                         >
                           Status:
@@ -710,7 +845,9 @@ const EmployeeDashboard = (props) => {
           <h2>You haven't joined the company yet!</h2>
         </div>
       )}
+      <footer> <Footercr/></footer>
     </div>
+ 
   );
 };
 
