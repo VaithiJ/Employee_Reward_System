@@ -225,6 +225,7 @@ const EmployeeDashboard = (props) => {
 
   return (
     <div>
+      
       <header
         style={{
           backgroundColor: "#009FBD",
@@ -234,9 +235,9 @@ const EmployeeDashboard = (props) => {
           textAlign: "center",
         }}
       >
-        <div style={{ position: "relative", bottom: "10px" }}>
-          <SidebarMenu12 />
-        </div>
+          <div style={{ position: "relative", bottom: "10px"}}>
+    <SidebarMenu12 style={{ color: "#fff",backgroundColor:"#009FBD" }} /> {/* Updated color */}
+  </div>
         <button
           onClick={balanceOf}
           className="btn btn-primary"
@@ -268,7 +269,8 @@ const EmployeeDashboard = (props) => {
             textAlign: "center",
             position: "relative",
             right: "150px",
-            top:"15px"
+            top:"15px",
+            fontWeight:"bolder"
           }}
         >
           Employee Dashboard
@@ -284,7 +286,7 @@ const EmployeeDashboard = (props) => {
                 zIndex: 1,
                 height: "35px",
                 width: "35px",
-                top: "4px",
+                top: "12px",
               }}
             />
             {onboarded ? (
@@ -292,7 +294,7 @@ const EmployeeDashboard = (props) => {
                 style={{
                   color: "#FFFFFF",
                   position: "relative",
-                  top: "-45px",
+                  top: "-40px",
                   right: "-30px",
                   background: "#FF0000",
                   borderRadius: "50%",

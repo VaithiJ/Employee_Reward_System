@@ -115,8 +115,8 @@ const SidebarMenu12 = () => {
 
   return (
     <div ref={menuRef} style={{marginTop:"20px"}}>
-    <button className="btn btn-primary" id="menu-toggle" style={{background:"#FFFFFF",color:"#000000",width:"70px",border:"none"}} onMouseEnter={toggleSidebar}>
-       {isOpen ? <AiOutlineClose style={{fontSize:"2rem",position:"relative",right:"0px",}} /> : <AiOutlineMenu style={{fontSize:"2rem",position:"relative",right:"0px",}} />}
+    <button className="btn btn-primary" id="menu-toggle" style={{background:"#009FBD",color:"#000000",width:"50px",border:"none",position:"relative",top:"5px"}} onMouseEnter={toggleSidebar}>
+       {isOpen ? <AiOutlineClose style={{fontSize:"2rem",position:"relative",right:"0px",}} /> : <AiOutlineMenu style={{fontSize:"2rem",position:"relative",right:"0px",height:"40px",width:"40px"}} />}
      </button>
      <nav className={`sidebar-menu ${isOpen ? 'open' : ''}`} onMouseLeave={handleMouseLeave}>
        <div className="sidebar-header" ></div>
