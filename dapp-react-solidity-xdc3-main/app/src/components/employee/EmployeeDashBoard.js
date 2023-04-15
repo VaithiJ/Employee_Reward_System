@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FaBell, FaUser, FaTimes, FaHome } from "react-icons/fa";
+import { FaBell, FaUser, FaTimes, FaHome,FaSquare } from "react-icons/fa";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileText } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,16 @@ import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import "../admin/real.css"
+import "../admin/real.css";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart,
+  Line,
+  Area,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,BarChart
+   } from 'recharts';
 import SidebarMenu12 from "./side1";
 import { Link } from "react-router-dom";
 const {
@@ -132,8 +141,9 @@ const EmployeeDashboard = (props) => {
   const Approved = tasks.filter((task) => task.status === "Approved").length;
   const pendingTasks = tasks.filter((task) => task.status === "Pending").length;
   const Rewarded = tasks.filter((task) => task.status === "Rewarded").length;
+  const waitingforapproval = tasks.filter((task) => task.status === "Waiting For Approval").length;
   const Alltasks = tasks.length;
-
+console.log("rowwwww",Alltasks)
   const toke = jwt_decode(cookies.employee_token);
   // console.log(toke)
   const API_URL = "http://localhost:8800";
@@ -209,6 +219,13 @@ const EmployeeDashboard = (props) => {
 
   console.log("vanakam", onboarded);
 
+  const data = [
+    { name: 'pending',value:pendingTasks },
+    { name: 'Approved Tasks', value: Approved },
+    { name: 'Rewarded Tasks', value: Rewarded },
+    { name: 'Total Tasks', value: Alltasks},
+  ];
+  const COLORS = ['red', '#32CD32', '#FFD700', '#27E1C1'];
   const getTextColor = (status) => {
     switch (status) {
       case "Pending":
@@ -539,8 +556,46 @@ const EmployeeDashboard = (props) => {
       </div>
     </div>
   </div>
+  {onboarded ? (
+  <div style={{ display: 'flex', alignItems: 'center' ,position:"relative",left:"700px",top:"100px",width:"350px"}}>
+                <ul style={{marginTop:"-300px", fontSize:"30px", marginLeft:"-180px", fontFamily:"Montserrat", fontWeight:"1000"}}>
+                TASKS</ul>
+  <div style={{ marginRight: '-70px' }}>
+    
+    <p style={{marginLeft:"-10px", fontFamily:"Montserrat"}}>TOTAL : <FaSquare style={{backgroundColor:"#27E1C1 ", color:"#27E1C1 "}}/></p>
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>PENDING : <FaSquare style={{color:"red", backgroundColor:"red"}}/></p>
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>APPROVED : <FaSquare style={{backgroundColor:"#32CD32", color:"#32CD32"}}/></p>
+
+    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>REWARDED :<FaSquare style={{backgroundColor:"#F3DA06", color:"#F3DA06"}}/></p>
+
+
+  </div>
+ 
+  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"-310px"}} width={800} height={400} >
+        <Pie
+          data={data}
+          cx={120}
+          cy={200}
+          innerRadius={60}
+          outerRadius={80}
+          fill="#8884d8"
+          paddingAngle={5}
+          dataKey="value"
+          style={{color:"black"}}
+        >   
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        
+        </Pie> 
+        <Tooltip/>
+      </PieChart>
+      </div>
+  ): null }
 </main>
 
+
+    
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -665,9 +720,11 @@ const EmployeeDashboard = (props) => {
               boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
               // backgroundColor: "#17A2B8",
               marginBottom: "40px",
-              width: "845px",
+              width: "800px",
               position:"relative",
-              left:"60px"
+              left:"60px",
+              bottom:"330px",
+              height:"400px"
           }}>
           <h5
              className="card-header font-weight-bold"
@@ -738,7 +795,9 @@ const EmployeeDashboard = (props) => {
                             fontFamily: "Montserrat",
                             position: "relative",
                             top: "7px",
-                            color: "#000000", // updated text color
+                            color: "#000000",
+                            fontFamily: "Algeria",
+                            fontSize:'1.2rem' // updated text color
                           }}
                         >
                           Status:
