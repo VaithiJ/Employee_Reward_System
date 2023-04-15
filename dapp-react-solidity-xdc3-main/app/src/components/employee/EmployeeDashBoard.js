@@ -9,6 +9,7 @@ import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import "../admin/real.css";
+import Footercr from "../footer/footercr.js"
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart,
   Line,
   Area,
@@ -842,7 +843,9 @@ console.log("rowwwww",Alltasks)
           <h2>You haven't joined the company yet!</h2>
         </div>
       )}
+      <footer> <Footercr/></footer>
     </div>
+ 
   );
 };
 

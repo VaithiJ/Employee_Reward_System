@@ -513,8 +513,8 @@ const handleButtonClick = () => {
       </div>
 
       <div></div>
-
-      {/* <Footercr/> */}
+      <footer style={{position:"relative",top:"40px"}}>  <Footercr/> </footer>
+      
     </div>
   );
 };
