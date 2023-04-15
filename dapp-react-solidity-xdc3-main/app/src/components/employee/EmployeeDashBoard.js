@@ -410,7 +410,7 @@ const EmployeeDashboard = (props) => {
             marginBottom: "20px",
             boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
             border: "0px",
-            backgroundColor: "#32CD32",
+            backgroundColor: "red",
             flex: "1",
             width: "100%",
             position:'relative',
@@ -440,7 +440,7 @@ const EmployeeDashboard = (props) => {
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily:"Algeria",fontSize:"1.2rem",fontWeight:"bolder"}}>
               Pending
             </div>
           </div>
@@ -455,7 +455,7 @@ const EmployeeDashboard = (props) => {
             marginBottom: "20px",
             boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
             border: "0px",
-            backgroundColor: "orange",
+            backgroundColor: "#32CD32",
             flex: "1",
             width: "100%",
             position:'relative',
@@ -485,7 +485,7 @@ const EmployeeDashboard = (props) => {
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Algeria" ,fontSize:"1.2rem",fontWeight:"bolder"}}>
               Approved
             </div>
           </div>
@@ -501,7 +501,7 @@ const EmployeeDashboard = (props) => {
             marginBottom: "20px",
             boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
             border: "0px",
-            backgroundColor: "red",
+            backgroundColor: "#27E1C1",
             flex: "1",
             width: "100%",
             position:'relative',
@@ -531,7 +531,7 @@ const EmployeeDashboard = (props) => {
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Algeria",fontSize:"1.2rem",fontWeight:"bolder" }}>
               All Tasks
             </div>
           </div>
