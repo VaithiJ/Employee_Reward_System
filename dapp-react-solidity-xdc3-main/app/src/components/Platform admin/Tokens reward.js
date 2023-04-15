@@ -209,6 +209,8 @@ const PlatformAdmin = () => {
           fontWeight: "bold",
           marginBottom: "2rem",
           marginTop: "50px",
+          marginLeft:"-100px",
+          fontFamily:"Playfair Display"
         }}
       >
         EMPLOYEE REWARD SYSTEM
@@ -218,18 +220,18 @@ const PlatformAdmin = () => {
           style={{
             fontSize: "40px",
             fontFamily: "Montserrat",
-            backgroundColor: "#2051E9",
+            backgroundColor: "#1196B0",
             height: "400px",
             marginLeft: "80px",
             marginTop: "80px",
-            width: "400px",
+            width: "500px",
             color: "white",
             borderRadius: "20px",
-            boxShadow: "0px 0px 30px rgba(255, 255, 255, 1)",
+            boxShadow: "1px 0px 19px 5px rgba(255,255,255,0.75)",
           }}
         >
           <div style={{ marginTop: "20px", fontFamily: "Montserrat" }}>
-            Welcome Admin
+            Manage platform with <b style={{fontFamily:"Montserrat"}} >EASE!</b>
           </div>
           <ul
             style={{
@@ -238,10 +240,10 @@ const PlatformAdmin = () => {
               fontSize: "20px",
             }}
           >
-            Manage the platform
+            
           </ul>
           <ul style={{ fontFamily: "Montserrat", fontSize: "20px" }}>
-            Verify and Register the company to blockchain
+            Register Company to Blockchain
           </ul>
           <ul style={{ fontFamily: "Montserrat", fontSize: "20px" }}>
             Send tokens to companies
@@ -265,25 +267,22 @@ const PlatformAdmin = () => {
         }}
       >
         <table
-          style={{ minWidth: "100%", height: "auto", borderRadius: "20px" }}
+          style={{ minWidth: "100%", height: "auto", borderRadius: "20px",backgroundColor: "transparent" }}
         >
           <thead>
-<<<<<<< HEAD
             <tr
               style={{
                 backgroundColor: "#2051E9",
-                border: "1px solid red",
+                border: "",
                 color: "white",
               }}
-            >
-=======
+            ></tr>
             <tr style={{ backgroundColor: "#2051E9", border: "1px solid white" , color:"white"}}>
->>>>>>> 1a4de7f947ba6682dd51471051f57dc08fa19915
-              <th style={{ padding: "1rem" }}>Company Name</th>
-              <th style={{ padding: "1rem" }}>Wallet Address</th>
-              <th style={{ padding: "1rem" }}>Reward</th>
-              <th style={{ padding: "1rem" }}>Balance Tokens</th>
-              <th style={{ padding: "1rem" }}>Register</th>
+              <th style={{ padding: "1rem",fontFamily:"Montserrat" }}>Company Name</th>
+              <th style={{ padding: "1rem" ,fontFamily:"Montserrat"}}>Wallet Address</th>
+              <th style={{ padding: "1rem",fontFamily:"Montserrat" }}>Reward</th>
+              <th style={{ padding: "1rem",fontFamily:"Montserrat" }}>Balance Tokens</th>
+              <th style={{ padding: "1rem",fontFamily:"Montserrat" }}>Register</th>
               {/* <th style={{ padding: "1rem" }}>Register</th> */}
             </tr>
           </thead>
@@ -293,16 +292,16 @@ const PlatformAdmin = () => {
               console.log(admin);
               return (
                 <tr key={index} style={{ borderBottom: "1px solid #ccc" }}>
-                  <td style={{ padding: "1rem", color: "white" }}>
+                  <td style={{ padding: "1rem", color: "white", fontFamily:"Montserrat" }}>
                     {company.comName}
                   </td>
-                  <td style={{ padding: "1rem", color: "white" }}>
+                  <td style={{ padding: "1rem", color: "white",fontFamily:"Montserrat" }}>
                     xdc....{company.walletAddress.slice(-10)}
                   </td>
                   <td style={{ padding: "1rem", color: "white" }}>
-                    <button
+                    <button className="button1"
                       style={{
-                        backgroundColor: "#4CAF50",
+                        backgroundColor: "#00FA57",
                         color: "white",
                         border: "none",
                         borderRadius: "5px",
@@ -311,14 +310,15 @@ const PlatformAdmin = () => {
                         position: "relative",
                         overflow: "hidden",
                         zIndex: "1",
+                        fontFamily:"Montserrat"
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.background = "#ADD8E6";
+                        e.target.style.background = "#330078";
                         e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                        e.target.style.boxShadow = "0 0 50px #1e9bff";
+                        e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.background = "#4CAF50";
+                        e.target.style.background = "#00FA57";
                         e.target.style.border = "none";
                         e.target.style.boxShadow = "none";
                       }}
@@ -336,6 +336,7 @@ const PlatformAdmin = () => {
                           zIndex: "-1",
                           transform: "scale(0)",
                           transition: "0.5s",
+                          
                         }}
                       ></span>
                       Give Tokens
@@ -345,19 +346,20 @@ const PlatformAdmin = () => {
                     <button
                       onClick={(e) => balanceOf(e, company)}
                       style={{
-                        backgroundColor: "#00FFFF",
+                        backgroundColor: "#FAC900",
                         color: "white",
                         border: "none",
                         borderRadius: "5px",
                         padding: "0.5rem 1rem",
+                        fontFamily:"Montserrat",
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.background = "#FF6000";
+                        e.target.style.background = "#CC00FF";
                         e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                        e.target.style.boxShadow = "0 0 50px #1e9bff";
+                        e.target.style.boxShadow = "1px 0px 19px 5px #ffffff";
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.background = "#00FFFF";
+                        e.target.style.background = "#FAC900";
                         e.target.style.border = "none";
                         e.target.style.boxShadow = "none";
                       }}
@@ -389,19 +391,20 @@ const PlatformAdmin = () => {
                     <button
                       onClick={(e) => regCompany(e, company)}
                       style={{
-                        backgroundColor: "#00FFFF",
+                        backgroundColor: "#FA0000",
                         color: "white",
                         border: "none",
                         borderRadius: "5px",
                         padding: "0.5rem 1rem",
+                        fontFamily:"Montserrat"
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.background = "#16FF00";
                         e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                        e.target.style.boxShadow = "0 0 50px #1e9bff";
+                        e.target.style.boxShadow = "1px 0px 19px 5px #ffffff";
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.background = "#00FFFF";
+                        e.target.style.background = "#FA0000";
                         e.target.style.border = "none";
                         e.target.style.boxShadow = "none";
                       }}

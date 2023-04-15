@@ -10,8 +10,8 @@ import Slideshow from "./carousel/car";
 import "./openpage.module.css";
 import bg from "./y.svg";
 import g from "./sc.svg";
-import roadmap from "./roadmap.svg";
-import road from "./mm.png"
+// import roadmap from "./roadgif.gif";
+import road from "./roadgif.gif"
 
 const Openpage = () => {
   useEffect(() => {

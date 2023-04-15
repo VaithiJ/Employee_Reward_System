@@ -57,11 +57,11 @@ function AdminDashBoard() {
     console.log(employee.isOnboarded);
     return (
       employee.isOnboarded === false &&
-      (employee.name.toLowerCase().includes(search.toLowerCase()) ||
-        employee._id.toString().includes(search))
+      (employee.name.toLowerCase().includes(search.toLowerCase()))
     );
   });
 
+  
   return (
     <div style={{height:"800px"}}>
       <div className="row">
@@ -84,25 +84,26 @@ function AdminDashBoard() {
 
             }}
           >
-            WELCOME {tokenn.name.toUpperCase()}'s ADMIN
+           {tokenn.name.toUpperCase()}'s ADMIN
           </div>
           </div>
         <div className="col-md-9">
           
           <div
             className="row"
-            style={{ marginTop: "40px", marginLeft: "-280px" }}
+            style={{ marginTop: "80px", marginLeft: "-280px" }}
           >
            
             <div className="row justify-content-center">
-              <div className="col-md-3" style={{marginLeft:"600px"}}>
+              <div className="col-md-3" style={{marginLeft:"120px", width:"475px"}}>
                 <div
                   className="card"
                   style={{
+
                     color: "white",
                     height: "150px",
                     marginBottom: "20px",
-                    boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)",
+                    boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
                     border: "0px",
                     backgroundColor: "#FFC107",
                     margin: "auto" /* centers horizontally */,
@@ -133,14 +134,14 @@ function AdminDashBoard() {
                     />
                     <br />
                     <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
-                      Total Users
+                      TOTAL USERS
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            {/* <div className="col-md-3"> */}
-            {/* <div
+            <div className="col-md-5" style={{width:"475px",marginLeft:"930px", marginTop:"-150px"}}> 
+            <div
                 className="card"
                 style={{
                   color: "white",
@@ -149,7 +150,7 @@ function AdminDashBoard() {
                   height: "150px",
                   marginLeft: "",
                   marginBottom: "20px",
-                  boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)",
+                  boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
                 }}
               >
                 <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -176,21 +177,64 @@ function AdminDashBoard() {
                   />
                   <br />
                   <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
-                    Deleted
+                    DELETED
                   </div>
                 </div>
-              </div> */}
-            {/* </div> */}
-          </div>
+              </div> 
+             </div>
+             {/* <div className="col-md-5" style={{width:"400px",height:"500px",marginLeft:"1220px", marginTop:"-170px"}}> 
+            <div
+                className="card"
+                style={{
+                  color: "white",
+                  border: "0px",
+                  backgroundColor: "#0ED6CA",
+                  height: "575px",
+                  marginLeft: "",
+                  marginBottom: "20px",
+                  boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)",
+                }}
+              >
+                <div className={styles.txt} style={{ marginTop: "20px" }}>
+                  {/* <h3>
+                    <b
+                      style={{
+                        marginLeft: "0px",
+                        marginTop: "30px",
+                        marginBottom: "-100px",
+                        fontSize: "70px",
+                      }}
+                    >
+                      20
+                    </b>
+                  </h3> */}
+                  {/* <FaHome
+                    style={{
+                      marginLeft: "200px",
+                      marginTop: "-120px",
+                      height: "70px",
+                      width: "80px",
+                      opacity: "0.5",
+                    }}
+                  /> */}
+                  {/* <br />
+                  <div style={{ fontWeight:"2000",marginTop: "20px", marginLeft: "10px" , fontFamily:"Montserrat", fontSize:"30px"}}>
+                    RECENTLY ADDED
+                  </div>
+                </div>
+              </div> 
+             </div> */}
+          </div> 
+          
           <div className="row mt-">
             <div
               className="col-md-11 "
-              style={{ marginTop: "50px", marginLeft: "225px" }}
+              style={{ marginTop: "-0px", marginLeft: "190px" }}
             >
               <div
                 className="card"
                 style={{
-                  boxShadow: "0px 0px 10px 15px rgba(0,0,0,0.3)",
+                  boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
                   backgroundColor: "#fff",
                 }}
               >
@@ -204,14 +248,14 @@ function AdminDashBoard() {
                     fontWeight:"1000"
                   }}
                 >
-                  Employee Onboarding
+                  EMPLOYEE ONBOARDING
                 </h5>
                 <div className={`${styles.cardBody}`}>
                   <div className={`${styles.inputGroup} mb-3`}>
                     <input
                       type="text"
                       className={`${styles.formControl} form-control`}
-                      placeholder="Search by Name or Register ID"
+                      placeholder="Search by Name "
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                     />
@@ -251,12 +295,14 @@ function AdminDashBoard() {
                                 style={{
                                   fontFamily: "Montserrat",
                                   marginTop: "15px",
-                                  fontWeight:"1000"
+                                  fontWeight:"1000",
+                                  marginLeft:"-0px",
+                                  
                                 }}
                               >
-                                {employee.name}
+                                <b style={{fontSize:"20px", fontFamily:"Montserrat"}}>{employee.name.toUpperCase()}</b>  ({employee._id.slice(-8)})
                               </h6>
-                              <small style={{fontWeight:"1000"}}>{employee._id}</small>
+                              {/* <small style={{fontWeight:"1000"}}>{employee._id}</small> */}
                             </div>
                             <Link to={`/empprofile/${employee._id}`}>
                               <button className="btn btn-primary" style={{fontWeight:"1000"}}>
@@ -273,8 +319,11 @@ function AdminDashBoard() {
             </div>
           </div>
         </div>
+        
       </div>
+      
     </div>
+    
   );
 }
 export default AdminDashBoard;
