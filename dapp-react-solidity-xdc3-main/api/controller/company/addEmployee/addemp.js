@@ -14,10 +14,11 @@ export const addEmp = async (req, res) => {
       const Email = req.params.email;
       const Wallet = req.params.wallet;
       const Onboard = req.params.isOnboarded;
+      const Profilee = req.params.profile
 
 
       const { user,comName, comId } = req.body;
-      const newUser = new AddEmployee({ user:userId,comName, comId, Name:Name, Address : Address, Mobile:Mobile, Email:Email, Wallet : Wallet, Onboard : Onboard,profile: ""});
+      const newUser = new AddEmployee({ user:userId,comName, comId, Name:Name, Address : Address, Mobile:Mobile, Email:Email, Wallet : Wallet, Onboard : Onboard,profile: Profilee});
       // const user = await User.findById(req.params._id);
     const newEmployee = await newUser.save();
     res.status(201).json(newEmployee);

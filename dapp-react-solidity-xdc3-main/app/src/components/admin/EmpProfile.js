@@ -368,6 +368,9 @@ import { Link } from "react-router-dom";
 
 import Footercr from "../footer/footercr";
 import LogoutHeader from "../header/logoutheader";
+import {storage} from "../../firebase.js"
+import {v4 as uuidv4} from "uuid";
+import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
  const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
 
 const ProfilePage = (props) => {
@@ -376,6 +379,9 @@ const ProfilePage = (props) => {
     "access_token",
     "name",
   ]);
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [red, setred] = useState([]);
+  const[m,setm]=useState("")
   // const [comName, setComName] = useState(" ");
   // const [comId, setComId] = useState(" ");
   const [employee, setEmployee] = useState([]);
@@ -386,6 +392,7 @@ const ProfilePage = (props) => {
   const employeeMobile = employee.mobile;
   const employeeEmail = employee.email;
   const employeeWallet = employee.wallet;
+  const profile11= employee.profile;
   console.log("aksjdakjsdkasdjasd", employeeMobile);
     const [submitting, setSubmitting] = useState(false);
   const { provider, erc } = useContext(EthereumContext);
@@ -401,6 +408,7 @@ const ProfilePage = (props) => {
   console.log("email: ", employeeEmail);
   console.log("mobile: ", employeeMobile);
   console.log("wallet: ", employeeWallet);
+  console.log("profile: ", profile11);
   // console.log(response.data);
 
   const tokenn = jwt_decode(cookies.access_token);
@@ -419,7 +427,7 @@ const ProfilePage = (props) => {
   const regEmployee = async () => {
 
     const response = await axios.post(
-      `${API_URL}/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}`,
+      `${API_URL}/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
       {
         comName,
         comId,
@@ -445,6 +453,31 @@ const ProfilePage = (props) => {
           setSubmitting(false);
           
   };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        console.log("irukiya poitiya da",employeeName)
+        const response = await axios.put(`${API_URL}/updateprofile/${employeeName}`);
+        const red = response.data.updatedprofile;
+        setred(red);
+  
+        const storageRef = ref(storage, `UserProfile/${employeeName}`);
+        const listResult = await listAll(storageRef);
+  
+        const itemRef = listResult.items.find((ref) => ref.name === red.profile);
+        if (itemRef) {
+          const url = await getDownloadURL(itemRef);
+          setAvatarUrl(url);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchProfile();
+  }, [employeeName]);
+  
   useEffect(() => {
     axios
       .get(`${API_URL}/empprofile/${employeeId}`, { withCredentials: true })
@@ -502,15 +535,7 @@ const ProfilePage = (props) => {
             height: "50px",
           }}
         /> */}
-        <p
-          style={{
-            margin: "0",
-            fontSize: "16px",
-            color: "#777",
-          }}
-        >
-          {employee.name}
-        </p>
+        
       </header>
       <div
         className="card"
@@ -526,7 +551,7 @@ const ProfilePage = (props) => {
         }}
       >
         <img
-          src="https://img.freepik.com/free-icon/user_318-159711.jpg"
+          src={avatarUrl ||"https://img.freepik.com/free-icon/user_318-159711.jpg"}
           alt="Avatar"
           style={{
             border: "3px solid #ccc",
