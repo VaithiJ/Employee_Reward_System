@@ -157,7 +157,7 @@ const RewardTasks = (props) => {
       .get(`${API_URL}/gettasks`, { withCredentials: true })
       .then((response) => {
         setTasks(
-          response.data.tasks.filter((tasks) => tasks.status === "Approved")
+          response.data.tasks.filter((tasks) => tasks.status === "Approved" || tasks.status === "Rewarded")
         );
         setrewardedemp(
           response.data.tasks.filter((tasks) => tasks.status === "Rewarded")
@@ -291,7 +291,7 @@ const RewardTasks = (props) => {
         <div className="task-due-date">{task.deadline}</div>
         <div className="task-progress" >{task.rewards}
         </div>
-        {!task.certificates ? (
+        {task.status==="Approved" ? (
         <div>
            <input
     style={{ opacity: submitting ? 0.5 : 1 , marginRight:"-30px"}}
@@ -322,7 +322,7 @@ const RewardTasks = (props) => {
           width: '15%',
           marginRight:"-20px"
         }}>
-          {!task.approved ? (
+          {task.status === "Approved" ? (
             <div>
               <button style={{ 
                 marginRight: '10px', 
