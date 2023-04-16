@@ -38,77 +38,65 @@ const PlatformAdmin = () => {
         console.log(error);
       });
   }, []);
-  const regCompany = async (event, company) => {
+  // const regCompany = async (event, company) => {
+  //   event.preventDefault();
+
+  //   try {
+  //     setSubmitting(true);
+
+  //     let companyaddress = company.walletAddress.replace("xdc", "0x");
+  //     let companyname = company.comName;
+  //     console.log(erc);
+
+  //     // Register the company
+  //     let resp = await executeTransaction(erc, provider, "regCompany", [
+  //       companyaddress,
+  //       companyname,
+  //     ]);
+  //     log("Registered company", "hash", resp.txHash);
+
+  //     // If user confirmed, approve the company
+
+  //     setSubmitting(false);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const verify = async (event, company) => {
     event.preventDefault();
-
-    try {
-      setSubmitting(true);
-
-      let companyaddress = company.walletAddress.replace("xdc", "0x");
-      let companyname = company.comName;
-      console.log(erc);
-
-      // Register the company
-      let resp = await executeTransaction(erc, provider, "regCompany", [
-        companyaddress,
-        companyname,
-      ]);
-      log("Registered company", "hash", resp.txHash);
-
-      // Check console for confirmation message
-      console.log("Please approve this company.");
-
-      // Wait for user to confirm in console
-      let consoleConfirmation = await new Promise((resolve, reject) => {
-        let interval = setInterval(() => {
-          if (console.log.toString().includes("Company approved.")) {
-            clearInterval(interval);
-            resolve(true);
-          }
-        }, 1000);
+  
+    axios
+      .put(
+        `${API_URL}/verifycom/${company._id}`,
+        { isAdmin: true },
+        { withCredentials: true }
+      )
+      .then(async (response) => {
+        const compp = response.data.savedUser;
+        let companyaddress = company.walletAddress.replace("xdc", "0x");
+        let companyname = company.comName;
+        console.log(erc);
+  
+        // Register the company
+        let resp = await executeTransaction(erc, provider, "regCompany", [
+          companyaddress,
+          companyname,
+        ]);
+        log("Registered company", "hash", resp.txHash);
+        console.log("red", response.data.savedUser);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        // Reload the page after 6 seconds
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       });
-
-      // If user confirmed, approve the company
-      if (consoleConfirmation) {
-        axios
-          .put(
-            `${API_URL}/verifycom/${company._id}`,
-            { isAdmin: true },
-            { withCredentials: true }
-          )
-          .then((response) => {
-            const compp = response.data.savedUser;
-            window.location.reload();
-            console.log("red", response.data.savedUser);
-
-            // Update tasks state
-            setupdatecompanies(
-              Array.isArray(compp)
-                ? compp.map((t) => {
-                    if (t._id === company._id) {
-                      window.location.reload();
-                      console.log("m");
-                      return compp;
-                    } else {
-                      window.location.reload();
-                      console.log("m");
-                      return t;
-                    }
-                  })
-                : []
-            );
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-
-      setSubmitting(false);
-    } catch (error) {
-      console.error(error);
-    }
   };
-
+  
   const sendToCompany = async (event, company) => {
     event.preventDefault();
     setSubmitting(true);
@@ -118,7 +106,7 @@ const PlatformAdmin = () => {
     console.log("kasdlkaskdajsld", companyAddress);
 
     // Define the amount to be sent
-    let amount = "20";
+    let amount = "200";
     console.log(amount);
 
     // try {
@@ -193,6 +181,10 @@ const PlatformAdmin = () => {
     setSubmitting(false);
   };
 
+  window.onload = function() {
+    alert("Connect the wallet address of only the owner and check it before using");
+  }
+  
   return (
     <div
       style={{
@@ -209,8 +201,8 @@ const PlatformAdmin = () => {
           fontWeight: "bold",
           marginBottom: "2rem",
           marginTop: "50px",
-          marginLeft:"-100px",
-          fontFamily:"Playfair Display"
+          marginLeft: "-100px",
+          fontFamily: "Playfair Display",
         }}
       >
         EMPLOYEE REWARD SYSTEM
@@ -231,7 +223,8 @@ const PlatformAdmin = () => {
           }}
         >
           <div style={{ marginTop: "20px", fontFamily: "Montserrat" }}>
-            Manage platform with <b style={{fontFamily:"Montserrat"}} >EASE!</b>
+            Manage platform with{" "}
+            <b style={{ fontFamily: "Montserrat" }}>EASE!</b>
           </div>
           <ul
             style={{
@@ -239,9 +232,7 @@ const PlatformAdmin = () => {
               fontFamily: "Montserrat",
               fontSize: "20px",
             }}
-          >
-            
-          </ul>
+          ></ul>
           <ul style={{ fontFamily: "Montserrat", fontSize: "20px" }}>
             Register Company to Blockchain
           </ul>
@@ -267,7 +258,12 @@ const PlatformAdmin = () => {
         }}
       >
         <table
-          style={{ minWidth: "100%", height: "auto", borderRadius: "20px",backgroundColor: "transparent" }}
+          style={{
+            minWidth: "100%",
+            height: "auto",
+            borderRadius: "20px",
+            backgroundColor: "transparent",
+          }}
         >
           <thead>
             <tr
@@ -277,12 +273,32 @@ const PlatformAdmin = () => {
                 color: "white",
               }}
             ></tr>
-            <tr style={{ backgroundColor: "#2051E9", border: "1px solid white" , color:"white"}}>
-              <th style={{ padding: "1rem",fontFamily:"Montserrat" }}>Company Name</th>
-              <th style={{ padding: "1rem" ,fontFamily:"Montserrat"}}>Wallet Address</th>
-              <th style={{ padding: "1rem",fontFamily:"Montserrat" }}>Reward</th>
-              <th style={{ padding: "1rem",fontFamily:"Montserrat" }}>Balance Tokens</th>
-              <th style={{ padding: "1rem",fontFamily:"Montserrat" }}>Register</th>
+            <tr
+              style={{
+                backgroundColor: "#2051E9",
+                border: "1px solid white",
+                color: "white",
+              }}
+            >
+              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
+                Company Name
+              </th>
+              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
+                Wallet Address
+              </th>
+              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
+                Reward
+              </th>
+              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
+                Balance Tokens
+              </th>
+              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
+                Register
+              </th>
+              {/* <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
+                Verify
+              </th> */}
+
               {/* <th style={{ padding: "1rem" }}>Register</th> */}
             </tr>
           </thead>
@@ -292,14 +308,27 @@ const PlatformAdmin = () => {
               console.log(admin);
               return (
                 <tr key={index} style={{ borderBottom: "1px solid #ccc" }}>
-                  <td style={{ padding: "1rem", color: "white", fontFamily:"Montserrat" }}>
+                  <td
+                    style={{
+                      padding: "1rem",
+                      color: "white",
+                      fontFamily: "Montserrat",
+                    }}
+                  >
                     {company.comName}
                   </td>
-                  <td style={{ padding: "1rem", color: "white",fontFamily:"Montserrat" }}>
+                  <td
+                    style={{
+                      padding: "1rem",
+                      color: "white",
+                      fontFamily: "Montserrat",
+                    }}
+                  >
                     xdc....{company.walletAddress.slice(-10)}
                   </td>
                   <td style={{ padding: "1rem", color: "white" }}>
-                    <button className="button1"
+                    <button
+                      className="button1"
                       style={{
                         backgroundColor: "#00FA57",
                         color: "white",
@@ -310,7 +339,7 @@ const PlatformAdmin = () => {
                         position: "relative",
                         overflow: "hidden",
                         zIndex: "1",
-                        fontFamily:"Montserrat"
+                        fontFamily: "Montserrat",
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.background = "#330078";
@@ -336,7 +365,6 @@ const PlatformAdmin = () => {
                           zIndex: "-1",
                           transform: "scale(0)",
                           transition: "0.5s",
-                          
                         }}
                       ></span>
                       Give Tokens
@@ -351,7 +379,7 @@ const PlatformAdmin = () => {
                         border: "none",
                         borderRadius: "5px",
                         padding: "0.5rem 1rem",
-                        fontFamily:"Montserrat",
+                        fontFamily: "Montserrat",
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.background = "#CC00FF";
@@ -385,8 +413,8 @@ const PlatformAdmin = () => {
                   
                 )} 
                 </td> */}
-                  <td style={{ padding: "1rem" }}>
-                    {/* <button onClick={transfer}>Query Data</button> */}
+                  {/* <td style={{ padding: "1rem" }}>
+                     <button onClick={transfer}>Query Data</button> 
 
                     <button
                       onClick={(e) => regCompany(e, company)}
@@ -396,7 +424,7 @@ const PlatformAdmin = () => {
                         border: "none",
                         borderRadius: "5px",
                         padding: "0.5rem 1rem",
-                        fontFamily:"Montserrat"
+                        fontFamily: "Montserrat",
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.background = "#16FF00";
@@ -411,7 +439,36 @@ const PlatformAdmin = () => {
                     >
                       Register
                     </button>
-                  </td>
+                  </td> */}
+                  {company.isAdmin===false ? (<td style={{ padding: "1rem" }}>
+                    {/* <button onClick={transfer}>Query Data</button> */}
+
+                    <button
+                      onClick={(e) => verify(e, company)}
+                      style={{
+                        backgroundColor: "#FA0000",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "5px",
+                        padding: "0.5rem 1rem",
+                        fontFamily: "Montserrat",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.background = "#16FF00";
+                        e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+                        e.target.style.boxShadow = "1px 0px 19px 5px #ffffff";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.background = "#FA0000";
+                        e.target.style.border = "none";
+                        e.target.style.boxShadow = "none";
+                      }}
+                    >
+                      Register
+                    </button>
+                  </td>):(<div style={{ fontSize: '20px', fontWeight: 'bold', color:"white" }}>Registered</div>
+)}
+                  
                 </tr>
               );
             })}

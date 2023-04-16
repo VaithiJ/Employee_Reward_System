@@ -11,6 +11,7 @@ import crypto from "crypto";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart   } from 'recharts';
 import bg from "./grid3.png"
 import ss from "./ss.svg"
+import { BigNumber } from "ethers";
 
 
 import {
@@ -48,78 +49,126 @@ const RewardTasks = (props) => {
     hash.update(data);
     return hash.digest('hex');
   }
+  window.onload = function() {
+    alert("\n• Connect the wallet address of Admin and check it before using\n• Make sure you have unique name for each certificate which is to be uploaded\n• Once uploaded file to blockchain, cannot reupload another certiicate, so be careful\n• Make sure you have enough balance of tokens before rewarding ");
+  }
+  
 
-  const uploadFile = async(taskkk) => {
-    axios
-        .put(
-          `${API_URL}/updateetask/${taskkk._id}`,
-          { certificates: "Certified" },
-          { withCredentials: true }
-        )
-        .then(async (responsee) => {
-          const updateFile = responsee.data.updatedTask;
-          console.log(responsee.data.updateFile);
-          setSubmitting(true);
-        
-    if (fileUpload == null) return;
-    const fileName = fileUpload.name + generateHash(fileUpload.name);
-    const hashName = fileName.slice(-64);
+  const uploadFile = async (taskkk) => {
+    const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
+const confirmUniqueName = window.confirm("Does the certificate have a unique name?");
+const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proceed?");
 
-
-    console.log(hashName)
-    const fileRef = ref(storage, `certificates/${fileName}`);
-    uploadBytes(fileRef, fileUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        setFileList((prev) => [...prev, { name: fileName, url: url }]);
-      });
-    });
-
-    console.log(taskkk._id.slice(-5))
-
-   
-
-
-    
-   
-    setSubmitting(true);
-    let filehash = hashName;
-    let resp = await executeTransaction(erc,provider,"registerFile",[filehash, taskkk._id.slice(-5)]);
-    log("Registered","hash", resp.txHash)
-    if (fileUpload && fileUpload.type === "application/pdf") {
-      // TODO: Upload the file
-      console.log("File uploaded successfully.");
-    } else {
-      // Show an alert or a notification message
-      alert("Please select a PDF file.");
-    
-    }
-    let taskId = (taskkk._id).slice(-5);
-    console.log(taskId);
-    let response = await queryData(erc, provider, 'getFileHash', [taskId]);
-    log("Returned hash", "hash", response);
-    const fileListRef = ref(storage, 'certificates');
-    listAll(fileListRef)
-      .then((res) => {
-        res.items.forEach((itemRef) => {
-          if (itemRef.name.slice(-64) === response) {
-            console.log(itemRef.fullPath);
-            getDownloadURL(itemRef)
-              .then((url) => {
-                console.log(url);
-                window.open(url, '_blank');
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }
+if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
+  axios
+      .put(
+        `${API_URL}/updateetask/${taskkk._id}`,
+        { certificates: "Certified" },
+        { withCredentials: true }
+      )
+      .then(async (responsee) => {
+        const updateFile = responsee.data.updatedTask;
+        console.log(responsee.data.updateFile);
+        setSubmitting(true);
+  
+        if (fileUpload == null) return;
+        const fileName = fileUpload.name + generateHash(fileUpload.name);
+        const hashName = fileName.slice(-64);
+  
+        console.log(hashName);
+        const fileRef = ref(storage, `certificates/${fileName}`);
+        uploadBytes(fileRef, fileUpload).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            setFileList((prev) => [...prev, { name: fileName, url: url }]);
+          });
         });
+  
+        console.log(taskkk._id.slice(-5));
+  
+        setSubmitting(true);
+        let filehash = hashName;
+        let resp = await executeTransaction(erc, provider, "registerFile", [
+          filehash,
+          taskkk._id.slice(-5),
+        ]);
+        log("Registered", "hash", resp.txHash);
+        if (fileUpload && fileUpload.type === "application/pdf") {
+          // TODO: Upload the file
+          console.log("File uploaded successfully.");
+        } else {
+          // Show an alert or a notification message
+          alert("Please select a PDF file.");
+        }
+        let taskId = taskkk._id.slice(-5);
+        console.log(taskId);
+        let response = await queryData(erc, provider, "getFileHash", [taskId]);
+        log("Returned hash", "hash", response);
+        const fileListRef = ref(storage, "certificates");
+        listAll(fileListRef)
+          .then((res) => {
+            res.items.forEach((itemRef) => {
+              if (itemRef.name.slice(-64) === response) {
+                console.log(itemRef.fullPath);
+                getDownloadURL(itemRef)
+                  .then((url) => {
+                    console.log(url);
+                    window.open(url, "_blank");
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              }
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+  
+        // Reload page after 5 seconds
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
+  
+        setSubmitting(false);
       })
       .catch((error) => {
         console.log(error);
+        // Reload page after 5 seconds
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       });
-      setSubmitting(false);
-    })
   };
+} 
+
+
+    
+
+  
+  // useEffect(() => {
+  //   window.addEventListener("error", handleWindowError);
+  //   return () => {
+  //     window.removeEventListener("error", handleWindowError);
+  //   };
+  // }, []);
+
+  // const handleWindowError = (event) => {
+  //   if (event.error?.message?.includes("invalid BigNumber string")) {
+  //     window.location.reload();
+  //   }
+  // };
+  function checkInspectConsoleForBigNumberError() {
+    setInterval(() => {
+      const errors = Array.from(window.console.errors || []);
+      console.log('Errors:', errors);
+      const bigNumberError = errors.find(error => error.message.includes("invalid BigNumber string"));
+      if (bigNumberError) {
+        console.error("BigNumber error occurred:", bigNumberError);
+        window.location.href = window.location.href;
+        console.log('Page reloaded.');
+      }
+    }, 1000);
+  }
   
   
 
@@ -135,6 +184,8 @@ const RewardTasks = (props) => {
   const [submitting, setSubmitting] = useState(false);
   const { provider, erc } = useContext(EthereumContext);
   console.log("sample", erc);
+
+
 
   const tokenn = jwt_decode(cookies.access_token);
 
@@ -170,40 +221,52 @@ const RewardTasks = (props) => {
 
   const Rewarded = async (taskk) => {
     const confirmed = window.confirm("Reward this Employee?");
+
+    const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
+    const confirmUniqueName = window.confirm("Do you have enough balance to reward?");
+    const confirmNoChanges = window.confirm("Once rewarded, cannot be changed. Proceed?");
+    let updatedTask = await axios.put(
+      `${API_URL}/updatetask/${taskk._id}`,
+      { status: "Rewarded" },
+      { withCredentials: true }
+    ).then(response => response.data.updatedTask);
   
-    if (confirmed) {
-      let updatedTask;
+    console.log(updatedTask);
+    if (confirmAdminWallet && confirmNoChanges && confirmUniqueName) {
       try {
         // Call the executeTransaction function first
         let resp = await executeTransaction(erc, provider, "sendReward", [
           taskk.empWalletAddress.replace("xdc", "0x"),
-          taskk.rewards,
+          taskk.rewards
         ]);
-        log("Sending Reward to Employee ", "hash", resp.txHash);
-  
-        // Update the task status only after successful XDC transaction
-        const response = await axios.put(
-          `${API_URL}/updatetask/${taskk._id}`,
-          { status: "Rewarded" },
-          { withCredentials: true }
-        );
-        updatedTask = response.data.updatedTask;
-        console.log(response.data.updatedTask);
-        setSubmitting(true);
-        window.location.reload();
+    
+        // Wait for the transactionHash event to be emitted before proceeding
+        await new Promise(resolve => {
+          provider.once(resp.txHash, resolve);
+        });
+    
+        // Force reload the page after 5 seconds
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
+    
       } catch (error) {
-        console.log(error);
+        console.log("Failed successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+        // handle the error here, e.g. show an error message to the user
       } finally {
         setSubmitting(false);
       }
-  
+    
       // Update tasks state
       if (updatedTask) {
         setTask(
           task.map((t) => {
             if (t._id === updatedTask._id) {
-              return updatedTask;
               setTaskId(updatedTask._id);
+              return updatedTask;
             } else {
               return t;
             }
@@ -211,9 +274,9 @@ const RewardTasks = (props) => {
         );
       }
     }
-  };
+  }
   
-
+  
   const handleApproveTask = async (index) => {
     const updatedTasks = [...tasks];
     updatedTasks[index] = { ...updatedTasks[index], approved: true };
