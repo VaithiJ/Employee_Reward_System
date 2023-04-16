@@ -320,7 +320,8 @@ function AdminDashBoard() {
         console.log(error);
       });
   }, []);
-
+const re= Alltasks.filter((task) => task.companyName === tokenn.name).length
+console.log("ell tasks um ", re)
   if (cookies.access_token && jwt_decode(cookies.access_token).isAdmin) {
     const filteredEmployees = employees.filter((employee) => {
       console.log(employee.isOnboarded);
@@ -334,23 +335,24 @@ function AdminDashBoard() {
     });
 
     const OnboardedEmployees = filteredEmployees.length;
-    const rewardedTasks = Alltasks.filter(
-      (task) => task.status === "Rewarded"
-    ).length;
+    const rewardedTasks = Alltasks.filter((task) => task.status === "Rewarded" && task.compName === tokenn.name).length;
     const PendingApprovals = tasks.filter(
-      (task) => task.status === "Waiting For Approval"
+      (task) => task.status === "Waiting For Approval" && (task.companyName === tokenn.name)
     ).length;
     const TaskIncentive = Alltasks.filter(
-      (task) => task.status === "Approved"
+      (task) => task.status === "Approved" && (task.companyName === tokenn.name)
     ).length;
     const Assignedtasks = tasks.filter(
-      (task) => task.status === "Pending"
+      (task) => task.status === "Pending" && (task.companyName === tokenn.name)
+    ).length;
+    const everytasks =tasks.filter(
+      (task) => task.status === "Pending" || task.status === "Approved" && (task.companyName === tokenn.name)
     ).length;
     const data = [
       { name: "Waiting for approval", value: PendingApprovals },
       { name: "Assigned Tasks", value: Assignedtasks },
       { name: "Rewarded Tasks", value: rewardedTasks },
-      { name: "Total Tasks", value: Alltasks.length },
+      { name: "Total Tasks", value: re },
     ];
     const COLORS = ["red", "#F3DA06", "black", "green"];
 

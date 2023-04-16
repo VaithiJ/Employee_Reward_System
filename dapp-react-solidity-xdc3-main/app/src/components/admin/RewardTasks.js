@@ -156,9 +156,8 @@ const RewardTasks = (props) => {
     axios
       .get(`${API_URL}/gettasks`, { withCredentials: true })
       .then((response) => {
-        setTasks(
-          response.data.tasks.filter((tasks) => tasks.status === "Approved" || tasks.status === "Rewarded")
-        );
+        const re=  response.data.tasks.filter((tasks) => tasks.status === "Approved" || tasks.status === "Rewarded")
+       setTasks(re.filter((task) => task.companyName===tokenn.name ))
         setrewardedemp(
           response.data.tasks.filter((tasks) => tasks.status === "Rewarded")
         );
