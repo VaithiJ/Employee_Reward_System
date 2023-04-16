@@ -961,7 +961,7 @@ console.log("ell tasks um ", re)
                   <div style={{ display: "flex", alignItems: "center" }}>
                 <ul
                   style={{
-                    marginTop: "-1000px",
+                    marginTop: "-780px",
                     fontSize: "30px",
                     marginLeft: "1000px",
                     fontFamily: "Montserrat",
@@ -970,7 +970,7 @@ console.log("ell tasks um ", re)
                 >
                   TASKS
                 </ul>
-                <div style={{ marginRight: "-0px" } }>
+                <div style={{ marginRight: "-300px", marginTop:"-450px" } }>
                   <p style={{ marginLeft: "-10px", fontFamily: "Algeria", fontWeight:"1000" }}>
                     TOTAL :{" "}
                     <FaSquare
@@ -1000,7 +1000,7 @@ console.log("ell tasks um ", re)
                 </div>
 
                   
-                  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"860px", marginTop:"-570px"}} width={800} height={400} >
+                  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"860px", marginTop:"-440px"}} width={800} height={400} >
         <Pie
           data={data}
           cx={120}
