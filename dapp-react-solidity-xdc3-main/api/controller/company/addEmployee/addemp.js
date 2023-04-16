@@ -17,7 +17,7 @@ export const addEmp = async (req, res) => {
 
 
       const { user,comName, comId } = req.body;
-      const newUser = new AddEmployee({ user:userId,comName, comId, Name:Name, Address : Address, Mobile:Mobile, Email:Email, Wallet : Wallet, Onboard : Onboard});
+      const newUser = new AddEmployee({ user:userId,comName, comId, Name:Name, Address : Address, Mobile:Mobile, Email:Email, Wallet : Wallet, Onboard : Onboard,profile: ""});
       // const user = await User.findById(req.params._id);
     const newEmployee = await newUser.save();
     res.status(201).json(newEmployee);
