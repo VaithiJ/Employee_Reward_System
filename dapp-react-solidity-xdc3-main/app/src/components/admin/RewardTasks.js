@@ -170,53 +170,49 @@ const RewardTasks = (props) => {
 
   const Rewarded = async (taskk) => {
     const confirmed = window.confirm("Reward this Employee?");
-
+  
     if (confirmed) {
-      axios
-        .put(
+      let updatedTask;
+      try {
+        // Call the executeTransaction function first
+        let resp = await executeTransaction(erc, provider, "sendReward", [
+          taskk.empWalletAddress.replace("xdc", "0x"),
+          taskk.rewards,
+        ]);
+        log("Sending Reward to Employee ", "hash", resp.txHash);
+  
+        // Update the task status only after successful XDC transaction
+        const response = await axios.put(
           `${API_URL}/updatetask/${taskk._id}`,
           { status: "Rewarded" },
           { withCredentials: true }
-        )
-        .then(async (response) => {
-          const updatedTask = response.data.updatedTask;
-          console.log(response.data.updatedTask);
-          setSubmitting(true);
-          // let to = tokenn.wallet.replace("xdc", "0x");
-          let employeeaddress = updatedTask.empWalletAddress.replace(
-            "xdc",
-            "0x"
-          );
-          console.log(employeeaddress);
-          let amount = updatedTask.rewards;
-          console.log(amount);
-
-          let resp = await executeTransaction(erc, provider, "sendReward", [
-            employeeaddress,
-            amount,
-          ]);
-          log("Sending Reward to Employee ", "hash", resp.txHash);
-          window.location.reload();
-
-          setSubmitting(false);
-
-          // update tasks state
-          setTask(
-            task.map((t) => {
-              if (t._id === updatedTask._id) {
-                return updatedTask;
-                setTaskId(updatedTask._id)
-              } else {
-                return t;
-              }
-            })
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        );
+        updatedTask = response.data.updatedTask;
+        console.log(response.data.updatedTask);
+        setSubmitting(true);
+        window.location.reload();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setSubmitting(false);
+      }
+  
+      // Update tasks state
+      if (updatedTask) {
+        setTask(
+          task.map((t) => {
+            if (t._id === updatedTask._id) {
+              return updatedTask;
+              setTaskId(updatedTask._id);
+            } else {
+              return t;
+            }
+          })
+        );
+      }
     }
   };
+  
 
   const handleApproveTask = async (index) => {
     const updatedTasks = [...tasks];
