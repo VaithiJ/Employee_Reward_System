@@ -302,12 +302,12 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
     <div className="container" >
       <div className="main" >
         <h1 style={{fontFamily:"Algeria", fontSize:"50px"}}>REWARD EMPLOYEES</h1>
-        <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-180px"}}>
+        <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-120px"}}>
           {" "}
           <SidebarMenu />{" "}
 </div>
 
-<div  style={{ 
+<div style={{ 
   background: 'white', 
   padding: '20px', 
   borderRadius: '8px', 
@@ -316,92 +316,104 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
   marginBottom: '20px',
   width:"1300px",
   backgroundImage: `url(${bg})`
- 
-  }}>
+}}>
   <h2>Tasks</h2>
-  <div className="task-list" style={{width:"1250px"}}>
-  <div className="task-list">
-    <div className="task-list-header">
-    <div className="task-name" style={{marginLeft:"-30px"}} >UID</div>
-      <div className="task-name" >Task Name</div>
-      <div className="task-name" > Name</div>
-      <div className="task-name" >Wallet Address</div>
-      {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
-      <div className="task-due-date" >Due Date</div>
-      <div className="task-due-date" >Reward</div>
-
-      <div className="task-progress">Actions</div>
-      
-      <div className="task-status" style={{ width: '15%', paddingLeft: "30px" }}>Rewards</div>
-    </div>
-    {tasks.map((task) => (
-      <div className="task-list-item"  style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        marginTop: '10px', 
-        borderBottom: '1px solid #ccc',
-        paddingBottom: '10px',
-      }}>
-        <div className="task-name" >{(task._id).slice(-5)}</div>
-        <div className="task-name">{task.task}</div>
-        <div className="task-assigned-to"> {task.empName}</div>
-        <div className="task-assigned-to" >xdc...{task.empWalletAddress.slice(-5)}</div>
-        <div className="task-due-date">{task.deadline}</div>
-        <div className="task-progress" >{task.rewards}
+  <div className="task-list-container" style={{ height: '500px', overflow: 'scroll' }}>
+    <div className="task-list" style={{ width: "1250px" }}>
+      <div className="task-list">
+        <div className="task-list-header">
+          <div className="task-name" style={{ marginLeft:"-30px" }}>UID</div>
+          <div className="task-name">Task Name</div>
+          <div className="task-name">Name</div>
+          <div className="task-name">Wallet Address</div>
+          {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
+          <div className="task-due-date">Due Date</div>
+          <div className="task-due-date">Reward</div>
+          <div className="task-progress">Actions</div>
+          <div className="task-status" style={{ width: '15%', paddingLeft: "30px" }}>Rewards</div>
         </div>
-        {task.certificates==="false" ? (
-        <div>
-           <input
-    style={{ opacity: submitting ? 0.5 : 1 , marginRight:"-30px"}}
-    disabled={submitting}
-    type="file"
-    accept=".pdf"
-    onChange={(e) => setFileUpload(e.target.files[0])}/>
-              <button style={{ 
-                marginRight: '-40px', 
-                padding: '8px 16px', 
-                background: submitting ?'red' : "green", 
-                color: 'white', 
-                border: 'none', 
-                borderRadius: '4px', 
-                cursor: 'pointer' ,
+        {tasks.map((task) => (
+          <div
+            className="task-list-item"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              marginTop: '10px', 
+              borderBottom: '1px solid #ccc',
+              paddingBottom: '10px',
+            }}
+          >
+            <div className="task-name">{(task._id).slice(-5)}</div>
+            <div className="task-name">{task.task}</div>
+            <div className="task-assigned-to">{task.empName}</div>
+            <div className="task-assigned-to">xdc...{task.empWalletAddress.slice(-5)}</div>
+            <div className="task-due-date">{task.deadline}</div>
+            <div className="task-progress">{task.rewards}</div>
+            {task.certificates==="false" ? (
+              <div>
+                <input
+                  style={{ opacity: submitting ? 0.5 : 1, marginRight:"-30px" }}
+                  disabled={submitting}
+                  type="file"
+                  accept=".pdf"
+                  onChange={(e) => setFileUpload(e.target.files[0])}
+                />
+                <button
+                  style={{ 
+                    marginRight: '-40px', 
+                    padding: '8px 16px', 
+                    background: submitting ?'red' : "green", 
+                    color: 'white', 
+                    border: 'none', 
+                    borderRadius: '4px', 
+                    cursor: 'pointer',
+                    opacity: submitting ? 0.5 : 1
+                  }}
+                  onClick={() => uploadFile(task)}
+                >
+                  Upload Certificates
+                </button> 
+              </div>
+            ) : (
+              <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Uploaded</div>
+            )}
+            <div
+              className="task-status"
+              style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                alignItems: 'center',
+                paddingLeft: '30px',
+                }}
+                >
+                {task.rewardsReceived === "true" ? (
+                <div style={{ color: 'green', fontWeight: 'bold' }}>Received</div>
+                ) : (
+                <button
+                style={{
+                padding: '8px 16px',
+                background: 'green',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
                 opacity: submitting ? 0.5 : 1
-              }}
-              onClick={()=>uploadFile(task)}> Upload Certificates</button> 
-            </div>) : (
-            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Uploaded</div>
-          )}
-        
-        <div className="task-status" style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          
-          width: '15%',
-          marginRight:"-20px"
-        }}>
-          {task.status === "Approved" ? (
-            <div>
-              <button style={{ 
-                marginRight: '10px', 
-                padding: '8px 16px', 
-                background: 'green', 
-                color: 'white', 
-                border: 'none', 
-                borderRadius: '4px', 
-                cursor: 'pointer' 
-              }}
-               onClick={() => Rewarded(task)}>Reward</button> 
-            </div>
-          ) : (
-            <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Rewarded</div>
-          )}           
+                }}
+                disabled={submitting}
+                onClick={() => Rewarded(task)}
+                >
+                Claim Rewards
+                </button>
+                )}
+                </div>
+                </div>
+                ))}
+                </div>
+                </div>
+                
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
     </div>
