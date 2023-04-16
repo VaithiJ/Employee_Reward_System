@@ -286,7 +286,7 @@ const RewardTasks = (props) => {
         <div className="task-due-date">{task.deadline}</div>
         <div className="task-progress" >{task.rewards}
         </div>
-        {task.status==="Approved" ? (
+        {task.certificates==="Certified" ? (
         <div>
            <input
     style={{ opacity: submitting ? 0.5 : 1 , marginRight:"-30px"}}
