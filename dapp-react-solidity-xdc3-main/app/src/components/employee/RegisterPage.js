@@ -11,6 +11,8 @@ import reg from "../openPage/r5.svg";
 import "./reg.css";
 import g from "../admin/g.svg"
 import empImg from "../../image/employee.jpg"
+import { FaHome } from "react-icons/fa";
+
 
 export default function Register() {
   const API_URL = "http://localhost:8800";
@@ -63,6 +65,9 @@ export default function Register() {
             
           }}
         >
+                    <p style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Noto Serif"}}>Be Part of the Future - Register with Blockchain and Unlock Your Employee Rewards!</b></p>
+                    <Link to="/"><FaHome style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
+
           <div style={{display:"flex", flexDirection:"row"}}>
                     <img src={employeeImage} style={{width:"400px", height:"450px", marginLeft:"-100px", marginTop:"50px"}}/>
 
@@ -72,7 +77,7 @@ export default function Register() {
               marginLeft: "200px",
               borderRadius: "50px",
               marginBottom: "100px",
-              boxShadow: "10px 90px 40px 10px rgba(0,0,0,0.5)",
+              boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
               
             }}
           >

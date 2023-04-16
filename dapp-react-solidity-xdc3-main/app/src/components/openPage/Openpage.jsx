@@ -11,7 +11,7 @@ import "./openpage.module.css";
 import bg from "./y.svg";
 import g from "./sc.svg";
 // import roadmap from "./roadgif.gif";
-import road from "./roadgif.gif"
+import road from "./dia.gif"
 
 const Openpage = () => {
   useEffect(() => {
@@ -107,7 +107,7 @@ const Openpage = () => {
                 The employee's role in this platform is to complete tasks
                 assigned by the company admin and earn ERCoin rewards. They can
                 also take certification courses to increase their value to the
-                company. The platform stores certificates of completion on IPFS
+                company. The platform stores certificates of completion on Firebase
                 and records the hash on the XDC blockchain, providing lifelong
                 proof of achievements. Overall, the employee's contributions and
                 hard work are crucial to the success of the platform.
@@ -131,7 +131,7 @@ const Openpage = () => {
                 >
                   The company registers and onboard employees, assigns tasks and
                   certifications, and rewards them with ERCoin. The admin
-                  approves tasks and stores certificates on IPFS, recording the
+                  approves tasks and stores certificates on Firebase, recording the
                   hash on the XDC blockchain. The platform streamlines task
                   management and reduces administrative workload. It promotes
                   transparency and fairness in task assignment and reward
@@ -219,7 +219,7 @@ const Openpage = () => {
         {/* <Footer /> */}
       </div>
     </div>
-    // </div>
+     </div>
   );
 };
 

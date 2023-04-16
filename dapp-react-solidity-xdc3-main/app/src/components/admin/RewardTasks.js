@@ -240,7 +240,7 @@ const RewardTasks = (props) => {
   ];
   const COLORS = ['red', '#F3DA06'];
   return (
-    <div style={{backgroundImage: `url(${ss})`, height:"800px"}}>
+    <div style={{backgroundImage: `url(${ss})`, height:"1000px"}}>
     <div className="container" >
       <div className="main" >
         <h1 style={{fontFamily:"Algeria", fontSize:"50px"}}>REWARD EMPLOYEES</h1>

@@ -959,44 +959,46 @@ function AdminDashBoard() {
                   <div style={{ display: "flex", alignItems: "center" }}>
                 <ul
                   style={{
-                    marginTop: "-300px",
+                    marginTop: "-1000px",
                     fontSize: "30px",
-                    marginLeft: "-0px",
+                    marginLeft: "1000px",
                     fontFamily: "Montserrat",
                     fontWeight: "1000",
                   }}
                 >
                   TASKS
                 </ul>
-                <div style={{ marginRight: "-0px" }}>
+                <div style={{ marginRight: "-0px" } }>
                   <p style={{ marginLeft: "-10px", fontFamily: "Algeria", fontWeight:"1000" }}>
                     TOTAL :{" "}
                     <FaSquare
                       style={{ backgroundColor: "green", color: "green" }}
                     />
                   </p>
-                  <p style={{ marginLeft: "-10px", fontFamily: "Algeria",fontWeight:"1000" }}>
+                  <p style={{ marginLeft: "-30px", fontFamily: "Algeria",fontWeight:"1000" }}>
                     ASSIGNED :{" "}
                     <FaSquare
                       style={{ color: "#F3DA06", backgroundColor: "#F3DA06" }}
                     />
                   </p>
-                  <p style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                  <p style={{ marginLeft: "-30px", fontWeight:"1000",fontFamily: "Algeria" }}>
                     APPROVAL :{" "}
                     <FaSquare
                       style={{ backgroundColor: "red", color: "red" }}
                     />
                   </p>
 
-                  <p style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                  <p style={{ marginLeft: "-30px", fontWeight:"1000",fontFamily: "Algeria" }}>
                     REWARDED :{" "}
                     <FaSquare
                       style={{ backgroundColor: "black", color: "black" }}
                     />
                   </p>
                 </div>
+                </div>
+
                   
-                  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"860px", marginTop:"-440px"}} width={800} height={400} >
+                  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"860px", marginTop:"-570px"}} width={800} height={400} >
         <Pie
           data={data}
           cx={120}
@@ -1020,7 +1022,6 @@ function AdminDashBoard() {
             </div>
           </div>
         </div>
-      </div>
       </div>
     );
   } else {

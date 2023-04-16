@@ -10,7 +10,9 @@ import styles from "../openPage/openpage.module.css";
 import reg from "../../components/openPage/r5.svg";
 import g from "./g.svg"
 import companyImage from "../openPage/comp1.png"
-import "./reg.css";
+import "./reg.css";import { FaHome } from "react-icons/fa";
+
+
 
 export default function RegisterComp() {
   const API_URL = "http://localhost:8800";
@@ -68,6 +70,9 @@ export default function RegisterComp() {
             marginLeft:"300px"
           }}
         >
+           <p style={{fontSize:"40px",paddingTop:"30px", marginLeft:"120px" }}><b style={{fontFamily:"Noto Serif"}}>Revolutionize Your Business with Blockchain - Register Now and Empower Your Workforce!</b></p>
+                    <Link to="/"><FaHome style={{marginLeft:"-1200px", marginTop:"-230px", width:"110px", height:"40px", color:"black"}}/></Link>
+
           <div style={{display:"flex", flexDirection:"row"}}>
           <img src={companyImage} style={{width:"500px", height:"550px", marginLeft:"50px"}}/>
           <form
@@ -76,7 +81,7 @@ export default function RegisterComp() {
               marginLeft: "50px",
               borderRadius: "20px",
               marginBottom: "100px",
-              boxShadow: "10px 90px 40px 10px rgba(0,0,0,0.5)",
+              boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
               backgroundColor:"transparent",
               width:"600px"
             }}
@@ -203,7 +208,7 @@ export default function RegisterComp() {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

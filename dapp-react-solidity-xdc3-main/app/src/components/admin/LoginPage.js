@@ -8,6 +8,8 @@ import styles from "../openPage/openpage.module.css"
 
 import Footer from "../footer/Footer";
 import { useHistory } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
+
 
 import "../../App.css";
 import "./reg.css";
@@ -70,9 +72,12 @@ export default function SignInPage() {
   
 
         <div className="text-center m-5-auto" style={{marginTop:"-10px"}}>
+        <p style={{fontSize:"40px",paddingTop:"30px", marginLeft:"60px" }}><b style={{fontFamily:"Noto Serif"}}>Securely Connect to Your Business - Login to Your Blockchain-Enabled Company Portal Now!</b></p>
+                    <Link to="/"><FaHome style={{marginLeft:"-1250px", marginTop:"-240px", width:"110px", height:"40px",  color:"black"}}/></Link>
+
           <div style={{display:"flex", flexDirection:"row"}}>
         <img src={companyImage} style={{width:"500px", height:"550px", marginLeft:"150px", marginTop:"50px"}}/>
-          <form onSubmit={handleLogin} style={{marginTop:"120px",marginLeft:"145px",marginRight:"50px",marginBottom:"100px",boxShadow: '00px 100px 60px 0px rgba(0,0,0,0.5)',borderRadius:"20px", backgroundColor:"transparent"}}>
+          <form onSubmit={handleLogin} style={{marginTop:"120px",marginLeft:"145px",marginRight:"50px",marginBottom:"100px", boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",borderRadius:"20px", backgroundColor:"transparent"}}>
             <h2 className={styles.txt} style={{marginLeft:"70px", marginTop:"30px", fontSize:"30px"}}>Login</h2>
             <p>
               <label>Company Name</label>
@@ -125,7 +130,7 @@ export default function SignInPage() {
           {message && <p>{message}</p>}
         </div>
       
-      <Footer />
+      {/* <Footer /> */}
  
     </div>
   );
