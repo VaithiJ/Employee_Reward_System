@@ -1,14 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FaSignOutAlt , FaSquare} from "react-icons/fa";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart,
+import { FaSignOutAlt, FaSquare } from "react-icons/fa";
+import {
+  PieChart,
+  Pie,
+  Sector,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  ComposedChart,
   Line,
   Area,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
-  Legend,BarChart
-   } from 'recharts';
+  Legend,
+  BarChart,
+} from "recharts";
 
 import { useCookies } from "react-cookie";
 import { Link, useHistory } from "react-router-dom";
@@ -16,7 +24,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 import styles from "./dash.module.css";
 import bg from "./lay.svg";
-import "./real.css"
+import "./real.css";
 import {
   FaBars,
   FaUserPlus,
@@ -138,7 +146,7 @@ function AdminDashBoard() {
   //     amt: 2100,
   //   },
   // ];
-  
+
   // const getIntroOfPage = (label) => {
   //   if (label === 'Page A') {
   //     return "Page A is about men's clothing";
@@ -160,7 +168,7 @@ function AdminDashBoard() {
   //   }
   //   return '';
   // };
-  
+
   // const CustomTooltip = ({ active, payload, label }) => {
   //   if (active && payload && payload.length) {
   //     return (
@@ -171,10 +179,10 @@ function AdminDashBoard() {
   //       </div>
   //     );
   //   }
-  
+
   //   return null;
   // };
-  
+
   const history = useHistory();
   // const [open, setOpen] = useState(false);
   const tokenn = jwt_decode(cookies.access_token);
@@ -326,7 +334,9 @@ function AdminDashBoard() {
     });
 
     const OnboardedEmployees = filteredEmployees.length;
-    const rewardedTasks = Alltasks.filter((task) => task.status === "Rewarded").length;
+    const rewardedTasks = Alltasks.filter(
+      (task) => task.status === "Rewarded"
+    ).length;
     const PendingApprovals = tasks.filter(
       (task) => task.status === "Waiting For Approval"
     ).length;
@@ -337,12 +347,12 @@ function AdminDashBoard() {
       (task) => task.status === "Pending"
     ).length;
     const data = [
-      { name: 'Waiting for approval', value: PendingApprovals },
-      { name: 'Assigned Tasks', value: Assignedtasks },
-      { name: 'Rewarded Tasks', value: rewardedTasks },
-      { name: 'Total Tasks', value: Alltasks.length },
+      { name: "Waiting for approval", value: PendingApprovals },
+      { name: "Assigned Tasks", value: Assignedtasks },
+      { name: "Rewarded Tasks", value: rewardedTasks },
+      { name: "Total Tasks", value: Alltasks.length },
     ];
-    const COLORS = ['red', '#F3DA06', 'black', 'green'];
+    const COLORS = ["red", "#F3DA06", "black", "green"];
 
     const filteredTasks = tasks.filter((task) => {
       return (
@@ -358,29 +368,29 @@ function AdminDashBoard() {
 
     return (
       <div>
-         <div style={{ backgroundColor:"#F9F8F8" }}>
-        <div className="row">
-          {/* <div
+        <div style={{ backgroundColor: "#F9F8F8" }}>
+          <div className="row">
+            {/* <div
           style={{
             borderRadius: "20px",
             boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)",
           }}
         > */}
 
-          <div className="col-md-3"></div>
-          <div className="col-md-9">
-            <div
-              style={{
-                height: "100px",
-                display: "flex",
-                flexDirection: "row",
-                marginTop: "0px",
-                marginLeft: "-350px",
-                backgroundColor: "#00F1C3",
-                boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
-              }}
-            >
-              {/* <div
+            <div className="col-md-3"></div>
+            <div className="col-md-9">
+              <div
+                style={{
+                  height: "100px",
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: "0px",
+                  marginLeft: "-350px",
+                  backgroundColor: "#00F1C3",
+                  boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+                }}
+              >
+                {/* <div
                 className={styles.span}
                 style={{ marginLeft: "80px", backgroundColor: "#00F1C3" }}
               >
@@ -391,54 +401,56 @@ function AdminDashBoard() {
                     backgroundColor: "#00F1C3",
                   }}
                 > */}
-              <div style={{marginTop:"10px", marginLeft:"60px"}}><SidebarMenu /></div>
-             
-            <div
-              style={{
-                marginTop: "20px",
-                marginLeft: "60px",
-                fontFamily: "Algeria",
-                fontSize: "30px",
-               
-              }}
-            >
-             
-              <b style={{ fontFamily: "Algeria", fontWeight: "1000", fontSize:"40px"}}>
-                {tokenn.name.toUpperCase()}
-              </b>
-             
-              </div>
-              <button
-              onClick={balanceOf}
-              className="btn btn-primary"
-              style={{
-                margin: "1rem",
-                marginLeft: "500px",
-                marginTop: "30px",
-                borderRadius: "20px",
-                height: "50px",
-                backgroundColor: "#1196B0",
-                width: "130px",
-                boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+                <div style={{ marginTop: "10px", marginLeft: "60px" }}>
+                  <SidebarMenu />
+                </div>
 
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = "#330078";
-                // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = "#1196B0";
-                e.target.style.border = "none";
-                e.target.style.boxShadow = "0 2px 5px rgba(0, 0, 0,1.0)";
-              }}
-            >
-              <FaSignOutAlt /> Balance
-            </button>
-            </div>
-           
-           
-     
+                <div
+                  style={{
+                    marginTop: "20px",
+                    marginLeft: "60px",
+                    fontFamily: "Algeria",
+                    fontSize: "30px",
+                  }}
+                >
+                  <b
+                    style={{
+                      fontFamily: "Algeria",
+                      fontWeight: "1000",
+                      fontSize: "40px",
+                    }}
+                  >
+                    {tokenn.name.toUpperCase()}
+                  </b>
+                </div>
+                <button
+                  onClick={balanceOf}
+                  className="btn btn-primary"
+                  style={{
+                    margin: "1rem",
+                    marginLeft: "500px",
+                    marginTop: "30px",
+                    borderRadius: "20px",
+                    height: "50px",
+                    backgroundColor: "#1196B0",
+                    width: "130px",
+                    boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = "#330078";
+                    // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+                    e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = "#1196B0";
+                    e.target.style.border = "none";
+                    e.target.style.boxShadow = "0 2px 5px rgba(0, 0, 0,1.0)";
+                  }}
+                >
+                  <FaSignOutAlt /> Balance
+                </button>
+              </div>
+
               <div
                 style={{
                   display: "flex",
@@ -446,8 +458,7 @@ function AdminDashBoard() {
                   marginLeft: "-600px",
                   marginTop: "60px",
                 }}
-              >
-              </div>
+              ></div>
 
               <div
                 className="row"
@@ -530,7 +541,7 @@ function AdminDashBoard() {
                       />
                       <br />
                       <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
-                         Assigned Tasks
+                        Assigned Tasks
                       </div>
                     </div>
                   </div>
@@ -545,6 +556,7 @@ function AdminDashBoard() {
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
                       backgroundColor: "red",
+                      width:"380px"
                     }}
                   >
                     <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -576,45 +588,78 @@ function AdminDashBoard() {
                     </div>
                   </div>
                 </div>
-
-               
               </div>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <ul style={{marginTop:"-300px", fontSize:"30px", marginLeft:"-180px", fontFamily:"Montserrat", fontWeight:"1000"}}>
-                TASKS</ul>
-  <div style={{ marginRight: '-70px' }}>
-    
-    <p style={{marginLeft:"-10px", fontFamily:"Montserrat"}}>TOTAL : <FaSquare style={{backgroundColor:"green", color:"green"}}/></p>
-    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>ASSIGNED : <FaSquare style={{color:"#F3DA06", backgroundColor:"#F3DA06"}}/></p>
-    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>APPROVAL : <FaSquare style={{backgroundColor:"red", color:"red"}}/></p>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <ul
+                  style={{
+                    marginTop: "-300px",
+                    fontSize: "30px",
+                    marginLeft: "-180px",
+                    fontFamily: "Montserrat",
+                    fontWeight: "1000",
+                  }}
+                >
+                  TASKS
+                </ul>
+                <div style={{ marginRight: "-70px" }}>
+                  <p style={{ marginLeft: "-10px", fontFamily: "Algeria", fontWeight:"1000" }}>
+                    TOTAL :{" "}
+                    <FaSquare
+                      style={{ backgroundColor: "green", color: "green" }}
+                    />
+                  </p>
+                  <p style={{ marginLeft: "-10px", fontFamily: "Algeria",fontWeight:"1000" }}>
+                    ASSIGNED :{" "}
+                    <FaSquare
+                      style={{ color: "#F3DA06", backgroundColor: "#F3DA06" }}
+                    />
+                  </p>
+                  <p style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                    APPROVAL :{" "}
+                    <FaSquare
+                      style={{ backgroundColor: "red", color: "red" }}
+                    />
+                  </p>
 
-    <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>REWARDED :<FaSquare style={{backgroundColor:"black", color:"black"}}/></p>
+                  <p style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                    REWARDED :{" "}
+                    <FaSquare
+                      style={{ backgroundColor: "black", color: "black" }}
+                    />
+                  </p>
+                </div>
 
+                <PieChart
+                  style={{
+                    width: "430px",
+                    boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+                    marginLeft: "-310px",
+                  }}
+                  width={800}
+                  height={400}
+                >
+                  <Pie
+                    data={data}
+                    cx={120}
+                    cy={200}
+                    innerRadius={60}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    paddingAngle={5}
+                    dataKey="value"
+                    style={{ color: "black" }}
+                  >
+                    {data.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
 
-  </div>
- 
-
-              <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"-310px"}} width={800} height={400} >
-        <Pie
-          data={data}
-          cx={120}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          paddingAngle={5}
-          dataKey="value"
-          style={{color:"black"}}
-        >   
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        
-        </Pie> 
-        <Tooltip/>
-      </PieChart>
-    
-      {/* <ResponsiveContainer width="100%" height="100%">
+                {/* <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={500}
           height={300}
@@ -637,15 +682,16 @@ function AdminDashBoard() {
       </ResponsiveContainer>
      
     */}
-     
-      </div>
-    
-     
-    
+              </div>
+
               <div className="row mt-">
                 <div
                   className="col-md-10 "
-                  style={{ marginTop: "-400px", marginLeft: "130px" }}
+                  style={{
+                    marginTop: "-400px",
+                    marginLeft: "130px",
+                    height: "200px",
+                  }}
                 >
                   <div
                     className="card"
@@ -653,6 +699,7 @@ function AdminDashBoard() {
                       boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
                       // backgroundColor: "#CAFFF5",
                       marginBottom: "40px",
+                      height: "400px",
                     }}
                   >
                     <h5
@@ -664,7 +711,7 @@ function AdminDashBoard() {
                         // backgroundColor: "#CAFFF5",
                         color: "black",
                         fontWeight: "1000",
-                        fontSize: "30px",
+                        fontSize: "20px",
                       }}
                     >
                       EMPLOYEES
@@ -688,7 +735,7 @@ function AdminDashBoard() {
                       >
                         <div
                           className="list-group"
-                          style={{ maxHeight: "1350px", overflowY: "auto" }}
+                          style={{ maxHeight: "220px", overflowY: "auto" }}
                         >
                           {filteredEmployees.map((employee) => (
                             <div
@@ -711,7 +758,8 @@ function AdminDashBoard() {
                                       position: "relative",
                                       right: "25px",
                                       marginLeft: "0px",
-                                      fontSize: "26px",
+                                      fontSize: "18px",
+                                      height: "10px",
                                     }}
                                   >
                                     {employee.Name.toUpperCase()}
@@ -738,7 +786,7 @@ function AdminDashBoard() {
                                         left: "315px",
                                         bottom: "40px",
                                         marginLeft: "180px",
-                                        marginTop: "20px",
+                                        marginTop: "30px",
                                       }}
                                     ></span>
 
@@ -780,14 +828,13 @@ function AdminDashBoard() {
                   </div>
                 </div>
 
-                
                 <div
                   className="col-md-8"
                   style={{
                     marginTop: "50px",
-                    marginLeft: "-300px",
+                    marginLeft: "-320px",
                     width: "1290px",
-                    height: "629px",
+                    height: "560px",
                   }}
                 >
                   <div
@@ -797,6 +844,7 @@ function AdminDashBoard() {
                       // backgroundColor: "#17A2B8",
                       marginBottom: "40px",
                       width: "845px",
+                      height:"400px"
                     }}
                   >
                     <h5
@@ -808,7 +856,7 @@ function AdminDashBoard() {
                         // backgroundColor: "#17A2B8",
                         color: "black",
                         fontWeight: "1000",
-                        fontSize: "30px",
+                        fontSize: "20px",
                       }}
                     >
                       ASSIGNED TASKS
@@ -832,7 +880,7 @@ function AdminDashBoard() {
                       >
                         <div
                           className="list-group"
-                          style={{ maxHeight: "1350px", overflowY: "auto" }}
+                          style={{ maxHeight: "220px", overflowY: "auto" }}
                         >
                           {filteredTasks.map((task) => (
                             <div
@@ -852,7 +900,7 @@ function AdminDashBoard() {
                                       fontFamily: "Algeria",
                                       marginTop: "20px",
                                       fontWeight: "1000",
-                                      fontSize: "26px",
+                                      fontSize: "18px",
                                     }}
                                   >
                                     {task.empName.toUpperCase()}
@@ -908,12 +956,71 @@ function AdminDashBoard() {
                       </div>
                     </div>
                   </div>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                <ul
+                  style={{
+                    marginTop: "-300px",
+                    fontSize: "30px",
+                    marginLeft: "-0px",
+                    fontFamily: "Montserrat",
+                    fontWeight: "1000",
+                  }}
+                >
+                  TASKS
+                </ul>
+                <div style={{ marginRight: "-0px" }}>
+                  <p style={{ marginLeft: "-10px", fontFamily: "Algeria", fontWeight:"1000" }}>
+                    TOTAL :{" "}
+                    <FaSquare
+                      style={{ backgroundColor: "green", color: "green" }}
+                    />
+                  </p>
+                  <p style={{ marginLeft: "-10px", fontFamily: "Algeria",fontWeight:"1000" }}>
+                    ASSIGNED :{" "}
+                    <FaSquare
+                      style={{ color: "#F3DA06", backgroundColor: "#F3DA06" }}
+                    />
+                  </p>
+                  <p style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                    APPROVAL :{" "}
+                    <FaSquare
+                      style={{ backgroundColor: "red", color: "red" }}
+                    />
+                  </p>
+
+                  <p style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                    REWARDED :{" "}
+                    <FaSquare
+                      style={{ backgroundColor: "black", color: "black" }}
+                    />
+                  </p>
+                </div>
+                  
+                  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"860px", marginTop:"-440px"}} width={800} height={400} >
+        <Pie
+          data={data}
+          cx={120}
+          cy={200}
+          innerRadius={60}
+          outerRadius={80}
+          fill="#8884d8"
+          paddingAngle={5}
+          dataKey="value"
+          style={{color:"black"}}
+        >   
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        
+        </Pie> 
+        <Tooltip/>
+      </PieChart>
                 </div>
               </div>
             </div>
           </div>
         </div>
-       
+      </div>
       </div>
     );
   } else {
