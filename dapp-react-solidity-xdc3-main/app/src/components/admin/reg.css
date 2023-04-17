@@ -43,6 +43,32 @@
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 
+@media screen and (max-width : 768px){
+  .headerrr{
+    margin: auto;
+  }
+  .container .task-list-container  .main{
+    width:500px;
+    margin:auto;
+  }
+
+ .task-due-date{
+  display: none;
+ }
+ .task-name{
+  display:none;
+ }
+ .task-assigned-to{
+  display:none;
+ }
+ .task-list-container{
+  margin-left:-00px;
+ }
+ .task-list{
+  margin-left: 00px;
+ }
+}
+
 
 .form-group {
     display: flex;

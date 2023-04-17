@@ -12,6 +12,7 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart
 import bg from "./grid3.png"
 import ss from "./ss.svg"
 import { BigNumber } from "ethers";
+import "./reg.css"
 
 
 import {
@@ -299,15 +300,15 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
   const COLORS = ['red', '#F3DA06'];
   return (
     <div style={{backgroundImage: `url(${ss})`, height:"1000px"}}>
-    <div className="container" >
+    <div className="containerr" >
       <div className="main" >
-        <h1 style={{fontFamily:"Algeria", fontSize:"50px"}}>REWARD EMPLOYEES</h1>
+        <h1 className="headerrr" style={{fontFamily:"Algeria", fontSize:"50px"}}>REWARD EMPLOYEES</h1>
         <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-120px"}}>
           {" "}
           <SidebarMenu />{" "}
 </div>
 
-<div style={{ 
+<div className="container" style={{ 
   background: 'white', 
   padding: '20px', 
   borderRadius: '8px', 
@@ -324,8 +325,8 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
         <div className="task-list-header">
           <div className="task-name" style={{ marginLeft:"-30px" }}>UID</div>
           <div className="task-name">Task Name</div>
-          <div className="task-name">Name</div>
-          <div className="task-name">Wallet Address</div>
+          <div className="task-namee">Name</div>
+          <div className="task-wallet">Wallet Address</div>
           {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
           <div className="task-due-date">Due Date</div>
           <div className="task-due-date">Reward</div>
@@ -343,9 +344,9 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
               paddingBottom: '10px',
             }}
           >
-            <div className="task-name">{(task._id).slice(-5)}</div>
+            <div className="task-nameee">{(task._id).slice(-5)}</div>
             <div className="task-name">{task.task}</div>
-            <div className="task-assigned-to">{task.empName}</div>
+            <div className="task-assigned-too">{task.empName}</div>
             <div className="task-assigned-to">xdc...{task.empWalletAddress.slice(-5)}</div>
             <div className="task-due-date">{task.deadline}</div>
             <div className="task-progress">{task.rewards}</div>

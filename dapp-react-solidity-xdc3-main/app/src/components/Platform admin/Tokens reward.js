@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import jet from "./jet.gif";
+import "./token.css"
 
 const {
   executeTransaction,
@@ -186,7 +187,7 @@ const PlatformAdmin = () => {
   }
   
   return (
-    <div
+    <div className="first"
       style={{
         backgroundColor: "#2051E9",
         textAlign: "center",
@@ -208,7 +209,7 @@ const PlatformAdmin = () => {
         EMPLOYEE REWARD SYSTEM
       </h1>
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <div
+        <div className="yt"
           style={{
             fontSize: "40px",
             fontFamily: "Montserrat",
@@ -227,6 +228,7 @@ const PlatformAdmin = () => {
             <b style={{ fontFamily: "Montserrat" }}>EASE!</b>
           </div>
           <ul
+         
             style={{
               marginTop: "40px",
               fontFamily: "Montserrat",
@@ -246,18 +248,21 @@ const PlatformAdmin = () => {
         </div>
       </div>
       <div
+                     className="tableh"
+
         style={{
           margin: "0 auto",
           width: "1000px",
           border: "1px solid #ccc",
           borderRadius: "20px",
-          overflow: "hidden",
+          overflow: "auto",
           height: "auto",
           boxShadow: "0px 0px 30px rgba(255, 255, 255, 1)",
           marginTop: "30px",
         }}
       >
         <table
+
           style={{
             minWidth: "100%",
             height: "auto",
@@ -265,7 +270,7 @@ const PlatformAdmin = () => {
             backgroundColor: "transparent",
           }}
         >
-          <thead>
+          <thead >
             <tr
               style={{
                 backgroundColor: "#2051E9",
@@ -274,12 +279,14 @@ const PlatformAdmin = () => {
               }}
             ></tr>
             <tr
+              
               style={{
                 backgroundColor: "#2051E9",
                 border: "1px solid white",
                 color: "white",
               }}
             >
+             
               <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
                 Company Name
               </th>
