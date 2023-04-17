@@ -12,6 +12,7 @@ import bg from "./y.svg";
 import g from "./sc.svg";
 // import roadmap from "./roadgif.gif";
 import road from "./dia.gif"
+import "./ap.css";
 
 const Openpage = () => {
   useEffect(() => {
@@ -44,7 +45,7 @@ const Openpage = () => {
           </span>
         </div>
         <div>
-          <img
+          <img className="ac"
             src={ac}
             style={{
               width: "500px",
@@ -81,10 +82,11 @@ const Openpage = () => {
           </Link>
         </div>
       </div>
-      <div style={{ backgroundImage: `url(${g})` }}>
+      <div  style={{ backgroundImage: `url(${g})` }}>
         <div className={styles.open}>
           <div className={styles.image_container} id="empp">
             <img
+            className="emping"
               src={employeeImage}
               style={{
                 width: "550px",
@@ -94,7 +96,7 @@ const Openpage = () => {
               }}
               alt="Employee"
             />
-            <div style={{ marginTop: "-550px" }}>
+            <div className="emptext" style={{ marginTop: "-550px" }}>
               <h3 className={styles.txt}>EMPLOYEE</h3>
               <p
                 className={styles.p}
@@ -143,6 +145,7 @@ const Openpage = () => {
             </div>
 
             <img
+            className="coming"
               src={companyImage}
               style={{
                 width: "750px",

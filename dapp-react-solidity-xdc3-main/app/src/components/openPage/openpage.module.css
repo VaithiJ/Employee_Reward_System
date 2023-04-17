@@ -171,10 +171,23 @@
   margin-right: 100px;
   font-size: 16px;
 }
+@media screen and (max-width: 768px) {
+  .about {
+    padding: 20px;
+  }
 
+  .a1 {
+    font-size: 24px;
+  }
+
+  .p {
+    font-size: 16px;
+  }
+}
 
 .image_container {
   display: flex;
+  flex-direction: row;
   align-items: center;
   margin-top: 100px;
 }
