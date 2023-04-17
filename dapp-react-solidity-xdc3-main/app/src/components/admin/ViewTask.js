@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import SidebarMenu from "./side";
 import bg from "./grid3.png"
 import stack from "./lay.svg"
+import "./real.css"
 
 const CreateModal = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -88,8 +89,8 @@ const CreateModal = (props) => {
   <div className="me" >
 <div className="modal-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
      <header style={{ backgroundColor: "#69C5FA", padding: "1.5rem 0", height: "100px", color: "#F2F2F2", width: "100%" }}>
-       <div style={{ position: "relative", bottom: "20px", right:"600px" }}>
-       <SidebarMenu />
+       <div className="sidejs" style={{ position: "relative", bottom: "20px", right:"600px" }}>
+       <SidebarMenu  />
       </div>
        <h2 className="heading" style={{ fontFamily: "Axiforma", fontSize: "2.5rem", marginBottom: "1.5rem", color: "black", textAlign: "center", textTransform: "uppercase", position: "relative", bottom: "60px" }}>VIEW TASK</h2>
      </header>     

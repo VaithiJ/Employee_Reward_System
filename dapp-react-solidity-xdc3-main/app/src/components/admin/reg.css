@@ -47,11 +47,15 @@
   .headerrr{
     margin: auto;
   }
-  .container .task-list-container  .main{
-    width:500px;
-    margin:auto;
-  }
-
+  .container   .main{
+display: none;  }
+.containerrr{
+max-width: 30%;
+}
+.task-list-container{
+  max-width: 500px;
+  margin-left: -8100px
+}
  .task-due-date{
   display: none;
  }
