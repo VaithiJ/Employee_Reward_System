@@ -38,6 +38,10 @@ const CompanySchema = new mongoose.Schema({
     walletAddress : {
         type: String,
         unique:true
+    },
+    profile:{
+        type: String,
+        default:"",
     }
 
     // status:{

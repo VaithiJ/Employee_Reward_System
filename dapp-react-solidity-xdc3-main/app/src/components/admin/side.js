@@ -4,9 +4,11 @@ import { FaBars, FaThumbsUp, FaHome , FaPowerOff} from 'react-icons/fa';
 import { AiOutlineClose,AiOutlineMenu } from 'react-icons/ai';
 import { IoMdAddCircle } from 'react-icons/io';
 import { BiTask } from 'react-icons/bi';
-import { FiGift ,FiPower} from 'react-icons/fi';
+import { FiGift ,FiPower,FiEdit3} from 'react-icons/fi';
 import './SidebarMenu.css';
-
+import {storage} from "../../firebase.js"
+import {v4 as uuidv4} from "uuid";
+import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import { useCookies } from "react-cookie";
@@ -25,6 +27,10 @@ const SidebarMenu = () => {
   ]);
   const toke = jwt_decode(cookies.access_token);
   const API_URL = "http://localhost:8800";
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [red, setred] = useState([]);
+  const [fileList, setFileList] = useState([]);
+   
 
   const handleLogout = () => {
     removeCookie("access_token");
@@ -42,6 +48,65 @@ const SidebarMenu = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  const uploadFile = (fileUpload) => {
+    if (fileUpload == null) return;
+    const fileName = fileUpload.name + uuidv4();
+    const fileRef = ref(storage, `UserProfile/Company/${toke.name}/${fileName}`);
+    uploadBytes(fileRef, fileUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setFileList((prev) => [...prev, { name: fileName, url: url }]);
+        setAvatarUrl(url);
+        const red = fileName;
+        console.log(fileName);
+        
+        axios
+          .put(
+            `${API_URL}/updateprofileee/${toke.name}`,
+            { profile: fileName },
+            { withCredentials: true }
+          )
+          .then((response) => {
+            const updated = response.data.updatedprofile;
+            
+          });
+      });
+    });
+  }
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.put(`${API_URL}/updateprofileee/${toke.name}`);
+        const red = response.data.updatedprofileC;
+        console.log("mpp",red)
+        setred(red);
+  
+        const storageRef = ref(storage, `UserProfile/Company/${toke.name}`);
+        const listResult = await listAll(storageRef);
+  
+        const itemRef = listResult.items.find((ref) => ref.name === red.profile);
+        if (itemRef) {
+          const url = await getDownloadURL(itemRef);
+          setAvatarUrl(url);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchProfile();
+  }, []);
+  const handleButtonClick = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/jpeg";
+    input.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      uploadFile(file);
+    });
+    input.click();
+  };
+  const buttonRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -70,13 +135,35 @@ const SidebarMenu = () => {
         <div className="sidebar-header" ></div>
         <ul className="list-unstyled" >
         <li id="fonnn">
-        <img src={ 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
+        <img src={ avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
            borderRadius: '50%',
         marginRight: '20px',
         width:"150px",
         height:"150px"
 
-      }} />  </li>
+      }} /> <button
+      ref={buttonRef}
+      onClick={handleButtonClick}
+      style={{
+        position: "relative",
+        top: "80%",
+        left: "48%",
+        transform: "translate(-50%, -50%)",
+        backgroundColor: "#007bff",
+        borderRadius: "50%",
+        width: "30px",
+        height: "30px",
+        border: "none",
+        boxShadow: "0px 0px 10px #ccc",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "pointer",
+        zIndex: 1,
+      }}
+    >
+      Edit
+    </button> </li>
 
       <li style={{color:"white", marginLeft:"-20px"}}>{toke.name}</li>
 
