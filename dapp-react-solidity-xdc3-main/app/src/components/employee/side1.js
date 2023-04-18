@@ -115,7 +115,7 @@ const SidebarMenu12 = () => {
 
   return (
     <div ref={menuRef} style={{marginTop:"20px"}}>
-    <button className="btn btn-primary" id="menu-toggle" style={{background:"#009FBD",color:"#000000",width:"50px",border:"none",position:"relative",top:"5px"}} onMouseEnter={toggleSidebar}>
+    <button className="btn btn-primary" id="menu-toggle" style={{background:"#FFFFFF",color:"#000000",width:"50px",border:"none",position:"relative",top:"5px"}} onMouseEnter={toggleSidebar}>
        {isOpen ? <AiOutlineClose style={{fontSize:"2rem",position:"relative",right:"0px",}} /> : <AiOutlineMenu style={{fontSize:"2rem",position:"relative",right:"0px",height:"40px",width:"40px"}} />}
      </button>
      <nav className={`sidebar-menu ${isOpen ? 'open' : ''}`} onMouseLeave={handleMouseLeave}>
@@ -133,14 +133,14 @@ const SidebarMenu12 = () => {
     border: "none"}}></img>
 </a>
 
-<li style={{color:"white", marginLeft:"-20px",fontSize:"2rem",position:"relative",top:"30px"}} >
+<li style={{color:"white", marginLeft:"-20px",fontSize:"2rem",position:"relative",top:"30px",fontFamily: "Secular One"}} >
     {toke.name} </li>
     <br />
      {employees.map((comp) => (
-    <li style={{fontSize:"0.8rem",position:"relative",top:"6px",color:"white",right:"10px"}}>{comp.comName} </li>
+    <li style={{fontSize:"0.8rem",position:"relative",top:"6px",color:"white",right:"10px",fontFamily:"Montserrat"}}>{comp.comName} </li>
 ))}
-<Link to="/employeehome" style={{marginLeft:"-200px", fontSize:"20px",position:"relative",top:"20px"}}>
-      <FaHome className="fonnn"  /> Home
+<Link to="/employeehome" style={{marginLeft:"-200px", fontSize:"14px",position:"relative",top:"20px",fontFamily:"Montserrat"}}>
+      <FaHome className="fonnn"  /> <b style={{fontSize:"14px",fontFamily:"Montserrat"}}> HOME </b>
     </Link>
 </li>
 
@@ -153,12 +153,12 @@ const SidebarMenu12 = () => {
        
          <li>
            <a href="/login"
-             style={{ color: "#FFFFFF",position:"relative",top:"20px",textAlign:"center" }}
+             style={{ color: "#FFFFFF",position:"relative",top:"20px" }}
              onMouseOver={(e) => (e.target.style.color = "#000000")}
              onMouseOut={(e) => (e.target.style.color = "#FFFFFF")}
              onClick={handleLogout}
            >
-             <FiPower style={{fontSize:"20px",marginLeft:"-100px",position:"relative",left:"30px",bottom:"2px"}} className="icon" id="fonnn" /> <b style={{fontSize:"18px",position:"relative",left:"30px" }}>Logout </b>
+             <FiPower style={{fontSize:"14px",marginLeft:"-100px",position:"relative",right:"40px",bottom:"2px"}} className="icon" id="fonnn" /> <b style={{fontSize:"14px",position:"relative",right:"43px" ,fontFamily:"Montserrat"}}>LOGOUT </b>
            </a>
          </li>
        </ul>

@@ -210,14 +210,13 @@ const handleButtonClick = () => {
       });
     },[])
   return (
-    <div style={{ height: "auto" }}>
+    <div style={{ height: "auto",backgroundColor:'#F9F8F8' }}>
       <header style={{ 
-      backgroundColor: '#009FBD',
+      backgroundColor: 'white',
       padding: '20px',
       borderBottom: '1px solid #ddd',
       display: 'flex',
-      alignItems: 'center',
-      boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+      alignItems: 'center'
     }}>  <div style={{display:"flex",position:"relative",bottom:"10px"}}> <SidebarMenu12/></div>
       <img src={avatarUrl || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s'} alt="User Avatar" style={{ 
         borderRadius: '50%',
@@ -231,9 +230,10 @@ const handleButtonClick = () => {
       <p style={{ 
         margin: '0',
         fontSize: '16px',
-        color: '#ffffff',
+        color: '#000000',
         position:"relative",
-        left:"40px"
+        left:"40px",
+        fontFamily: "Secular One"
 
       }}>{toke.name}</p>
       <h1 style={{ 
@@ -245,7 +245,8 @@ const handleButtonClick = () => {
         textAlign:"center",
         position:"relative",
         right:"80px",
-        color:"#FFFFFF"
+        color:"#000000",
+        fontFamily: "Secular One"
       }}>
         USER PROFILE</h1>
         
@@ -334,12 +335,12 @@ const handleButtonClick = () => {
           }}
         >
           <p style={{ display: "inline-block" }}>
-            <b style={{ color: "#537FE7", display: "inline",position:"relative",right:"197px" }}>Name :<b style={{color:"#000000",position:"relative",left:"10px"}}>{toke.name} </b> </b> 
+            <b style={{ color: "#537FE7", display: "inline",position:"relative",right:"197px",fontFamily: "Secular One" }}>Name :<b style={{color:"#000000",position:"relative",left:"10px",fontFamily: "Secular One" }}>{toke.name} </b> </b> 
           </p>
 
           <p>
             {" "}
-            <b style={{ color: "#537FE7" }}> Wallet Address: <b style={{color:"#000000",position:"relative",left:"10px"}}> {toke.wallet} </b></b>
+            <b style={{ color: "#537FE7" ,fontFamily: "Secular One" }}> Wallet Address: <b style={{color:"#000000",position:"relative",left:"10px",fontFamily: "Secular One" }}> {toke.wallet} </b></b>
           </p>
         </div>
         <div>
@@ -359,10 +360,11 @@ const handleButtonClick = () => {
               ":hover": {
                 transform: "scale(1.2)",
                 background: "#FFFFFF",
+                fontFamily: "Secular One" 
               },
             }}
           >
-            Token History{" "}
+            <b style={{ fontFamily: "Secular One" }}>Token History{" "} </b>
             <IoIosArrowDropdownCircle style={{ fontSize: "30px" }} />
           </div>
         </div>
@@ -374,7 +376,7 @@ const handleButtonClick = () => {
             marginLeft: "238px",
             position: "relative",
             top: "55px",
-            borderRadius: "20px",
+            borderRadius: "20px" 
           }}
         >
           <div style={{ textAlign: "center", height: "40px" }}>
@@ -389,7 +391,7 @@ const handleButtonClick = () => {
                 }}
               >
                 {" "}
-                <b style={{ color: "#537FE7", padding: "40px" }}>
+                <b style={{ color: "#537FE7", padding: "40px",fontFamily: "Secular One"}}>
                   Token History
                 </b>{" "}
               </p>
@@ -398,20 +400,20 @@ const handleButtonClick = () => {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th style={{ color: "#537FE7", textAlign: "center" }}>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>
                   Company 
                 </th>
-                <th style={{ color: "#537FE7", textAlign: "center" }}>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>
                   Rewarded Tasks
                 </th>
-                <th style={{ color: "#537FE7", textAlign: "center" }}>Completion Date</th>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>Completion Date</th>
                 {/* <th style={{ color: "#537FE7", textAlign: "center" }}>
                   Deadline
                 </th> */}
-                <th style={{ color: "#537FE7", textAlign: "center" }}>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>
                   Tokens Earned
                 </th>
-                <th style={{ color: "#537FE7", textAlign: "center" }}>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>
                   Certificates
                 </th>
               </tr>
@@ -419,20 +421,21 @@ const handleButtonClick = () => {
             <tbody>
               {tasks.map((token, index) => (
                 <tr key={index}>
-                  <td >{token.companyName}</td>
-                  <td >{token.task}</td>
-                  <td align="center">{token.deadline}</td>
+                  <td style={{ fontFamily: "Secular One" }}>{token.companyName}</td>
+                  <td style={{ fontFamily: "Secular One" }}>{token.task}</td>
+                  <td align="center" style={{ fontFamily: "Secular One" }}>{token.deadline}</td>
                   {/* <td align="center">{token.rating}</td> */}
-                  <td align="center">{token.rewards}</td>
-                  <td align="center"><button style={{ 
+                  <td align="center" style={{ fontFamily: "Secular One" }}>{token.rewards}</td>
+                  <td align="center" ><button style={{ 
                 marginRight: '10px', 
                 padding: '8px 16px', 
                 background: 'blue', 
                 color: 'white', 
                 border: 'none', 
                 borderRadius: '4px', 
-                cursor: 'pointer' 
-              }}onClick={() => viewCertificate(token)}>View</button></td>
+                cursor: 'pointer',
+                fontFamily: "Secular One" 
+              }}onClick={() => viewCertificate(token)}> View</button></td>
                 </tr>
               ))}
             </tbody>
@@ -451,35 +454,35 @@ const handleButtonClick = () => {
       >
         <div style={{ textAlign: "center" }}>
           <h6>
-            <b style={{ fontSize: "1.4rem", color: "#537FE7" }}>INFORMATION</b>
+            <b style={{ fontSize: "1.4rem", color: "#537FE7",fontFamily: "Secular One"  }}>INFORMATION</b>
           </h6>{" "}
         </div>
         <hr className="mt-0 mb-4" />
         <div className="row pt-1">
           <div className="col-6 mb-3 d-flex align-items-left" style={{position:"relative",left:"50px"}} >
-            <h6 style={{ color: "#537FE7", marginRight: "20px" }}>Name:</h6>
-            <p className="text-muted  mb-6">{toke.name}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily: "Secular One" }}>Name:</h6>
+            <p className="text-muted  mb-6" style={{fontFamily: "Secular One" }}>{toke.name}</p>
           </div>
           <div className="col-6 mb-3 d-flex align-items-left" style={{position:"relative",left:"50px"}}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px"  }}>Email:</h6>
-            <p className="text-muted mb-6">{toke.email}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily: "Secular One"  }}>Email:</h6>
+            <p className="text-muted mb-6" style={{fontFamily: "Secular One" }}>{toke.email}</p>
           </div>
           <div className="col-6 mb-3 d-flex align-items-left" style={{position:"relative",left:"50px"}}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px"  }}>Phone:</h6>
-            <p className="text-muted  mb-6">{toke.mobile}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily: "Secular One"  }}>Phone:</h6>
+            <p className="text-muted  mb-6" style={{fontFamily: "Secular One" }}>{toke.mobile}</p>
           </div>
 
           <div className="col-6 mb-3 d-flex align-items-left" style={{position:"relative",left:"50px"}}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px"  }}>Address:</h6>
-            <p className="text-muted mb-0">{toke.address}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily: "Secular One"  }}>Address:</h6>
+            <p className="text-muted mb-0" style={{fontFamily: "Secular One" }}>{toke.address}</p>
           </div>
           <div className="col-6 mb-3 d-flex align-items-left" style={{position:"relative",left:"50px"}}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px"  }}>Wallet Address:</h6>
-            <p className="text-muted  mb-6">{toke.wallet}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily: "Secular One"  }}>Wallet Address:</h6>
+            <p className="text-muted  mb-6" style={{fontFamily: "Secular One" }}>{toke.wallet}</p>
           </div>
           <div className="col-6 mb-3 d-flex align-items-left" style={{position:"relative",left:"50px"}}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px"  }}>ID:</h6>
-            <p className="text-muted  mb-6">{toke.id}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px",fontFamily: "Secular One"   }}>ID:</h6>
+            <p className="text-muted  mb-6" style={{fontFamily: "Secular One" }}>{toke.id}</p>
           </div>
         </div>
         <div style={{ marginTop: "80px" }}>
@@ -489,7 +492,8 @@ const handleButtonClick = () => {
                 style={{
                   fontSize: "1.4rem",
                   color: "#537FE7",
-                  textAlign: "center",
+                  textAlign: "center"
+                  ,fontFamily: "Secular One" 
                 }}
               >
                 COMPANY
@@ -499,12 +503,12 @@ const handleButtonClick = () => {
           <hr className="mt-0 mb-4" />
           {employees.map((emp)=>( <div className="row pt-1">
             <div className="col-6 mb-3 d-flex align-items-left" style={{position:"relative",left:"50px"}}>
-              <h6 style={{ color: "#537FE7",marginRight: "20px" }}>Company Name:</h6>
-              <p className="text-muted mb-0">{emp.comName}</p>
+              <h6 style={{ color: "#537FE7",marginRight: "20px",fontFamily: "Secular One"  }}>Company Name:</h6>
+              <p className="text-muted mb-0" style={{fontFamily: "Secular One" }}>{emp.comName}</p>
             </div>
             <div className="col-6 mb-3 d-flex align-items-left" style={{position:"relative",left:"50px"}}>
-              <h6 style={{ color: "#537FE7",marginRight: "20px" }}>EmployeeId:</h6>
-              <p className="text-muted mb-0">{emp.comId}</p>
+              <h6 style={{ color: "#537FE7",marginRight: "20px",fontFamily: "Secular One"  }}>EmployeeId:</h6>
+              <p className="text-muted mb-0" style={{fontFamily: "Secular One" }}>{emp.comId}</p>
             </div>
             </div>))}
          

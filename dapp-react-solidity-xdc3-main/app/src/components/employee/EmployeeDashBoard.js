@@ -247,17 +247,16 @@ console.log("rowwwww",Alltasks)
     <div>
       <header
         style={{
-          backgroundColor: "#009FBD",
           padding: "30px",
           display: "flex",
           justifyContent: "space-between",
           textAlign: "center",
-          height:"130px",
-          boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+          height:"100px",
+          backgroundColor:"white"
         }}
       >
         
-        <div style={{ position: "relative", bottom: "10px" }}>
+        <div style={{ position: "relative", bottom: "33px" }}>
           <SidebarMenu12
             style={{ color: "#fff", backgroundColor: "#009FBD" }}
           />{" "}
@@ -274,10 +273,11 @@ console.log("rowwwww",Alltasks)
             height: "50px",
             backgroundColor: "#1196B0",
             width: "130px",
-            boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+            boxShadow : "0 2px 5px rgba(0, 0, 0,1.0) ",
             position:"relative",
-            right:"450px",
-            bottom:"10px"
+            left:"250px",
+            bottom:"30px",
+            fontFamily: "Secular One"
 
           }}
           onMouseEnter={(e) => {
@@ -298,15 +298,16 @@ console.log("rowwwww",Alltasks)
         <h1
           style={{
             color: "white",
-            fontFamily: "Montserrat",
+            fontFamily: "Secular One",
             textAlign: "center",
             position: "relative",
-            right: "330px",
-            top: "15px",
+            right: "800px",
+            top: "-5px",
             fontWeight: "bolder",
+            color:"black"
           }}
         >
-          EMPLOYEE DASHBOARD
+        DASHBOARD
         </h1>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ position: "relative", left: "170px" }}></div>
@@ -320,6 +321,7 @@ console.log("rowwwww",Alltasks)
                 height: "35px",
                 width: "35px",
                 top: "17px",
+                color:"black"
               }}
             />
             {onboarded ? (
@@ -370,6 +372,7 @@ console.log("rowwwww",Alltasks)
                           borderRadius: "10px",
                           boxShadow: "2px 2px 5px grey",
                           background: "#f2f2f2",
+                          fontFamily: "Secular One"
                         }}
                       >
                         You have been Onboarded by {comp.comName}
@@ -383,6 +386,7 @@ console.log("rowwwww",Alltasks)
                           borderRadius: "10px",
                           boxShadow: "2px 2px 5px grey",
                           background: "#f2f2f2",
+                          fontFamily: "Secular One"
                         }}
                       >
                         You have been assigned with {pendingTasks} tasks
@@ -404,7 +408,8 @@ console.log("rowwwww",Alltasks)
     alignItems: "center",
     fontStyle: "kanit",
     flexWrap: "wrap", // Add this line
-    width: "100%", // Add this line to occupy full width of the page
+    width: "100%",
+    backgroundColor:'#F9F8F8' // Add this line to occupy full width of the page
   }}
 >
   <div
@@ -459,7 +464,7 @@ console.log("rowwwww",Alltasks)
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily:"Algeria",fontSize:"1.2rem",fontWeight:"bolder"}}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily: "Secular One",fontSize:"1.2rem",fontWeight:"bolder"}}>
               Pending
             </div>
           </div>
@@ -504,7 +509,7 @@ console.log("rowwwww",Alltasks)
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Algeria" ,fontSize:"1.2rem",fontWeight:"bolder"}}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Secular One" ,fontSize:"1.2rem",fontWeight:"bolder"}}>
               Approved
             </div>
           </div>
@@ -550,7 +555,7 @@ console.log("rowwwww",Alltasks)
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Algeria",fontSize:"1.2rem",fontWeight:"bolder" }}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Secular One",fontSize:"1.2rem",fontWeight:"bolder" }}>
               All Tasks
             </div>
           </div>
@@ -560,7 +565,7 @@ console.log("rowwwww",Alltasks)
   </div>
   {onboarded ? (
   <div style={{ display: 'flex', alignItems: 'center' ,position:"relative",left:"700px",top:"100px",width:"350px"}}>
-                <ul style={{marginTop:"-300px", fontSize:"30px", marginLeft:"-180px", fontFamily:"Montserrat", fontWeight:"1000"}}>
+                <ul style={{marginTop:"-300px", fontSize:"30px", marginLeft:"-180px", fontFamily: "Secular One", fontWeight:"1000"}}>
                 TASKS</ul>
   <div style={{ marginRight: '-70px' }}>
     
@@ -733,7 +738,7 @@ console.log("rowwwww",Alltasks)
              className="card-header font-weight-bold"
              style={{
                textAlign: "center",
-               fontFamily: "Algeria",
+               fontFamily: "Secular One",
                padding: "20px",
                // backgroundColor: "#17A2B8",
                color: "black",
@@ -765,7 +770,7 @@ console.log("rowwwww",Alltasks)
                         <h6
                           className="font-weight-bold mb-0"
                           style={{
-                            fontFamily: "Montserrat",
+                            fontFamily: "Secular One",
                             marginTop: "20px",
                           }}
                         >
@@ -775,7 +780,7 @@ console.log("rowwwww",Alltasks)
                           </b>
                         </h6>
 
-                        <small>Deadline: {task.deadline}</small>
+                        <small style={{fontFamily: "Montserrat"}}>Deadline: {task.deadline}</small>
                       </div>
                       <div
                         style={{
@@ -799,7 +804,7 @@ console.log("rowwwww",Alltasks)
                             position: "relative",
                             top: "7px",
                             color: "#000000",
-                            fontFamily: "Algeria",
+                            fontFamily: "Secular One",
                             fontSize:'1.2rem' // updated text color
                           }}
                         >
