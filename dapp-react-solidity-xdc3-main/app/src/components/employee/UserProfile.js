@@ -513,7 +513,7 @@ const handleButtonClick = () => {
       </div>
 
       <div></div>
-      <footer style={{position:"relative",top:"40px"}}>  <Footercr/> </footer>
+      {/* <footer >  © All Rights Reserved | 2023 SecurekloudTechnologies. </footer> */}
       
     </div>
   );
