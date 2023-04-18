@@ -65,7 +65,7 @@ export default function Register() {
             
           }}
         >
-                    <p style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Noto Serif"}}>Be Part of the Future - Register with Blockchain and Unlock Your Employee Rewards!</b></p>
+                    <p style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Secular One"}}>Be Part of the Future - Register with Blockchain and Unlock Your Employee Rewards!</b></p>
                     <Link to="/"><FaHome style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
 
           <div style={{display:"flex", flexDirection:"row"}}>
@@ -83,8 +83,8 @@ export default function Register() {
           >
             <div style={{ textAlign: "center", margin: "auto" }}>
               <div>
-                <h2 style={{fontFamily:"Montserrat", fontSize:"28px", fontWeight:"bold"}}>JOIN US</h2>
-                <h5 style={{fontFamily:"Montserrat", fontSize:"20px",fontWeight:"bold"}}>CREATE YOUR USER ACCOUNT</h5>
+                <h2 style={{fontFamily:"Secular One", fontSize:"28px", fontWeight:"bold"}}>JOIN US</h2>
+                <h5 style={{fontFamily:"Secular One", fontSize:"20px",fontWeight:"bold"}}>CREATE YOUR USER ACCOUNT</h5>
               </div>
             </div>
             <div style={{ color: "black" }}>
@@ -176,7 +176,7 @@ export default function Register() {
                   <div style={{ marginLeft: "110px" }}>
                     <label
                       className="form-check-label"
-                      style={{ color: "black" , marginLeft:"30px"}}
+                      style={{ color: "black" , marginLeft:"30px",fontFamily:"Secular One"}}
                     >
                       <input
                         type="checkbox"
@@ -184,7 +184,7 @@ export default function Register() {
                         checked={checkbox}
                         onChange={(e) => setCheckbox(e.target.checked)}
                         required
-                        style={{marginLeft:"-20px"}}
+                        style={{marginLeft:"-20px", }}
                       />
                       I_agree_to_the_terms_and_conditions
                     </label>
@@ -194,12 +194,12 @@ export default function Register() {
               <button
                 type="submit"
                 className="btn btn-primary"
-                style={{ marginLeft: "0px" }}
+                style={{ marginLeft: "0px",fontFamily:"Secular One" }}
               >
                 Register
               </button>
-              <div style={{ marginTop: "30px", marginRight: "130px" }}>
-                <p className="forgot-password text-right">
+              <div style={{ marginTop: "30px", marginRight: "0px" }}>
+                <p className="forgot-password text-right" style={{fontFamily:"Secular One"}}>
                   Already registered <Link to="/login">log in?</Link>
                 </p>
               </div>

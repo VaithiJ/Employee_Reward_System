@@ -70,7 +70,7 @@ export default function RegisterComp() {
             marginLeft:"300px"
           }}
         >
-           <p style={{fontSize:"40px",paddingTop:"30px", marginLeft:"120px" }}><b style={{fontFamily:"Noto Serif"}}>Revolutionize Your Business with Blockchain - Register Now and Empower Your Workforce!</b></p>
+           <p style={{fontSize:"40px",paddingTop:"30px", marginLeft:"120px" }}><b style={{fontFamily:"Secular One"}}>Revolutionize Your Business with Blockchain - Register Now and Empower Your Workforce!</b></p>
                     <Link to="/"><FaHome style={{marginLeft:"-1200px", marginTop:"-230px", width:"110px", height:"40px", color:"black"}}/></Link>
 
           <div style={{display:"flex", flexDirection:"row"}}>
@@ -88,8 +88,8 @@ export default function RegisterComp() {
           >
             <div style={{ textAlign: "center", margin: "auto" }}>
               <div >
-                <h2 className={styles.txt} style={{marginLeft:"90px"}}>JOIN US</h2>
-                <h5 className={styles.p} style={{marginTop:"-40px", fontWeight:"bold"}}>CREATE YOUR COMPANY ACCOUNT</h5>
+                <h2 className={styles.txt} style={{marginLeft:"90px",fontFamily:"Secular One"}}>JOIN US</h2>
+                <h5 className={styles.p} style={{marginTop:"-40px", fontWeight:"bold",fontFamily:"Secular One"}}>CREATE YOUR COMPANY ACCOUNT</h5>
               </div>
             </div>
             <div style={{ color: "black" }}>
@@ -176,7 +176,7 @@ export default function RegisterComp() {
                   <div style={{ marginLeft: "180px" }}>
                     <label
                       className="form-check-label"
-                      style={{ color: "black", marginLeft:"-30px" }}
+                      style={{ color: "black", marginLeft:"-30px" ,fontFamily:"Secular One"}}
                     >
                       <input
                         type="checkbox"
@@ -197,8 +197,8 @@ export default function RegisterComp() {
               >
                 Register
               </button>
-              <div style={{ marginTop: "30px", marginRight: "0px" }}>
-                <p className="forgot-password text-right">
+              <div style={{ marginTop: "30px", marginRight: "0px",fontFamily:"Secular One" }}>
+                <p className="forgot-password text-right" style={{fontFamily:"Secular One"}}>
                   Already registered <Link to="/logincomp">log in?</Link>
                 </p>
               </div>

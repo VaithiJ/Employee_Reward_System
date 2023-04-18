@@ -15,6 +15,25 @@
         
     
 }
+.bounce{
+  width: 600px;
+  height: 600px;
+  margin-top: 300px;
+margin-left: -570px;
+animation: bounce 3s infinite;
+}
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateX(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital@1&display=swap');

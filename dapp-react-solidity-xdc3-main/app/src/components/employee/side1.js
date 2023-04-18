@@ -313,7 +313,7 @@ const SidebarMenu12 = () => {
     {toke.name} </li>
     <br />
      {employees.map((comp) => (
-    <li style={{fontSize:"0.8rem",position:"relative",top:"6px",color:"white",right:"10px",fontFamily:"Montserrat"}}>{comp.comName} </li>
+    <li style={{fontSize:"16px",position:"relative",top:"6px",color:"white",right:"10px",fontFamily:"Montserrat"}}>{comp.comName} </li>
 ))}
 <Link to="/employeehome" style={{marginLeft:"-200px", fontSize:"14px",position:"relative",top:"20px",fontFamily:"Montserrat"}}>
       <FaHome className="fonnn"  /> <b style={{fontSize:"14px",fontFamily:"Montserrat"}}> HOME </b>

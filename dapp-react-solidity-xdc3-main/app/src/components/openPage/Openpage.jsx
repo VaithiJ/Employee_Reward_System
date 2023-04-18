@@ -9,10 +9,11 @@ import { Link } from "react-router-dom";
 import Slideshow from "./carousel/car";
 import "./openpage.module.css";
 import bg from "./y.svg";
-import g from "./sc.svg";
+import g from "./sadd.svg";
 // import roadmap from "./roadgif.gif";
 import road from "./dia.gif"
 import "./ap.css";
+import sds from "./sds.png"
 
 const Openpage = () => {
   useEffect(() => {
@@ -20,7 +21,7 @@ const Openpage = () => {
   }, []);
 
   return (
-    <div className="all">
+    <div className="all" >
       <div
         className={styles.open}
         style={{
@@ -39,7 +40,7 @@ const Openpage = () => {
         >
           <span
             className={styles.span}
-            style={{ paddingTop: "200px", textShadow: "0px 0px 2px" }}
+            style={{ paddingTop: "200px", textShadow: "0px 0px 2px", fontFamily:"Secular One" }}
           >
             Employee Reward System{" "}
           </span>
@@ -186,13 +187,15 @@ const Openpage = () => {
           </Link>
           <br />
         </div>
-        <div style={{}} ><div><img
+        <div  ><div>
+          <img className={styles.bounce} src={sds} />
+          <img
               src={road}
               style={{
                 width: "700px",
                 height: "1000px",
-                marginTop: "70px",
-                marginLeft: "-600px",
+                marginTop: "-820px",
+                marginLeft: "700px",
                 // boxShadow: "2px 2px 27px -1px rgba(0,0,0,0.41)",
                 // boxShadow: "0px 24px 64px rgba(38, 33, 74,0.1)"
                 

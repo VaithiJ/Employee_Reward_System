@@ -72,13 +72,13 @@ export default function SignInPage() {
   
 
         <div className="text-center m-5-auto" style={{marginTop:"-10px"}}>
-        <p style={{fontSize:"40px",paddingTop:"30px", marginLeft:"60px" }}><b style={{fontFamily:"Noto Serif"}}>Securely Connect to Your Business - Login to Your Blockchain-Enabled Company Portal Now!</b></p>
-                    <Link to="/"><FaHome style={{marginLeft:"-1250px", marginTop:"-240px", width:"110px", height:"40px",  color:"black"}}/></Link>
+        <p style={{fontSize:"36px",paddingTop:"30px", marginLeft:"60px" }}><b style={{fontFamily:"Secular One"}}>Securely Connect to Your Business - Login to Your Blockchain-Enabled Company Portal Now!</b></p>
+                    <Link to="/"><FaHome style={{marginLeft:"-1250px", marginTop:"-230px", width:"110px", height:"40px",  color:"black"}}/></Link>
 
-          <div style={{display:"flex", flexDirection:"row"}}>
-        <img src={companyImage} style={{width:"500px", height:"550px", marginLeft:"150px", marginTop:"50px"}}/>
-          <form onSubmit={handleLogin} style={{marginTop:"120px",marginLeft:"145px",marginRight:"50px",marginBottom:"100px", boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",borderRadius:"20px", backgroundColor:"transparent"}}>
-            <h2 className={styles.txt} style={{marginLeft:"70px", marginTop:"30px", fontSize:"30px"}}>Login</h2>
+          <div style={{display:"flex", flexDirection:"row", marginTop:"-100px"}}>
+        <img src={companyImage} style={{width:"500px", height:"550px", marginLeft:"70px", marginTop:"50px"}}/>
+          <form onSubmit={handleLogin} style={{height:"500px",marginTop:"120px",marginLeft:"245px",marginRight:"50px",marginBottom:"100px", boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",borderRadius:"20px", backgroundColor:"transparent"}}>
+            <h2 className={styles.txt} style={{marginLeft:"70px", marginTop:"30px", fontSize:"30px", fontFamily:"Secular One"}}>Login</h2>
             <p>
               <label>Company Name</label>
               <br />
@@ -114,15 +114,15 @@ export default function SignInPage() {
               </button> 
             </p>
             <footer>
-              <p>
-                <Link to="/registercompany">
+              <p style={{fontFamily:"Secular One"}}>
+                <Link to="/registercompany" style={{fontFamily:"Secular One"}}>
                   {" "}
                   First time? Create an account
                 </Link>
                 .
               </p>
-              <p>
-                <Link to="/">Back to Homepage</Link>.
+              <p style={{fontFamily:"Secular One"}}>
+                <Link to="/"style={{fontFamily:"Secular One"}}>Back to Homepage</Link>.
               </p>
             </footer>
           </form>

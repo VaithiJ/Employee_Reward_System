@@ -19,7 +19,7 @@ const AboutPage = () => {
   };
 
   return (
-    <div >
+    <div style={{backgroundColor:"white", height:"1500px"}}>
       <Onavbar />
       <head>
         <link
@@ -27,11 +27,10 @@ const AboutPage = () => {
           <link href="'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap"  rel="stylesheet"/>
       </head>
 
-      <Container>
         <Row>
           <Col>
             {/* Apply the custom font to the text */}
-            <div className='open'>
+            <div className='opennnn' style={{backgroundColor:"white"}}>
               <h1 style={{ fontSize: '4rem', textAlign: 'center', ...customFont, ...headingGradient ,position:"relative", top:"50px"}}>
                 EMPLOYEE REWARD SYSTEM
               </h1>
@@ -95,8 +94,7 @@ const AboutPage = () => {
          </div>
        </Col>
      </Row>
-   </Container>
-   <footer style={{position:"relative", top:"40px"}}> <Footercr/> </footer>
+   {/* <footer style={{position:"relative", top:"40px"}}> <Footercr/> </footer> */}
  </div>
 
  );

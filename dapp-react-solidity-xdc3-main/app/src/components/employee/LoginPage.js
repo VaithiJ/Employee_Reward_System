@@ -65,7 +65,7 @@ export default function SignInPage() {
           }}
         >
           
-          <p style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Noto Serif"}}>Unlock Your Potential - Login to Your Employee Portal<br/> TODAY!!!</b></p></div>
+          <p style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Secular One"}}>Unlock Your Potential - Login to Your Employee Portal<br/> TODAY!!!</b></p></div>
           <div><Link to="/"><FaHome style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
           <div style={{ display: "flex", flexDirection: "row" }}>
             
@@ -94,7 +94,7 @@ export default function SignInPage() {
               <h2
                 style={{
                   textAlign: "center",
-                  fontFamily: "Montserrat",
+                  fontFamily: "Secular One",
                   fontSize: "28px",
                   fontWeight: "bold",
                 }}

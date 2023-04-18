@@ -1123,7 +1123,7 @@ console.log("rowwwww",Alltasks)
             margin: "1rem",
             marginLeft: "500px",
             marginTop: "30px",
-            borderRadius: "20px",
+            borderRadius: "10px",
             height: "50px",
             backgroundColor: "#1196B0",
             width: "130px",
