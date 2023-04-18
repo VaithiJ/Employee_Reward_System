@@ -66,11 +66,11 @@ function AdminDashBoard() {
   return (
     <div style={{height:"800px"}}>
       <div className="row">
-        <div style={{backgroundColor:"#00F1C3", height:"120px"}}>
+        <div style={{ height:"120px"}}>
         <div className="col-md-2">
           
           <div
-            style={{ marginTop: "40px", marginLeft: "20px", display: "flex" }}
+            style={{ marginTop: "20px", marginLeft: "20px", display: "flex" }}
           >
             <SidebarMenu />
           </div>
@@ -78,16 +78,16 @@ function AdminDashBoard() {
         <div
             className={styles.span}
             style={{
-              fontSize: "2em",
-              fontFamily: "Montserrat",
-              marginLeft: "-70px",
+              fontSize: "40px",
+              fontFamily: "Secular One",
+              marginLeft: "-900px",
               marginTop:"-50px",
 
             }}
           >
-           {tokenn.name.toUpperCase()}'s ADMIN
+           {tokenn.name.toUpperCase()}
           </div>
-          </div>
+          </div><div  style={{backgroundColor:"#F9F8F8"}}>
         <div className="col-md-9">
           
           <div
@@ -131,10 +131,11 @@ margin:"auto",
                         height: "70px",
                         width: "80px",
                         opacity: "0.5",
+                        fontFamily:"Secular One"
                       }}
                     />
                     <br />
-                    <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+                    <div style={{ marginTop: "-20px", marginLeft: "10px" ,fontFamily: "Secular One"}}>
                       TOTAL USERS
                     </div>
                   </div>
@@ -245,9 +246,10 @@ margin:"auto",
                   style={{
                     textAlign: "center",
                     color: "black",
-                    fontFamily: "Montserrat",
+                    fontFamily: "Secular One",
                     padding: "20px",
-                    fontWeight:"1000"
+                    fontWeight:"1000",
+                    fontSize:"30px"
                   }}
                 >
                   EMPLOYEE ONBOARDING
@@ -295,14 +297,14 @@ margin:"auto",
                               <h6
                                 className="font-weight-bold mb-0"
                                 style={{
-                                  fontFamily: "Montserrat",
+                                  fontFamily: "Secular One",
                                   marginTop: "15px",
                                   fontWeight:"1000",
                                   marginLeft:"-0px",
                                   
                                 }}
                               >
-                                <b style={{fontSize:"20px", fontFamily:"Montserrat"}}>{employee.name.toUpperCase()}</b>  ({employee._id.slice(-8)})
+                                <b style={{fontSize:"24px", fontFamily:"Secular One"}}>{employee.name.toUpperCase()}</b>  ({employee._id.slice(-8)})
                               </h6>
                               {/* <small style={{fontWeight:"1000"}}>{employee._id}</small> */}
                             </div>
@@ -320,6 +322,7 @@ margin:"auto",
               </div>
             </div>
           </div>
+        </div>
         </div>
         
       </div>

@@ -310,11 +310,11 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
   ];
   const COLORS = ['red', '#F3DA06'];
   return (
-    <div style={{backgroundImage: `url(${ss})`, height:"1000px"}}>
+    <div style={{backgroundColor:"#E3E3E3", height:"800px"}}>
     <div className="containerr" >
       <div className="main" >
-        <h1 className="headerrr" style={{fontFamily:"Algeria", fontSize:"50px"}}>REWARD EMPLOYEES</h1>
-        <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-120px"}}>
+        <h1 className="headerrr" style={{fontFamily:"Secular One", fontSize:"40px", marginTop:"10px", marginLeft:"00px"}}>REWARD EMPLOYEES</h1>
+        <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-120px", marginTop:"-10px"}}>
           {" "}
           <SidebarMenu />{" "}
           <button
@@ -322,13 +322,15 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                   className="btn btn-primary"
                   style={{
                     margin: "1rem",
-                    marginLeft: "250px",
-                    marginTop: "-60px",
-                    borderRadius: "20px",
+                    marginLeft: "1950px",
+                    marginTop: "-40px",
+                    borderRadius: "10px",
                     height: "50px",
                     backgroundColor: "#1196B0",
-                    width: "130px",
+                    width: "120px",
                     boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+                    fontFamily:"Secular One",
+                    
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.background = "#330078";
@@ -346,7 +348,8 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
 </div>
 
 <div className="container" style={{ 
-  background: 'white', 
+  
+  background: `url(${bg})`, 
   padding: '20px', 
   borderRadius: '8px', 
   boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
@@ -355,20 +358,20 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
   width:"1300px",
   backgroundImage: `url(${bg})`
 }}>
-  <h2 className="containerrr">Tasks</h2>
-  <div className="task-list-container" style={{ height: '500px', overflow: 'scroll',marginTop:"-100px" }}>
-    <div className="task-list" style={{ width: "1050px" }}>
-      <div className="task-list" style={{}}>
-        <div className="task-list-header">
-          <div className="task-name" style={{ marginLeft:"-70px" }}>UID</div>
-          <div className="task-name" style={{ marginLeft:"-70px" }}>Task Name</div>
-          <div className="task-namee">Name</div>
-          <div className="task-wallet">Wallet Address</div>
+  <h2 className="containerrr" style={{fontFamily:"Secular One"}}>Tasks</h2>
+  <div className="task-list-container" style={{ height: '500px', overflow: 'scroll',marginTop:"-100px",  }}>
+    <div className="task-list" style={{ width: "1050px" ,fontFamily:"Secular One",}}>
+      <div className="task-list" style={{fontFamily:"Secular One",}}>
+        <div className="task-list-header" style={{fontFamily:"Secular One",backgroundColor:"#D1D1D1"}}>
+          <div className="task-name" style={{fontFamily:"Secular One", marginLeft:"-70px" }}>UID</div>
+          <div className="task-name" style={{ fontFamily:"Secular One",marginLeft:"-70px" }}>Task Name</div>
+          <div className="task-namee" style={{fontFamily:"Secular One",}}>Name</div>
+          <div className="task-wallet" style={{fontFamily:"Secular One",}}>Wallet Address</div>
           {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
-          <div className="task-due-date">Due Date</div>
-          <div className="task-due-date">Reward</div>
-          <div className="task-progress">Actions</div>
-          <div className="task-status" style={{ width: '15%', paddingLeft: "30px" }}>Rewards</div>
+          <div className="task-due-date" style={{fontFamily:"Secular One",}}>Due Date</div>
+          <div className="task-due-date" style={{fontFamily:"Secular One",}}>Reward</div>
+          <div className="task-progress" style={{fontFamily:"Secular One",}}>Actions</div>
+          <div className="task-status" style={{ width: '15%', paddingLeft: "30px",fontFamily:"Secular One", }}>Rewards</div>
         </div>
         {tasks.map((task) => (
           <div
@@ -379,14 +382,15 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
               marginTop: '10px', 
               borderBottom: '1px solid #ccc',
               paddingBottom: '10px',
+              backgroundColor:"white"
             }}
           >
-            <div className="task-nameee">{(task._id).slice(-5)}</div>
-            <div className="task-name">{task.task}</div>
-            <div className="task-assigned-too">{task.empName}</div>
-            <div className="task-assigned-to">xdc...{task.empWalletAddress.slice(-5)}</div>
-            <div className="task-due-date">{task.deadline}</div>
-            <div className="task-progress">{task.rewards}</div>
+            <div className="task-nameee" style={{fontFamily:"Secular One",}}>{(task._id).slice(-5)}</div>
+            <div className="task-name" style={{fontFamily:"Secular One",}}>{task.task}</div>
+            <div className="task-assigned-too" style={{fontFamily:"Secular One",}}>{task.empName}</div>
+            <div className="task-assigned-to" style={{fontFamily:"Secular One",}}>xdc...{task.empWalletAddress.slice(-5)}</div>
+            <div className="task-due-date" style={{fontFamily:"Secular One",}}>{task.deadline}</div>
+            <div className="task-progress" style={{fontFamily:"Secular One",}}>{task.rewards}</div>
             {task.certificates==="false" ? (
               <div>
                 <input
@@ -405,7 +409,8 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                     border: 'none', 
                     borderRadius: '4px', 
                     cursor: 'pointer',
-                    opacity: submitting ? 0.5 : 1
+                    opacity: submitting ? 0.5 : 1,
+                    fontFamily:"Secular One"
                   }}
                   onClick={() => uploadFile(task)}
                 >
@@ -413,7 +418,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                 </button> 
               </div>
             ) : (
-              <div style={{ fontSize: '20px', fontWeight: 'bold' }}>Uploaded</div>
+              <div style={{ fontSize: '20px', fontWeight: 'bold', fontFamily:"Secular One" }}>Uploaded</div>
             )}
             <div
               className="task-status"
@@ -425,7 +430,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                 }}
                 >
                 {task.status === "Rewarded" ? (
-                <div style={{ color: 'green', fontWeight: 'bold' }}>Received</div>
+                <div style={{ color: 'green', fontWeight: 'bold', fontFamily:"Secular One" }}>Received</div>
                 ) : (
                 <button
                 style={{

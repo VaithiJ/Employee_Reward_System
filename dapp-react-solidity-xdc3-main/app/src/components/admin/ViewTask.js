@@ -92,7 +92,7 @@ const CreateModal = (props) => {
        <div className="sidejs" style={{ position: "relative", bottom: "20px", right:"600px" }}>
        <SidebarMenu  />
       </div>
-       <h2 className="heading" style={{ fontFamily: "Axiforma", fontSize: "2.5rem", marginBottom: "1.5rem", color: "black", textAlign: "center", textTransform: "uppercase", position: "relative", bottom: "60px" }}>VIEW TASK</h2>
+       <h2 className="heading" style={{ fontFamily: "Secular One", fontSize: "2.5rem", marginBottom: "1.5rem", color: "black", textAlign: "center", textTransform: "uppercase", position: "relative", bottom: "60px" }}>VIEW TASK</h2>
      </header>     
      
    
@@ -103,29 +103,29 @@ const CreateModal = (props) => {
         <br />
       
         <br />
-        <div className="Productdet">
-          <div>Employee Name : </div>
-          <div style={{fontWeight:"1000"}}>{task.empName}</div>
+        <div className="Productdet" >
+          <div style={{fontFamily: "Secular One"}} > Employee Name : </div>
+          <div style={{fontWeight:"1000",fontFamily: "Secular One"}}>{task.empName}</div>
 
-          <div>Category : </div>
-          <div style={{fontWeight:"1000"}}>{task.task}</div>
+          <div style={{fontFamily: "Secular One"}}>Category : </div>
+          <div style={{fontWeight:"1000",fontFamily: "Secular One"}}>{task.task}</div>
 
-          <div>Task Name : </div>
-          <div style={{fontWeight:"1000"}}>{task.taskName}</div>
+          <div style={{fontFamily: "Secular One"}}>Task Name : </div>
+          <div style={{fontWeight:"1000",fontFamily: "Secular One"}}>{task.taskName}</div>
 
-          <div>Task Description: </div>
-          <div style={{fontWeight:"1000"}}> {task.taskDescription}</div>
+          <div style={{fontFamily: "Secular One"}}>Task Description: </div>
+          <div style={{fontWeight:"1000",fontFamily: "Secular One"}}> {task.taskDescription}</div>
 
-          <div>Deadline : </div>
-          <div style={{fontWeight:"1000"}}>{task.deadline}</div>
+          <div style={{fontFamily: "Secular One"}}>Deadline : </div>
+          <div style={{fontWeight:"1000",fontFamily: "Secular One"}}>{task.deadline}</div>
 
-          <div>Completion Date : </div>
-          <div style={{fontWeight:"1000"}}>{task.completion}</div>
+          <div style={{fontFamily: "Secular One"}}>Completion Date : </div>
+          <div style={{fontWeight:"1000",fontFamily: "Secular One"}}>{task.completion}</div>
           
-          <div>
-     <p  >Status:</p>
+          <div style={{fontFamily: "Secular One"}}>
+     <p style={{fontFamily: "Secular One"}} >Status:</p>
    </div>
-   <div>    <p style={{color: task.status === "Completed" ? "green" : "red", fontWeight:"1000" }}>{task.status}</p>
+   <div>    <p style={{color: task.status === "Completed" ? "green" : "red", fontWeight:"1000" ,fontFamily: "Secular One"}}>{task.status}</p>
 </div>
    
         </div>
@@ -144,7 +144,8 @@ const CreateModal = (props) => {
                 cursor: "pointer",
                 boxShadow: "0 2px 5px rgba(0, 0, 0, 1.0)",
                 marginTop:"240px",
-                marginLeft:"20px"
+                marginLeft:"20px",
+                fontFamily: "Secular One"
               }}
               onMouseEnter={(e) => {
                 e.target.style.background = "#330078";

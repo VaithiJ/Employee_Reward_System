@@ -84,14 +84,14 @@ const CreateModal = (props) => {
 
 
   return (
-    <div className="modal-container" style={{ backgroundImage: `url(${bg})` }} >
+    <div className="modal-container"  >
       <header style={{ backgroundColor: 'transparent', padding: '1.5rem 0',height:"100px" }}>
       <div style={{position:"relative",bottom:"20px",left:"20px", marginLeft:"-1200px"}}>
       <SidebarMenu /> </div>
   <h2
     className="heading"
     style={{ 
-      fontFamily: 'Axiforma', 
+      fontFamily: 'Secular One', 
       fontSize: '2.5rem', 
       marginBottom: '1.5rem',
       color: '#333333',
@@ -108,7 +108,7 @@ const CreateModal = (props) => {
     className="Add-list"
     style={{
       backgroundColor: 'transparent',
-     
+     fontFamily:"Secular One",
       
       width: '1000px',
       textAlign: 'center',
@@ -118,7 +118,7 @@ const CreateModal = (props) => {
       marginLeft:"250px"
     }}
   >
-        <form className="modal-form" style={{backgroundColor:"white", borderRadius:"40px"}} >
+        <form className="modal-form" style={{backgroundColor:"white", borderRadius:"40px", fontFamily:"Secular One"}} >
           <label className="modlabel" htmlFor="text" >
             Task
           </label>
@@ -225,6 +225,7 @@ const CreateModal = (props) => {
             name="singlebutton"
             className="btM"
             onClick={handleAddModel}
+            style={{fontFamily:"Secular One"}}
           >
             Submit
           </button>

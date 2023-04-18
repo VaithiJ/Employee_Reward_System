@@ -128,7 +128,7 @@ const SidebarMenu = () => {
 
   return (
     <div ref={menuRef} style={{marginTop:"20px"}}>
-     <button className="btn btn-primary" id="menu-toggle" style={{background:"#FFFFFF",color:"#000000",width:"70px",border:"none"}} onMouseEnter={toggleSidebar}>
+     <button className="btn btn-primary" id="menu-toggle" style={{background:"#FFFFFF",border:"none",color:"#000000",width:"70px"}} onMouseEnter={toggleSidebar}>
         {isOpen ? <AiOutlineClose style={{fontSize:"2rem",position:"relative",right:"0px",}} /> : <AiOutlineMenu style={{fontSize:"2rem",position:"relative",right:"0px",}} />}
       </button>
       <nav className={`sidebar-menu ${isOpen ? 'open' : ''}`} onMouseLeave={handleMouseLeave}>
@@ -139,7 +139,8 @@ const SidebarMenu = () => {
            borderRadius: '50%',
         marginRight: '20px',
         width:"150px",
-        height:"150px"
+        height:"150px",
+        marginTop:"30px"
 
       }} /> <button
       ref={buttonRef}
@@ -165,14 +166,15 @@ const SidebarMenu = () => {
       Edit
     </button> </li>
 
-      <li style={{color:"white", marginLeft:"-20px"}}>{toke.name}</li>
-
-    <Link to="/real"style={{marginLeft:"-200px", fontSize:"14px"}}>
-      <FaHome className="fonnn"  /> Home
+      <li style={{color:"white", marginLeft:"-20px", fontFamily:"Secular One", fontSize:"30px"}}>{toke.name}</li>
+      <li id="fonnn" style={{marginTop:"40px"}} >
+    <Link to="/real"style={{marginLeft:"-200px", fontSize:"14px", fontFamily:"Montserrat"}}>
+      <FaHome className="fonnn" /> HOME
     </Link>
-  <li id="fonnn">
-    <Link to="/admindash" style={{marginLeft:"-120px",fontSize:"14px"}}>
-      <FaHome className="fonnn"  /> Onboard Employees
+    </li>
+  <li id="fonnn" style={{marginTop:"10px", marginBottom:"10px"}}>
+    <Link to="/admindash" style={{marginLeft:"-80px",fontSize:"14px",fontFamily:"Montserrat"}}>
+      <FaHome className="fonnn"  /> ONBOARD EMPLOYEES
     </Link>
   </li>
           {/* <li id="fonnn">
@@ -180,26 +182,26 @@ const SidebarMenu = () => {
               <BiTask className="icon" id="fonnn" /> Assign Tasks
             </a>
           </li> */}
-         <li id="fonnn">
-    <Link to="/reward" style={{marginLeft:"-200px",fontSize:"14px"}}>
-      <FaHome className="fonnn"  /> Reward
+         <li id="fonnn" style={{marginBottom:"10px"}}>
+    <Link to="/reward" style={{marginLeft:"-180px",fontSize:"14px", fontFamily:"Montserrat", marginBottom:"10px"}}>
+      <FaHome className="fonnn"  /> REWARD
     </Link>
   </li>
           <li>
             <a href="/logincomp"
-              style={{ color: "#FFFFFF" }}
+              style={{ color: "#FFFFFF"}}
               onMouseOver={(e) => (e.target.style.color = "#000000")}
               onMouseOut={(e) => (e.target.style.color = "#FFFFFF")}
               onClick={handleLogout}
             >
-              <FiPower style={{fontSize:"20px",marginLeft:"-100px"}} className="icon" id="fonnn" /> <b style={{fontSize:"18px", }}>Logout </b>
+              <FiPower style={{fontSize:"14px",marginLeft:"-192px"}} className="icon" id="fonnn" /> <b style={{fontSize:"14px",fontFamily:"Montserrat" }}>LOGOUT </b>
             </a>
           </li>
         </ul>
         <div className="sidebar-footer">
-          <button className="close-btn" onClick={toggleSidebar}>
+          {/* <button className="close-btn" onClick={toggleSidebar}> */}
             {/* <AiOutlineClose /> */}
-          </button>
+          {/* </button> */}
         </div>
       </nav>
     </div>

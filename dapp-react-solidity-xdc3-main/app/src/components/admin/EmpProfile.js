@@ -54,7 +54,7 @@ const ProfilePage = (props) => {
   // console.log("sdfgjhfsdghfdsghd",respo.data);
   // console.log("sdfgjhfsdghfdsghd",respo.data);
   window.onload = function() {
-    alert("\n• Please connect your compoany admin wallet ");
+    alert("\n• Please connect your company wallet address ");
   }
   // console.log("comName:",comName);
   // console.log("comId:",comId);
@@ -158,7 +158,7 @@ const ProfilePage = (props) => {
     <div  style={{ height: "auto" }}>
       <header
         style={{
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "white",
           padding: "20px",
           borderBottom: "1px solid #ddd",
           display: "flex",
@@ -173,6 +173,7 @@ const ProfilePage = (props) => {
         <h1
           style={{
             margin: "0",
+            marginLeft:"-120px",
             fontSize: "35px",
             fontWeight: "bold",
             color: "#0F6292",
@@ -180,9 +181,10 @@ const ProfilePage = (props) => {
             textAlign: "center",
             position: "relative",
             left: "30px",
+            fontFamily:"Secular One"
           }}
         >
-          Employee Profile
+          EMPLOYEE PROFILE
         </h1>
         {/* <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s"
@@ -196,6 +198,7 @@ const ProfilePage = (props) => {
         /> */}
         
       </header>
+      <div style={{backgroundColor:"#F9F8F8"}}>
       <div
         className="card"
         style={{
@@ -234,14 +237,14 @@ const ProfilePage = (props) => {
             flexDirection: "column",
           }}
         >
-          <p style={{ display: "inline-block" }}>
-            <b style={{ color: "#537FE7", display: "inline" }}>Name : </b>{" "}
+          <p style={{ display: "inline-block",fontFamily:"Secular One", marginLeft:"-0px" }}>
+            <b style={{ color: "#537FE7", display: "inline",fontFamily:"Secular One" }}>Name : </b>{" "}
             {employee.name}
           </p>
 
-          <p>
+          <p style={{fontFamily:"Secular One"}}>
             {" "}
-            <b style={{ color: "#537FE7" }}> Wallet Address: </b>{" "}
+            <b style={{ color: "#537FE7",fontFamily:"Secular One" }}> Wallet Address: </b>{" "}
             {employee.wallet}
           </p>
         </div>
@@ -327,7 +330,7 @@ const ProfilePage = (props) => {
       >
         <div style={{ textAlign: "center" }}>
           <h6>
-            <b style={{ fontSize: "1.4rem", color: "#537FE7" }}>INFORMATION</b>
+            <b style={{ fontSize: "1.4rem", color: "#537FE7",fontFamily:"Secular One"    }}>INFORMATION</b>
           </h6>{" "}
         </div>
         <hr className="mt-0 mb-4" />
@@ -336,46 +339,46 @@ const ProfilePage = (props) => {
             className="col-6 mb-3 d-flex align-items-left"
             style={{ position: "relative", left: "50px" }}
           >
-            <h6 style={{ color: "#537FE7", marginRight: "20px" }}>Name:</h6>
-            <p className="text-muted  mb-6">{employee.name}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily:"Secular One" }}>Name:</h6>
+            <p className="text-muted  mb-6" style={{fontFamily:"Secular One"}}>{employee.name}</p>
           </div>
           <div
             className="col-6 mb-3 d-flex align-items-left"
             style={{ position: "relative", left: "50px" }}
           >
-            <h6 style={{ color: "#537FE7", marginRight: "20px" }}>Email:</h6>
-            <p className="text-muted mb-6">{employee.email}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily:"Secular One"}}>Email:</h6>
+            <p className="text-muted mb-6" style={{fontFamily:"Secular One" }}>{employee.email}</p>
           </div>
           <div
             className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px" }}
+            style={{ position: "relative", left: "50px",fontFamily:"Secular One" }}
           >
-            <h6 style={{ color: "#537FE7", marginRight: "20px" }}>Phone:</h6>
-            <p className="text-muted  mb-6">{employee.mobile}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px",fontFamily:"Secular One" }}>Phone:</h6>
+            <p className="text-muted  mb-6" style={{fontFamily:"Secular One"}}>{employee.mobile}</p>
           </div>
 
           <div
             className="col-6 mb-3 d-flex align-items-left"
             style={{ position: "relative", left: "50px" }}
           >
-            <h6 style={{ color: "#537FE7", marginRight: "20px" }}>Address:</h6>
-            <p className="text-muted mb-0">{employee.address}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px",fontFamily:"Secular One" }}>Address:</h6>
+            <p className="text-muted mb-0" style={{fontFamily:"Secular One"}}>{employee.address}</p>
           </div>
           <div
             className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px" }}
+            style={{ position: "relative", left: "50px" , marginLeft:"-20px"}}
           >
-            <h6  className="walad" style={{ color: "#537FE7", marginRight: "20px" }}>
+            <h6  className="walad" style={{ color: "#537FE7", marginRight: "100px",fontFamily:"Secular One" }}>
               Wallet Address:
             </h6>
-            <p className="walad" style={{color:"#6C7592"}}>{employee.wallet}</p>
+            <p className="walad" style={{color:"#6C7592",fontFamily:"Secular One", marginLeft:"-100px"}}>{employee.wallet}</p>
           </div>
           <div
             className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px" }}
+            style={{ position: "relative", left: "50px", marginLeft:"20px" }}
           >
-            <h6 style={{ color: "#537FE7", marginRight: "20px" }}>ID:</h6>
-            <p className="text-muted  mb-6">{employee._id}</p>
+            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily:"Secular One" }}>ID:</h6>
+            <p className="text-muted  mb-6" style={{fontFamily:"Secular One"}}>{employee._id}</p>
           </div>
         </div>
         <div style={{ marginTop: "80px" }}>
@@ -386,6 +389,7 @@ const ProfilePage = (props) => {
                   fontSize: "1.4rem",
                   color: "#537FE7",
                   textAlign: "center",
+                  fontFamily:"Secular One"
                 }}
               >
                 COMPANY
@@ -398,7 +402,7 @@ const ProfilePage = (props) => {
               className="col-6 mb-3 d-flex align-items-left"
               style={{ position: "relative", left: "50px" }}
             >
-              <h6 style={{ color: "#537FE7", marginRight: "20px" }}>
+              <h6 style={{ color: "#537FE7", marginRight: "20px",fontFamily:"Secular One" }}>
                 Company Name:
               </h6>
               <p className="text-muted mb-0"> </p>
@@ -407,12 +411,13 @@ const ProfilePage = (props) => {
               className="col-6 mb-3 d-flex align-items-left"
               style={{ position: "relative", left: "50px" }}
             >
-              <h6 style={{ color: "#537FE7", marginRight: "20px" }}>
+              <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily:"Secular One"}}>
                 EmployeeId:
               </h6>
               <p className="text-muted mb-0"></p>
             </div>
           </div>
+        </div>
         </div>
       </div>
 

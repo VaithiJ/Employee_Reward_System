@@ -97,7 +97,7 @@ const Openpage = () => {
               alt="Employee"
             />
             <div className="emptext" style={{ marginTop: "-550px" }}>
-              <h3 className={styles.txt}>EMPLOYEE</h3>
+              <h3 className={styles.txt} style={{fontFamily:"Secular One", fontSize:"40px"}}>EMPLOYEE</h3>
               <p
                 className={styles.p}
                 style={{
@@ -120,7 +120,7 @@ const Openpage = () => {
           <div className={styles.image_container}>
             <div className="compp">
               <div className={styles.text_container}>
-                <h3 className={styles.txt}>COMPANY</h3>
+                <h3 className={styles.txt} style={{fontFamily:"Secular One", fontSize:"40px"}}>COMPANY</h3>
 
                 <p
                   className={styles.p}
@@ -206,20 +206,20 @@ const Openpage = () => {
             style={{
               marginLeft: "550px",
               marginTop: "100px",
-              boxShadow: "0 0 10px rgba(10,100,0,0.7)",
+              // boxShadow: "0 0 10px rgba(10,100,0,0.7)",
               width: "300px",
               height: "300px",
               marginBottom:"40px"
             }}
           >
-            <h3 className={styles.a1} style={{}}>
+            <h3 className={styles.a1} style={{fontFamily:"Secular One"}}>
               Stacks Used
             </h3>
             <Slideshow />
           </div>
         </div>
        
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
      </div>

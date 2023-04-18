@@ -29,6 +29,14 @@ body {
   margin-top: .5rem;
   font-size: 1.25rem;
 }
+.route-real .connect-wallet-button {
+  background-color: red;
+}
+
+/* for the /admindash route */
+.route-admindash .connect-wallet-button {
+  background-color: black
+}
 
 .App-link {
   color: #61dafb;

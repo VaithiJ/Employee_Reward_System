@@ -1,7 +1,7 @@
 .pie-chart-container {
     animation: rotate 10s linear infinite;
 }
-
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
   @keyframes rotate {
     from {
       transform: rotate(0deg);

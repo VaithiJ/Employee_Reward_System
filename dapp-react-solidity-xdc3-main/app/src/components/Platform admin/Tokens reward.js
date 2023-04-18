@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 import jet from "./jet.gif";
 import "./token.css"
+import OwnerButton from "./OwnerButton";
 
 const {
   executeTransaction,
@@ -198,12 +199,12 @@ const PlatformAdmin = () => {
         style={{
           color: "white",
           fontFamily: "Montserrat",
-          fontSize: "2.5rem",
+          fontSize: "50px",
           fontWeight: "bold",
           marginBottom: "2rem",
-          marginTop: "50px",
+          marginTop: "30px",
           marginLeft: "-100px",
-          fontFamily: "Playfair Display",
+          fontFamily: "Secular One",
         }}
       >
         EMPLOYEE REWARD SYSTEM
@@ -224,8 +225,8 @@ const PlatformAdmin = () => {
           }}
         >
           <div style={{ marginTop: "20px", fontFamily: "Montserrat" }}>
-            Manage platform with{" "}
-            <b style={{ fontFamily: "Montserrat" }}>EASE!</b>
+            Manage your platform with{" "}
+            <b style={{ fontFamily: "Secular One" }}>EASE!</b>
           </div>
           <ul
          
@@ -319,7 +320,7 @@ const PlatformAdmin = () => {
                     style={{
                       padding: "1rem",
                       color: "white",
-                      fontFamily: "Montserrat",
+                      fontFamily: "Secular One",
                     }}
                   >
                     {company.comName}
@@ -328,7 +329,7 @@ const PlatformAdmin = () => {
                     style={{
                       padding: "1rem",
                       color: "white",
-                      fontFamily: "Montserrat",
+                      fontFamily: "Secular One",
                     }}
                   >
                     xdc....{company.walletAddress.slice(-10)}
@@ -346,7 +347,7 @@ const PlatformAdmin = () => {
                         position: "relative",
                         overflow: "hidden",
                         zIndex: "1",
-                        fontFamily: "Montserrat",
+                        fontFamily: "Secular One",
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.background = "#330078";
@@ -372,9 +373,10 @@ const PlatformAdmin = () => {
                           zIndex: "-1",
                           transform: "scale(0)",
                           transition: "0.5s",
+                         
                         }}
                       ></span>
-                      Give Tokens
+                      GIVE TOKENS
                     </button>
                   </td>
                   <td style={{ padding: "1rem" }}>
@@ -386,7 +388,7 @@ const PlatformAdmin = () => {
                         border: "none",
                         borderRadius: "5px",
                         padding: "0.5rem 1rem",
-                        fontFamily: "Montserrat",
+                        fontFamily: "Secular One",
                       }}
                       onMouseEnter={(e) => {
                         e.target.style.background = "#CC00FF";
@@ -399,7 +401,7 @@ const PlatformAdmin = () => {
                         e.target.style.boxShadow = "none";
                       }}
                     >
-                      Balance
+                      BALANCE
                     </button>
                   </td>
                   {/* <td style={{ padding: "1rem" }}>
@@ -473,7 +475,7 @@ const PlatformAdmin = () => {
                     >
                       Register
                     </button>
-                  </td>):(<div style={{ fontSize: '20px', fontWeight: 'bold', color:"white" }}>Registered</div>
+                  </td>):(<div style={{ fontSize: '18px', fontWeight: 'bold', color:"white", marginTop:"30px", fontFamily:"Secular One" }}>REGISTERED</div>
 )}
                   
                 </tr>

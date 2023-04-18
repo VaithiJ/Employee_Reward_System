@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FaSignOutAlt, FaSquare } from "react-icons/fa";
+import AdminButton from "./AdminButton.js";
 import {
   PieChart,
   Pie,
@@ -45,7 +46,7 @@ const {
   EthereumContext,
 } = require("react-solidity-xdc3");
 
-function AdminDashBoard() {
+function RealDash(connect) {
   const [search, setSearch] = useState("");
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -264,8 +265,8 @@ console.log("ell tasks um ", re)
                   flexDirection: "row",
                   marginTop: "0px",
                   marginLeft: "-350px",
-                  backgroundColor: "#00F1C3",
-                  boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+                  backgroundColor: "white",
+                  
                 }}
               >
                 {/* <div
@@ -279,7 +280,7 @@ console.log("ell tasks um ", re)
                     backgroundColor: "#00F1C3",
                   }}
                 > */}
-                <div className="sidee" style={{ marginTop: "10px", marginLeft: "60px" }}>
+                <div className="sidee" style={{ marginTop: "10px", marginLeft: "20px" }}>
                   <SidebarMenu />
                 </div>
 
@@ -293,9 +294,10 @@ console.log("ell tasks um ", re)
                 >
                   <b  className="del"
                     style={{
-                      fontFamily: "Algeria",
+                      fontFamily: "Secular One",
                       fontWeight: "1000",
                       fontSize: "40px",
+                      marginLeft:"-40px"
                     }}
                   >
                     {tokenn.name.toUpperCase()}
@@ -305,27 +307,29 @@ console.log("ell tasks um ", re)
                   onClick={balanceOf}
                  className="buy"
                   style={{
-                    margin: "1rem",
-                    marginLeft: "500px",
+                    // margin: "1rem",
+                     marginLeft: "700px",
                     marginTop: "30px",
-                    borderRadius: "20px",
-                    height: "50px",
+                    borderRadius: "10px",
+                    height: "45px",
+                    
+                   
                     backgroundColor: "#1196B0",
-                    width: "130px",
-                    boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+                    width: "120px",
+                    boxShadow: "3px 6px 14px -1px rgba(0,0,0,0.36) "
+
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.background = "#330078";
                     // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                    e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
+                    ;
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.background = "#1196B0";
-                    e.target.style.border = "none";
-                    e.target.style.boxShadow = "0 2px 5px rgba(0, 0, 0,1.0)";
                   }}
                 >
-                  <FaSignOutAlt /> Balance
+             
+                  <div style={{marginTop:"-5px", fontSize:"18px", fontFamily:"Secular One"}}>Balance</div> 
                 </button>
               </div>
 
@@ -364,6 +368,7 @@ console.log("ell tasks um ", re)
                             marginTop: "680px",
                             fontSize: "70px",
                             marginLeft: "",
+                            fontFamily:"Secular One"
                           }}
                         >
                           {OnboardedEmployees}
@@ -379,7 +384,7 @@ console.log("ell tasks um ", re)
                         }}
                       />
                       <br />
-                      <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+                      <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily:"Secular One" }}>
                         Total Onboarded Employees
                       </div>
                     </div>
@@ -407,6 +412,7 @@ console.log("ell tasks um ", re)
                             marginBottom: "100px",
                             marginLeft: "",
                             fontSize: "70px",
+                            fontFamily:"Secular One"
                           }}
                         >
                           {Assignedtasks}
@@ -422,7 +428,7 @@ console.log("ell tasks um ", re)
                         }}
                       />
                       <br />
-                      <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+                      <div style={{ marginTop: "-20px", marginLeft: "10px" ,fontFamily:"Secular One"}}>
                         Assigned Tasks
                       </div>
                     </div>
@@ -449,6 +455,7 @@ console.log("ell tasks um ", re)
                             marginBottom: "100px",
                             marginLeft: "-0px",
                             fontSize: "70px",
+                            fontFamily:"Secular One"
                           }}
                         >
                           {PendingApprovals}
@@ -464,7 +471,7 @@ console.log("ell tasks um ", re)
                         }}
                       />
                       <br />
-                      <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
+                      <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Secular One" }}>
                         Pending for Approval
                       </div>
                     </div>
@@ -476,9 +483,10 @@ console.log("ell tasks um ", re)
                   style={{
                     marginTop: "-300px",
                     fontSize: "30px",
-                    marginLeft: "-180px",
+                    marginLeft: "-170px",
                     fontFamily: "Montserrat",
                     fontWeight: "1000",
+                    fontFamily:"Secular One"
                   }}
                 >
                   TASKS
@@ -594,7 +602,8 @@ console.log("ell tasks um ", re)
                         // backgroundColor: "#CAFFF5",
                         color: "black",
                         fontWeight: "1000",
-                        fontSize: "20px",
+                        fontSize: "30px",
+                        fontFamily:"Secular One"
                       }}
                     >
                       EMPLOYEES
@@ -643,10 +652,11 @@ console.log("ell tasks um ", re)
                                       marginLeft: "0px",
                                       fontSize: "18px",
                                       height: "10px",
+                                      fontFamily:"Secular One"
                                     }}
                                   >
                                     {employee.Name.toUpperCase()}
-                                    <b style={{ fontSize: "16px" }}>
+                                    <b style={{ fontSize: "16px",fontFamily:"Secular One" }}>
                                       ({employee.comId})
                                     </b>
                                   </h6>
@@ -697,6 +707,7 @@ console.log("ell tasks um ", re)
                                       fontFamily: "Algeria",
                                       marginTop: "-10px",
                                       fontWeight: "1000",
+                                      fontFamily:"Secular One"
                                     }}
                                   >
                                     Assign Tasks
@@ -739,7 +750,8 @@ console.log("ell tasks um ", re)
                         // backgroundColor: "#17A2B8",
                         color: "black",
                         fontWeight: "1000",
-                        fontSize: "20px",
+                        fontSize: "30px",
+                        fontFamily:"Secular One"
                       }}
                     >
                       ASSIGNED TASKS
@@ -784,6 +796,7 @@ console.log("ell tasks um ", re)
                                       marginTop: "20px",
                                       fontWeight: "1000",
                                       fontSize: "18px",
+                                      fontFamily:"Secular One"
                                     }}
                                   >
                                     {task.empName.toUpperCase()}
@@ -792,6 +805,7 @@ console.log("ell tasks um ", re)
                                     style={{
                                       fontWeight: "1000",
                                       marginLeft: "20px",
+                                      fontFamily:"Secular One"
                                     }}
                                   >
                                     {task.task}
@@ -848,6 +862,7 @@ console.log("ell tasks um ", re)
                     marginLeft: "1000px",
                     fontFamily: "Montserrat",
                     fontWeight: "1000",
+                    fontFamily:"Secular One"
                   }}
                 >
                   TASKS
@@ -912,4 +927,4 @@ console.log("ell tasks um ", re)
     return null;
   }
 }
-export default AdminDashBoard;
+export default RealDash;
