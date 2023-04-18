@@ -58,130 +58,6 @@ function AdminDashBoard() {
     "access_token",
     "name",
   ]);
-  // const dataa = [
-  //   {
-  //     name: 'Page A',
-  //     uv: 4000,
-  //     pv: 2400,
-  //     amt: 2400,
-  //   },
-  //   {
-  //     name: 'Page B',
-  //     uv: 3000,
-  //     pv: 1398,
-  //     amt: 2210,
-  //   },
-  //   {
-  //     name: 'Page C',
-  //     uv: 2000,
-  //     pv: 9800,
-  //     amt: 2290,
-  //   },
-  //   {
-  //     name: 'Page D',
-  //     uv: 2780,
-  //     pv: 3908,
-  //     amt: 2000,
-  //   },
-  //   {
-  //     name: 'Page E',
-  //     uv: 1890,
-  //     pv: 4800,
-  //     amt: 2181,
-  //   },
-  //   {
-  //     name: 'Page F',
-  //     uv: 2390,
-  //     pv: 3800,
-  //     amt: 2500,
-  //   },
-  //   {
-  //     name: 'Page G',
-  //     uv: 3490,
-  //     pv: 4300,
-  //     amt: 2100,
-  //   },
-  // ];
-  // const dataa = [
-  //   {
-  //     name: 'Page A',
-  //     uv: 4000,
-  //     pv: 2400,
-  //     amt: 2400,
-  //   },
-  //   {
-  //     name: 'Page B',
-  //     uv: 3000,
-  //     pv: 1398,
-  //     amt: 2210,
-  //   },
-  //   {
-  //     name: 'Page C',
-  //     uv: 2000,
-  //     pv: 9800,
-  //     amt: 2290,
-  //   },
-  //   {
-  //     name: 'Page D',
-  //     uv: 2780,
-  //     pv: 3908,
-  //     amt: 2000,
-  //   },
-  //   {
-  //     name: 'Page E',
-  //     uv: 1890,
-  //     pv: 4800,
-  //     amt: 2181,
-  //   },
-  //   {
-  //     name: 'Page F',
-  //     uv: 2390,
-  //     pv: 3800,
-  //     amt: 2500,
-  //   },
-  //   {
-  //     name: 'Page G',
-  //     uv: 3490,
-  //     pv: 4300,
-  //     amt: 2100,
-  //   },
-  // ];
-
-  // const getIntroOfPage = (label) => {
-  //   if (label === 'Page A') {
-  //     return "Page A is about men's clothing";
-  //   }
-  //   if (label === 'Page B') {
-  //     return "Page B is about women's dress";
-  //   }
-  //   if (label === 'Page C') {
-  //     return "Page C is about women's bag";
-  //   }
-  //   if (label === 'Page D') {
-  //     return 'Page D is about household goods';
-  //   }
-  //   if (label === 'Page E') {
-  //     return 'Page E is about food';
-  //   }
-  //   if (label === 'Page F') {
-  //     return 'Page F is about baby food';
-  //   }
-  //   return '';
-  // };
-
-  // const CustomTooltip = ({ active, payload, label }) => {
-  //   if (active && payload && payload.length) {
-  //     return (
-  //       <div className="custom-tooltip">
-  //         <p className="label">{`${label} : ${payload[0].value}`}</p>
-  //         <p className="intro">{getIntroOfPage(label)}</p>
-  //         <p className="desc">Anything you want can be displayed here.</p>
-  //       </div>
-  //     );
-  //   }
-
-  //   return null;
-  // };
 
   const history = useHistory();
   // const [open, setOpen] = useState(false);
@@ -381,7 +257,7 @@ console.log("ell tasks um ", re)
 
             <div className="col-md-3"></div>
             <div className="col-md-9">
-              <div
+              <div className="hea"
                 style={{
                   height: "100px",
                   display: "flex",
@@ -403,7 +279,7 @@ console.log("ell tasks um ", re)
                     backgroundColor: "#00F1C3",
                   }}
                 > */}
-                <div style={{ marginTop: "10px", marginLeft: "60px" }}>
+                <div className="sidee" style={{ marginTop: "10px", marginLeft: "60px" }}>
                   <SidebarMenu />
                 </div>
 
@@ -415,7 +291,7 @@ console.log("ell tasks um ", re)
                     fontSize: "30px",
                   }}
                 >
-                  <b
+                  <b  className="del"
                     style={{
                       fontFamily: "Algeria",
                       fontWeight: "1000",
@@ -427,7 +303,7 @@ console.log("ell tasks um ", re)
                 </div>
                 <button
                   onClick={balanceOf}
-                  className="btn btn-primary"
+                 className="buy"
                   style={{
                     margin: "1rem",
                     marginLeft: "500px",
@@ -476,6 +352,8 @@ console.log("ell tasks um ", re)
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
                       backgroundColor: "#17A2B8",
+                      width:"390px"
+
                     }}
                   >
                     <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -517,6 +395,8 @@ console.log("ell tasks um ", re)
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
                       backgroundColor: "#F3DA06",
+                      width:"390px"
+
                     }}
                   >
                     <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -549,7 +429,7 @@ console.log("ell tasks um ", re)
                   </div>
                 </div>
                 <div className="col-md-4">
-                  <div
+                <div
                     className="card"
                     style={{
                       color: "white",
@@ -558,7 +438,7 @@ console.log("ell tasks um ", re)
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
                       backgroundColor: "red",
-                      width:"380px"
+                      width:"390px"
                     }}
                   >
                     <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -591,7 +471,7 @@ console.log("ell tasks um ", re)
                   </div>
                 </div>
               </div>
-              <div style={{ display: "flex", alignItems: "center" }}>
+              <div className="piee" style={{ display: "flex", alignItems: "center" }}>
                 <ul
                   style={{
                     marginTop: "-300px",
@@ -603,8 +483,8 @@ console.log("ell tasks um ", re)
                 >
                   TASKS
                 </ul>
-                <div style={{ marginRight: "-70px" }}>
-                  <p style={{ marginLeft: "-10px", fontFamily: "Algeria", fontWeight:"1000" }}>
+                <div className="piee" style={{ marginRight: "-70px" }}>
+                  <p  style={{ marginLeft: "-10px", fontFamily: "Algeria", fontWeight:"1000" }}>
                     TOTAL :{" "}
                     <FaSquare
                       style={{ backgroundColor: "green", color: "green" }}
@@ -623,7 +503,7 @@ console.log("ell tasks um ", re)
                     />
                   </p>
 
-                  <p style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                  <p  style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
                     REWARDED :{" "}
                     <FaSquare
                       style={{ backgroundColor: "black", color: "black" }}
@@ -632,6 +512,7 @@ console.log("ell tasks um ", re)
                 </div>
 
                 <PieChart
+                className="pie"
                   style={{
                     width: "430px",
                     boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
@@ -686,7 +567,7 @@ console.log("ell tasks um ", re)
     */}
               </div>
 
-              <div className="row mt-">
+              <div className="roww">
                 <div
                   className="col-md-10 "
                   style={{
@@ -806,7 +687,7 @@ console.log("ell tasks um ", re)
                                     </small>
                                   </div>
                                 </div>
-                                <Link
+                                <Link 
                                   to={`/assigntask/${employee.Name}/${tokenn.name}/${employee.Wallet}`}
                                 >
                                   <button
@@ -833,14 +714,14 @@ console.log("ell tasks um ", re)
                 <div
                   className="col-md-8"
                   style={{
-                    marginTop: "50px",
+                    marginTop: "230px",
                     marginLeft: "-320px",
                     width: "1290px",
                     height: "560px",
                   }}
                 >
                   <div
-                    className="card"
+                    className="cardd"
                     style={{
                       boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
                       // backgroundColor: "#17A2B8",
@@ -958,8 +839,9 @@ console.log("ell tasks um ", re)
                       </div>
                     </div>
                   </div>
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div  style={{ display: "flex", alignItems: "center" }}>
                 <ul
+                className="piee"
                   style={{
                     marginTop: "-780px",
                     fontSize: "30px",
@@ -1000,7 +882,7 @@ console.log("ell tasks um ", re)
                 </div>
 
                   
-                  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"860px", marginTop:"-440px"}} width={410} height={400} >
+                  <PieChart className="pie" style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"860px", marginTop:"-440px"}} width={410} height={400} >
         <Pie
           data={data}
           cx={120}

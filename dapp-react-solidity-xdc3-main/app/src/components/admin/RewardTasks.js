@@ -219,7 +219,18 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
         console.log(error);
       });
   }, []);
+  const balanceOf = async (event) => {
+    event.preventDefault();
+    setSubmitting(true);
 
+    let account = tokenn.wallet.replace("xdc", "0x");
+    let balance = await erc.balanceOf(account);
+
+    console.log(`Account balance: ${balance.toString()}`);
+    alert(`Account balance: ${balance.toString()} tokens`);
+
+    setSubmitting(false);
+  };
   const Rewarded = async (taskk) => {
     const confirmed = window.confirm("Reward this Employee?");
 
@@ -306,6 +317,32 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
         <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-120px"}}>
           {" "}
           <SidebarMenu />{" "}
+          <button
+                  onClick={balanceOf}
+                  className="btn btn-primary"
+                  style={{
+                    margin: "1rem",
+                    marginLeft: "250px",
+                    marginTop: "-60px",
+                    borderRadius: "20px",
+                    height: "50px",
+                    backgroundColor: "#1196B0",
+                    width: "130px",
+                    boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = "#330078";
+                    // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+                    e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = "#1196B0";
+                    e.target.style.border = "none";
+                    e.target.style.boxShadow = "0 2px 5px rgba(0, 0, 0,1.0)";
+                  }}
+                >
+                  <FaSignOutAlt /> Balance
+                </button>
 </div>
 
 <div className="container" style={{ 
@@ -318,13 +355,13 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
   width:"1300px",
   backgroundImage: `url(${bg})`
 }}>
-  <h2>Tasks</h2>
-  <div className="task-list-container" style={{ height: '500px', overflow: 'scroll' }}>
-    <div className="task-list" style={{ width: "1250px" }}>
-      <div className="task-list">
+  <h2 className="containerrr">Tasks</h2>
+  <div className="task-list-container" style={{ height: '500px', overflow: 'scroll',marginTop:"-100px" }}>
+    <div className="task-list" style={{ width: "1050px" }}>
+      <div className="task-list" style={{}}>
         <div className="task-list-header">
-          <div className="task-name" style={{ marginLeft:"-30px" }}>UID</div>
-          <div className="task-name">Task Name</div>
+          <div className="task-name" style={{ marginLeft:"-70px" }}>UID</div>
+          <div className="task-name" style={{ marginLeft:"-70px" }}>Task Name</div>
           <div className="task-namee">Name</div>
           <div className="task-wallet">Wallet Address</div>
           {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}

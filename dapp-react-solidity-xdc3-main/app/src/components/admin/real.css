@@ -10,3 +10,95 @@
       transform: rotate(360deg);
     }
   }
+
+  @media screen and (max-width : 768px){
+    /* .row{
+      margin: auto;
+      max-width: 600px;
+    } */
+    .col-md-9{
+      width:90%;
+      margin-left: 50px;
+    }
+    .col-md-11{
+      width: 90%;
+      margin-left: -100px;
+    }
+    .col-md-4{
+      
+      margin-left: 450px;
+      
+
+    }
+    .rowww{
+      max-width: 500px;
+      margin-left:-100px;
+     
+    }
+    .del{
+      margin: auto;
+      margin-left: 200px;
+    }
+    .buy{
+      margin: auto;
+      margin-left: -1000px;
+    }
+  .piee {
+    display: none;
+  }
+   .pie{
+    display: none;
+   }
+
+   .roww{
+    width: 90%;
+    margin-top: 400px;
+    margin-left: 0px;
+   }
+
+   .col-md-8{
+    margin-top: 400px;
+   }
+   .cardd{
+    
+   margin-left: 280px;
+   max-width: 40%;
+   overflow: auto;
+   }
+  .col-md-3{
+width: auto; 
+margin-left: -200px;
+
+}
+  .col-md-5{
+    display: none;
+  }
+
+  .card{
+    max-width: 500px;
+   margin-left: -130px; 
+   display: inline;
+  }
+  
+  .card1{
+   display: inline;
+   }
+
+   .butad{
+    margin-left: 0px;
+   }
+   .walad{
+    margin-top: 20px;
+   }
+
+   .Add-list{
+    display: inline;
+max-width: 90%;
+margin-left: -400px;
+ }
+ .sidejs{
+margin-left: 650px;
+}
+
+
+  }

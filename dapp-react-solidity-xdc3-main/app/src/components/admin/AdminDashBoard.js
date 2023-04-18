@@ -8,6 +8,7 @@ import styles from "./dash.module.css";
 import swal from "sweetalert";
 // import { FaBars,FaUserPlus, FaTasks, FaGift } from "react-icons/fa";
 import SidebarMenu from "./side.js";
+import "./real.css"
 import {
   FaBars,
   FaUserPlus,
@@ -66,7 +67,7 @@ function AdminDashBoard() {
     <div style={{height:"800px"}}>
       <div className="row">
         <div style={{backgroundColor:"#00F1C3", height:"120px"}}>
-        <div className="col-md-3">
+        <div className="col-md-2">
           
           <div
             style={{ marginTop: "40px", marginLeft: "20px", display: "flex" }}
@@ -95,15 +96,15 @@ function AdminDashBoard() {
           >
            
             <div className="row justify-content-center">
-              <div className="col-md-3" style={{marginLeft:"120px", width:"475px"}}>
+              <div className="col-md-3" style={{marginLeft:"590px", width:"945px"}}>
                 <div
                   className="card"
                   style={{
-
+margin:"auto",
                     color: "white",
                     height: "150px",
                     marginBottom: "20px",
-                    boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
+                    boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
                     border: "0px",
                     backgroundColor: "#FFC107",
                     margin: "auto" /* centers horizontally */,
@@ -140,7 +141,7 @@ function AdminDashBoard() {
                 </div>
               </div>
             </div>
-            <div className="col-md-5" style={{width:"475px",marginLeft:"930px", marginTop:"-150px"}}> 
+            {/* <div className="col-md-5" style={{width:"475px",marginLeft:"930px", marginTop:"-150px"}}> 
             <div
                 className="card"
                 style={{
@@ -151,6 +152,7 @@ function AdminDashBoard() {
                   marginLeft: "",
                   marginBottom: "20px",
                   boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
+                  margin:"auto"
                 }}
               >
                 <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -181,7 +183,7 @@ function AdminDashBoard() {
                   </div>
                 </div>
               </div> 
-             </div>
+             </div> */}
              {/* <div className="col-md-5" style={{width:"400px",height:"500px",marginLeft:"1220px", marginTop:"-170px"}}> 
             <div
                 className="card"
@@ -226,7 +228,7 @@ function AdminDashBoard() {
              </div> */}
           </div> 
           
-          <div className="row mt-">
+          <div className="rowww">
             <div
               className="col-md-11 "
               style={{ marginTop: "-0px", marginLeft: "190px" }}
@@ -234,7 +236,7 @@ function AdminDashBoard() {
               <div
                 className="card"
                 style={{
-                  boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
+                  boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
                   backgroundColor: "#fff",
                 }}
               >

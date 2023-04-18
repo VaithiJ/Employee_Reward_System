@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import SidebarMenu from "./side";
 import { useHistory } from "react-router-dom";
 import bg from "./ss.svg"
+import "./real.css"
 
 
 
@@ -108,7 +109,7 @@ const CreateModal = (props) => {
     style={{
       backgroundColor: 'transparent',
      
-      margin: '0 auto',
+      
       width: '1000px',
       textAlign: 'center',
       boxShadow: '0 24px 500px #26214a1a',
