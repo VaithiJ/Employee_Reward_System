@@ -845,7 +845,7 @@ console.log("rowwwww",Alltasks)
           <h2>You haven't joined the company yet!</h2>
         </div>
       )}
-      <footer> <Footercr/></footer>
+      {/* <footer> <Footercr/></footer> */}
     </div>
  
   );
