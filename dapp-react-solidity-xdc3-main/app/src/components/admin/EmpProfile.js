@@ -53,7 +53,9 @@ const ProfilePage = (props) => {
   console.log("sample", erc)
   // console.log("sdfgjhfsdghfdsghd",respo.data);
   // console.log("sdfgjhfsdghfdsghd",respo.data);
-
+  window.onload = function() {
+    alert("\n• Please connect your compoany admin wallet ");
+  }
   // console.log("comName:",comName);
   // console.log("comId:",comId);
   console.log("employee id:", employeeId);
@@ -97,8 +99,8 @@ const ProfilePage = (props) => {
       let employeename = employee.name;
       console.log("name", employeename);
       let resp = await executeTransaction(erc, provider, "regEmployee", [
-        "0x6d5edb36abe81cc1b951946f5b7b3d021b5c111d",
-        "employeename",
+        employeeaddress,employeename
+        
       ]);
       log("Registered Employee", "hash", resp.txHash);
       setSubmitting(false);
@@ -114,7 +116,7 @@ const ProfilePage = (props) => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        console.log("irukiya poitiya da",employeeName)
+        console.log(employeeName)
         const response = await axios.put(`${API_URL}/updateprofile/${employeeName}`);
         const red = response.data.updatedprofile;
         setred(red);

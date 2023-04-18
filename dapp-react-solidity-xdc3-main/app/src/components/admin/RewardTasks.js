@@ -424,7 +424,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                 paddingLeft: '30px',
                 }}
                 >
-                {task.rewardsReceived === "true" ? (
+                {task.status === "Rewarded" ? (
                 <div style={{ color: 'green', fontWeight: 'bold' }}>Received</div>
                 ) : (
                 <button
@@ -440,7 +440,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                 disabled={submitting}
                 onClick={() => Rewarded(task)}
                 >
-                Claim Rewards
+                Reward
                 </button>
                 )}
                 </div>
