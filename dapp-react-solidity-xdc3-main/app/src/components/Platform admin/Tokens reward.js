@@ -22,6 +22,8 @@ const PlatformAdmin = () => {
   //   };
 
   const API_URL = "http://localhost:8800";
+  const [tokenMap, setTokenMap] = useState({});
+  
   const [companies, setCompanies] = useState([]);
   const [updatecompanies, setupdatecompanies] = useState([]);
   const [submitting, setSubmitting] = useState(false);
@@ -168,6 +170,12 @@ const PlatformAdmin = () => {
     console.log(events);
     console.log("asassadas");
   };
+const handleTokenChange = (e, company) => {
+  const newTokenMap = {...tokenMap};
+  newTokenMap[company] = e.target.value;
+  setTokenMap(newTokenMap);
+};
+
 
   const balanceOf = async (event, company) => {
     event.preventDefault();
@@ -334,51 +342,65 @@ const PlatformAdmin = () => {
                   >
                     xdc....{company.walletAddress.slice(-10)}
                   </td>
-                  <td style={{ padding: "1rem", color: "white" }}>
-                    <button
-                      className="button1"
-                      style={{
-                        backgroundColor: "#00FA57",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "5px",
-                        padding: "0.5rem 1rem",
-                        fontSize: "1rem",
-                        position: "relative",
-                        overflow: "hidden",
-                        zIndex: "1",
-                        fontFamily: "Secular One",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.background = "#330078";
-                        e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                        e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.background = "#00FA57";
-                        e.target.style.border = "none";
-                        e.target.style.boxShadow = "none";
-                      }}
-                      onClick={(e) => sendToCompany(e, company)}
-                    >
-                      <span
-                        style={{
-                          content: "''",
-                          position: "absolute",
-                          top: "0",
-                          left: "0",
-                          width: "100%",
-                          height: "100%",
-                          backgroundColor: "#1e9bff",
-                          zIndex: "-1",
-                          transform: "scale(0)",
-                          transition: "0.5s",
-                         
-                        }}
-                      ></span>
-                      GIVE TOKENS
-                    </button>
-                  </td>
+                 
+                   <td  style={{ padding: "1rem", color: "white" }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
+      {/* <input
+      key={index}
+  type="number"
+  min="0"
+  placeholder="Enter number of tokens"
+  style={{ marginRight: "1rem", width:"100px" }}
+  onChange={(e) => handleTokenChange(e, company)}
+  value={tokenMap[company] || ""}
+/> */}
+
+        <button
+          className="button1"
+          style={{
+            backgroundColor: "#00FA57",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            padding: "0.5rem 1rem",
+            fontSize: "1rem",
+            position: "relative",
+            overflow: "hidden",
+            zIndex: "1",
+            fontFamily: "Secular One",
+            
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = "#330078";
+            e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+            e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = "#00FA57";
+            e.target.style.border = "none";
+            e.target.style.boxShadow = "none";
+          }}
+          onClick={(e) => sendToCompany(e, company)}
+        >
+          <span
+            style={{
+              content: "''",
+              position: "absolute",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#1e9bff",
+              zIndex: "-1",
+              transform: "scale(0)",
+              transition: "0.5s",
+            }}
+          ></span>
+          GIVE TOKENS
+        </button>
+      </div>
+    </td>
+            
                   <td style={{ padding: "1rem" }}>
                     <button
                       onClick={(e) => balanceOf(e, company)}

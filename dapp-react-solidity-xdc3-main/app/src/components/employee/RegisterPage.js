@@ -54,7 +54,7 @@ export default function Register() {
     <div style={{ backgroundImage: `url(${g})` }}>
       {/* <Loginheader12 /> */}
       <div
-        className={styles.image_cont}
+        
         id="empp"
         style={{ marginLeft:"200px" , marginRight:"100px"}}
       >
@@ -65,13 +65,14 @@ export default function Register() {
             
           }}
         >
-                    <p style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Secular One"}}>Be Part of the Future - Register with Blockchain and Unlock Your Employee Rewards!</b></p>
-                    <Link to="/"><FaHome style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
+                    <p className="go" style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Secular One"}}>Be Part of the Future - Register with Blockchain and Unlock Your Employee Rewards!</b></p>
+                    <Link to="/"><FaHome className="fah" style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
 
-          <div style={{display:"flex", flexDirection:"row"}}>
-                    <img src={employeeImage} style={{width:"400px", height:"450px", marginLeft:"-100px", marginTop:"50px"}}/>
+          <div  style={{display:"flex", flexDirection:"row"}}>
+                    <img className="empp" src={employeeImage} style={{width:"400px", height:"450px", marginLeft:"-100px", marginTop:"50px"}}/>
 
           <form
+          className="empreg"
             onSubmit={handleRegister}
             style={{
               marginLeft: "200px",

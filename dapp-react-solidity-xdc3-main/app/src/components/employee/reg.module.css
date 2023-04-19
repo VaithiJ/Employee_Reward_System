@@ -250,3 +250,11 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 } */
+
+
+
+@media screen and (max-width: 768px){
+	.about{
+	  height: 800px;
+	}
+	}

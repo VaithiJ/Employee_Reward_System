@@ -52,6 +52,19 @@ display: none;  }
 .containerrr{
 max-width: 30%;
 }
+.sec::after{
+  
+    font-family: "Secular One";
+    content: "Company Login";
+    margin-left: -100px !important;
+  }
+
+  .cmplg{
+    display: none;
+  }
+.cmplgg{
+  margin-left: 80px !important;
+}
 .task-list-container{
   max-width: 500px;
   margin-left: -8100px

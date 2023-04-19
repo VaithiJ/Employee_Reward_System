@@ -190,6 +190,7 @@ const Openpage = () => {
         <div  ><div>
           <img className={styles.bounce} src={sds} />
           <img
+          className={styles.boun}
               src={road}
               style={{
                 width: "700px",
@@ -203,7 +204,7 @@ const Openpage = () => {
               }}
               alt="Employee"
             /></div>
-        <div className="int">
+        <div className={styles.int}>
           <div
             className={styles.open}
             style={{
@@ -218,11 +219,11 @@ const Openpage = () => {
             <h3 className={styles.a1} style={{fontFamily:"Secular One"}}>
               Stacks Used
             </h3>
-            <Slideshow />
+            <Slideshow className={styles.a2} />
           </div>
         </div>
        
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </div>
      </div>

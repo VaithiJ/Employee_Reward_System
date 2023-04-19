@@ -65,11 +65,12 @@ export default function SignInPage() {
           }}
         >
           
-          <p style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Secular One"}}>Unlock Your Potential - Login to Your Employee Portal<br/> TODAY!!!</b></p></div>
-          <div><Link to="/"><FaHome style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
+          <p className="ftnn" style={{fontSize:"40px",paddingTop:"30px" }}><b className="ftnn" style={{fontFamily:"Secular One"}}>Unlock Your Potential - Login to Your Employee Portal<br/> TODAY!!!</b></p></div>
+          <div><Link to="/"><FaHome className="fah" style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
           <div style={{ display: "flex", flexDirection: "row" }}>
             
             <img
+            className="loginclass"
               src={employeeImage}
               style={{
                 width: "400px",
@@ -80,6 +81,7 @@ export default function SignInPage() {
             />
 
             <form
+            className="formemp"
               style={{
                 margin: "auto",
                 borderRadius: "50px",
@@ -105,6 +107,7 @@ export default function SignInPage() {
                 <label>Username</label>
                 <br />
                 <input
+                className="ftn"
                   type="text"
                   title="name"
                   value={name}
@@ -119,6 +122,7 @@ export default function SignInPage() {
                 </Link>
                 <br />
                 <input
+                className="ftn"
                   type="password"
                   title="Password"
                   value={password}
