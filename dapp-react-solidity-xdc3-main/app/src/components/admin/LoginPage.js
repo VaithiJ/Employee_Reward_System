@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import reg from "../../components/openPage/r5.svg"
-import companyImage from "../openPage/comp1.png"
-import g from "./g.svg"
-import styles from "../openPage/openpage.module.css"
+import reg from "../../components/openPage/r5.svg";
+import companyImage from "../openPage/comp1.png";
+import g from "./lay.svg";
+import styles from "../openPage/openpage.module.css";
 
 import Footer from "../footer/Footer";
 import { useHistory } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
-
 
 import "../../App.css";
 import "./reg.css";
@@ -67,18 +66,82 @@ export default function SignInPage() {
   };
 
   return (
+    <div style={{height:"20px"}}>
     <div style={{ backgroundImage: `url(${g})` }}>
-   
-  
+      <div className="text-center m-5-auto" style={{ marginTop: "-10px" }}>
+        <p
+          className="sec"
+          style={{ fontSize: "36px", paddingTop: "30px", marginLeft: "60px" }}
+        >
+          <b style={{ fontFamily: "Secular One" }}></b>
+        </p>
+        <Link to="/">
+          <FaHome
+            className="fah"
+            style={{
+              marginLeft: "-1250px",
+              marginTop: "-0px",
+              width: "70px",
+              height: "40px",
+              color: "black",
+              border:"1px solid red"
+            }}
+          />
+        </Link>
 
-        <div className="text-center m-5-auto" style={{marginTop:"-10px"}}>
-        <p className="sec" style={{fontSize:"36px",paddingTop:"30px", marginLeft:"60px" }}><b style={{fontFamily:"Secular One"}}>Securely Connect to Your Business - Login to Your Blockchain-Enabled Company Portal Now!</b></p>
-                    <Link to="/"><FaHome className="fah" style={{marginLeft:"-1250px", marginTop:"-230px", width:"110px", height:"40px",  color:"black"}}/></Link>
-
-          <div style={{display:"flex", flexDirection:"row", marginTop:"-100px"}}>
-        <img className="cmplg"  src={companyImage} style={{width:"500px", height:"550px", marginLeft:"70px", marginTop:"50px"}}/>
-          <form className="cmplgg" onSubmit={handleLogin} style={{height:"500px",marginTop:"120px",marginLeft:"245px",marginRight:"50px",marginBottom:"100px", boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",borderRadius:"20px", backgroundColor:"transparent"}}>
-            <h2 className={styles.txt} style={{marginLeft:"70px", marginTop:"30px", fontSize:"30px", fontFamily:"Secular One"}}>Login</h2>
+        <div
+          style={{ display: "flex", flexDirection: "row", marginTop: "-100px" }}
+        >
+          <img
+            className="cmplg"
+            src={companyImage}
+            style={{
+              width: "450px",
+              height: "500px",
+              marginLeft: "170px",
+              marginTop: "30px",
+            }}
+          />
+          <p
+            style={{
+              borderRadius: "10px",
+              fontFamily: "Secular One",
+              paddingTop: "20px",
+              padding:"20px",
+              marginTop: "450px",
+              marginLeft: "-480px",
+              height: "150px",
+              fontSize:"18px"
+            }}
+          >
+            Securely Connect to Your Business  <br />
+            Login to Your Blockchain-Enabled <b style={{fontFamily:"Secular One", color:"red"}}>Company</b> Portal Now!
+          </p>
+          <form
+            className="cmplgg"
+            onSubmit={handleLogin}
+            style={{
+              height: "500px",
+              marginTop: "80px",
+              marginLeft: "155px",
+              marginRight: "50px",
+              marginBottom: "100px",
+              boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+              borderRadius: "20px",
+              backgroundColor: "transparent",
+            }}
+          >
+            <h2
+              className={styles.txt}
+              style={{
+                marginLeft: "70px",
+                marginTop: "30px",
+                fontSize: "30px",
+                fontFamily: "Secular One",
+              }}
+            >
+              Login
+            </h2>
             <p>
               <label>Company Name</label>
               <br />
@@ -105,33 +168,39 @@ export default function SignInPage() {
               />
             </p>
             <p>
-            <button
+              <button
                 type="submit"
                 className="btn btn-primary"
                 style={{ marginLeft: "10px" }}
               >
                 Login
-              </button> 
+              </button>
             </p>
             <footer>
-              <p style={{fontFamily:"Secular One"}}>
-                <Link to="/registercompany" style={{fontFamily:"Secular One"}}>
+              <p style={{ fontFamily: "Secular One" }}>
+                <Link
+                  to="/registercompany"
+                  style={{ fontFamily: "Secular One" }}
+                >
                   {" "}
                   First time? Create an account
                 </Link>
                 .
               </p>
-              <p style={{fontFamily:"Secular One"}}>
-                <Link to="/"style={{fontFamily:"Secular One"}}>Back to Homepage</Link>.
+              <p style={{ fontFamily: "Secular One" }}>
+                <Link to="/" style={{ fontFamily: "Secular One" }}>
+                  Back to Homepage
+                </Link>
+                .
               </p>
             </footer>
           </form>
-          </div>
-          {message && <p>{message}</p>}
         </div>
-      
+        {message && <p>{message}</p>}
+      </div>
+
       {/* <Footer /> */}
- 
+    </div>
     </div>
   );
 }

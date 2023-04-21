@@ -46,7 +46,8 @@ const {
   EthereumContext,
 } = require("react-solidity-xdc3");
 
-function RealDash(connect) {
+function RealDash() {
+ 
   const [search, setSearch] = useState("");
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -161,7 +162,7 @@ function RealDash(connect) {
     if (token) {
       const decoded = jwt_decode(token);
       if (!decoded.isAdmin) {
-        alert("Your account will be verified soon.");
+        alert("Your account will be whitelisted soon.");
         window.location.replace("/logincomp");
         return;
       }
@@ -332,7 +333,6 @@ console.log("ell tasks um ", re)
                   <div style={{marginTop:"-5px", fontSize:"18px", fontFamily:"Secular One"}}>Balance</div> 
                 </button>
               </div>
-
               <div
                 style={{
                   display: "flex",

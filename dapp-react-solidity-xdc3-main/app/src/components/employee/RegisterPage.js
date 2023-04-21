@@ -9,9 +9,10 @@ import employeeImage from "./employees.png";
 import styles from "../openPage/openpage.module.css";
 import reg from "../openPage/r5.svg";
 import "./reg.css";
-import g from "../admin/g.svg"
+import g from "../admin/w4.svg"
 import empImg from "../../image/employee.jpg"
 import { FaHome } from "react-icons/fa";
+import "./task.css";
 
 
 export default function Register() {
@@ -51,6 +52,7 @@ export default function Register() {
   };
 
   return (
+    <div style={{height:"680px"}}>
     <div style={{ backgroundImage: `url(${g})` }}>
       {/* <Loginheader12 /> */}
       <div
@@ -65,11 +67,14 @@ export default function Register() {
             
           }}
         >
-                    <p className="go" style={{fontSize:"40px",paddingTop:"30px" }}><b style={{fontFamily:"Secular One"}}>Be Part of the Future - Register with Blockchain and Unlock Your Employee Rewards!</b></p>
-                    <Link to="/"><FaHome className="fah" style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
+                    <Link to="/"><FaHome  style={{border:"1px solid red",marginLeft:"200px", marginTop:"30px",marginLeft:"-1300px", width:"50px", height:"40px", color:"black"}}/></Link>
 
-          <div  style={{display:"flex", flexDirection:"row"}}>
-                    <img className="empp" src={employeeImage} style={{width:"400px", height:"450px", marginLeft:"-100px", marginTop:"50px"}}/>
+          <div   style={{display:"flex", flexDirection:"row"}}>
+            <div className="loginnnclass">
+                    <img className="empp" src={employeeImage} style={{width:"400px", height:"350px", marginLeft:"-00px", marginTop:"50px"}}/>
+
+                    </div>
+                    <p className="go" style={{fontSize:"18px",paddingTop:"30px", marginLeft:"-240px", marginTop:"350px" }}><b style={{fontFamily:"Secular One"}}>Be Part of the Future <br/><b style={{color:"red", fontFamily:"Secular One"}}>Register</b>  with Blockchain and Unlock Your Employee Rewards!</b></p>
 
           <form
           className="empreg"
@@ -79,6 +84,8 @@ export default function Register() {
               borderRadius: "50px",
               marginBottom: "100px",
               boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+              height:"650px",
+              marginTop:"-20px"
               
             }}
           >
@@ -209,7 +216,8 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
+    </div>
     </div>
   );
 }

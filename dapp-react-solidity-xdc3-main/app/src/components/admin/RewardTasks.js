@@ -369,7 +369,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
           <div className="task-wallet" style={{fontFamily:"Secular One",}}>Wallet Address</div>
           {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
           <div className="task-due-date" style={{fontFamily:"Secular One",}}>Due Date</div>
-          <div className="task-due-date" style={{fontFamily:"Secular One",}}>Reward</div>
+          <div className="task-due-date" style={{fontFamily:"Secular One",marginRight:"80px"}}>Reward</div>
           <div className="task-progress" style={{fontFamily:"Secular One",}}>Actions</div>
           <div className="task-status" style={{ width: '15%', paddingLeft: "30px",fontFamily:"Secular One", }}>Rewards</div>
         </div>
@@ -390,11 +390,11 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
             <div className="task-assigned-too" style={{fontFamily:"Secular One",}}>{task.empName}</div>
             <div className="task-assigned-to" style={{fontFamily:"Secular One",}}>xdc...{task.empWalletAddress.slice(-5)}</div>
             <div className="task-due-date" style={{fontFamily:"Secular One",}}>{task.deadline}</div>
-            <div className="task-progress" style={{fontFamily:"Secular One",}}>{task.rewards}</div>
+            <div className="task-progress" style={{fontFamily:"Secular One",marginRight:"80px"}}>{task.rewards}</div>
             {task.certificates==="false" ? (
               <div>
                 <input
-                  style={{ opacity: submitting ? 0.5 : 1, marginRight:"-30px" }}
+                  style={{ opacity: submitting ? 0.5 : 1, marginRight:"-80px" }}
                   disabled={submitting}
                   type="file"
                   accept=".pdf"
@@ -402,7 +402,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                 />
                 <button
                   style={{ 
-                    marginRight: '-40px', 
+                    marginRight: '-90px', 
                     padding: '8px 16px', 
                     background: submitting ?'red' : "green", 
                     color: 'white', 
@@ -410,7 +410,8 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                     borderRadius: '4px', 
                     cursor: 'pointer',
                     opacity: submitting ? 0.5 : 1,
-                    fontFamily:"Secular One"
+                    fontFamily:"Secular One",
+                    marginLeft:"30px"
                   }}
                   onClick={() => uploadFile(task)}
                 >
@@ -418,7 +419,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                 </button> 
               </div>
             ) : (
-              <div style={{ fontSize: '20px', fontWeight: 'bold', fontFamily:"Secular One" }}>Uploaded</div>
+              <div style={{ fontSize: '20px', fontWeight: 'bold', fontFamily:"Secular One",marginRight:"60px" }}>Uploaded</div>
             )}
             <div
               className="task-status"
@@ -430,7 +431,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                 }}
                 >
                 {task.status === "Rewarded" ? (
-                <div style={{ color: 'green', fontWeight: 'bold', fontFamily:"Secular One" }}>Received</div>
+                <div style={{ color: 'green', fontWeight: 'bold', fontFamily:"Secular One",  fontSize:"20px"}}>Rewarded</div>
                 ) : (
                 <button
                 style={{
@@ -440,7 +441,9 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                 border: 'none',
                 borderRadius: '4px',
                 cursor: 'pointer',
-                opacity: submitting ? 0.5 : 1
+                opacity: submitting ? 0.5 : 1,
+                fontFamily:"Secular One",
+                marginRight:"-40px"
                 }}
                 disabled={submitting}
                 onClick={() => Rewarded(task)}

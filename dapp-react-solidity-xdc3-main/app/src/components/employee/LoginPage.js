@@ -9,11 +9,11 @@ import employeeImage from "./employees.png";
 import styles from "../openPage/openpage.module.css";
 import reg from "../openPage/r5.svg";
 import "./reg.css";
-import g from "../admin/g.svg";
+import g from "../admin/w3.svg";
 import empImg from "../../image/employee.jpg";
 import "../../App.css";
 import { FaHome } from "react-icons/fa";
-
+import "./task.css"
 
 const API_URL = "http://localhost:8800";
 
@@ -56,32 +56,45 @@ export default function SignInPage() {
         className={styles.image_cont}
         id="empp"
         style={{ marginLeft: "200px", marginRight: "100px" }}
-      >      
-
+      >
         <div
           className="col-md-18 mx-auto my-auto text-left"
           style={{
             width: "100%",
           }}
-        >
-          
-          <p className="ftnn" style={{fontSize:"40px",paddingTop:"30px" }}><b className="ftnn" style={{fontFamily:"Secular One"}}>Unlock Your Potential - Login to Your Employee Portal<br/> TODAY!!!</b></p></div>
-          <div><Link to="/"><FaHome className="fah" style={{marginLeft:"-1300px", marginTop:"-250px", width:"110px", height:"40px", color:"black"}}/></Link>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            
-            <img
-            className="loginclass"
-              src={employeeImage}
+        ></div>
+        <div>
+          <Link to="/">
+            <FaHome
+              className="fah"
               style={{
-                width: "400px",
-                height: "450px",
-                marginLeft: "-100px",
-                marginTop: "50px",
+                marginLeft: "-1300px",
+                marginTop: "-250px",
+                width: "110px",
+                height: "40px",
+                color: "black",
               }}
             />
+          </Link>
+          <div  style={{ display: "flex", flexDirection: "row", marginTop:"-20px" }}>
+            <img
+              className="loginnclass"
+              // style={{height:"20px", width:"10px"}}
+              src={employeeImage}
+              
+            />
+            <p
+              className="ftnn"
+              style={{ fontSize: "18px", paddingTop: "30px", marginTop:"350px", marginLeft:"-300px" }}
+            >
+              <b className="ftnn" style={{ fontFamily: "Secular One", marginTop:"-390px" }}>
+                Unlock Your Potential <br/> Login to Your <b style={{fontFamily:"Secular One", color: "red"}}>Employee</b> Portal
+                <br /> TODAY!!!
+              </b>
+            </p>
 
             <form
-            className="formemp"
+              className="formemp"
               style={{
                 margin: "auto",
                 borderRadius: "50px",
@@ -107,7 +120,7 @@ export default function SignInPage() {
                 <label>Username</label>
                 <br />
                 <input
-                className="ftn"
+                  className="ftn"
                   type="text"
                   title="name"
                   value={name}
@@ -122,7 +135,7 @@ export default function SignInPage() {
                 </Link>
                 <br />
                 <input
-                className="ftn"
+                  className="ftn"
                   type="password"
                   title="Password"
                   value={password}

@@ -47,3 +47,29 @@
     box-shadow: 15px 15px 30px #bebebe,
                -15px -15px 30px #ffffff;
   }
+  .loginnnclass{
+    width: 350px;
+    height: 300px;
+    margin-top: -30px;
+  margin-left: -120px;
+  animation: bounce 3s infinite;
+  }
+  .loginnclass{
+    width: 350px;
+    height: 300px;
+    margin-top: 80px;
+  margin-left: -100px;
+  animation: bounce 3s infinite;
+  }
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-30px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  

@@ -1,4 +1,5 @@
 import React, { useState, useEffect , useContext} from "react";
+import dotenv from "dotenv";
 import {
   Button,
   Card,
@@ -25,14 +26,23 @@ import LogoutHeader from "../header/logoutheader";
 import {storage} from "../../firebase.js"
 import {v4 as uuidv4} from "uuid";
 import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
- const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
+dotenv.config()
 
+const nodemailer = require('nodemailer');
+ const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
 const ProfilePage = (props) => {
   const [progressWidth, setProgressWidth] = useState(0);
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
     "name",
   ]);
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.GMAIL,
+        pass: process.env.GMAIL_PASSWORD
+    }
+});
   const [avatarUrl, setAvatarUrl] = useState("");
   const [red, setred] = useState([]);
   const[m,setm]=useState("")
@@ -91,18 +101,19 @@ const ProfilePage = (props) => {
       );
       setSubmitting(true);
   
-      const respo = await axios.get(`${API_URL}/onboard/${employeeId}`, {
-        withCredentials: true,
-      });
-      console.log("asasdasdasdasdsaasdasssssssssssss", respo);
-      let employeeaddress = employee.wallet.replace("xdc", "0x");
-      let employeename = employee.name;
-      console.log("name", employeename);
-      let resp = await executeTransaction(erc, provider, "regEmployee", [
-        employeeaddress,employeename
+      // const respo = await axios.get(`${API_URL}/onboard/${employeeId}`, {
+      //   withCredentials: true,
+      // });
+      // console.log("asasdasdasdasdsaasdasssssssssssss", respo);
+      
+      // let employeeaddress = employee.wallet.replace("xdc", "0x");
+      // let employeename = employee.name;
+      // console.log("name", employeename);
+      // let resp = await executeTransaction(erc, provider, "regEmployee", [
+      //   employeeaddress,employeename
         
-      ]);
-      log("Registered Employee", "hash", resp.txHash);
+      // ]);
+      // log("Registered Employee", "hash", resp.txHash);
       setSubmitting(false);
     } catch (error) {
       console.error("Error in regEmployee function: ", error);

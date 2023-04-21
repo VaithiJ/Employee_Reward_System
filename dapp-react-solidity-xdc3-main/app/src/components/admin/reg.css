@@ -14,6 +14,24 @@
     border-radius: 10px;
     width: 100%;
   }
+  .cmplg{
+    width: 600px;
+    height: 600px;
+    margin-top: 300px;
+  margin-left: -570px;
+  animation: bounce 3s infinite;
+  }
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-30px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
   
   .inputGroup label {
     font-size: 100%;
