@@ -308,16 +308,17 @@ console.log("ell tasks um ", re)
                   onClick={balanceOf}
                  className="buy"
                   style={{
-                    // margin: "1rem",
                      marginLeft: "700px",
                     marginTop: "30px",
                     borderRadius: "10px",
                     height: "45px",
+                    fontFamily:"Secular One",
+                    padding:"10px",
                     
                    
                     backgroundColor: "#1196B0",
                     width: "120px",
-                    boxShadow: "3px 6px 14px -1px rgba(0,0,0,0.36) "
+                    fontSize:"17px"
 
                   }}
                   onMouseEnter={(e) => {
@@ -330,8 +331,7 @@ console.log("ell tasks um ", re)
                   }}
                 >
              
-                  <div style={{marginTop:"-5px", fontSize:"18px", fontFamily:"Secular One"}}>Balance</div> 
-                </button>
+Balance                </button>
               </div>
               <div
                 style={{

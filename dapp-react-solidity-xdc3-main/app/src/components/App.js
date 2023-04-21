@@ -10,7 +10,7 @@
   import 'react-toastify/dist/ReactToastify.css';
   import React from 'react'
   import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-  import { useLocation } from 'react-router-dom'
+  import { useLocation,matchPath } from 'react-router-dom'
 
   import LoginPage from '../components/employee/LoginPage'
   import RegisterPage from '../components/employee/RegisterPage'
@@ -35,6 +35,7 @@
   // import Tes from "../components/Platform admin/Tes";
   import "./App.css"
   import AdminButton from './admin/AdminButton';
+  import EmpButton from './employee/EmpButton';
 
 
   const { getWeb3Modal, createWeb3Provider, connectWallet, EthereumContext, createContractInstance, log } = require('react-solidity-xdc3');
@@ -66,11 +67,13 @@
       log("Connect", "Get Address", await signer.getAddress());
       setconnecting(true);
     }
+    const match = matchPath(location.pathname, { path: "/empprofile/:id" });
 
-    const links =
-  
-    location.pathname == "/real";
-    
+
+    const adminlinks = (location.pathname === "/real" || location.pathname === "/reward" || !!match);
+
+    const emplinks = (location.pathname === "/employeehome" || location.pathname === "/userprofile");
+
     return (
   //     <div className="App">
   //                     <div className="connect-button-container" style={{marginTop:"30px", position: "absolute", top: 0, right: 0, padding: "10px", zIndex: 999, textAlign: "right" }}>
@@ -80,9 +83,12 @@
   <div className="App">
       
         { 
-              links && <AdminButton connect={connect} connected={connect} />}
+              adminlinks && <AdminButton connect={connect} connected={connect} />}
+               { 
+              emplinks && <EmpButton connect={connect} connected={connect} />}
+              
 
-          <div className="connect-button-container" style={{marginTop:"20px",textAlign:"center", position: "absolute", top: 0, right: 160, padding: "10px", zIndex: 999, textAlign: "right" }}>
+          {/* <div className="connect-button-container" style={{marginTop:"20px",textAlign:"center", position: "absolute", top: 0, right: 160, padding: "10px", zIndex: 999, textAlign: "right" }}>
             <button   onMouseEnter={(e) => {
                         e.target.style.background = "#330078";
                         e.target.style.border = "none";
@@ -95,7 +101,7 @@
                         e.target.style.width = "150px"
                       }} style={{borderRadius:"10px", width:"150px", height:"45px", backgroundColor:"#1196B0", marginRight:"-100px", fontSize:"17px",textAlign:"center", fontFamily:"Secular One"}} onClick={connect} disabled={connecting}>{connecting ? 'Connected' : 'Connect'}
             </button>
-          </div>
+          </div> */}
         <section>
           <EthereumContext.Provider value={ethereumContext}>
             <Router>
