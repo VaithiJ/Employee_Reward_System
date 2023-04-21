@@ -26,10 +26,16 @@ const CompanySchema = new mongoose.Schema({
         unique: true,
 
     },
-    mobile:{
-        type : Number,
-        required : true,
-    },
+    mobile: {
+        type: String,
+        required: true,
+        // validate: {
+        //   validator: function(v) {
+        //     return /^[+]\d{1,3}\s\d{10}$/.test(v);
+        //   },
+        //   message: props => `${props.value} is not a valid mobile number!`
+        // }
+      },
     isAdmin : {
         type : Boolean,
         default : false
