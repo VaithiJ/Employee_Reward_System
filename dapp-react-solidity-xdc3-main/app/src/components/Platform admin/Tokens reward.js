@@ -25,9 +25,10 @@ const PlatformAdmin = () => {
   const [tokenMap, setTokenMap] = useState({});
   
   const [companies, setCompanies] = useState([]);
-  const [updatecompanies, setupdatecompanies] = useState([]);
+ const[companyName,setcompanyName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const { provider, erc } = useContext(EthereumContext);
+
 
   console.log("sample", erc);
   console.log(provider);
@@ -108,15 +109,15 @@ const PlatformAdmin = () => {
     // Replace the "xdc" with "0x" in the company's wallet address
     let companyAddress = company.walletAddress.replace("xdc", "0x");
     console.log("kasdlkaskdajsld", companyAddress);
-
+console.log("tokenss",tokenMap[companyName])
     // Define the amount to be sent
-    let amount = "200";
-    console.log(amount);
+    // let amount = "200";
+    // console.log(amount);
 
     // try {
     // Execute the transaction
     let resp = await executeTransaction(erc, provider, "sendToCompany", [
-      amount,
+      tokenMap[companyName],
       companyAddress,
     ]);
 
@@ -172,7 +173,9 @@ const PlatformAdmin = () => {
   };
 const handleTokenChange = (e, company) => {
   const newTokenMap = {...tokenMap};
-  newTokenMap[company] = e.target.value;
+  newTokenMap[company.comName] = e.target.value;
+  setcompanyName(company.comName)
+  console.log("company Name", company.comName)
   setTokenMap(newTokenMap);
 };
 
@@ -345,15 +348,17 @@ const handleTokenChange = (e, company) => {
                  
                    <td  style={{ padding: "1rem", color: "white" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
-      {/* <input
+      <input className="inputbox"
       key={index}
+      placeholder="TOKENS" 
   type="number"
   min="0"
-  placeholder="Enter number of tokens"
-  style={{ marginRight: "1rem", width:"100px" }}
+  inputMode="numeric"
+  // placeholder="Enter number of tokens"
+  style={{ marginRight: "1rem", width:"80px", height:"40px" }}
   onChange={(e) => handleTokenChange(e, company)}
-  value={tokenMap[company] || ""}
-/> */}
+  value={tokenMap[company.comName] || ""}
+/>
 
         <button
           className="button1"
