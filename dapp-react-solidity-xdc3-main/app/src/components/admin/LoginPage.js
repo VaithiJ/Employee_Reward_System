@@ -9,6 +9,8 @@ import styles from "../openPage/openpage.module.css";
 import Footer from "../footer/Footer";
 import { useHistory } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
+import {AiOutlineEye ,AiOutlineEyeInvisible} from "react-icons/ai"
+
 
 import "../../App.css";
 import "./reg.css";
@@ -23,12 +25,13 @@ export default function SignInPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
   const history = useHistory();
+  const [showPassword, setShowPassword] = useState(false);
   const backgroundGradient = {
     background: "#FFFFFF",
     height: "100%",
     width: "100%",
   };
-
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const handleLogin = async (event) => {
     event.preventDefault();
 
@@ -160,15 +163,43 @@ export default function SignInPage() {
                 <label className="right-label" style={{fontFamily:"Secular One", fontWeight:"bolder"}}>Forget password?</label>
               </Link>
               <br />
-              <input
-                type="password"
-                title="Password"
-                value={password}
-                style={{fontFamily:"Montserrat", fontWeight:"bold"}}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </p>
+              <p>
+  <input
+    type={showPassword ? 'text' : 'password'}
+    title="Password"
+    value={password}
+    style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+  {showPassword ? (
+    <AiOutlineEyeInvisible
+      style={{
+        position: "relative",
+        left: "100px",
+        top: "5px",
+        transform: "translateY(-250%)",
+        cursor: "pointer",
+        height: "10%",
+        width: "10%"
+      }}
+      onClick={togglePasswordVisibility}
+    />
+  ) : (
+    <AiOutlineEye
+      style={{
+        position: "relative",
+        left: "100px",
+        top: "5px",
+        transform: "translateY(-250%)",
+        cursor: "pointer",
+        height: "10%",
+        width: "10%"
+      }}
+      onClick={togglePasswordVisibility}
+    />
+  )}
+</p>
+</p>
             <p>
               <button
                 type="submit"
