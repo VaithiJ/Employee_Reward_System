@@ -117,21 +117,22 @@ export default function SignInPage() {
                 Login
               </h2>
               <p>
-                <label>Username</label>
+                <label style={{fontFamily:"Secular One",fontWeight:"bolder"}}>USERNAME</label>
                 <br />
                 <input
                   className="ftn"
                   type="text"
                   title="name"
                   value={name}
+                  style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                   onChange={(e) => setname(e.target.value)}
                   required
                 />
               </p>
               <p>
-                <label>Password</label>
+                <label style={{fontFamily:"Secular One", fontWeight:"bolder"}}>PASSWORD</label>
                 <Link to="/forget-password">
-                  <label className="right-label">Forget password?</label>
+                  <label className="right-label" style={{fontFamily:"Secular One",fontWeight:"bold"}}>Forget password?</label>
                 </Link>
                 <br />
                 <input
@@ -139,6 +140,7 @@ export default function SignInPage() {
                   type="password"
                   title="Password"
                   value={password}
+                  style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
@@ -155,11 +157,11 @@ export default function SignInPage() {
 
               {message && <p>{message}</p>}
               <footer>
-                <p style={{ textAlign: "center" }}>
-                  <Link to="/register"> First time? Create an account</Link>.
+                <p style={{ textAlign: "center"}}>
+                  <Link to="/register" style={{fontFamily:"Secular One",fontWeight:"bold"}}> First time? Create an account</Link>.
                 </p>
                 <p style={{ textAlign: "center" }}>
-                  <Link to="/">Back to Homepage</Link>.
+                  <Link to="/" style={{fontFamily:"Secular One",fontWeight:"bold"}}>Back to Homepage</Link>.
                 </p>
               </footer>
             </form>

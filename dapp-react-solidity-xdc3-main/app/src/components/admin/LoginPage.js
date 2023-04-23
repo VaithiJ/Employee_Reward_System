@@ -143,26 +143,28 @@ export default function SignInPage() {
               Login
             </h2>
             <p>
-              <label>Company Name</label>
+              <label style={{fontFamily:"Secular One", fontWeight:"bolder"}}>COMPANY NAME</label>
               <br />
               <input
                 type="text"
                 title="name"
                 value={comName}
+                style={{fontFamily:"Montserrat", fontWeight:"bold"}}
                 onChange={(e) => setname(e.target.value)}
                 required
               />
             </p>
             <p>
-              <label>Password</label>
+              <label style={{fontFamily:"Secular One", fontWeight:"bolder"}}>PASSWORD</label>
               <Link to="/forget-password">
-                <label className="right-label">Forget password?</label>
+                <label className="right-label" style={{fontFamily:"Secular One", fontWeight:"bolder"}}>Forget password?</label>
               </Link>
               <br />
               <input
                 type="password"
                 title="Password"
                 value={password}
+                style={{fontFamily:"Montserrat", fontWeight:"bold"}}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
@@ -180,7 +182,7 @@ export default function SignInPage() {
               <p style={{ fontFamily: "Secular One" }}>
                 <Link
                   to="/registercompany"
-                  style={{ fontFamily: "Secular One" }}
+                  style={{ fontFamily: "Secular One",fontWeight:"bolder" }}
                 >
                   {" "}
                   First time? Create an account
@@ -188,7 +190,7 @@ export default function SignInPage() {
                 .
               </p>
               <p style={{ fontFamily: "Secular One" }}>
-                <Link to="/" style={{ fontFamily: "Secular One" }}>
+                <Link to="/" style={{ fontFamily: "Secular One",fontWeight:"bolder" }}>
                   Back to Homepage
                 </Link>
                 .
