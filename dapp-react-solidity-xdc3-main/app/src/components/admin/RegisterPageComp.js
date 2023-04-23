@@ -16,6 +16,7 @@ import { FaHome } from "react-icons/fa";
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function RegisterComp() {
   const API_URL = "http://localhost:8800";
@@ -28,7 +29,8 @@ export default function RegisterComp() {
   const [checkbox, setCheckbox] = useState(false);
   const history = useHistory();
   const isAdmin = false;
-
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const handleRegister = async (event) => {
     event.preventDefault();
 
@@ -160,7 +162,7 @@ export default function RegisterComp() {
                         className="form-control"
                         value={comName}
                         title="UsercomName"
-                        style={{ fontFamily: "Montserrat",fontWeight:"bold" }}
+                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
                         onChange={(e) => setUsercomName(e.target.value)}
                         required
                       />
@@ -176,7 +178,7 @@ export default function RegisterComp() {
                         placeholder="Company Email"
                         value={comEmail}
                         title="comEmail"
-                        style={{ fontFamily: "Montserrat",fontWeight:"bold" }}
+                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
                         onChange={(e) => setcomEmail(e.target.value)}
                         required
                       />
@@ -196,14 +198,13 @@ export default function RegisterComp() {
                         onChange={setMobile}
                         inputClass="form-control"
                         className="red"
-                        style={{ fontFamily: "Montserrat"}}
+                        style={{ fontFamily: "Montserrat" }}
                         // dropdownClass="form-control"
                         // style={{height:}}
                         inputStyle={{
                           height: "45px",
                           width: "265px",
-                          fontWeight:"bold"
-                         
+                          fontWeight: "bold",
                         }}
                         // onBlur={() => {
                         //   const phoneNumber = parsePhoneNumberFromString(
@@ -219,18 +220,46 @@ export default function RegisterComp() {
                       />
                     </div>
 
-                    <div className="col-md-6 form-group">
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Password"
-                        value={password}
-                        title="password"
-                        style={{ fontFamily: "Montserrat",fontWeight:"bold" }}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                      />
-                    </div>
+                    <div className="col-md-6 form-group" style={{ position: "relative" }}>
+  <input
+    type={showPassword ? "text" : "password"}
+    className="form-control"
+    placeholder="Password"
+    value={password}
+    title="password"
+    style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+    onChange={(e) => setPassword(e.target.value)}
+    required
+  />
+  {showPassword ? (
+    <AiOutlineEyeInvisible
+      style={{
+        position: "absolute",
+        right: "10px",
+        top: "50%",
+        transform: "translateY(-83%) translateX(24%)",
+        cursor: "pointer",
+        height: "40%",
+        width: "40%",
+      }}
+      onClick={togglePasswordVisibility}
+    />
+  ) : (
+    <AiOutlineEye
+      style={{
+        position: "absolute",
+        right: "30px",
+        top: "50%",
+        transform: "translateY(-83%) translateX(40%)",
+        cursor: "pointer",
+        height: "40%",
+        width: "40%",
+      }}
+      onClick={togglePasswordVisibility}
+    />
+  )}
+</div>
+
 
                     <div className="col-md-12 form-group">
                       <input
@@ -239,7 +268,7 @@ export default function RegisterComp() {
                         className="form-control"
                         value={comAddress}
                         title="comAddress"
-                        style={{ fontFamily: "Montserrat",fontWeight:"bold" }}
+                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
                         onChange={(e) => setcomAddress(e.target.value)}
                         required
                       />
@@ -251,7 +280,7 @@ export default function RegisterComp() {
                         className="form-control"
                         value={walletAddress}
                         title="wallet"
-                        style={{ fontFamily: "Montserrat",fontWeight:"bold" }}
+                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
                         onChange={(e) => setWallet(e.target.value)}
                         required
                       />
@@ -266,7 +295,7 @@ export default function RegisterComp() {
                             color: "black",
                             marginLeft: "-30px",
                             fontFamily: "Montserrat",
-                            fontWeight:"bold"
+                            fontWeight: "bold",
                           }}
                         >
                           <input
