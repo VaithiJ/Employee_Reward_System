@@ -13,7 +13,8 @@ import g from "../admin/w3.svg";
 import empImg from "../../image/employee.jpg";
 import "../../App.css";
 import { FaHome } from "react-icons/fa";
-import "./task.css"
+import "./task.css";
+import {AiOutlineEye ,AiOutlineEyeInvisible} from "react-icons/ai"
 
 const API_URL = "http://localhost:8800";
 
@@ -22,13 +23,14 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const history = useHistory();
   const backgroundGradient = {
     background: "#FFFFFF)",
     height: "10%",
     width: "100%",
   };
-
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
@@ -137,13 +139,40 @@ export default function SignInPage() {
                 <br />
                 <input
                   className="ftn"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   title="Password"
                   value={password}
                   style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
+                {showPassword ? (
+    <AiOutlineEyeInvisible
+      style={{
+        position: "relative",
+        left: "100px",
+        top: "5px",
+        transform: "translateY(-250%)",
+        cursor: "pointer",
+        height: "10%",
+        width: "10%"
+      }}
+      onClick={togglePasswordVisibility}
+    />
+  ) : (
+    <AiOutlineEye
+      style={{
+        position: "relative",
+        left: "100px",
+        top: "5px",
+        transform: "translateY(-250%)",
+        cursor: "pointer",
+        height: "10%",
+        width: "10%"
+      }}
+      onClick={togglePasswordVisibility}
+    />
+  )}
               </p>
               <p>
                 <button
