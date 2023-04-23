@@ -13,7 +13,8 @@ import g from "../admin/w4.svg"
 import empImg from "../../image/employee.jpg"
 import { FaHome } from "react-icons/fa";
 import "./task.css";
-
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from "react-phone-input-2";
 
 export default function Register() {
   const API_URL = "http://localhost:8800";
@@ -104,6 +105,7 @@ export default function Register() {
                     className="form-control"
                     value={name}
                     title="User Name"
+                    style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />
@@ -115,23 +117,51 @@ export default function Register() {
                     placeholder="Email"
                     value={email}
                     title="comEmail"
+                    style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
 
-                <div className="col-md-6 form-group">
-                  <input
-                    type="text"
-                    placeholder="Mobile"
-                    className="form-control"
-                    value={mobile}
-                    title="mobile"
-                    onChange={(e) => setMobile(e.target.value)}
-                    required
-                  />
-                </div>
+                <div
+                      className="col-md-6 form-group"
+                      style={{
+                        position: "relative",
+                        bottom: "45px",
+                        right: "30px",
+                      }}
+                    >
+                      <PhoneInput
+                        placeholder="Enter Your Mobile Number"
+                        value={mobile}
+                        onChange={setMobile}
+                        inputClass="form-control"
+                        className="red"
+                        style={{ fontFamily: "Montserrat"}}
+                        // dropdownClass="form-control"
+                        // style={{height:}}
+                        inputStyle={{
+                          height: "45px",
+                          width: "305px",
+                          fontWeight:"bold"
+                         
+                        }}
+                        // onBlur={() => {
+                        //   const phoneNumber = parsePhoneNumberFromString(
+                        //     mobile,
+                        //     "ZZ"
+                        //   );
+                        //   // const formattedPhoneNumber =
+                        //   //   phoneNumber?.formatInternational();
+                        //   // setMobile(formattedPhoneNumber || "");
+                        // }}
+                        countryCodeEditable={false}
+                        required
+                      />
+                    </div>
 
+
+                
                 <div className="col-md-6 form-group">
                   <input
                     type="password"
@@ -139,6 +169,7 @@ export default function Register() {
                     placeholder="Password"
                     value={password}
                     title="password"
+                    style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
@@ -149,6 +180,7 @@ export default function Register() {
                         title="Date of Joining"
                         placeholder="DOJ"
                         className="form-control"
+                        style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                         value={DOJ}
                         onChange={(e) => setDOJ(e.target.value)}
                         required
@@ -161,6 +193,7 @@ export default function Register() {
                     title="Address"
                     placeholder="address"
                     className="form-control"
+                    style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                     value={address}
                     
                     onChange={(e) => setAddress(e.target.value)}
@@ -174,6 +207,7 @@ export default function Register() {
                     placeholder="Wallet Address"
                     value={wallet}
                     title="wallet"
+                    style={{fontFamily:"Montserrat",fontWeight:"bold"}}
                     onChange={(e) => setWallet(e.target.value)}
                     required
                   />
