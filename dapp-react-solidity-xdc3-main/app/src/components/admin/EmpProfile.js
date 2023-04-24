@@ -76,7 +76,23 @@ const ProfilePage = (props) => {
   console.log("wallet: ", employeeWallet);
   console.log("profile: ", profile11);
   // console.log(response.data);
-
+  const [same, setSame] = useState(false);
+  const sameAdd = () => {
+    // console.log(tokenn.wallet.replace("xdc", "0x"));
+    const ls = localStorage.getItem("WalletAddress");
+    const sl = ls.toLowerCase();
+    console.log(sl);
+    if (tokenn.wallet.replace("xdc","0x") === sl) {
+      setSame(true);
+    }
+  }
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      sameAdd();
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+    
   const tokenn = jwt_decode(cookies.access_token);
   const comName = tokenn.name;
   const comId = tokenn.name.substr(0, 3).toUpperCase() + employeeId.substr(-6);
@@ -90,6 +106,8 @@ const ProfilePage = (props) => {
     setSubmitting(false);
   }
   const regEmployee = async () => {
+    sameAdd()
+    if(same == true){
     try {
       const response = await axios.post(
         `${API_URL}/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
@@ -101,27 +119,38 @@ const ProfilePage = (props) => {
       );
       setSubmitting(true);
   
-      // const respo = await axios.get(`${API_URL}/onboard/${employeeId}`, {
-      //   withCredentials: true,
-      // });
-      // console.log("asasdasdasdasdsaasdasssssssssssss", respo);
+      const respo = await axios.get(`${API_URL}/onboard/${employeeId}`, {
+        withCredentials: true,
+      });
+      console.log("asasdasdasdasdsaasdasssssssssssss", respo);
       
-      // let employeeaddress = employee.wallet.replace("xdc", "0x");
-      // let employeename = employee.name;
-      // console.log("name", employeename);
-      // let resp = await executeTransaction(erc, provider, "regEmployee", [
-      //   employeeaddress,employeename
+      let employeeaddress = employee.wallet.replace("xdc", "0x");
+      let employeename = employee.name;
+      console.log("name", employeename);
+      let resp = await executeTransaction(erc, provider, "regEmployee", [
+        employeeaddress,employeename
         
-      // ]);
-      // log("Registered Employee", "hash", resp.txHash);
+      ]);
+      log("Registered Employee", "hash", resp.txHash);
       setSubmitting(false);
     } catch (error) {
-      console.error("Error in regEmployee function: ", error);
+      if (error.response) {
+        console.error("Error response: ", error.response.data);
+      } else if (error.request) {
+        console.error("Error request: ", error.request);
+      } else {
+        console.error("Error message: ", error.message);
+      }
       setTimeout(() => {
         window.location.reload();
       }, 2000);
     }
-  };
+  }else{
+    alert(`This is not ${comName}'s wallet address`)
+
+  }
+}
+  
   
 
   useEffect(() => {
@@ -239,7 +268,7 @@ const ProfilePage = (props) => {
         />
 
         <div
-          classname="red"
+          className="red"
           style={{
             flexDirection: "column",
             position: "relative",
@@ -259,7 +288,7 @@ const ProfilePage = (props) => {
             {employee.wallet}
           </p>
         </div>
-        <div className="butad">
+        {/* <div className="butad">
           <div
           
             style={{
@@ -281,7 +310,7 @@ const ProfilePage = (props) => {
           >
             {onboarded ? null : (
               <CardActions>
-                {/* <Link to={"/real"}> */}
+                <Link to={"/real"}>
                   <Button
                   
                     onClick={regEmployee}
@@ -311,8 +340,8 @@ const ProfilePage = (props) => {
                       <b> Add </b>{" "}
                     </a>
                   </Button>
-                {/* </Link> */}
-                {/* <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
+                </Link>
+                <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
                 <Button
                   onClick={getAllEmployees}
                     variant="contained"
@@ -321,13 +350,13 @@ const ProfilePage = (props) => {
                   >
                      <AiOutlineUserAdd style={{width:"30px",height:"30px",position:"relative",right:"20px"}}/> <a> <b> Get </b>  </a>
                   </Button>
-                  </div> */}
+                  </div>
               </CardActions>
 
 
             )}
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         className="card1"
@@ -337,6 +366,7 @@ const ProfilePage = (props) => {
           top: "50px",
           textAlign: "center",
           borderRadius: "20px",
+          height:"300px"
         }}
       >
         <div style={{ textAlign: "center" }}>
@@ -392,7 +422,7 @@ const ProfilePage = (props) => {
             <p className="text-muted  mb-6" style={{fontFamily:"Secular One"}}>{employee._id}</p>
           </div>
         </div>
-        <div style={{ marginTop: "80px" }}>
+        {/* <div style={{ marginTop: "80px" }}>
           <div style={{ textAlign: "center" }}>
             <h6>
               <b
@@ -428,8 +458,79 @@ const ProfilePage = (props) => {
               <p className="text-muted mb-0"></p>
             </div>
           </div>
+        </div> */}
+        
         </div>
+        <div className="butad">
+          <div
+          
+            style={{
+              position: "absolute",
+              bottom: "10px",
+              right: "-10px",
+              height: "20%",
+              width: "20%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+              ":hover": {
+                transform: "scale(10)",
+                background: "#330078",
+              },
+            }}
+          >
+            {onboarded ? null : (
+              <CardActions>
+                {/* <Link to={"/real"}> */}
+                  <Button
+                  
+                    onClick={regEmployee}
+                    variant="contained"
+                    color="primary"
+                    style={{
+                      margin: "1rem",
+                      position: "relative",
+                      bottom: "50px",
+                      width: "240px",
+                      right: "30px",
+                      height:"60px",
+                      marginTop:"150px",
+                      marginLeft:"-630px",
+                    }}
+                  >
+                    <AiOutlineUserAdd
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        position: "relative",
+                        right: "20px",
+                      }}
+                    />{" "}
+                    <a>
+                      {" "}
+                      <b> Add Employee </b>{" "}
+                    </a>
+                  </Button>
+                {/* </Link> */}
+                {/* <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
+                <Button
+                  onClick={getAllEmployees}
+                    variant="contained"
+                    color="primary"
+                    style={{marginTop:"10px",marginBottom:"0px", margin: "1rem",position:"relative",bottom:"50px",width:"150px",right:"30px", marginLeft:"-170px"}}
+                  >
+                     <AiOutlineUserAdd style={{width:"30px",height:"30px",position:"relative",right:"20px"}}/> <a> <b> Get </b>  </a>
+                  </Button>
+                  </div> */}
+              </CardActions>
+
+
+            )}
+          </div>
         </div>
+        
       </div>
 
       <div></div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-const AdminButton = ({ connect }) => {
+const AdminButton = ({ connect, connected }) => {
   return (
     <div>
       <button
@@ -23,8 +23,7 @@ const AdminButton = ({ connect }) => {
           e.target.style.background = "#1196B0";
         }}
         onClick={connect}
-      >
-        Connect
+       >{connected ? 'Connected' : 'Connect'}
       </button>
     </div>
   );

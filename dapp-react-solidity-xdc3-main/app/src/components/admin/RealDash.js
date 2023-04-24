@@ -74,6 +74,7 @@ function RealDash() {
   const [task, setTask] = useState([]);
   const handleLogout = () => {
     removeCookie("access_token");
+
   };
   const regCompany = async (event) => {
     event.preventDefault();
@@ -130,6 +131,24 @@ function RealDash() {
     alert(respp);
     setSubmitting(false);
   };
+const [same, setSame] = useState(false);
+const sameAdd = () => {
+  console.log(tokenn.wallet.replace("xdc", "0x"));
+  const ls = localStorage.getItem("WalletAddress");
+  const sl = ls.toLowerCase();
+  console.log(sl);
+  if (tokenn.wallet.replace("xdc","0x") === sl) {
+    setSame(true);
+  }
+}
+
+useEffect(() => {
+  const intervalId = setInterval(() => {
+    sameAdd();
+  }, 1000);
+  return () => clearInterval(intervalId);
+}, []);
+  
 
   const isCompanyRegistered = async (event) => {
     event.preventDefault();
@@ -144,20 +163,25 @@ function RealDash() {
   };
 
   const balanceOf = async (event) => {
+    sameAdd()
     event.preventDefault();
     setSubmitting(true);
 
     let account = tokenn.wallet.replace("xdc", "0x");
     let balance = await erc.balanceOf(account);
-
+if(same == true){
     console.log(`Account balance: ${balance.toString()}`);
     alert(`Account balance: ${balance.toString()} tokens`);
-
+} else   {console.log("not same")
+alert(`This is not ${tokenn.name}'s wallet address`)
+}
     setSubmitting(false);
   };
 
   useEffect(() => {
     const token = cookies.access_token;
+    const WalletAddress = localStorage.getItem("WalletAddress");
+    console.log(WalletAddress)
 
     if (token) {
       const decoded = jwt_decode(token);
@@ -247,6 +271,7 @@ console.log("ell tasks um ", re)
     console.log("noice", employees);
 
     return (
+      
       <div>
         <div style={{ backgroundColor: "#F9F8F8" }}>
           <div className="row">
@@ -332,6 +357,7 @@ console.log("ell tasks um ", re)
                 >
              
 Balance                </button>
+
               </div>
               <div
                 style={{
@@ -341,7 +367,7 @@ Balance                </button>
                   marginTop: "60px",
                 }}
               ></div>
-
+              
               <div
                 className="row"
                 style={{ marginTop: "0px", marginLeft: "-330px" }}
@@ -917,11 +943,17 @@ Balance                </button>
         <Tooltip/>
       </PieChart>
                 </div>
+                
               </div>
+             
+              
             </div>
+            
           </div>
         </div>
+        
       </div>
+          
     );
   } else {
     return null;

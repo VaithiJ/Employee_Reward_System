@@ -34,6 +34,8 @@ const SidebarMenu = () => {
 
   const handleLogout = () => {
     removeCookie("access_token");
+    localStorage.removeItem("WalletAddress");
+
   };
 
   const handleClickOutside = (event) => {

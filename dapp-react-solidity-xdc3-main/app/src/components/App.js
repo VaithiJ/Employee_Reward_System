@@ -4,14 +4,12 @@
   import Header from './s/Header';
   import { abi } from '../artifacts/contracts/ERSC/erc.sol/ERC.json'; 
   import { erc as address } from '../output.json';
-
   import { useState } from 'react';
   import { ToastContainer } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
   import React from 'react'
   import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
   import { useLocation,matchPath } from 'react-router-dom'
-
   import LoginPage from '../components/employee/LoginPage'
   import RegisterPage from '../components/employee/RegisterPage'
   import ForgetPasswordPage from '../components/pages/ForgetPasswordPage'
@@ -34,8 +32,7 @@
   import PlatformAdmin from "../components/Platform admin/Tokens reward"
   // import Tes from "../components/Platform admin/Tes";
   import "./App.css"
-  import AdminButton from './admin/AdminButton';
-  import EmpButton from './employee/EmpButton';
+
 
 
   const { getWeb3Modal, createWeb3Provider, connectWallet, EthereumContext, createContractInstance, log } = require('react-solidity-xdc3');
@@ -52,7 +49,10 @@
   function App() {
     const location = useLocation();
 
+
     const [connecting, setconnecting] = useState(false);
+
+   
     const [ethereumContext, setethereumContext] = useState({});
     const web3Modal = getWeb3Modal(connectOptions);
 
@@ -62,17 +62,23 @@
       const instance = await web3Modal.connect();
       const { provider, signer } = await createWeb3Provider(instance);
       const erc = await createContractInstance(address, abi, provider);
-      const account = signer.getAddress();
+      const account = await signer.getAddress();
+      localStorage.setItem("WalletAddress", account);
+
       setethereumContext({ provider, erc, account})
       log("Connect", "Get Address", await signer.getAddress());
       setconnecting(true);
+
     }
+   
     const match = matchPath(location.pathname, { path: "/empprofile/:id" });
 
 
-    const adminlinks = (location.pathname === "/real" || location.pathname === "/reward" || !!match);
+    const links = (location.pathname === "/real" || location.pathname === "/reward" || !!match || location.pathname === "/employeehome" || location.pathname === "/userprofile" || location.pathname === "/admin");
 
-    const emplinks = (location.pathname === "/employeehome" || location.pathname === "/userprofile");
+    // const emplinks = (location.pathname === "/employeehome" || location.pathname === "/userprofile");
+
+    // const ownerlink = (location.pathname === "/admin");
 
     return (
   //     <div className="App">
@@ -82,26 +88,39 @@
   // </div>
   <div className="App">
       
-        { 
-              adminlinks && <AdminButton connect={connect} connected={connect} />}
+        {/* { 
+              ownerlink && <OwnerButton connect={connect} connecting={connect} />}{connecting ? 'Connected...' : 'Connect Wallet'}
                { 
               emplinks && <EmpButton connect={connect} connected={connect} />}
+              { 
+              adminlinks && <AdminButton connect={connect} connected={connect} />} */}
               
 
-          {/* <div className="connect-button-container" style={{marginTop:"20px",textAlign:"center", position: "absolute", top: 0, right: 160, padding: "10px", zIndex: 999, textAlign: "right" }}>
-            <button   onMouseEnter={(e) => {
-                        e.target.style.background = "#330078";
-                        e.target.style.border = "none";
-                        e.target.style.boxShadow = "none";
-                        e.target.style.width = "150px"
-                      }} onMouseLeave={(e) => {
-                        e.target.style.background = "#1196B0";
-                        e.target.style.border = "none";
-                        e.target.style.boxShadow = "none";
-                        e.target.style.width = "150px"
-                      }} style={{borderRadius:"10px", width:"150px", height:"45px", backgroundColor:"#1196B0", marginRight:"-100px", fontSize:"17px",textAlign:"center", fontFamily:"Secular One"}} onClick={connect} disabled={connecting}>{connecting ? 'Connected' : 'Connect'}
+        
+          { links &&
+          
+         <div className="connect-button-container" style={{marginTop:"20px",textAlign:"center", position: "absolute", top: 0, right: 160, padding: "10px", zIndex: 999, textAlign: "right" }}>
+            <button  style={{
+      marginTop: "-0px",
+      marginLeft: "00px",
+      position: "absolute",
+      fontSize: "17px",
+      backgroundColor: "#1196B0",
+      borderRadius: "10px",
+      fontFamily: "Secular One",
+      padding: "8px",
+      width: "120px",
+    }}
+    
+    onMouseEnter={(e) => {
+      e.target.style.background = "#330078";
+      // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+    }}
+    onMouseLeave={(e) => {
+      e.target.style.background = "#1196B0";
+    }} onClick={connect} disabled={connecting}>{connecting ? 'Connected' : 'Connect'}
             </button>
-          </div> */}
+          </div>}
         <section>
           <EthereumContext.Provider value={ethereumContext}>
             <Router>
@@ -134,7 +153,11 @@
                       <Route exact path="/employeehome" component={EmployeeDashboard}/>
                       {/* <Route path="/approvetask" component={ApproveTask}/> */}
                       <Route path="/empprofile/:_id" component={EmpProfile}/>
-                      <Route path="/real"  component={RealDash}/>
+                      {/* <Route path="/real"   component={RealDash}/> */}
+                      <Route path="/real" render={(props) => <RealDash {...props} connect={connect} />} />
+
+                      {/* <Route path="/real" render={(props) => <RealDash {...props} walletaddd={walletaddd} />} /> */}
+
                       {/* <Route path="/real" render={(props) => <RealDash {...props} account={ethereumContext.account} />} /> */}
 
                       <Route path="/adde/:_id/:name/:address/:mobile/:email/:wallet" component={AddEmployee}/>
