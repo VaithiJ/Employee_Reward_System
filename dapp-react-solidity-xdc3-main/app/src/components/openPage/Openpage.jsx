@@ -63,8 +63,8 @@ const Openpage = () => {
             style={{
               marginLeft: "100px",
               textAlign: "left",
-              fontFamily: "Roboto Condensed",
-              lineHeight: "1.5",
+              fontFamily: "Montserrat",
+              lineHeight: "1.2",
             }}
           >
             Recognizing and Rewarding Employees <br /> with Excellence
@@ -222,10 +222,10 @@ const Openpage = () => {
             <Slideshow className={styles.a2} />
           </div>
         </div>
+        </div>
        
         {/* <Footer /> */}
       </div>
-    </div>
      </div>
   );
 };

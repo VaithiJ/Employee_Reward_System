@@ -1,10 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
+import crypto from "crypto";
 import mongoose from "mongoose";
 import userRoute from "./routes/employee/register.js";
 import loginRoute from "./routes/employee/login.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import fs from "fs";
 import regComp from "./routes/company/registerComp.js";
 import loginComp from "./routes/company/loginComp.js";
 import addEmployee from "./routes/company/addemp.js"
@@ -29,8 +31,60 @@ import Updateprofile from "./routes/employee/updateprofile.js"
 import Updatedcondition from "./routes/employee/condition.js"
 import Certify from "./routes/company/certify.js"
 import updateprofileee from "./routes/company/updateprofileee.js"
+import AWS from "aws-sdk";
+import multer from "multer";
+import multerS3 from "multer-s3";
 const app = express()
 dotenv.config();
+// const upload = multer({ dest: 'EmployeeRewardSystem/certificates/' })
+// const s3 = new AWS.S3({
+//     accessKeyId: process.env.ACCESS_KEY,
+//     secretAccessKey: process.env.SECRET_ACCESS_KEY,
+//     region: 'ap-south-1'
+//   });
+//   const certUpload = upload.fields([{ name: 'certificates', maxCount: 1 }])
+//   app.post('/uploadingCertificate', certUpload, function (req, res, next) {
+//     const file = req.files['certificates'][0];
+  
+//     // set S3 key (filename) to a unique value based on timestamp
+//     const s3Key = Date.now().toString() + '-' + file.originalname;
+  
+//     // create parameters object for S3 upload
+//     const params = {
+//       Bucket: '',
+//       Key: s3Key,
+//       Body: file.buffer,
+//       ContentType: file.mimetype,
+//       ACL: 'public-read' // set ACL to public-read to allow public access to the file
+//     };
+  
+//     // upload file to S3
+//     s3.upload(params, function (err, data) {
+//       if (err) {
+//         console.log('Error uploading to S3:', err);
+//         return res.status(500).json({ message: 'Error uploading to S3' });
+//       }
+  
+//       console.log('Successfully uploaded to S3:', data.Location);
+//       return res.status(200).json({ message: 'File uploaded successfully' });
+//     });
+//   });
+  
+const s3 = new AWS.S3({
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  });
+  
+  const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.BUCKET_NAME,
+        key: function (req, file, cb) {
+            cb(null, 'EmployeeRewards/' + file.originalname); // use EmployeeRewards folder + original filename as the key in S3
+        }
+    })
+});
+
 
 const connect = async () =>{
     try {
@@ -76,7 +130,9 @@ app.use("/", Updatedcondition)
 app.use("/", Certify)
 app.use("/", updateprofileee)
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
+    
     res.header("Access-Control-Allow-Credentials", true);
     res.header(
       "Access-Control-Allow-Headers",
@@ -101,6 +157,77 @@ app.use((err,req,res,next)=>{
     })
 })
   
+// app.post('/uploadingCertificate', upload.single('certificates'), function (req, res, next) {
+    // app.post('/uploadingCertificate', upload.fields([{name:'certificates', maxCount:1}]), async function (req, res) {
+    // res.send('File uploaded successfully');
+    // if (req.file && req.file.buffer) {
+    //     const hash = crypto.createHash('sha256').update(req.files.buffer);
+    //     console.log(hash)
+    //     // do something with the hash
+    //   } else {
+    //     console.log("hola amigo")
+    //         }
+    // var Certificates = req.files['certificates'][0];
+
+    // const hash = crypto.createHash('sha256').update(Certificates.buffer);
+    // console.log(hash)
+
+// });
+
+
+
+
+
+
+// app.post('/uploadingCertificate', upload.fields([{name:'certificates', maxCount:1}]), async function (req, res) {
+//     const file = req.files['certificates'][0];
+//     console.log(file)
+//     const fileContents = fs.readFileSync(file.path);
+
+//     console.log(fileContents)
+//     const fileBuffer = file.buffer;
+//     const hash = crypto.createHash('sha256').update(fileBuffer).digest('hex');
+//     console.log('Hash of uploaded file:', hash);
+//     res.send('File uploaded successfully');
+// });
+
+app.post('/uploadingCertificate', upload.single('certificates'), async function (req, res) {
+    const file = req.file;
+    console.log('Uploaded file:', file);
+  
+    // Read the contents of the uploaded file from the S3 bucket
+    const params = { Bucket: file.bucket, Key: file.key };
+    const fileObject = await s3.getObject(params).promise();
+    const fileContents = fileObject.Body;
+  
+    // Compute the SHA256 hash of the file contents
+    const hash = crypto.createHash('sha256').update(fileContents).digest('hex');
+    console.log('Hash of uploaded file:', hash);
+  
+    res.send({uploadStatus:"success", FileHash:hash});
+  });
+
+
+
+
+// app.post('/uploadingCertificate', upload.fields([{name:'certificates', maxCount:1}]), async function (req, res) {
+//     try{
+//     // const file = req.files['certificates'][0];
+//     const buffer = fs.readFileSync(req.files['certificates'][0].location);
+//     console.log(buffer)
+
+   
+    // const hash = crypto.createHash('sha256').update(buffer);
+    // const fileHash = hash.digest('hex');
+    
+    // console.log(fileHash);
+//     } catch(error){
+//         console.log(error)
+//     }
+    
+//     res.send('File uploaded successfully');
+//   });
+
 app.get("/", (req,res)=>{
     res.send("HI")
 })

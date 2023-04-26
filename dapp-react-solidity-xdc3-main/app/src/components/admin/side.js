@@ -26,7 +26,7 @@ const SidebarMenu = () => {
     "name",
   ]);
   const toke = jwt_decode(cookies.access_token);
-  const API_URL = "http://localhost:8800";
+  const API_URL = "http://3.110.107.87:8800";
   const [avatarUrl, setAvatarUrl] = useState("");
   const [red, setred] = useState([]);
   const [fileList, setFileList] = useState([]);

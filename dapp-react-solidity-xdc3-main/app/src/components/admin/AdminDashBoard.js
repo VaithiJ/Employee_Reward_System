@@ -15,7 +15,7 @@ import {
   FaTasks,
   FaGift,
   FaHome,
-  FaUser,
+  FaUsers,
 } from "react-icons/fa";
 
 function AdminDashBoard() {
@@ -37,7 +37,7 @@ function AdminDashBoard() {
   };
 
   const tokenn = jwt_decode(cookies.access_token);
-  const API_URL = "http://localhost:8800";
+  const API_URL = "http://3.110.107.87:8800";
 
   useEffect(() => {
     axios
@@ -124,7 +124,7 @@ margin:"auto",
                         {users.length}
                       </b>
                     </h3>
-                    <FaHome
+                    <FaUsers
                       style={{
                         marginLeft: "200px",
                         marginTop: "-120px",
@@ -136,7 +136,7 @@ margin:"auto",
                     />
                     <br />
                     <div style={{ marginTop: "-20px", marginLeft: "10px" ,fontFamily: "Secular One"}}>
-                      TOTAL USERS
+                      TOTAL USERS AVAILABLE
                     </div>
                   </div>
                 </div>

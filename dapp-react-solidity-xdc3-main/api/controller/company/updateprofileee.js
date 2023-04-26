@@ -1,5 +1,6 @@
 import CompanyReg from "../../modals/CompanyReg.js";
 
+
 export const updateprofileee= async (req, res) => {
     const username = req.params.comName;
     const profile = req.body.profile;

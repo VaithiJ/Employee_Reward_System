@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FaSignOutAlt, FaSquare } from "react-icons/fa";
+import { FaSignOutAlt, FaSquare} from "react-icons/fa";
 import AdminButton from "./AdminButton.js";
 import {
   PieChart,
@@ -33,6 +33,7 @@ import {
   FaGift,
   FaHome,
   FaUser,
+  FaThumbsUp
 } from "react-icons/fa";
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json";
@@ -65,7 +66,7 @@ function RealDash() {
   // const [open, setOpen] = useState(false);
   const tokenn = jwt_decode(cookies.access_token);
   console.log(tokenn);
-  const API_URL = "http://localhost:8800";
+  const API_URL = "http://3.110.107.87:8800";
   // const [showPopup, setShowPopup] = useState(false);
   const [open, setOpen] = useState(false);
   const togglePopup = () => {
@@ -386,7 +387,7 @@ Balance                </button>
 
                     }}
                   >
-                    <div className={styles.txt} style={{ marginTop: "20px" }}>
+                    <div className={styles.txt} style={{ marginTop: "20px", marginLeft:"-80px" }}>
                       <h3>
                         <b
                           style={{
@@ -402,7 +403,7 @@ Balance                </button>
                       </h3>
                       <FaUser
                         style={{
-                          marginLeft: "200px",
+                          marginLeft: "300px",
                           marginTop: "-120px",
                           height: "70px",
                           width: "80px",
@@ -411,8 +412,7 @@ Balance                </button>
                       />
                       <br />
                       <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily:"Secular One" }}>
-                        Total Onboarded Employees
-                      </div>
+TOTAL ONBOARDED EMPLOYEES                      </div>
                     </div>
                   </div>
                 </div>
@@ -430,11 +430,11 @@ Balance                </button>
 
                     }}
                   >
-                    <div className={styles.txt} style={{ marginTop: "20px" }}>
+                    <div className={styles.txt} style={{ marginTop: "20px" , marginLeft:"-80px"}}>
                       <h3>
                         <b
                           style={{
-                            marginLeft: "90px",
+                            marginLeft: "190px",
                             marginBottom: "100px",
                             marginLeft: "",
                             fontSize: "70px",
@@ -444,9 +444,9 @@ Balance                </button>
                           {Assignedtasks}
                         </b>
                       </h3>
-                      <FaHome
+                      <FaTasks
                         style={{
-                          marginLeft: "200px",
+                          marginLeft: "300px",
                           marginTop: "-120px",
                           height: "70px",
                           width: "80px",
@@ -454,9 +454,8 @@ Balance                </button>
                         }}
                       />
                       <br />
-                      <div style={{ marginTop: "-20px", marginLeft: "10px" ,fontFamily:"Secular One"}}>
-                        Assigned Tasks
-                      </div>
+                      <div style={{ marginTop: "-20px", marginLeft: "-0px" ,fontFamily:"Secular One"}}>
+ASSIGNED TASKS                      </div>
                     </div>
                   </div>
                 </div>
@@ -473,7 +472,7 @@ Balance                </button>
                       width:"390px"
                     }}
                   >
-                    <div className={styles.txt} style={{ marginTop: "20px" }}>
+                    <div className={styles.txt} style={{ marginTop: "20px" , marginLeft:"-80px"}}>
                       <h3>
                         <b
                           style={{
@@ -487,9 +486,9 @@ Balance                </button>
                           {PendingApprovals}
                         </b>
                       </h3>
-                      <FaHome
+                      <FaThumbsUp
                         style={{
-                          marginLeft: "200px",
+                          marginLeft: "300px",
                           marginTop: "-120px",
                           height: "70px",
                           width: "80px",
@@ -498,8 +497,7 @@ Balance                </button>
                       />
                       <br />
                       <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Secular One" }}>
-                        Pending for Approval
-                      </div>
+PENDING FOR APPROVAL                      </div>
                     </div>
                   </div>
                 </div>

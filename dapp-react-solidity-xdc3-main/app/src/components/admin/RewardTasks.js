@@ -142,8 +142,31 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
   };
 } 
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!fileUpload) return;
 
-    
+  try {
+    setSubmitting(true);
+console.log("FIles",fileUpload)
+    const formData =  new FormData();
+     formData.append('certificates', fileUpload);
+console.log("Formdata", formData.entries())
+    const response = await axios.post(`${API_URL}/uploadingCertificate`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        "req":"Access-Control-Allow-Origin"
+      }, withCredentials:true
+    });
+
+    console.log('File uploaded successfully!', response.data.FileHash);
+    setSubmitting(false);
+  } catch (error) {
+    console.error('Error uploading file!', error);
+    setSubmitting(false);
+  }
+};
+
 
   
   // useEffect(() => {
@@ -190,7 +213,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
 
   const tokenn = jwt_decode(cookies.access_token);
 
-  const API_URL = "http://localhost:8800";
+  const API_URL = "http://3.110.107.87:8800";
   // const empName = props.match.params.empName;
   // const taskk = props.match.params.task;
   // console.log(empName);
@@ -325,10 +348,9 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                     marginLeft: "1950px",
                     marginTop: "-40px",
                     borderRadius: "10px",
-                    height: "50px",
+                    height: "45px",
                     backgroundColor: "#1196B0",
-                    width: "120px",
-                    boxShadow: "0 2px 5px rgba(0, 0, 0,1.0) inset",
+                    width: "110px",
                     fontFamily:"Secular One",
                     
                   }}
@@ -349,29 +371,27 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
 
 <div className="container" style={{ 
   
-  background: `url(${bg})`, 
-  padding: '20px', 
-  borderRadius: '8px', 
-  boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+  background: "white", 
+  padding: '0px 20px', 
+  borderRadius: '0px', 
+  boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.3) inset",
   border: '1px solid #ccc',
   marginBottom: '20px',
-  width:"1300px",
-  backgroundImage: `url(${bg})`
-}}>
-  <h2 className="containerrr" style={{fontFamily:"Secular One"}}>Tasks</h2>
-  <div className="task-list-container" style={{ height: '500px', overflow: 'scroll',marginTop:"-100px",  }}>
-    <div className="task-list" style={{ width: "1050px" ,fontFamily:"Secular One",}}>
-      <div className="task-list" style={{fontFamily:"Secular One",}}>
+  width:"1400px"}}>
+  <h2 className="containerrr" style={{fontFamily:"Secular One",marginTop:"20px"}}>TASKS</h2>
+  <div className="task-list-container" style={{ height: '500px', overflowY: 'auto',marginTop:"-100px",  }}>
+    <div className="task-list" style={{ width: "1100px" ,fontFamily:"Secular One",}}>
+      <div className="task-list" style={{fontFamily:"Secular One"}}>
         <div className="task-list-header" style={{fontFamily:"Secular One",backgroundColor:"#D1D1D1"}}>
-          <div className="task-name" style={{fontFamily:"Secular One", marginLeft:"-70px" }}>UID</div>
-          <div className="task-name" style={{ fontFamily:"Secular One",marginLeft:"-70px" }}>Task Name</div>
-          <div className="task-namee" style={{fontFamily:"Secular One",}}>Name</div>
-          <div className="task-wallet" style={{fontFamily:"Secular One",}}>Wallet Address</div>
+          <div className="task-name" style={{fontFamily:"Secular One", marginLeft:"-60px" }}>UID</div>
+          <div className="task-name" style={{ fontFamily:"Secular One",marginLeft:"-70px" }}>TASK NAME</div>
+          <div className="task-namee" style={{fontFamily:"Secular One",}}>NAME</div>
+          <div className="task-wallet" style={{fontFamily:"Secular One",width:"-20"}}>WALLET ADDRESS</div>
           {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
-          <div className="task-due-date" style={{fontFamily:"Secular One",}}>Due Date</div>
-          <div className="task-due-date" style={{fontFamily:"Secular One",marginRight:"80px"}}>Reward</div>
-          <div className="task-progress" style={{fontFamily:"Secular One",}}>Actions</div>
-          <div className="task-status" style={{ width: '15%', paddingLeft: "30px",fontFamily:"Secular One", }}>Rewards</div>
+          <div className="task-due-date" style={{fontFamily:"Secular One",}}>DUE DATE</div>
+          <div className="task-due-date" style={{fontFamily:"Secular One",marginRight:"80px"}}>REWARD</div>
+          <div className="task-progress" style={{fontFamily:"Secular One",}}>ACTIONS</div>
+          <div className="task-status" style={{ width: '15%', paddingLeft: "30px",fontFamily:"Secular One", }}>REWARDS</div>
         </div>
         {tasks.map((task) => (
           <div
@@ -392,13 +412,14 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
             <div className="task-due-date" style={{fontFamily:"Secular One",}}>{task.deadline}</div>
             <div className="task-progress" style={{fontFamily:"Secular One",marginRight:"80px"}}>{task.rewards}</div>
             {task.certificates==="false" ? (
-              <div>
+              <form onSubmit={handleSubmit}>
                 <input
                   style={{ opacity: submitting ? 0.5 : 1, marginRight:"-80px" }}
                   disabled={submitting}
                   type="file"
                   accept=".pdf"
                   onChange={(e) => setFileUpload(e.target.files[0])}
+                  name="certificates"
                 />
                 <button
                   style={{ 
@@ -413,11 +434,10 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
                     fontFamily:"Secular One",
                     marginLeft:"30px"
                   }}
-                  onClick={() => uploadFile(task)}
                 >
                   Upload Certificates
                 </button> 
-              </div>
+              </form>
             ) : (
               <div style={{ fontSize: '20px', fontWeight: 'bold', fontFamily:"Secular One",marginRight:"60px" }}>Uploaded</div>
             )}
