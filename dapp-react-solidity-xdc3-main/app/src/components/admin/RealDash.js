@@ -38,7 +38,7 @@ import {
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json";
 import { erc as address } from "../../output.json";
-
+import Calendar from "react-calendar"
 import SidebarMenu from "./side.js";
 const {
   executeTransaction,
@@ -47,8 +47,7 @@ const {
   EthereumContext,
 } = require("react-solidity-xdc3");
 
-function RealDash() {
- 
+function RealDash(connect) {
   const [search, setSearch] = useState("");
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -75,7 +74,6 @@ function RealDash() {
   const [task, setTask] = useState([]);
   const handleLogout = () => {
     removeCookie("access_token");
-
   };
   const regCompany = async (event) => {
     event.preventDefault();
@@ -132,24 +130,6 @@ function RealDash() {
     alert(respp);
     setSubmitting(false);
   };
-const [same, setSame] = useState(false);
-const sameAdd = () => {
-  console.log(tokenn.wallet.replace("xdc", "0x"));
-  const ls = localStorage.getItem("WalletAddress");
-  const sl = ls.toLowerCase();
-  console.log(sl);
-  if (tokenn.wallet.replace("xdc","0x") === sl) {
-    setSame(true);
-  }
-}
-
-useEffect(() => {
-  const intervalId = setInterval(() => {
-    sameAdd();
-  }, 1000);
-  return () => clearInterval(intervalId);
-}, []);
-  
 
   const isCompanyRegistered = async (event) => {
     event.preventDefault();
@@ -164,30 +144,25 @@ useEffect(() => {
   };
 
   const balanceOf = async (event) => {
-    sameAdd()
     event.preventDefault();
     setSubmitting(true);
 
     let account = tokenn.wallet.replace("xdc", "0x");
     let balance = await erc.balanceOf(account);
-if(same == true){
+
     console.log(`Account balance: ${balance.toString()}`);
     alert(`Account balance: ${balance.toString()} tokens`);
-} else   {console.log("not same")
-alert(`This is not ${tokenn.name}'s wallet address`)
-}
+
     setSubmitting(false);
   };
 
   useEffect(() => {
     const token = cookies.access_token;
-    const WalletAddress = localStorage.getItem("WalletAddress");
-    console.log(WalletAddress)
 
     if (token) {
       const decoded = jwt_decode(token);
       if (!decoded.isAdmin) {
-        alert("Your account will be whitelisted soon.");
+        alert("Your account will be verified soon.");
         window.location.replace("/logincomp");
         return;
       }
@@ -272,7 +247,6 @@ console.log("ell tasks um ", re)
     console.log("noice", employees);
 
     return (
-      
       <div>
         <div style={{ backgroundColor: "#F9F8F8" }}>
           <div className="row">
@@ -334,17 +308,16 @@ console.log("ell tasks um ", re)
                   onClick={balanceOf}
                  className="buy"
                   style={{
+                    // margin: "1rem",
                      marginLeft: "700px",
                     marginTop: "30px",
                     borderRadius: "10px",
                     height: "45px",
-                    fontFamily:"Secular One",
-                    padding:"10px",
                     
                    
                     backgroundColor: "#1196B0",
                     width: "120px",
-                    fontSize:"17px"
+                    boxShadow: "3px 6px 14px -1px rgba(0,0,0,0.36) "
 
                   }}
                   onMouseEnter={(e) => {
@@ -357,9 +330,10 @@ console.log("ell tasks um ", re)
                   }}
                 >
              
-Balance                </button>
-
+                  <div style={{marginTop:"-5px", fontSize:"18px", fontFamily:"Secular One"}}>Balance</div> 
+                </button>
               </div>
+
               <div
                 style={{
                   display: "flex",
@@ -368,7 +342,7 @@ Balance                </button>
                   marginTop: "60px",
                 }}
               ></div>
-              
+
               <div
                 className="row"
                 style={{ marginTop: "0px", marginLeft: "-330px" }}
@@ -941,20 +915,34 @@ PENDING FOR APPROVAL                      </div>
         <Tooltip/>
       </PieChart>
                 </div>
-                
+               <div className="calender-employee" style={{
+  boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset"
+}}>
+  
+  <div style={{position:"relative", top:'20px',width:"750px",position:"relative",left:"50px",top:"40px"}}>
+  <h2 style={{fontFamily:"Secular One", fontWeight:"bold"}}> CALENDAR </h2>
+  <Calendar style={{
+    height: "10px",
+    marginLeft: "1000px",
+    backgroundColor: "white",
+    position: "relative",
+    top: "150px",
+    fontFamily:"Montserrat"
+  }}/> </div>
+</div>
+
               </div>
-             
               
             </div>
-            
+        
           </div>
         </div>
-        
       </div>
-          
     );
   } else {
     return null;
   }
+
+
 }
 export default RealDash;
