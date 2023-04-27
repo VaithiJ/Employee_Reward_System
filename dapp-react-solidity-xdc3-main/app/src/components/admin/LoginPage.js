@@ -10,6 +10,7 @@ import Footer from "../footer/Footer";
 import { useHistory } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import {AiOutlineEye ,AiOutlineEyeInvisible} from "react-icons/ai"
+import Swal from "sweetalert2";
 
 
 import "../../App.css";
@@ -17,7 +18,7 @@ import "./reg.css";
 
 import Loginheader12 from "../header/comploginheader";
 
-const API_URL = "http://3.110.107.87:8800";
+const API_URL = "http://localhost:8800";
 
 export default function SignInPage() {
   const [comName, setname] = useState("");
@@ -49,6 +50,17 @@ export default function SignInPage() {
       //  console.log(response.data);
 
       // Redirect to admin page on successful login
+      Swal.fire({
+
+         icon: 'success',
+        
+        title: 'Login successful!',
+        
+         text: 'You are now logged in.',
+        
+         confirmButtonColor:"#9A1B56"
+        
+         })
       history.push("/real");
     } catch (error) {
       console.error(error);

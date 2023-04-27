@@ -35,6 +35,7 @@ import {
   FaUser,
   FaThumbsUp
 } from "react-icons/fa";
+import Swal from "sweetalert2";
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json";
 import { erc as address } from "../../output.json";
@@ -65,7 +66,7 @@ function RealDash(connect) {
   // const [open, setOpen] = useState(false);
   const tokenn = jwt_decode(cookies.access_token);
   console.log(tokenn);
-  const API_URL = "http://3.110.107.87:8800";
+  const API_URL = "http://localhost:8800";
   // const [showPopup, setShowPopup] = useState(false);
   const [open, setOpen] = useState(false);
   const togglePopup = () => {
@@ -157,6 +158,17 @@ function RealDash(connect) {
   };
 
   useEffect(() => {
+    // Swal.fire({
+
+    //   icon: 'success',
+     
+    //  title: 'Login successful!',
+     
+    //  text: 'You are now logged in.',
+     
+    //   confirmButtonColor:"#9A1B56"
+     
+    //  })
     const token = cookies.access_token;
 
     if (token) {
@@ -245,6 +257,7 @@ console.log("ell tasks um ", re)
     });
 
     console.log("noice", employees);
+   
 
     return (
       <div>
@@ -356,8 +369,8 @@ console.log("ell tasks um ", re)
                       marginBottom: "20px",
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "#17A2B8",
-                      width:"390px"
+                      backgroundColor: "#1196B0",
+                      width:"430px"
 
                     }}
                   >
@@ -399,9 +412,8 @@ TOTAL ONBOARDED EMPLOYEES                      </div>
                       marginBottom: "20px",
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "#F3DA06",
-                      width:"390px"
-
+                      backgroundColor: "#1196B0",
+                      width:"430px"
                     }}
                   >
                     <div className={styles.txt} style={{ marginTop: "20px" , marginLeft:"-80px"}}>
@@ -442,7 +454,7 @@ ASSIGNED TASKS                      </div>
                       marginBottom: "20px",
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "red",
+                      backgroundColor: "#1196B0",
                       width:"390px"
                     }}
                   >

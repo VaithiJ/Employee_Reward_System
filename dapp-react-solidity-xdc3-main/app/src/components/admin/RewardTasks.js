@@ -35,6 +35,7 @@ const {
 
 const RewardTasks = (props) => {
   const [tasks, setTasks] = useState([]);
+  const [hash, setHash] = useState("");
   const [rewardedemp, setrewardedemp] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
@@ -61,36 +62,61 @@ const confirmUniqueName = window.confirm("Does the certificate have a unique nam
 const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proceed?");
 
 if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
-  axios
-      .put(
-        `${API_URL}/updateetask/${taskkk._id}`,
-        { certificates: "Certified" },
-        { withCredentials: true }
-      )
-      .then(async (responsee) => {
-        const updateFile = responsee.data.updatedTask;
-        console.log(responsee.data.updateFile);
-        setSubmitting(true);
+
+  // axios
+  //     .put(
+  //       `${API_URL}/updateetask/${taskkk._id}`,
+  //       { certificates: "Certified" },
+  //       { withCredentials: true }
+  //     )
+      // .then(async (responsee) => {
+      //   const updateFile = responsee.data.updatedTask;
+      //   console.log(responsee.data.updateFile);
+      //   setSubmitting(true);
+        
+  //  e.preventDefault();
+  if (!fileUpload) return;
+
+  try {
+    setSubmitting(true);
+console.log("FIles",fileUpload)
+    const formData =  new FormData();
+     formData.append('certificates', fileUpload);
+console.log("Formdata", formData.entries())
+    const response = await axios.post(`${API_URL}/uploadingCertificate`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        "req":"Access-Control-Allow-Origin"
+      }, withCredentials:true
+    });
+    setHash(response.data.FileHash);
+
+    console.log('File uploaded successfully!', response.data.FileHash);
+    console.log(hash)
+    setSubmitting(false);
+  } catch (error) {
+    console.error('Error uploading file!', error);
+    setSubmitting(false);
+  }
+        // if (fileUpload == null) return;
+        // const fileName = fileUpload.name + generateHash(fileUpload.name);
+        // const hashName = fileName.slice(-64);
   
-        if (fileUpload == null) return;
-        const fileName = fileUpload.name + generateHash(fileUpload.name);
-        const hashName = fileName.slice(-64);
+        // console.log(hashName);
+        // const fileRef = ref(storage, `certificates/${fileName}`);
+        // uploadBytes(fileRef, fileUpload).then((snapshot) => {
+        //   getDownloadURL(snapshot.ref).then((url) => {
+        //     setFileList((prev) => [...prev, { name: fileName, url: url }]);
+        //   });
+        // });
   
-        console.log(hashName);
-        const fileRef = ref(storage, `certificates/${fileName}`);
-        uploadBytes(fileRef, fileUpload).then((snapshot) => {
-          getDownloadURL(snapshot.ref).then((url) => {
-            setFileList((prev) => [...prev, { name: fileName, url: url }]);
-          });
-        });
-  
-        console.log(taskkk._id.slice(-5));
-  
-        setSubmitting(true);
-        let filehash = hashName;
+        // console.log(taskkk._id.slice(-5));
+         setSubmitting(true);
+         let taskId = ((taskkk._id).slice(-5));
+        let filehash = hash;
         let resp = await executeTransaction(erc, provider, "registerFile", [
           filehash,
-          taskkk._id.slice(-5),
+          taskId
         ]);
         log("Registered", "hash", resp.txHash);
         if (fileUpload && fileUpload.type === "application/pdf") {
@@ -100,49 +126,49 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
           // Show an alert or a notification message
           alert("Please select a PDF file.");
         }
-        let taskId = taskkk._id.slice(-5);
+       
         console.log(taskId);
         let response = await queryData(erc, provider, "getFileHash", [taskId]);
         log("Returned hash", "hash", response);
-        const fileListRef = ref(storage, "certificates");
-        listAll(fileListRef)
-          .then((res) => {
-            res.items.forEach((itemRef) => {
-              if (itemRef.name.slice(-64) === response) {
-                console.log(itemRef.fullPath);
-                getDownloadURL(itemRef)
-                  .then((url) => {
-                    console.log(url);
-                    window.open(url, "_blank");
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        // const fileListRef = ref(storage, "certificates");
+        // listAll(fileListRef)
+        //   .then((res) => {
+        //     res.items.forEach((itemRef) => {
+        //       if (itemRef.name.slice(-64) === response) {
+        //         console.log(itemRef.fullPath);
+        //         getDownloadURL(itemRef)
+        //           .then((url) => {
+        //             console.log(url);
+        //             window.open(url, "_blank");
+        //           })
+        //           .catch((error) => {
+        //             console.log(error);
+        //           });
+        //       }
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
   
         // Reload page after 5 seconds
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 5000);
   
         setSubmitting(false);
-      })
-      .catch((error) => {
-        console.log(error);
+      // })
+      // .catch((error) => {
+      //   console.log(error);
         // Reload page after 5 seconds
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      });
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
+      // });
   };
 } 
 
-const handleSubmit = async (e) => {
+const handleSubmit = async (e, taskkk) => {
   e.preventDefault();
   if (!fileUpload) return;
 
@@ -167,8 +193,6 @@ console.log("Formdata", formData.entries())
   }
 };
 
-
-  
   // useEffect(() => {
   //   window.addEventListener("error", handleWindowError);
   //   return () => {
@@ -213,7 +237,7 @@ console.log("Formdata", formData.entries())
 
   const tokenn = jwt_decode(cookies.access_token);
 
-  const API_URL = "http://3.110.107.87:8800";
+  const API_URL = "http://localhost:8800";
   // const empName = props.match.params.empName;
   // const taskk = props.match.params.task;
   // console.log(empName);
@@ -352,8 +376,7 @@ console.log("Formdata", formData.entries())
                     backgroundColor: "#1196B0",
                     width: "110px",
                     fontFamily:"Secular One",
-                    
-                  }}
+                 }}
                   onMouseEnter={(e) => {
                     e.target.style.background = "#330078";
                     // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
@@ -412,7 +435,7 @@ console.log("Formdata", formData.entries())
             <div className="task-due-date" style={{fontFamily:"Secular One",}}>{task.deadline}</div>
             <div className="task-progress" style={{fontFamily:"Secular One",marginRight:"80px"}}>{task.rewards}</div>
             {task.certificates==="false" ? (
-              <form onSubmit={handleSubmit}>
+              <div>
                 <input
                   style={{ opacity: submitting ? 0.5 : 1, marginRight:"-80px" }}
                   disabled={submitting}
@@ -434,10 +457,11 @@ console.log("Formdata", formData.entries())
                     fontFamily:"Secular One",
                     marginLeft:"30px"
                   }}
+                  onClick={uploadFile}
                 >
                   Upload Certificates
                 </button> 
-              </form>
+                </div>
             ) : (
               <div style={{ fontSize: '20px', fontWeight: 'bold', fontFamily:"Secular One",marginRight:"60px" }}>Uploaded</div>
             )}

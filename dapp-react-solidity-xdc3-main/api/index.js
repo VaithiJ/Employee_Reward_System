@@ -108,7 +108,6 @@ app.use(express.json())
 app.use("/", userRoute)
 app.use("/",loginRoute)
 app.use("/", regComp)
-app.use("/", loginComp)
 app.use("/",regComp)
 app.use("/", addEmployee)
 app.use("/", getEmp)
@@ -130,7 +129,7 @@ app.use("/", Updatedcondition)
 app.use("/", Certify)
 app.use("/", updateprofileee)
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    // res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
     
     res.header("Access-Control-Allow-Credentials", true);
@@ -144,6 +143,7 @@ app.use((req, res, next) => {
     );
     next();
 });
+app.use("/" , loginComp)
 
 app.use((err,req,res,next)=>{
     const errstatus = err.status || 500;

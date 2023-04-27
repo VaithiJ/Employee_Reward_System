@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 const AddEmployee = (props) => {
-  const API_URL = "http://3.110.107.87:8800";
+  const API_URL = "http://localhost:8800";
   const [comName, setcomName] = useState("");
   const [comId, setcomId] = useState("");
   const employeeId = props.match.params._id;

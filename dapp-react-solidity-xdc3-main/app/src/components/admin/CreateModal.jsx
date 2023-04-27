@@ -20,7 +20,7 @@ const CreateModal = (props) => {
   const tokenn = jwt_decode(cookies.access_token);
   const history = useHistory();
 
-  const API_URL = "http://3.110.107.87:8800";
+  const API_URL = "http://localhost:8800";
 
   const employeeName = props.match.params.Name;
   const empAddress = props.match.params.Wallet;
