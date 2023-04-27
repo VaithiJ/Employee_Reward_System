@@ -32,7 +32,7 @@
   import PlatformAdmin from "../components/Platform admin/Tokens reward"
   // import Tes from "../components/Platform admin/Tes";
   import "./App.css"
-
+import Award from "../components/admin/award"
 
 
   const { getWeb3Modal, createWeb3Provider, connectWallet, EthereumContext, createContractInstance, log } = require('react-solidity-xdc3');
@@ -138,6 +138,8 @@
                       <Route path="/logincomp" component={LoginComp}/>
                       <Route path="/assigntask/:Name/:name/:Wallet" component={AssignTask}/>
                       <Route path="/viewtask/:id" component={ViewTask}/>
+                      <Route path="/award" component={Award}/>
+
 
 
 

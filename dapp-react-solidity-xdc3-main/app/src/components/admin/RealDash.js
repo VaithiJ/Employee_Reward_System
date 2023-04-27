@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FaSignOutAlt, FaSquare} from "react-icons/fa";
+import { FaSignOutAlt, FaSquare } from "react-icons/fa";
 import AdminButton from "./AdminButton.js";
+import {AiFillStar} from "react-icons/ai"
 import {
   PieChart,
   Pie,
@@ -26,6 +27,11 @@ import axios from "axios";
 import styles from "./dash.module.css";
 import bg from "./lay.svg";
 import "./real.css";
+import { momentLocalizer } from 'react-widgets'
+import moment from 'moment';
+import { Calendar } from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'
+
 import {
   FaBars,
   FaUserPlus,
@@ -33,14 +39,13 @@ import {
   FaGift,
   FaHome,
   FaUser,
-  FaThumbsUp
 } from "react-icons/fa";
-import Swal from "sweetalert2";
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json";
 import { erc as address } from "../../output.json";
-import Calendar from "react-calendar"
+// import {Calendar} from "react-calendar"
 import SidebarMenu from "./side.js";
+import { isSameDay } from 'date-fns';
 const {
   executeTransaction,
   queryData,
@@ -61,7 +66,7 @@ function RealDash(connect) {
     "access_token",
     "name",
   ]);
-
+  // const localizer = momentLocalizer(moment);
   const history = useHistory();
   // const [open, setOpen] = useState(false);
   const tokenn = jwt_decode(cookies.access_token);
@@ -76,6 +81,48 @@ function RealDash(connect) {
   const handleLogout = () => {
     removeCookie("access_token");
   };
+  function isCurrentDate(date, currentDate) {
+    return isSameDay(date, currentDate);
+  }
+  const [dateState, setDateState] = React.useState(new Date());
+  const [markedDates,setMarkedDates]= React.useState([]);
+  // const [markedDates, setMarkedDates] = React.useState([
+  //   '01/01/2023',
+  //   '14/02/2023',
+  //   '17/04/2023'
+  // ]);
+
+  const changeDate = (date) => setDateState(date);
+
+  const tileContent = ({ date, view }) => {
+    if (view === 'month') {
+      const formattedDate = date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+      if (markedDates.includes(formattedDate)) {
+        return <AiFillStar style={{position:"relative",height:'15px',width:"15px",bottom:"13px",color:"#E7B10A"}}/>
+      }
+    }
+  };
+  // ction tileContent({ date, view }) {
+  //   if (view === 'month' && markedDates.some(d => isSameDay(d, date))) {
+  //     return (
+  //       <div className="marker">
+  //         <BsFillStarFill style={{color:"yellow",width:"12px",height:"12px"}}/>
+  //       </div>
+  //     );
+  //   }
+  // }
+  
+  // function isSameDay(a, b) {
+  //   return a.getFullYear() === b.getFullYear() &&
+  //     a.getMonth() === b.getMonth() &&
+  //     a.getDate() === b.getDate();
+  // }
+  
+
   const regCompany = async (event) => {
     event.preventDefault();
     setSubmitting(true);
@@ -158,17 +205,6 @@ function RealDash(connect) {
   };
 
   useEffect(() => {
-    // Swal.fire({
-
-    //   icon: 'success',
-     
-    //  title: 'Login successful!',
-     
-    //  text: 'You are now logged in.',
-     
-    //   confirmButtonColor:"#9A1B56"
-     
-    //  })
     const token = cookies.access_token;
 
     if (token) {
@@ -197,6 +233,8 @@ function RealDash(connect) {
       .get(`${API_URL}/gettasks`, { withCredentials: true })
       .then((response) => {
         setAllTasks(response.data.tasks);
+        const ree= response.data.tasks.filter((tasks)=> tasks.deadline)
+        console.log(ree)
         setTasks(
           response.data.tasks.filter(
             (tasks) =>
@@ -210,6 +248,8 @@ function RealDash(connect) {
         console.log(error);
       });
   }, []);
+  const currentDate = new Date();
+  console.log("Iniki date enanda",currentDate)
 const re= Alltasks.filter((task) => task.companyName === tokenn.name).length
 console.log("ell tasks um ", re)
   if (cookies.access_token && jwt_decode(cookies.access_token).isAdmin) {
@@ -257,7 +297,7 @@ console.log("ell tasks um ", re)
     });
 
     console.log("noice", employees);
-   
+    
 
     return (
       <div>
@@ -369,12 +409,12 @@ console.log("ell tasks um ", re)
                       marginBottom: "20px",
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "#1196B0",
-                      width:"430px"
+                      backgroundColor: "#17A2B8",
+                      width:"390px"
 
                     }}
                   >
-                    <div className={styles.txt} style={{ marginTop: "20px", marginLeft:"-80px" }}>
+                    <div className={styles.txt} style={{ marginTop: "20px" }}>
                       <h3>
                         <b
                           style={{
@@ -390,7 +430,7 @@ console.log("ell tasks um ", re)
                       </h3>
                       <FaUser
                         style={{
-                          marginLeft: "300px",
+                          marginLeft: "200px",
                           marginTop: "-120px",
                           height: "70px",
                           width: "80px",
@@ -399,7 +439,8 @@ console.log("ell tasks um ", re)
                       />
                       <br />
                       <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily:"Secular One" }}>
-TOTAL ONBOARDED EMPLOYEES                      </div>
+                        Total Onboarded Employees
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -412,15 +453,16 @@ TOTAL ONBOARDED EMPLOYEES                      </div>
                       marginBottom: "20px",
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "#1196B0",
-                      width:"430px"
+                      backgroundColor: "#F3DA06",
+                      width:"390px"
+
                     }}
                   >
-                    <div className={styles.txt} style={{ marginTop: "20px" , marginLeft:"-80px"}}>
+                    <div className={styles.txt} style={{ marginTop: "20px" }}>
                       <h3>
                         <b
                           style={{
-                            marginLeft: "190px",
+                            marginLeft: "90px",
                             marginBottom: "100px",
                             marginLeft: "",
                             fontSize: "70px",
@@ -430,9 +472,9 @@ TOTAL ONBOARDED EMPLOYEES                      </div>
                           {Assignedtasks}
                         </b>
                       </h3>
-                      <FaTasks
+                      <FaHome
                         style={{
-                          marginLeft: "300px",
+                          marginLeft: "200px",
                           marginTop: "-120px",
                           height: "70px",
                           width: "80px",
@@ -440,8 +482,9 @@ TOTAL ONBOARDED EMPLOYEES                      </div>
                         }}
                       />
                       <br />
-                      <div style={{ marginTop: "-20px", marginLeft: "-0px" ,fontFamily:"Secular One"}}>
-ASSIGNED TASKS                      </div>
+                      <div style={{ marginTop: "-20px", marginLeft: "10px" ,fontFamily:"Secular One"}}>
+                        Assigned Tasks
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -454,11 +497,11 @@ ASSIGNED TASKS                      </div>
                       marginBottom: "20px",
                       boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "#1196B0",
+                      backgroundColor: "red",
                       width:"390px"
                     }}
                   >
-                    <div className={styles.txt} style={{ marginTop: "20px" , marginLeft:"-80px"}}>
+                    <div className={styles.txt} style={{ marginTop: "20px" }}>
                       <h3>
                         <b
                           style={{
@@ -472,9 +515,9 @@ ASSIGNED TASKS                      </div>
                           {PendingApprovals}
                         </b>
                       </h3>
-                      <FaThumbsUp
+                      <FaHome
                         style={{
-                          marginLeft: "300px",
+                          marginLeft: "200px",
                           marginTop: "-120px",
                           height: "70px",
                           width: "80px",
@@ -483,7 +526,8 @@ ASSIGNED TASKS                      </div>
                       />
                       <br />
                       <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Secular One" }}>
-PENDING FOR APPROVAL                      </div>
+                        Pending for Approval
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -686,7 +730,7 @@ PENDING FOR APPROVAL                      </div>
                                             : "red",
                                         borderRadius: "50%",
                                         position: "relative",
-                                        left: "315px",
+                                        left: "200px",
                                         bottom: "40px",
                                         marginLeft: "180px",
                                         marginTop: "30px",
@@ -696,7 +740,7 @@ PENDING FOR APPROVAL                      </div>
                                     <small
                                       style={{
                                         position: "relative",
-                                        left: "320px",
+                                        left: "200px",
                                         bottom: "39px",
                                         fontWeight: "bolder",
                                         fontSize: "1rem",
@@ -707,6 +751,25 @@ PENDING FOR APPROVAL                      </div>
                                     </small>
                                   </div>
                                 </div>
+                                <Link 
+                                  to={`/awardpage/${employee.Name}/${tokenn.name}/${employee.Wallet}`}
+                                >
+                                <button
+                                    className="btn btn-primary" 
+                                    onClick={togglePopup}
+                                    style={{
+                                      fontFamily: "Algeria",
+                                      marginTop: "-10px",
+                                      fontWeight: "1000",
+                                      fontFamily:"Secular One",
+                                      position:"relative",
+                                      left:"110px"
+
+                                    }}
+                                  >
+                                    Award
+                                  </button>
+                                  </Link>
                                 <Link 
                                   to={`/assigntask/${employee.Name}/${tokenn.name}/${employee.Wallet}`}
                                 >
@@ -863,84 +926,39 @@ PENDING FOR APPROVAL                      </div>
                       </div>
                     </div>
                   </div>
-                  <div  style={{ display: "flex", alignItems: "center" }}>
-                <ul
-                className="piee"
-                  style={{
-                    marginTop: "-780px",
-                    fontSize: "30px",
-                    marginLeft: "1000px",
-                    fontFamily: "Montserrat",
-                    fontWeight: "1000",
-                    fontFamily:"Secular One"
-                  }}
-                >
-                  TASKS
-                </ul>
-                <div style={{ marginRight: "-300px", marginTop:"-450px" } }>
-                  <p style={{ marginLeft: "-10px", fontFamily: "Algeria", fontWeight:"1000" }}>
-                    TOTAL :{" "}
-                    <FaSquare
-                      style={{ backgroundColor: "green", color: "green" }}
-                    />
-                  </p>
-                  <p style={{ marginLeft: "-30px", fontFamily: "Algeria",fontWeight:"1000" }}>
-                    ASSIGNED :{" "}
-                    <FaSquare
-                      style={{ color: "#F3DA06", backgroundColor: "#F3DA06" }}
-                    />
-                  </p>
-                  <p style={{ marginLeft: "-30px", fontWeight:"1000",fontFamily: "Algeria" }}>
-                    APPROVAL :{" "}
-                    <FaSquare
-                      style={{ backgroundColor: "red", color: "red" }}
-                    />
-                  </p>
+                <div className="calender-employee">
+  <div style={{position:"relative", top:'20px',width:"500px",paddingRight:"50px",position:"relative",left:"50px",top:"60px"}}>
 
-                  <p style={{ marginLeft: "-30px", fontWeight:"1000",fontFamily: "Algeria" }}>
-                    REWARDED :{" "}
-                    <FaSquare
-                      style={{ backgroundColor: "black", color: "black" }}
-                    />
-                  </p>
-                </div>
-                </div>
+    <>
+    <Calendar
+      className="my-calendar"
+      value={dateState}
+      onChange={changeDate}
+      tileContent={tileContent}
+    />
+    {/* <p>Current selected date is <b>{moment(dateState).format('MMMM Do YYYY')}</b></p> */}
+    </>
+    {/* <Calendar
+        style={{
+          height: '400px',
+          backgroundColor: 'white',
+          position: 'relative',
+          top: '150px',
+          fontFamily: 'Montserrat',
+          fontSize: '16px',
+          color: 'black',
+          fontWeight: 'bold',
+          lineHeight: '1.5',
+        }}
+        value={currentDate}
+        tileClassName={({ date }) =>
+          isCurrentDate(date, currentDate) ? 'current-date' : ''
+        }
+        tileContent={tileContent}
+      /> */}
 
-                  
-                  <PieChart className="pie" style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"860px", marginTop:"-440px"}} width={410} height={400} >
-        <Pie
-          data={data}
-          cx={120}
-          cy={200}
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          paddingAngle={5}
-          dataKey="value"
-          style={{color:"black"}}
-        >   
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        
-        </Pie> 
-        <Tooltip/>
-      </PieChart>
-                </div>
-               <div className="calender-employee" style={{
-  boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset"
-}}>
-  
-  <div style={{position:"relative", top:'20px',width:"750px",position:"relative",left:"50px",top:"40px"}}>
-  <h2 style={{fontFamily:"Secular One", fontWeight:"bold"}}> CALENDAR </h2>
-  <Calendar style={{
-    height: "10px",
-    marginLeft: "1000px",
-    backgroundColor: "white",
-    position: "relative",
-    top: "150px",
-    fontFamily:"Montserrat"
-  }}/> </div>
+  </div>
+</div>
 </div>
 
               </div>
