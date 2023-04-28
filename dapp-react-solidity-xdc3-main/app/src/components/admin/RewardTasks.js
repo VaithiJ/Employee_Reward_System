@@ -35,7 +35,6 @@ const {
 
 const RewardTasks = (props) => {
   const [tasks, setTasks] = useState([]);
-  const [hash, setHash] = useState("");
   const [rewardedemp, setrewardedemp] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
@@ -63,18 +62,19 @@ const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proce
 
 if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
 
-  // axios
-  //     .put(
-  //       `${API_URL}/updateetask/${taskkk._id}`,
-  //       { certificates: "Certified" },
-  //       { withCredentials: true }
-  //     )
-      // .then(async (responsee) => {
-      //   const updateFile = responsee.data.updatedTask;
-      //   console.log(responsee.data.updateFile);
-      //   setSubmitting(true);
+  axios
+      .put(
+        `${API_URL}/updateetask/${taskkk._id}`,
+        { certificates: "Certified" },
+        { withCredentials: true }
+      )
+      .then(async (responsee) => {
+        const updateFile = responsee.data.updatedTask;
+        console.log(responsee.data.updateFile);
+        setSubmitting(true);
         
-  //  e.preventDefault();
+})
+
   if (!fileUpload) return;
 
   try {
@@ -89,45 +89,32 @@ console.log("Formdata", formData.entries())
         "req":"Access-Control-Allow-Origin"
       }, withCredentials:true
     });
-    setHash(response.data.FileHash);
 
     console.log('File uploaded successfully!', response.data.FileHash);
-    console.log(hash)
-    setSubmitting(false);
+    console.log(response.data.FileHash)
+    console.log(taskkk)
+
+const filehash =response.data.FileHash;
+// console.log(hash,"ssssss")
+let taskId = taskkk._id.slice(-5);
+//  console.log(hash,"hashhhhhhh")
+console.log("asbdasbassdssmnadmasbdnabsmdasdsadsadsa", filehash)
+console.log(filehash,"filehash")
+console.log(taskId,"taskid")
+let resp = await executeTransaction(erc, provider, "registerFile", [
+  filehash,
+  taskId
+]);
+log("Registered", "hash", resp.txHash);
   } catch (error) {
     console.error('Error uploading file!', error);
     setSubmitting(false);
   }
-        // if (fileUpload == null) return;
-        // const fileName = fileUpload.name + generateHash(fileUpload.name);
-        // const hashName = fileName.slice(-64);
-  
-        // console.log(hashName);
-        // const fileRef = ref(storage, `certificates/${fileName}`);
-        // uploadBytes(fileRef, fileUpload).then((snapshot) => {
-        //   getDownloadURL(snapshot.ref).then((url) => {
-        //     setFileList((prev) => [...prev, { name: fileName, url: url }]);
-        //   });
-        // });
+      
   
         // console.log(taskkk._id.slice(-5));
-         setSubmitting(true);
-         let taskId = taskkk._id;
-        let filehash = hash;
-        let resp = await executeTransaction(erc, provider, "registerFile", [
-          filehash,
-          taskId
-        ]);
-        log("Registered", "hash", resp.txHash);
-        if (fileUpload && fileUpload.type === "application/pdf") {
-          // TODO: Upload the file
-          console.log("File uploaded successfully.");
-        } else {
-          // Show an alert or a notification message
-          alert("Please select a PDF file.");
-        }
-       
-        console.log(taskId);
+        //  setSubmitting(true);
+
         let response = await queryData(erc, provider, "getFileHash", [taskId]);
         log("Returned hash", "hash", response);
         // const fileListRef = ref(storage, "certificates");
@@ -457,8 +444,8 @@ console.log("Formdata", formData.entries())
                     fontFamily:"Secular One",
                     marginLeft:"30px"
                   }}
-                  onClick={uploadFile}
-                >
+                  onClick={() => uploadFile(task)}
+                  >
                   Upload Certificates
                 </button> 
                 </div>
