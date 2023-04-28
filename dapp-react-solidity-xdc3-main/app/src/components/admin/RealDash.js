@@ -71,7 +71,7 @@ function RealDash(connect) {
   // const [open, setOpen] = useState(false);
   const tokenn = jwt_decode(cookies.access_token);
   console.log(tokenn);
-  const API_URL = "http://192.168.26.107:8800";
+  const API_URL = "http://192.168.1.7:8800";
   // const [showPopup, setShowPopup] = useState(false);
   const [open, setOpen] = useState(false);
   const togglePopup = () => {
