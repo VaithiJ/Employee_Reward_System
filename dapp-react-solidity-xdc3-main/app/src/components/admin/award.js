@@ -37,52 +37,61 @@ const Award = (props) => {
   
   const [fileUpload, setFileUpload] = useState(null);
 
-  const handleTasks = (e) => {
-    setTask(e.target.value);
  
-    // setProductId(product.productName);
-  };
-
-  const handleTaskName = (e) => {
-    setTaskName(e.target.value);
-  };
-
-  const handleTaskDescription = (e) => {
-    setTaskDescription(e.target.value);
-  };
-
-  const handleDeadline = (e) => {
-    setDeadline(e.target.value);
-  };
-
-  const handleRewards = (e) => {
-    setRewards(e.target.value);
-  };
 
   const handleAddModel = async (event) => {
   event.preventDefault();
+}
   
-  try {
-    const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
-    const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
+//   try {
+//     const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
+//     const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
 
-    const response = await axios.post(
-      `${API_URL}/assigntask/${employeeName}/${compName}/${empAddress}`,
-      { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
-      { withCredentials: true }
-    );
+//     const response = await axios.post(
+//       `${API_URL}/assigntask/${employeeName}/${compName}/${empAddress}`,
+//       { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
+//       { withCredentials: true }
+//     );
 
-    console.log(response.data);
-    console.log(employeeName);
-    console.log(compName);
+//     console.log(response.data);
+//     console.log(employeeName);
+//     console.log(compName);
 
-    history.push("/real");
-  } catch (error) {
-    console.log("wrongyyyy");
-    console.error(error);
+//     history.push("/real");
+//   } catch (error) {
+//     console.log("wrongyyyy");
+//     console.error(error);
+//   }
+// };
+const [award, setAward] = useState([]);
+const [awardName, setAwardName] = useState("");
+const [tokens, setTokens] = useState("");
+  
+
+useEffect(() => {
+  axios
+    .get(`${API_URL}/award`, { withCredentials: true })
+    .then((response) => {
+      setAward(response.data.award);
+      console.log("vaa maaa en chellakutty",response.data.award)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}, []);
+
+console.log("vaa di en chellakutty",award)
+const handleSelectChange = (event) => {
+  const selectedOption = event.target.value;
+  setAwardName(selectedOption);
+
+  const selectedAward = award.find((award) => award.name === selectedOption);
+  if (selectedAward) {
+    setTokens(selectedAward.token);
+  } else {
+    setTokens("");
   }
 };
-
 
   return (
     <div className="modal-container"  >

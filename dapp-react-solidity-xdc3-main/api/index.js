@@ -31,9 +31,11 @@ import Updateprofile from "./routes/employee/updateprofile.js"
 import Updatedcondition from "./routes/employee/condition.js"
 import Certify from "./routes/company/certify.js"
 import updateprofileee from "./routes/company/updateprofileee.js"
+import award from "./routes/company/awaaard.js"
 import AWS from "aws-sdk";
 import multer from "multer";
 import multerS3 from "multer-s3";
+
 const app = express()
 dotenv.config();
 // const upload = multer({ dest: 'EmployeeRewardSystem/certificates/' })
@@ -127,6 +129,7 @@ app.use("/", completionDate)
 app.use("/",Updateprofile)
 app.use("/", Updatedcondition)
 app.use("/", Certify)
+app.use("/", award)
 app.use("/", updateprofileee)
 app.use((req, res, next) => {
     // res.header("Access-Control-Allow-Origin", "*");
