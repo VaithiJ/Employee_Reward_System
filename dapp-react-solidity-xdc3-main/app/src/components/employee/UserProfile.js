@@ -49,26 +49,26 @@ const ProfilePage = (props) => {
     let response = await queryData(erc, provider, 'getFileHash', [taskId]);
     log("Returned hash", "hash", response);
     setSubmitting(false);
-    const fileListRef = ref(storage, 'certificates');
-    listAll(fileListRef)
-      .then((res) => {
-        res.items.forEach((itemRef) => {
-          if (itemRef.name.slice(-64) === response) {
-            console.log(itemRef.fullPath);
-            getDownloadURL(itemRef)
-              .then((url) => {
-                console.log(url);
-                window.open(url, '_blank');
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // const fileListRef = ref(storage, 'certificates');
+    // listAll(fileListRef)
+    //   .then((res) => {
+    //     res.items.forEach((itemRef) => {
+    //       if (itemRef.name.slice(-64) === response) {
+    //         console.log(itemRef.fullPath);
+    //         getDownloadURL(itemRef)
+    //           .then((url) => {
+    //             console.log(url);
+    //             window.open(url, '_blank');
+    //           })
+    //           .catch((error) => {
+    //             console.log(error);
+    //           });
+    //       }
+    //     });
+    //   })
+      // .catch((error) => {
+      //   console.log(error);
+      // });
   };
    const [showButton, setShowButton] = useState(false);
  const [delay, setDelay] = useState(200);

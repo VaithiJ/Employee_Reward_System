@@ -61,6 +61,13 @@ const confirmUniqueName = window.confirm("Does the certificate have a unique nam
 const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proceed?");
 
 if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
+      let updatedTask = await axios.put(
+      `${API_URL}/updatetask/${taskkk._id}`,
+      { status: "Rewarded" },
+      { withCredentials: true }
+    ).then(response => response.data.updatedTask);
+  
+    console.log(updatedTask);
 
   axios
       .put(
@@ -101,15 +108,29 @@ let taskId = taskkk._id.slice(-5);
 console.log("asbdasbassdssmnadmasbdnabsmdasdsadsadsa", filehash)
 console.log(filehash,"filehash")
 console.log(taskId,"taskid")
-let resp = await executeTransaction(erc, provider, "registerFile", [
-  filehash,
-  taskId
-]);
-log("Registered", "hash", resp.txHash);
-  } catch (error) {
-    console.error('Error uploading file!', error);
-    setSubmitting(false);
-  }
+// let resp = await executeTransaction(erc, provider, "registerFile", [
+//   filehash,
+//   taskId
+// ]);
+// log("Registered", "hash", resp.txHash);
+//   } catch (error) {
+//     console.error('Error uploading file!', error);
+//     setSubmitting(false);
+//   }
+  let resp = await executeTransaction(erc, provider, "registerCertificateAndSendReward", [
+    filehash,
+    taskId, taskkk.empWalletAddress.replace("xdc", "0x"),
+    taskkk.rewards
+  ]);
+  log("Registered", "hash", resp.txHash);
+    } catch (error) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+
+      console.error('Error uploading file!', error);
+      setSubmitting(false);
+    }
       
   
         // console.log(taskkk._id.slice(-5));
@@ -139,9 +160,9 @@ log("Registered", "hash", resp.txHash);
         //   });
   
         // Reload page after 5 seconds
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 5000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 5000);
   
         setSubmitting(false);
       // })
@@ -155,30 +176,30 @@ log("Registered", "hash", resp.txHash);
   };
 } 
 
-const handleSubmit = async (e, taskkk) => {
-  e.preventDefault();
-  if (!fileUpload) return;
+// const handleSubmit = async (e, taskkk) => {
+//   e.preventDefault();
+//   if (!fileUpload) return;
 
-  try {
-    setSubmitting(true);
-console.log("FIles",fileUpload)
-    const formData =  new FormData();
-     formData.append('certificates', fileUpload);
-console.log("Formdata", formData.entries())
-    const response = await axios.post(`${API_URL}/uploadingCertificate`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        "req":"Access-Control-Allow-Origin"
-      }, withCredentials:true
-    });
+//   try {
+//     setSubmitting(true);
+// console.log("FIles",fileUpload)
+//     const formData =  new FormData();
+//      formData.append('certificates', fileUpload);
+// console.log("Formdata", formData.entries())
+//     const response = await axios.post(`${API_URL}/uploadingCertificate`, formData, {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//         "req":"Access-Control-Allow-Origin"
+//       }, withCredentials:true
+//     });
 
-    console.log('File uploaded successfully!', response.data.FileHash);
-    setSubmitting(false);
-  } catch (error) {
-    console.error('Error uploading file!', error);
-    setSubmitting(false);
-  }
-};
+//     console.log('File uploaded successfully!', response.data.FileHash);
+//     setSubmitting(false);
+//   } catch (error) {
+//     console.error('Error uploading file!', error);
+//     setSubmitting(false);
+//   }
+// };
 
   // useEffect(() => {
   //   window.addEventListener("error", handleWindowError);
@@ -192,18 +213,18 @@ console.log("Formdata", formData.entries())
   //     window.location.reload();
   //   }
   // };
-  function checkInspectConsoleForBigNumberError() {
-    setInterval(() => {
-      const errors = Array.from(window.console.errors || []);
-      console.log('Errors:', errors);
-      const bigNumberError = errors.find(error => error.message.includes("invalid BigNumber string"));
-      if (bigNumberError) {
-        console.error("BigNumber error occurred:", bigNumberError);
-        window.location.href = window.location.href;
-        console.log('Page reloaded.');
-      }
-    }, 1000);
-  }
+  // function checkInspectConsoleForBigNumberError() {
+  //   setInterval(() => {
+  //     const errors = Array.from(window.console.errors || []);
+  //     console.log('Errors:', errors);
+  //     const bigNumberError = errors.find(error => error.message.includes("invalid BigNumber string"));
+  //     if (bigNumberError) {
+  //       console.error("BigNumber error occurred:", bigNumberError);
+  //       window.location.href = window.location.href;
+  //       console.log('Page reloaded.');
+  //     }
+  //   }, 1000);
+  // }
   
   
 
@@ -265,77 +286,77 @@ console.log("Formdata", formData.entries())
 
     setSubmitting(false);
   };
-  const Rewarded = async (taskk) => {
-    const confirmed = window.confirm("Reward this Employee?");
+  // const Rewarded = async (taskk) => {
+  //   const confirmed = window.confirm("Reward this Employee?");
 
-    const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
-    const confirmUniqueName = window.confirm("Do you have enough balance to reward?");
-    const confirmNoChanges = window.confirm("Once rewarded, cannot be changed. Proceed?");
-    let updatedTask = await axios.put(
-      `${API_URL}/updatetask/${taskk._id}`,
-      { status: "Rewarded" },
-      { withCredentials: true }
-    ).then(response => response.data.updatedTask);
+  //   const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
+  //   const confirmUniqueName = window.confirm("Do you have enough balance to reward?");
+  //   const confirmNoChanges = window.confirm("Once rewarded, cannot be changed. Proceed?");
+  //   let updatedTask = await axios.put(
+  //     `${API_URL}/updatetask/${taskk._id}`,
+  //     { status: "Rewarded" },
+  //     { withCredentials: true }
+  //   ).then(response => response.data.updatedTask);
   
-    console.log(updatedTask);
-    if (confirmAdminWallet && confirmNoChanges && confirmUniqueName) {
-      try {
-        // Call the executeTransaction function first
-        let resp = await executeTransaction(erc, provider, "sendReward", [
-          taskk.empWalletAddress.replace("xdc", "0x"),
-          taskk.rewards
-        ]);
+  //   console.log(updatedTask);
+  //   if (confirmAdminWallet && confirmNoChanges && confirmUniqueName) {
+  //     try {
+  //       // Call the executeTransaction function first
+  //       let resp = await executeTransaction(erc, provider, "sendReward", [
+  //         taskk.empWalletAddress.replace("xdc", "0x"),
+  //         taskk.rewards
+  //       ]);
     
-        // Wait for the transactionHash event to be emitted before proceeding
-        await new Promise(resolve => {
-          provider.once(resp.txHash, resolve);
-        });
+  //       // Wait for the transactionHash event to be emitted before proceeding
+  //       await new Promise(resolve => {
+  //         provider.once(resp.txHash, resolve);
+  //       });
     
-        // Force reload the page after 5 seconds
-        setTimeout(() => {
-          window.location.reload();
-        }, 5000);
+  //       // Force reload the page after 5 seconds
+  //       setTimeout(() => {
+  //         window.location.reload();
+  //       }, 5000);
     
-      } catch (error) {
-        console.log("Failed successfully");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-        // handle the error here, e.g. show an error message to the user
-      } finally {
-        setSubmitting(false);
-      }
+  //     } catch (error) {
+  //       console.log("Failed successfully");
+  //       setTimeout(() => {
+  //         window.location.reload();
+  //       }, 2000);
+  //       // handle the error here, e.g. show an error message to the user
+  //     } finally {
+  //       setSubmitting(false);
+  //     }
     
-      // Update tasks state
-      if (updatedTask) {
-        setTask(
-          task.map((t) => {
-            if (t._id === updatedTask._id) {
-              setTaskId(updatedTask._id);
-              return updatedTask;
-            } else {
-              return t;
-            }
-          })
-        );
-      }
-    }
-  }
+  //     // Update tasks state
+  //     if (updatedTask) {
+  //       setTask(
+  //         task.map((t) => {
+  //           if (t._id === updatedTask._id) {
+  //             setTaskId(updatedTask._id);
+  //             return updatedTask;
+  //           } else {
+  //             return t;
+  //           }
+  //         })
+  //       );
+  //     }
+  //   }
+  // }
   
   
-  const handleApproveTask = async (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index] = { ...updatedTasks[index], approved: true };
-    setTasks(updatedTasks);
-    alert("Task has been approved");
-    console.log(tasks);
-    const respo = await axios.get(`${API_URL}/status/${tasks.EmpName}`, {
-      withCredentials: true,
-    });
-    console.log(respo.data);
+  // const handleApproveTask = async (index) => {
+  //   const updatedTasks = [...tasks];
+  //   updatedTasks[index] = { ...updatedTasks[index], approved: true };
+  //   setTasks(updatedTasks);
+  //   alert("Task has been approved");
+  //   console.log(tasks);
+  //   const respo = await axios.get(`${API_URL}/status/${tasks.EmpName}`, {
+  //     withCredentials: true,
+  //   });
+  //   console.log(respo.data);
 
-    //  const delete = await axios.get()
-  };
+  //   //  const delete = await axios.get()
+  // };
 
   const data = [
     { name: 'Approved Employees', value: tasks.length },
@@ -399,9 +420,9 @@ console.log("Formdata", formData.entries())
           <div className="task-wallet" style={{fontFamily:"Secular One",width:"-20"}}>WALLET ADDRESS</div>
           {/* <div className="task-assigned-to" style={{ width: '20%' }}>Assigned To</div> */}
           <div className="task-due-date" style={{fontFamily:"Secular One",}}>DUE DATE</div>
-          <div className="task-due-date" style={{fontFamily:"Secular One",marginRight:"80px"}}>REWARD</div>
-          <div className="task-progress" style={{fontFamily:"Secular One",}}>ACTIONS</div>
-          <div className="task-status" style={{ width: '15%', paddingLeft: "30px",fontFamily:"Secular One", }}>REWARDS</div>
+          <div className="task-due-date" style={{fontFamily:"Secular One",marginRight:"70px"}}>TOKENS</div>
+          <div className="task-progress" style={{fontFamily:"Secular One",}}>UPLOAD & REWARD</div>
+          {/* <div className="task-status" style={{ width: '15%', paddingLeft: "30px",fontFamily:"Secular One", }}>REWARDS</div> */}
         </div>
         {tasks.map((task) => (
           <div
@@ -452,7 +473,7 @@ console.log("Formdata", formData.entries())
             ) : (
               <div style={{ fontSize: '20px', fontWeight: 'bold', fontFamily:"Secular One",marginRight:"60px" }}>Uploaded</div>
             )}
-            <div
+            {/* <div
               className="task-status"
               style={{ 
                 display: 'flex', 
@@ -482,7 +503,7 @@ console.log("Formdata", formData.entries())
                 Reward
                 </button>
                 )}
-                </div>
+                </div> */}
                 </div>
                 ))}
                 </div>

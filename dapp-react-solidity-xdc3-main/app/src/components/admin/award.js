@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./CreateModal.css";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
@@ -10,9 +10,17 @@ import { useHistory } from "react-router-dom";
 import bg from "./ss.svg"
 import "./real.css"
 
+const {
+  executeTransaction,
+  EthereumContext,
+  log,
+  queryData,
+} = require("react-solidity-xdc3");
 
 
 const Award = (props) => {
+  const { provider, erc } = useContext(EthereumContext);
+
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
     "name",
@@ -23,8 +31,8 @@ const Award = (props) => {
   const API_URL = "http://192.168.26.107:8800";
 
   const employeeName = props.match.params.Name;
-  const empAddress = props.match.params.Wallet;
-     console.log(empAddress)
+  const employeeAddress = props.match.params.Wallet.replace("xdc","0x");
+     console.log(employeeAddress)
   const compName = tokenn.name;
   const [task, setTask] = useState(" ");
   const [taskName, setTaskName] = useState("");
@@ -37,12 +45,117 @@ const Award = (props) => {
   
   const [fileUpload, setFileUpload] = useState(null);
 
- 
+  const uploadFile = async () => {
+    
+    const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
+const confirmUniqueName = window.confirm("Does the certificate have a unique name?");
+const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proceed?");
+// const employeeAddress = props.params.Wallet.replace("xdc","0x")
+// console.log(employeeAddress)
+// console.log(employeeName)
+
+if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
+
+//   axios
+//       .put(
+//         `${API_URL}/updateetask/${taskkk._id}`,
+//         { certificates: "Certified" },
+//         { withCredentials: true }
+//       )
+//       .then(async (responsee) => {
+//         const updateFile = responsee.data.updatedTask;
+//         console.log(responsee.data.updateFile);
+//         setSubmitting(true);
+        
+// })
+
+  if (!fileUpload) return;
+
+  try {
+    setSubmitting(true);
+console.log("FIles",fileUpload)
+    const formData =  new FormData();
+     formData.append('PerformanceCertificates', fileUpload);
+console.log("Formdata", formData.entries())
+    const response = await axios.post(`${API_URL}/uploadCertificate`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        "req":"Access-Control-Allow-Origin"
+      }, withCredentials:true
+    });
+
+    console.log('Performance certificate uploaded successfully!', response.data.FileHash);
+    console.log(response.data.FileHash)
+//     console.log(taskkk)
+
+const filehash =response.data.FileHash;
+const rewardAmount = 100;
+// // console.log(hash,"ssssss")
+let taskId = "13b3s"
+// //  console.log(hash,"hashhhhhhh")
+// console.log("asbdasbassdssmnadmasbdnabsmdasdsadsadsa", filehash)
+// console.log(filehash,"filehash")
+// console.log(taskId,"taskid")
+let resp = await executeTransaction(erc, provider, "registerFileAndSendReward", [
+  filehash,
+  employeeName,
+  rewardAmount,
+  employeeAddress
+]);
+log("Registered", "hash", resp.txHash);
+   } catch (error) {
+    console.error('Error uploading file!', error);
+    setSubmitting(false);
+  }
+    // let response = await queryData(erc, provider, "getFileHash", [taskId]);
+    //     log("Returned hash", "hash", response);
+        // const fileListRef = ref(storage, "certificates");
+        // listAll(fileListRef)
+        //   .then((res) => {
+        //     res.items.forEach((itemRef) => {
+        //       if (itemRef.name.slice(-64) === response) {
+        //         console.log(itemRef.fullPath);
+        //         getDownloadURL(itemRef)
+        //           .then((url) => {
+        //             console.log(url);
+        //             window.open(url, "_blank");
+        //           })
+        //           .catch((error) => {
+        //             console.log(error);
+        //           });
+        //       }
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+  
+        // Reload page after 5 seconds
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 5000);
+  
+        setSubmitting(false);
+      // })
+      // .catch((error) => {
+      //   console.log(error);
+        // Reload page after 5 seconds
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
+      // });
+  };
+} 
 
   const handleAddModel = async (event) => {
   event.preventDefault();
 }
   
+const handleTasks = (e) => {
+  setTask(e.target.value);
+
+  // setProductId(product.productName);
+};
 //   try {
 //     const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
 //     const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
@@ -73,14 +186,14 @@ useEffect(() => {
     .get(`${API_URL}/award`, { withCredentials: true })
     .then((response) => {
       setAward(response.data.award);
-      console.log("vaa maaa en chellakutty",response.data.award)
+      console.log(response.data.award.AwardName)
     })
     .catch((error) => {
       console.log(error);
     });
 }, []);
 
-console.log("vaa di en chellakutty",award)
+console.log(award)
 const handleSelectChange = (event) => {
   const selectedOption = event.target.value;
   setAwardName(selectedOption);
@@ -259,13 +372,13 @@ const handleSelectChange = (event) => {
             
               {/* onClick={() => uploadFile(task)} */}
 
-          <Link to={"/real"}>
+          <Link>
           <button
 
             id="singlebutton"
             name="singlebutton"
             className="btM"
-            onClick={handleAddModel}
+            onClick={uploadFile}
             style={{fontFamily:"Secular One",position:"relative",top:"40px"}}
           >
             Award Employee

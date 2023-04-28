@@ -72,9 +72,10 @@ import Award from "../components/admin/award"
     }
    
     const match = matchPath(location.pathname, { path: "/empprofile/:id" });
+    const awarddpage = matchPath(location.pathname, {path : "/awardpage/:Name/:name/:Wallet"})
 
 
-    const links = (location.pathname === "/real" || location.pathname === "/reward" || !!match || location.pathname === "/employeehome" || location.pathname === "/userprofile" || location.pathname === "/admin");
+    const links = (location.pathname === "/real"|| !!awarddpage || location.pathname === "/reward" || !!match || location.pathname === "/employeehome" || location.pathname === "/userprofile" || location.pathname === "/admin");
 
     // const emplinks = (location.pathname === "/employeehome" || location.pathname === "/userprofile");
 
@@ -138,7 +139,7 @@ import Award from "../components/admin/award"
                       <Route path="/logincomp" component={LoginComp}/>
                       <Route path="/assigntask/:Name/:name/:Wallet" component={AssignTask}/>
                       <Route path="/viewtask/:id" component={ViewTask}/>
-                      <Route path="/award" component={Award}/>
+                      <Route path="/awardpage/:Name/:name/:Wallet" component={Award}/>
 
 
 

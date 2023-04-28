@@ -3,6 +3,8 @@ pragma solidity ^0.8.0;
 
 contract ERC {
     address public owner;
+    mapping(string => string) employeeFileMapping;
+
     mapping(address => bool) public companies;
     mapping(address => bool) public employees;
     mapping(address => string) public employeeNames;
@@ -79,14 +81,14 @@ mapping(string => string) public taskFileMapping; // new mapping to store taskId
         companyEmployees[msg.sender].push(employeeaddress);
     }
 
-    function sendReward(address employeeaddress, uint256 amount) public onlyAdmin {
-        require(employees[employeeaddress], "Address must be registered as an employee.");
-        require(amount > 0, "Amount must be greater than 0.");
-        require(balances[msg.sender] >= amount, "Not enough balance.");
-        balances[msg.sender] -= amount;
-        balances[employeeaddress] += amount;
-        emit Transfer(msg.sender, employeeaddress, amount);
-    }
+    // function sendReward(address employeeaddress, uint256 amount) public onlyAdmin {
+    //     require(employees[employeeaddress], "Address must be registered as an employee.");
+    //     require(amount > 0, "Amount must be greater than 0.");
+    //     require(balances[msg.sender] >= amount, "Not enough balance.");
+    //     balances[msg.sender] -= amount;
+    //     balances[employeeaddress] += amount;
+    //     emit Transfer(msg.sender, employeeaddress, amount);
+    // }
 
     function balanceOf(address account) public view returns (uint256) {
         return balances[account];
@@ -101,13 +103,17 @@ function getEmployeeCount(address companyaddress) public view returns (uint256) 
 //     fileHashes[filehash] = true;
 //     taskFileMapping[taskId] = filehash;
 // }
-function registerFile(string memory fileHash, string memory taskId) public onlyAdmin {
-    require(!fileHashes[fileHash], "File hash is already registered.");
-    require(keccak256(abi.encodePacked(taskFileMapping[fileHash])) != keccak256(abi.encodePacked(taskId)), "A file with the same task ID is already registered.");
 
-    fileHashes[fileHash] = true;
-    taskFileMapping[taskId] = fileHash;
-}
+
+
+
+// function registerFile(string memory fileHash, string memory taskId) public onlyAdmin {
+//     require(!fileHashes[fileHash], "File hash is already registered.");
+//     require(keccak256(abi.encodePacked(taskFileMapping[fileHash])) != keccak256(abi.encodePacked(taskId)), "A file with the same task ID is already registered.");
+
+//     fileHashes[fileHash] = true;
+//     taskFileMapping[taskId] = fileHash;
+// }
 
 
 
@@ -128,6 +134,39 @@ function isEmployeeRegistered(address employeeaddress) public view returns (bool
 function getFileHash(string memory taskId) public view returns (string memory) {
     return taskFileMapping[taskId];
 }
+
+function registerFileAndSendReward(string memory fileHash, string memory employeeName, uint256 rewardAmount, address employeeAddress) public onlyAdmin {
+    // Register the file hash for the employee
+    require(!fileHashes[fileHash], "File hash is already registered.");
+    require(keccak256(abi.encodePacked(employeeFileMapping[employeeName])) != keccak256(abi.encodePacked(fileHash)), "A file with the same employee name is already registered.");
+    fileHashes[fileHash] = true;
+    employeeFileMapping[employeeName] = fileHash;
+    
+    // Send the reward to the employee
+    require(employees[employeeAddress], "Address must be registered as an employee.");
+    require(rewardAmount > 0, "Reward amount must be greater than 0.");
+    require(balances[msg.sender] >= rewardAmount, "Not enough balance.");
+    balances[msg.sender] -= rewardAmount;
+    balances[employeeAddress] += rewardAmount;
+    emit Transfer(msg.sender, employeeAddress, rewardAmount);
+}
+
+function registerCertificateAndSendReward(string memory fileHash, string memory taskId, address employeeAddress, uint256 rewardAmount) public onlyAdmin {
+    // Register the file hash for the task
+    require(!fileHashes[fileHash], "File hash is already registered.");
+    require(keccak256(abi.encodePacked(taskFileMapping[taskId])) != keccak256(abi.encodePacked(fileHash)), "A file with the same task ID is already registered.");
+    fileHashes[fileHash] = true;
+    taskFileMapping[taskId] = fileHash;
+    
+    // Send the reward to the employee
+    require(employees[employeeAddress], "Address must be registered as an employee.");
+    require(rewardAmount > 0, "Reward amount must be greater than 0.");
+    require(balances[msg.sender] >= rewardAmount, "Not enough balance.");
+    balances[msg.sender] -= rewardAmount;
+    balances[employeeAddress] += rewardAmount;
+    emit Transfer(msg.sender, employeeAddress, rewardAmount);
+}
+
 }
 
 

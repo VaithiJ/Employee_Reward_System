@@ -82,11 +82,20 @@ const s3 = new AWS.S3({
         s3: s3,
         bucket: process.env.BUCKET_NAME,
         key: function (req, file, cb) {
-            cb(null, 'EmployeeRewards/' + file.originalname); // use EmployeeRewards folder + original filename as the key in S3
+            cb(null, 'EmployeeRewards/TaskCertificates/' + file.originalname); // use EmployeeRewards folder + original filename as the key in S3
         }
     })
 });
 
+const uploadd = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.BUCKET_NAME,
+        key: function (req, file, cb) {
+            cb(null, 'EmployeeRewards/PerformanceCertificates/' + file.originalname); // use EmployeeRewards folder + original filename as the key in S3
+        }
+    })
+});
 
 const connect = async () =>{
     try {
@@ -210,6 +219,21 @@ app.post('/uploadingCertificate', upload.single('certificates'), async function 
     res.send({uploadStatus:"success", FileHash:hash});
   });
 
+  app.post('/uploadCertificate', uploadd.single('PerformanceCertificates'), async function (req, res) {
+    const file = req.file;
+    console.log('Uploaded file:', file);
+  
+    // Read the contents of the uploaded file from the S3 bucket
+    const params = { Bucket: file.bucket, Key: file.key };
+    const fileObject = await s3.getObject(params).promise();
+    const fileContents = fileObject.Body;
+  
+    // Compute the SHA256 hash of the file contents
+    const hash = crypto.createHash('sha256').update(fileContents).digest('hex');
+    console.log('Hash of uploaded file:', hash);
+  
+    res.send({uploadStatus:"success", FileHash:hash});
+  });
 
 
 
