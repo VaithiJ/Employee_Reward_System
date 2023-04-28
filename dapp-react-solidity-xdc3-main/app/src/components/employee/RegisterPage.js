@@ -18,7 +18,7 @@ import PhoneInput from "react-phone-input-2";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function Register() {
-  const API_URL = "http://3.110.107.87:8800";
+  const API_URL = "http://192.168.26.107:8800";
   const [name, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(" ");

@@ -112,7 +112,7 @@ console.log("Formdata", formData.entries())
   
         // console.log(taskkk._id.slice(-5));
          setSubmitting(true);
-         let taskId = ((taskkk._id).slice(-5));
+         let taskId = taskkk._id;
         let filehash = hash;
         let resp = await executeTransaction(erc, provider, "registerFile", [
           filehash,
@@ -237,7 +237,7 @@ console.log("Formdata", formData.entries())
 
   const tokenn = jwt_decode(cookies.access_token);
 
-  const API_URL = "http://localhost:8800";
+  const API_URL = "http://192.168.26.107:8800";
   // const empName = props.match.params.empName;
   // const taskk = props.match.params.task;
   // console.log(empName);
