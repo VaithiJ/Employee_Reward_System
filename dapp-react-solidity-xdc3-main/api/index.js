@@ -83,7 +83,8 @@ const s3 = new AWS.S3({
         s3: s3,
         bucket: process.env.BUCKET_NAME,
         key: function (req, file, cb) {
-            const employeeName = req.body.empName;
+            const employeeName = req.body.employeeName;
+            console.log(employeeName)
             cb(null, `EmployeeRewards/TaskCertificates/${employeeName}/` + file.originalname); // use EmployeeRewards folder + original filename as the key in S3
         }
     })
