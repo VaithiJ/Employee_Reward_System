@@ -128,7 +128,7 @@ console.log(taskId,"taskid")
     } catch (error) {
       setTimeout(() => {
         window.location.reload();
-      }, 5000);
+      }, 15000);
 
       console.error('Error uploading file!', error);
       setSubmitting(false);
