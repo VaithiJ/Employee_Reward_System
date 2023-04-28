@@ -32,7 +32,7 @@
   import PlatformAdmin from "../components/Platform admin/Tokens reward"
   // import Tes from "../components/Platform admin/Tes";
   import "./App.css"
-import Award from "../components/admin/award"
+import Award from "../components/admin/award1"
 
 
   const { getWeb3Modal, createWeb3Provider, connectWallet, EthereumContext, createContractInstance, log } = require('react-solidity-xdc3');

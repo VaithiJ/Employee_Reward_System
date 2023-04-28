@@ -88,6 +88,8 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
     setSubmitting(true);
 console.log("FIles",fileUpload)
     const formData =  new FormData();
+    formData.append('employeeName', taskkk.empName); 
+
      formData.append('certificates', fileUpload);
 console.log("Formdata", formData.entries())
     const response = await axios.post(`${API_URL}/uploadingCertificate`, formData, {

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect , useContext} from "react";
 import "./CreateModal.css";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
@@ -18,6 +18,7 @@ const {
 } = require("react-solidity-xdc3");
 
 
+
 const Award = (props) => {
   const { provider, erc } = useContext(EthereumContext);
 
@@ -28,7 +29,7 @@ const Award = (props) => {
   const tokenn = jwt_decode(cookies.access_token);
   const history = useHistory();
 
-  const API_URL = "http://192.168.26.107:8800";
+  const API_URL = "http://localhost:8800";
 
   const employeeName = props.match.params.Name;
   const employeeAddress = props.match.params.Wallet.replace("xdc","0x");
@@ -40,11 +41,11 @@ const Award = (props) => {
   const [deadline, setDeadline] = useState(0);
   const [rewards, setRewards] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+
   // const [comName, setComName] = useState(" ");
   // const [empId, setEmpId] = useState(" ");
   
   const [fileUpload, setFileUpload] = useState(null);
-
   const uploadFile = async () => {
     
     const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
@@ -89,9 +90,9 @@ console.log("Formdata", formData.entries())
 //     console.log(taskkk)
 
 const filehash =response.data.FileHash;
-const rewardAmount = 100;
+const rewardAmount = tokens;
+console.log(rewardAmount)
 // // console.log(hash,"ssssss")
-let taskId = "13b3s"
 // //  console.log(hash,"hashhhhhhh")
 // console.log("asbdasbassdssmnadmasbdnabsmdasdsadsadsa", filehash)
 // console.log(filehash,"filehash")
@@ -146,59 +147,75 @@ log("Registered", "hash", resp.txHash);
       // });
   };
 } 
+  const handleTasks = (e) => {
+    setTask(e.target.value);
+ 
+    // setProductId(product.productName);
+  };
+
+  const handleTaskName = (e) => {
+    setTaskName(e.target.value);
+  };
+
+  const handleTaskDescription = (e) => {
+    setTaskDescription(e.target.value);
+  };
+
+  const handleDeadline = (e) => {
+    setDeadline(e.target.value);
+  };
+
+  const handleRewards = (e) => {
+    setRewards(e.target.value);
+  };
 
   const handleAddModel = async (event) => {
   event.preventDefault();
-}
   
-const handleTasks = (e) => {
-  setTask(e.target.value);
+  try {
+    const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
+    const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
 
-  // setProductId(product.productName);
+    const response = await axios.post(
+      `${API_URL}/assigntask/${employeeName}/${compName}/${employeeAddress}`,
+      { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
+      { withCredentials: true }
+    );
+
+    console.log(response.data);
+    console.log(employeeName);
+    console.log(compName);
+
+    history.push("/real");
+  } catch (error) {
+    console.log("wrongyyyy");
+    console.error(error);
+  }
 };
-//   try {
-//     const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
-//     const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
-
-//     const response = await axios.post(
-//       `${API_URL}/assigntask/${employeeName}/${compName}/${empAddress}`,
-//       { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
-//       { withCredentials: true }
-//     );
-
-//     console.log(response.data);
-//     console.log(employeeName);
-//     console.log(compName);
-
-//     history.push("/real");
-//   } catch (error) {
-//     console.log("wrongyyyy");
-//     console.error(error);
-//   }
-// };
 const [award, setAward] = useState([]);
 const [awardName, setAwardName] = useState("");
 const [tokens, setTokens] = useState("");
-  
 
 useEffect(() => {
   axios
     .get(`${API_URL}/award`, { withCredentials: true })
     .then((response) => {
       setAward(response.data.award);
-      console.log(response.data.award.AwardName)
+      console.log("vaa maaa en chellakutty",response.data.award)
     })
     .catch((error) => {
       console.log(error);
     });
 }, []);
 
-console.log(award)
+console.log("vaa di en chellakutty",award)
 const handleSelectChange = (event) => {
   const selectedOption = event.target.value;
   setAwardName(selectedOption);
 
-  const selectedAward = award.find((award) => award.name === selectedOption);
+  console.log("irukiyaa maaaa", selectedOption)
+  const selectedAward = award.find((award) => award.AwardName === selectedOption);
+  console.log("work aguthaa", selectedAward)
   if (selectedAward) {
     const pp = selectedAward.tokens
     setTokens(selectedAward.tokens);
@@ -209,7 +226,6 @@ const handleSelectChange = (event) => {
 };
 console.log("irukiyaa mamaae", award)
 console.log("superr", tokens)
-
   return (
     <div className="modal-container"  >
       <header style={{ backgroundColor: 'transparent', padding: '1.5rem 0',height:"100px" }}>
@@ -246,7 +262,8 @@ console.log("superr", tokens)
       height:"400px"
     }}
   >
-         <form className="modal-form" style={{backgroundColor:"transparent", borderRadius:"40px", fontFamily:"Secular One",height:"300px"}} >
+        
+        <form className="modal-form" style={{backgroundColor:"transparent", borderRadius:"40px", fontFamily:"Secular One",height:"300px"}} >
           <label className="modlabel" htmlFor="text" >
             Select Awards
           </label>
@@ -354,7 +371,7 @@ console.log("superr", tokens)
                   accept=".pdf"
                   onChange={(e) => setFileUpload(e.target.files[0])}
                 />
-                <button
+                {/* <button
                   style={{ 
                     marginRight: '-90px', 
                     padding: '8px 16px', 
@@ -370,18 +387,18 @@ console.log("superr", tokens)
                     left:"30px"
                   }}>
                   Upload
-                </button> 
+                </button>  */}
               </div>
             
               {/* onClick={() => uploadFile(task)} */}
 
-          <Link to={"/real"}>
+          <Link>
           <button
 
             id="singlebutton"
             name="singlebutton"
             className="btM"
-            onClick={handleAddModel}
+            onClick={uploadFile}
             style={{fontFamily:"Secular One",position:"relative",top:"40px"}}
           >
             Award Employee

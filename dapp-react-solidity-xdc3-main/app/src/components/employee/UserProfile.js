@@ -369,6 +369,7 @@ const handleButtonClick = () => {
             <IoIosArrowDropdownCircle style={{ fontSize: "30px" }} />
           </div>
         </div>
+        
       </div>
       {boxVisible && (
         <div
@@ -443,6 +444,7 @@ const handleButtonClick = () => {
           </Table>
         </div>
       )}
+      
       <div
         className="card1"
         style={{
