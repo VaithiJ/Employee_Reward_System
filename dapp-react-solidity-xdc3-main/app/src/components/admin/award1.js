@@ -9,6 +9,8 @@ import SidebarMenu from "./side";
 import { useHistory } from "react-router-dom";
 import bg from "./ss.svg"
 import "./real.css"
+import awarddd from "./ad3.png"
+
 
 const {
   executeTransaction,
@@ -29,7 +31,7 @@ const Award = (props) => {
   const tokenn = jwt_decode(cookies.access_token);
   const history = useHistory();
 
-  const API_URL = "http://localhost:8800";
+  const API_URL = "http://192.168.26.107:8800";
 
   const employeeName = props.match.params.Name;
   const employeeAddress = props.match.params.Wallet.replace("xdc","0x");
@@ -201,34 +203,31 @@ useEffect(() => {
     .get(`${API_URL}/award`, { withCredentials: true })
     .then((response) => {
       setAward(response.data.award);
-      console.log("vaa maaa en chellakutty",response.data.award)
+      console.log(response.data.award)
     })
     .catch((error) => {
       console.log(error);
     });
 }, []);
 
-console.log("vaa di en chellakutty",award)
 const handleSelectChange = (event) => {
   const selectedOption = event.target.value;
   setAwardName(selectedOption);
 
-  console.log("irukiyaa maaaa", selectedOption)
+  console.log( selectedOption)
   const selectedAward = award.find((award) => award.AwardName === selectedOption);
-  console.log("work aguthaa", selectedAward)
+  console.log( selectedAward)
   if (selectedAward) {
     const pp = selectedAward.tokens
     setTokens(selectedAward.tokens);
-    console.log("evlo tokens paa",pp )
+    console.log(pp )
   } else {
     setTokens("");
   }
 };
-console.log("irukiyaa mamaae", award)
-console.log("superr", tokens)
   return (
-    <div className="modal-container"  >
-      <header style={{ backgroundColor: 'transparent', padding: '1.5rem 0',height:"100px" }}>
+    <div className="modal-container"  style={{backgroundColor:"#161928"}} >
+      <header style={{ backgroundColor: '#161928', padding: '1.5rem 0',height:"100px" }}>
       <div style={{position:"relative",bottom:"20px",left:"20px", marginLeft:"-1200px"}}>
       <SidebarMenu /> </div>
   <h2
@@ -241,30 +240,35 @@ console.log("superr", tokens)
       textAlign: 'center',
       textTransform: 'uppercase',
       position:"relative",
-      bottom:"60px"
+      bottom:"60px",
+      color:"white"
 
     }}>
     {employeeName}
   </h2>
 </header>
-<div
+<div style={{display:"flex", flexDirection:"row"}}>
+<img style={{ marginLeft: "-50px" , height:"600px"}} src={awarddd} />
+{/* <div
     className="Add-list"
     style={{
-      backgroundColor: 'transparent',
+      backgroundColor: '#161928',
      fontFamily:"Secular One",
-      
+      background:"#161928",
       width: '1000px',
       textAlign: 'center',
       boxShadow: '0 24px 500px #26214a1a',
       borderRadius: '12px',
       padding: '2rem',
-      marginLeft:"250px",
-      height:"400px"
+      marginLeft:"150px",
+      height:"600px"
     }}
-  >
+  >          */}
+
         
-        <form className="modal-form" style={{backgroundColor:"transparent", borderRadius:"40px", fontFamily:"Secular One",height:"300px"}} >
-          <label className="modlabel" htmlFor="text" >
+        <form className="modal-form" style={{boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+backgroundColor:"transparent",width:"600px",marginLeft:"-00px", borderRadius:"40px", fontFamily:"Secular One",height:"600px"}} >
+          <label className="modlabel" htmlFor="text" style={{marginTop:"-200px"}} >
             Select Awards
           </label>
           <>
@@ -412,6 +416,9 @@ console.log("superr", tokens)
         Copyright &copy; 2023 | Asset Warrenty
       </div>
       <br /> */}
+    {/* </div> */}
+    <div style={{marginTop:"00px", marginLeft:"-700px", fontFamily:"Secular One", fontSize:"30px"}}>Award your employees!  Select your award and reward them !!!!</div>
+
     </div>
   
   );

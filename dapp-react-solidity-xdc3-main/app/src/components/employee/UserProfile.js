@@ -4,6 +4,7 @@ import "./task.css"
 import Footercr from "../footer/footercr";
 import { useCookies } from "react-cookie";
 import Header from "../Headerr/Header";
+import dotenv from "dotenv"
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { Table } from "react-bootstrap";
 import SidebarMenu12 from "./side1";
@@ -12,8 +13,15 @@ import axios from "axios";
 import {storage} from "../../firebase.js"
 import {v4 as uuidv4} from "uuid";
 import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
+dotenv.config();
 const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
-
+const AWS = require('aws-sdk');
+const crypto = require('crypto');
+const s3 = new AWS.S3({
+  accessKeyId: process.env.ACCESS_KEY,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  region: process.env.BUCKET_NAME
+});
 
 const ProfilePage = (props) => {
   const [progressWidth, setProgressWidth] = useState(0);
@@ -24,6 +32,8 @@ const ProfilePage = (props) => {
   const [boxVisible, setBoxVisible] = useState(false);
   const API_URL = "http://192.168.26.107:8800";
   const [submitting, setSubmitting] = useState(false);
+  const [hashh, setHash] = useState("");
+
   const { provider, erc } = useContext(EthereumContext);
   console.log("sample", erc)
   const handlePursuingClick = () => {
@@ -31,24 +41,88 @@ const ProfilePage = (props) => {
       setProgressWidth(progressWidth + 10);
     }
   };
+  const getCertificate = async (token, hashh) => {
+    let taskId = (token._id).slice(-5);
+    console.log(taskId);
+    setSubmitting(true);
+    let response = await queryData(erc, provider, 'getFileHash', [taskId]);
+    log("Returned hash", "hash", response);
+    setHash(response);
+    setSubmitting(false);
+    const params = {
+      Bucket: "blockedge-project",
+      Prefix: `EmployeeRewards/TaskCertificates/${toke.name}`
+    };
+  
+    return new Promise((resolve, reject) => {
+      // Use the listObjectsV2() method to get the list of files in the employeeName folder
+      s3.listObjectsV2(params, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          // Loop through the items in the response and find the file with matching hash
+          const promises = data.Contents.map(item => {
+            // Use the getObject() method to get the file from S3
+            const getFilePromise = s3.getObject({
+              Bucket: "blockedge-project",
+              Key: item.Key
+            }).promise();
+  
+            // Calculate the hash of the file and compare it with the blockchain hash
+            const hashPromise = getFilePromise.then(fileData => {
+              const fileHash = crypto.createHash('sha256').update(fileData.Body).digest('hex');
+              if (fileHash === hashh) {
+                // Use the getSignedUrl() method to generate the download URL
+                const url = s3.getSignedUrl('getObject', {
+                  Bucket: "blockedge-project",
+                  Key: item.Key,
+                  Expires: 60 * 60 // URL expiration time in seconds
+                });
+                return url;
+              } else {
+                return null;
+              }
+            });
+  
+            return hashPromise;
+          });
+  
+          // Wait for all promises to resolve and filter out null values
+          Promise.all(promises).then(urls => {
+            const validUrls = urls.filter(url => url !== null);
+            if (validUrls.length === 1) {
+              // Get the file from S3 using the URL
+              const getFilePromise = axios.get(validUrls[0], { responseType: 'arraybuffer' });
+              getFilePromise.then(fileData => {
+                // Calculate the hash of the file and compare it to the given hashh value
+                const fileHash = crypto.createHash('sha256').update(Buffer.from(fileData.data)).digest('hex');
+                if (fileHash === hashh) {
+                  // Hashes match, resolve with the download URL
+                  resolve(validUrls[0]);
+                } else {
+                  reject(new Error('Hashes do not match'));
+                }
+              }).catch(err => {
+                reject(err);
+              });
+            } else {
+              reject(new Error('No matching file found'));
+            }
+          });
+        }
+      });
+    });
+  };
+  
+  
   // const viewCertificate = async (token) => {
   //   let taskId = (token._id).slice(-5);
   //   console.log(taskId);
   //   setSubmitting(true);
   //   let response = await queryData(erc, provider, 'getFileHash', [taskId]);
   //   log("Returned hash", "hash", response);
+  //   setHash(response);
   //   setSubmitting(false);
-  //   const fileName = "b8a47cf35a3a9b8c0e36908becf9f2f6b306d233740356582fe37c80055db180";
-  //   const fileListRef = ref(storage,'certificates')
-  
-  // };
-  const viewCertificate = async (token) => {
-    let taskId = (token._id).slice(-5);
-    console.log(taskId);
-    setSubmitting(true);
-    let response = await queryData(erc, provider, 'getFileHash', [taskId]);
-    log("Returned hash", "hash", response);
-    setSubmitting(false);
     // const fileListRef = ref(storage, 'certificates');
     // listAll(fileListRef)
     //   .then((res) => {
@@ -69,7 +143,7 @@ const ProfilePage = (props) => {
       // .catch((error) => {
       //   console.log(error);
       // });
-  };
+  // };
    const [showButton, setShowButton] = useState(false);
  const [delay, setDelay] = useState(200);
  const [avatarUrl, setAvatarUrl] = useState("");
@@ -78,16 +152,6 @@ const ProfilePage = (props) => {
   
   const handleLogout = () => {
     removeCookie("employee_token");
-    // if (response === fileName) {
-    //   const fileRef = fileName.slice(0, fileName.indexOf("_"));
-    //   try {
-    //     const url = await getDownloadURL(fileRef);
-    //     console.log(url);
-    //     window.open(url, "_blank");
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
   };
   const handleBoxClick = () => {
     setBoxVisible(!boxVisible);
@@ -437,7 +501,7 @@ const handleButtonClick = () => {
                 borderRadius: '4px', 
                 cursor: 'pointer',
                 fontFamily: "Secular One" 
-              }}onClick={() => viewCertificate(token)}> View</button></td>
+              }}onClick={() => getCertificate(token)}> View</button></td>
                 </tr>
               ))}
             </tbody>
