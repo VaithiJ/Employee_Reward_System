@@ -32,6 +32,7 @@ import Updatedcondition from "./routes/employee/condition.js"
 import Certify from "./routes/company/certify.js"
 import updateprofileee from "./routes/company/updateprofileee.js"
 import award from "./routes/company/awaaard.js"
+import awardedemployee from "./routes/company/awardedemp.js"
 import AWS from "aws-sdk";
 import multer from "multer";
 import multerS3 from "multer-s3";
@@ -115,7 +116,7 @@ mongoose.connection.on("disconnected", ()=>{
 mongoose.connection.on("connected", ()=>{
     console.log("Mongodb connected")
 })
-app.use(cors({ origin: "http://192.168.26.107:3000", credentials: true }));
+app.use(cors({ origin: "http://192.168.1.7:3000", credentials: true }));
 app.use(cookieParser());
 app.use(express.json())
 app.use("/", userRoute)
@@ -142,9 +143,10 @@ app.use("/", Updatedcondition)
 app.use("/", Certify)
 app.use("/", award)
 app.use("/", updateprofileee)
+app.use("/", awardedemployee)
 app.use((req, res, next) => {
     // res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Origin", "http://192.168.26.107:3000"); 
+    res.header("Access-Control-Allow-Origin", "http://192.168.1.7:3000"); 
     
     res.header("Access-Control-Allow-Credentials", true);
     res.header(
