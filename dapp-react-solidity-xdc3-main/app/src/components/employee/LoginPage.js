@@ -16,7 +16,7 @@ import { FaHome } from "react-icons/fa";
 import "./task.css";
 import {AiOutlineEye ,AiOutlineEyeInvisible} from "react-icons/ai"
 
-const API_URL = "http://192.168.26.107:8800";
+const API_URL = "http://65.2.3.121:8800";
 
 export default function SignInPage() {
   const [name, setname] = useState("");

@@ -32,7 +32,7 @@ const Award = (props) => {
   const tokenn = jwt_decode(cookies.access_token);
   const history = useHistory();
 
-  const API_URL = "http://192.168.26.107:8800";
+  const API_URL = "http://localhost:8800";
 
   const employeeName = props.match.params.Name;
   const employeeAddress = props.match.params.Wallet.replace("xdc","0x");
@@ -210,29 +210,28 @@ const responsee = await axios.get(`${API_URL}/downloadCertificate?employeeName=$
     setRewards(e.target.value);
   };
 
-//   const handleAddModel = async (event) => {
-//   event.preventDefault();
+  const handleAddModel = async (event) => {
+    event.preventDefault();
+    
+    try {
+      const date = new Date().toLocaleDateString("en-GB");; // Get the deadline in the dd/mm/yy format
   
-//   try {
-//     const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
-//     const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
-
-//     const response = await axios.post(
-//       `${API_URL}/assigntask/${employeeName}/${compName}/${employeeAddress}`,
-//       { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
-//       { withCredentials: true }
-//     );
-
-//     console.log(response.data);
-//     console.log(employeeName);
-//     console.log(compName);
-
-//     history.push("/real");
-//   } catch (error) {
-//     console.log("wrongyyyy");
-//     console.error(error);
-//   }
-// };
+      const response = await axios.post(
+        `${API_URL}/awardemp/${employeeName}/${compName}/${empAddress}`,
+        { awardname: awardName , tokens, awarddate:date},
+        { withCredentials: true }
+      );
+  
+      console.log(response.data);
+      console.log(employeeName);
+      console.log(compName);
+  
+      history.push("/real");
+    } catch (error) {
+      console.log("wrongyyyy");
+      console.error(error);
+    }
+  };
 const [award, setAward] = useState([]);
 const [awardName, setAwardName] = useState("");
 const [tokens, setTokens] = useState("");

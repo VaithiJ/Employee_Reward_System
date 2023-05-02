@@ -117,7 +117,7 @@ mongoose.connection.on("disconnected", ()=>{
 mongoose.connection.on("connected", ()=>{
     console.log("Mongodb connected")
 })
-app.use(cors({ origin: "http://192.168.1.7:3000", credentials: true }));
+app.use(cors({ origin: "http://65.2.3.121:3000", credentials: true }));
 app.use(cookieParser());
 app.use(express.json())
 app.use("/", userRoute)
@@ -149,7 +149,7 @@ app.use("/", allAward)
 
 app.use((req, res, next) => {
     // res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Origin", "http://192.168.1.7:3000"); 
+    res.header("Access-Control-Allow-Origin", "http://65.2.3.121:3000"); 
     
     res.header("Access-Control-Allow-Credentials", true);
     res.header(

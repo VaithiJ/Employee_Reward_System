@@ -148,7 +148,7 @@ const EmployeeDashboard = (props) => {
 console.log("rowwwww",Alltasks)
   const toke = jwt_decode(cookies.employee_token);
   // console.log(toke)
-  const API_URL = "http://192.168.26.107:8800";
+  const API_URL = "http://65.2.3.121:8800";
   useEffect(() => {
     axios
       .get(`${API_URL}/viewtask`, { withCredentials: true })
