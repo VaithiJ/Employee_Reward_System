@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import styles from "./dash.module.css";
-import swal from "sweetalert";
 // import { FaBars,FaUserPlus, FaTasks, FaGift } from "react-icons/fa";
 import SidebarMenu from "./side.js";
 import "./real.css"
