@@ -35,6 +35,8 @@ const {
 
 const RewardTasks = (props) => {
   const [tasks, setTasks] = useState([]);
+  const API_URL = "http://localhost:8800";
+
   const [rewardedemp, setrewardedemp] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
@@ -247,7 +249,6 @@ console.log(taskId,"taskid")
 
   const tokenn = jwt_decode(cookies.access_token);
 
-  const API_URL = "http://192.168.26.107:8800";
   // const empName = props.match.params.empName;
   // const taskk = props.match.params.task;
   // console.log(empName);

@@ -29,6 +29,8 @@ const ProfilePage = (props) => {
   "name",]);
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [award, setaward] = useState([]);
+
   const [boxVisible, setBoxVisible] = useState(false);
   const API_URL = "http://192.168.26.107:8800";
   const [submitting, setSubmitting] = useState(false);
@@ -45,105 +47,22 @@ const ProfilePage = (props) => {
     let taskId = (token._id).slice(-5);
     console.log(taskId);
     setSubmitting(true);
+    
+    // Call the API to get the hash
     let response = await queryData(erc, provider, 'getFileHash', [taskId]);
     log("Returned hash", "hash", response);
     setHash(response);
-    setSubmitting(false);
-    const params = {
-      Bucket: "blockedge-project",
-      Prefix: `EmployeeRewards/TaskCertificates/${toke.name}`
+  
+    // Call the listFiles API to download the file
+    const url = `http://localhost:8800/listFiles?employeeName=${toke.name}&hash=${response}`;
+    const newWindow = window.open(url, '_blank');
+    
+    // Wait for the new window to load before setting submitting to false
+    newWindow.onload = () => {
+      setSubmitting(false);
     };
-  
-    return new Promise((resolve, reject) => {
-      // Use the listObjectsV2() method to get the list of files in the employeeName folder
-      s3.listObjectsV2(params, (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          // Loop through the items in the response and find the file with matching hash
-          const promises = data.Contents.map(item => {
-            // Use the getObject() method to get the file from S3
-            const getFilePromise = s3.getObject({
-              Bucket: "blockedge-project",
-              Key: item.Key
-            }).promise();
-  
-            // Calculate the hash of the file and compare it with the blockchain hash
-            const hashPromise = getFilePromise.then(fileData => {
-              const fileHash = crypto.createHash('sha256').update(fileData.Body).digest('hex');
-              if (fileHash === hashh) {
-                // Use the getSignedUrl() method to generate the download URL
-                const url = s3.getSignedUrl('getObject', {
-                  Bucket: "blockedge-project",
-                  Key: item.Key,
-                  Expires: 60 * 60 // URL expiration time in seconds
-                });
-                return url;
-              } else {
-                return null;
-              }
-            });
-  
-            return hashPromise;
-          });
-  
-          // Wait for all promises to resolve and filter out null values
-          Promise.all(promises).then(urls => {
-            const validUrls = urls.filter(url => url !== null);
-            if (validUrls.length === 1) {
-              // Get the file from S3 using the URL
-              const getFilePromise = axios.get(validUrls[0], { responseType: 'arraybuffer' });
-              getFilePromise.then(fileData => {
-                // Calculate the hash of the file and compare it to the given hashh value
-                const fileHash = crypto.createHash('sha256').update(Buffer.from(fileData.data)).digest('hex');
-                if (fileHash === hashh) {
-                  // Hashes match, resolve with the download URL
-                  resolve(validUrls[0]);
-                } else {
-                  reject(new Error('Hashes do not match'));
-                }
-              }).catch(err => {
-                reject(err);
-              });
-            } else {
-              reject(new Error('No matching file found'));
-            }
-          });
-        }
-      });
-    });
   };
-  
-  
-  // const viewCertificate = async (token) => {
-  //   let taskId = (token._id).slice(-5);
-  //   console.log(taskId);
-  //   setSubmitting(true);
-  //   let response = await queryData(erc, provider, 'getFileHash', [taskId]);
-  //   log("Returned hash", "hash", response);
-  //   setHash(response);
-  //   setSubmitting(false);
-    // const fileListRef = ref(storage, 'certificates');
-    // listAll(fileListRef)
-    //   .then((res) => {
-    //     res.items.forEach((itemRef) => {
-    //       if (itemRef.name.slice(-64) === response) {
-    //         console.log(itemRef.fullPath);
-    //         getDownloadURL(itemRef)
-    //           .then((url) => {
-    //             console.log(url);
-    //             window.open(url, '_blank');
-    //           })
-    //           .catch((error) => {
-    //             console.log(error);
-    //           });
-    //       }
-    //     });
-    //   })
-      // .catch((error) => {
-      //   console.log(error);
-      // });
-  // };
+
    const [showButton, setShowButton] = useState(false);
  const [delay, setDelay] = useState(200);
  const [avatarUrl, setAvatarUrl] = useState("");
@@ -185,28 +104,28 @@ const ProfilePage = (props) => {
   });
 };
 
-useEffect(() => {
-  const fetchProfile = async () => {
-    try {
-      const response = await axios.put(`${API_URL}/updateprofile/${toke.name}`);
-      const red = response.data.updatedprofile;
-      setred(red);
+// useEffect(() => {
+//   const fetchProfile = async () => {
+//     try {
+//       const response = await axios.put(`${API_URL}/updateprofile/${toke.name}`);
+//       const red = response.data.updatedprofile;
+//       setred(red);
 
-      const storageRef = ref(storage, `UserProfile/${toke.name}`);
-      const listResult = await listAll(storageRef);
+//       const storageRef = ref(storage, `UserProfile/${toke.name}`);
+//       const listResult = await listAll(storageRef);
 
-      const itemRef = listResult.items.find((ref) => ref.name === red.profile);
-      if (itemRef) {
-        const url = await getDownloadURL(itemRef);
-        setAvatarUrl(url);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+//       const itemRef = listResult.items.find((ref) => ref.name === red.profile);
+//       if (itemRef) {
+//         const url = await getDownloadURL(itemRef);
+//         setAvatarUrl(url);
+//       }
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
 
-  fetchProfile();
-}, []);
+//   fetchProfile();
+// }, []);
 
  
  const handleMouseEnter = () => {
@@ -241,16 +160,34 @@ const handleButtonClick = () => {
   input.click();
 };
 
-  
+const toke = jwt_decode(cookies.employee_token);
+console.log(toke)
+useEffect(() => {
+axios
+    .get(`${API_URL}/getawards`, { withCredentials: true })
+    .then((response) => {
+      setaward(
+        response.data.reee.filter((reee) => reee.emp === (toke.name)  )
+        
+      );
+      console.log(response.data.reee);
+    })
+    // const red= response.data.tasks.filter((tasks) => tasks.empName == toke.name)
+    // console.log(rd)
+    .catch((error) => {
+      console.log(error);
+    });
+    
+}, []);
 
-  const toke = jwt_decode(cookies.employee_token);
+  const tokee = jwt_decode(cookies.employee_token);
   console.log(toke)
   useEffect(() => {
   axios
       .get(`${API_URL}/viewtask`, { withCredentials: true })
       .then((response) => {
         setTasks(
-          response.data.tasks.filter((tasks) => tasks.empName === (toke.name) && tasks.status === "Rewarded" )
+          response.data.tasks.filter((tasks) => tasks.empName === (tokee.name) && tasks.status === "Rewarded" )
           
         );
         console.log(response.data.tasks);

@@ -49,7 +49,7 @@ const ProfilePage = (props) => {
   // const [comName, setComName] = useState(" ");
   // const [comId, setComId] = useState(" ");
   const [employee, setEmployee] = useState([]);
-  const API_URL = "http://192.168.26.107:8800";
+  const API_URL = "http://65.2.3.121:8800";
   const employeeId = props.match.params._id;
   const employeeName = employee.name;
   const employeeAddress = employee.address;

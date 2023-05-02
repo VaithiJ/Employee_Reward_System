@@ -36,6 +36,7 @@ import awardedemployee from "./routes/company/awardedemp.js"
 import AWS from "aws-sdk";
 import multer from "multer";
 import multerS3 from "multer-s3";
+import allAward from "./routes/company/getaward.js";
 
 const app = express()
 dotenv.config();
@@ -144,6 +145,8 @@ app.use("/", Certify)
 app.use("/", award)
 app.use("/", updateprofileee)
 app.use("/", awardedemployee)
+app.use("/", allAward)
+
 app.use((req, res, next) => {
     // res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Origin", "http://192.168.1.7:3000"); 
@@ -222,8 +225,107 @@ app.post('/uploadingCertificate', upload.single('certificates'), async function 
   
     res.send({uploadStatus:"success", FileHash:hash});
   });
+  app.get('/downloadCertificate', (req, res) => {
+    const employeeName = req.query.employeeName;
+    const hash = req.query.hash;
+  
+    const params = {
+      Bucket: process.env.BUCKET_NAME,
+      Prefix: `EmployeeRewards/TaskCertificates/${employeeName}/`
+    };
+  
+    s3.listObjectsV2(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error reading bucket');
+        return;
+      }
+  
+      const matchingFile = data.Contents.find((obj) => {
+        const fileStream = s3.getObject({ Bucket: process.env.BUCKET_NAME, Key: obj.Key }).createReadStream();
+        const fileHash = crypto.createHash('sha256');
+        if (obj.Body) {
+          fileStream.on('data', (chunk) => fileHash.update(chunk));
+          return fileHash.digest('hex') === hash;
+        }
+      });
+      
+  
+      if (matchingFile) {
+        const fileStream = s3.getObject({ Bucket: process.env.BUCKET_NAME, Key: matchingFile.Key }).createReadStream();
+        res.attachment(matchingFile.Key);
+        fileStream.pipe(res);
+      } else {
+        res.status(404).send('File not found');
+      }
+    });
+  });
 
-  app.post('/uploadCertificate', uploadd.single('PerformanceCertificates'), async function (req, res) {
+
+
+  app.get('/listFiles', (req, res) => {
+    const employeeName = req.query.employeeName;
+    const hash = req.query.hash;
+    const params = {
+      Bucket: process.env.BUCKET_NAME,
+      Prefix: `EmployeeRewards/TaskCertificates/${employeeName}`
+    };
+  
+    s3.listObjectsV2(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error reading bucket');
+        return;
+      }
+  
+      const matchingFiles = data.Contents.filter((obj) => {
+        return !obj.Key.endsWith('/');
+      });
+  
+      if (matchingFiles.length > 0) {
+        let matchingFile = null;
+        let promises = [];
+  
+        for (let i = 0; i < matchingFiles.length; i++) {
+          const getObjectParams = {
+            Bucket: process.env.BUCKET_NAME,
+            Key: matchingFiles[i].Key
+          };
+  
+          let promise = s3.getObject(getObjectParams).promise().then((data) => {
+            const fileContentHash = crypto.createHash('sha256').update(data.Body).digest('hex');
+            if (fileContentHash === hash) {
+              matchingFile = matchingFiles[i];
+              res.setHeader('Content-disposition', `attachment; filename=${matchingFile.Key}`);
+              res.setHeader('Content-type', 'application/pdf');
+              res.send(data.Body);
+            }
+          }).catch((err) => {
+            console.log(err);
+          });
+  
+          promises.push(promise);
+        }
+  
+        Promise.all(promises).then(() => {
+          if (!matchingFile) {
+            res.status(404).send('Your file has been changed!!!');
+          }
+        });
+      } else {
+        res.status(404).send('No matching files found');
+      }
+    });
+  });
+  
+  
+  
+  
+  
+  
+  
+
+ app.post('/uploadCertificate', uploadd.single('PerformanceCertificates'), async function (req, res) {
     const file = req.file;
     console.log('Uploaded file:', file);
   

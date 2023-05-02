@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import styles from "./dash.module.css";
-import swal from "sweetalert";
 // import { FaBars,FaUserPlus, FaTasks, FaGift } from "react-icons/fa";
 import SidebarMenu from "./side.js";
 import "./real.css"
@@ -37,7 +36,7 @@ function AdminDashBoard() {
   };
 
   const tokenn = jwt_decode(cookies.access_token);
-  const API_URL = "http://192.168.26.107:8800";
+  const API_URL = "http://65.2.3.121:8800";
 
   useEffect(() => {
     axios

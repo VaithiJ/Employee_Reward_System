@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import bg from "./ss.svg"
 import "./real.css"
 import awarddd from "./ad3.png"
+import "./reg.css"
 
 
 const {
@@ -31,7 +32,7 @@ const Award = (props) => {
   const tokenn = jwt_decode(cookies.access_token);
   const history = useHistory();
 
-  const API_URL = "http://localhost:8800";
+  const API_URL = "http://192.168.26.107:8800";
 
   const employeeName = props.match.params.Name;
   const employeeAddress = props.match.params.Wallet.replace("xdc","0x");
@@ -43,6 +44,7 @@ const Award = (props) => {
   const [deadline, setDeadline] = useState(0);
   const [rewards, setRewards] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const [hash, setHash] = useState("");
 
   // const [comName, setComName] = useState(" ");
   // const [empId, setEmpId] = useState(" ");
@@ -99,6 +101,28 @@ console.log(rewardAmount)
 // console.log("asbdasbassdssmnadmasbdnabsmdasdsadsadsa", filehash)
 // console.log(filehash,"filehash")
 // console.log(taskId,"taskid")
+
+  // event.preventDefault();
+  
+  try {
+    const date = new Date().toLocaleDateString("en-GB");; // Get the deadline in the dd/mm/yy format
+
+    const response = await axios.post(
+      `${API_URL}/awardemp/${employeeName}/${compName}/${employeeAddress}`,
+      { awardname: awardName , tokens, awarddate:date},
+      { withCredentials: true }
+    );
+
+    console.log(response.data);
+    console.log(employeeName);
+    console.log(compName);
+
+    // history.push("/real");
+  } catch (error) {
+    console.log("wrongyyyy");
+    console.error(error);
+  }
+
 let resp = await executeTransaction(erc, provider, "registerFileAndSendReward", [
   filehash,
   employeeName,
@@ -106,6 +130,21 @@ let resp = await executeTransaction(erc, provider, "registerFileAndSendReward", 
   employeeAddress
 ]);
 log("Registered", "hash", resp.txHash);
+setHash(resp.txHash)
+
+// const responsse = await axios.get(`${API_URL}/downloadCertificate`, formData, {
+//   headers: {
+//     'Content-Type': 'multipart/form-data',
+//     "req":"Access-Control-Allow-Origin"
+//   }, withCredentials:true
+// });
+const responsee = await axios.get(`${API_URL}/downloadCertificate?employeeName=${employeeName}&hash=${hash}`, {
+  withCredentials: true,
+  responseType: 'blob', // set the response type to blob to download the file
+});
+
+
+
    } catch (error) {
     console.error('Error uploading file!', error);
     setSubmitting(false);
@@ -171,28 +210,29 @@ log("Registered", "hash", resp.txHash);
     setRewards(e.target.value);
   };
 
-  const handleAddModel = async (event) => {
-    event.preventDefault();
-    
-    try {
-      const date = new Date().toLocaleDateString("en-GB");; // Get the deadline in the dd/mm/yy format
+//   const handleAddModel = async (event) => {
+//   event.preventDefault();
   
-      const response = await axios.post(
-        `${API_URL}/awardemp/${employeeName}/${compName}/${empAddress}`,
-        { awardname: awardName , tokens, awarddate:date},
-        { withCredentials: true }
-      );
-  
-      console.log(response.data);
-      console.log(employeeName);
-      console.log(compName);
-  
-      history.push("/real");
-    } catch (error) {
-      console.log("wrongyyyy");
-      console.error(error);
-    }
-  };
+//   try {
+//     const deadlineDate = new Date(deadline); // Convert the deadline value to a Date object
+//     const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
+
+//     const response = await axios.post(
+//       `${API_URL}/assigntask/${employeeName}/${compName}/${employeeAddress}`,
+//       { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
+//       { withCredentials: true }
+//     );
+
+//     console.log(response.data);
+//     console.log(employeeName);
+//     console.log(compName);
+
+//     history.push("/real");
+//   } catch (error) {
+//     console.log("wrongyyyy");
+//     console.error(error);
+//   }
+// };
 const [award, setAward] = useState([]);
 const [awardName, setAwardName] = useState("");
 const [tokens, setTokens] = useState("");
@@ -225,8 +265,8 @@ const handleSelectChange = (event) => {
   }
 };
   return (
-    <div className="modal-container"  style={{backgroundColor:"#161928"}} >
-      <header style={{ backgroundColor: '#161928', padding: '1.5rem 0',height:"100px" }}>
+    <div className="modal-container"  style={{backgroundColor:"#F9F8F8"}} >
+      <header style={{ backgroundColor: '#F9F8F8', padding: '1.5rem 0',height:"100px" }}>
       <div style={{position:"relative",bottom:"20px",left:"20px", marginLeft:"-1200px"}}>
       <SidebarMenu /> </div>
   <h2
@@ -240,14 +280,14 @@ const handleSelectChange = (event) => {
       textTransform: 'uppercase',
       position:"relative",
       bottom:"60px",
-      color:"white"
+      color:"black"
 
     }}>
     {employeeName}
   </h2>
 </header>
 <div style={{display:"flex", flexDirection:"row"}}>
-<img style={{ marginLeft: "-50px" , height:"600px"}} src={awarddd} />
+<img className="awardd" style={{ marginLeft: "-50px" , height:"600px"}} src={awarddd} />
 {/* <div
     className="Add-list"
     style={{
@@ -265,8 +305,8 @@ const handleSelectChange = (event) => {
   >          */}
 
         
-        <form className="modal-form" style={{boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
-backgroundColor:"transparent",width:"600px",marginLeft:"-00px", borderRadius:"40px", fontFamily:"Secular One",height:"600px"}} >
+        <form className="modal-form" style={{
+backgroundColor:"#F9F8F8",width:"600px",marginRight:"100px", borderRadius:"10px", fontFamily:"Secular One",height:"600px"}} >
           <label className="modlabel" htmlFor="text" style={{marginTop:"-200px"}} >
             Select Awards
           </label>
@@ -281,12 +321,12 @@ backgroundColor:"transparent",width:"600px",marginLeft:"-00px", borderRadius:"40
               fontWeight:"bolder"
             }}>
               
-  <option value="" style={{textDecoration:"line-through", color:"grey"}}>Select Award</option>
+  <option value="" style={{textDecoration:"line-through", color:"black"}}>Select Award</option>
   {award.map((awardObj) => (
     <option key={awardObj._id} value={awardObj.AwardName}>{awardObj.AwardName}</option>
   ))}
 </select>
-<p>Total token rewards : {tokens} </p>
+<p style={{fontFamily:"Secular One"}}>Total token rewards : {tokens} </p>
 
           </>
           {/* <label className="modlabel" htmlFor="text">
@@ -402,7 +442,6 @@ backgroundColor:"transparent",width:"600px",marginLeft:"-00px", borderRadius:"40
             name="singlebutton"
             className="btM"
             onClick={uploadFile}
-            onclick ={handleAddModel}
             style={{fontFamily:"Secular One",position:"relative",top:"40px"}}
           >
             Award Employee
@@ -417,7 +456,13 @@ backgroundColor:"transparent",width:"600px",marginLeft:"-00px", borderRadius:"40
       </div>
       <br /> */}
     {/* </div> */}
-    <div style={{marginTop:"00px", marginLeft:"-700px", fontFamily:"Secular One", fontSize:"30px"}}>Award your employees!  Select your award and reward them !!!!</div>
+    <div style={{ marginTop: "0px", marginLeft: "-800px",marginTop:"-120px", fontFamily: "Secular One", fontSize: "30px" }}>
+  <ul >
+    <li style={{fontFamily:"Secular One"}}>Select an award for your employee</li>
+    <li style={{fontFamily:"Secular One"}}>Reward them with the chosen award</li>
+    <li style={{fontFamily:"Secular One"}}>Watch your employees feel appreciated <br/> and  motivated!</li>
+  </ul>
+</div>
 
     </div>
   
