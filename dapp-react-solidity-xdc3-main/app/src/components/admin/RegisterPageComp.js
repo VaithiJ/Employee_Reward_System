@@ -19,7 +19,7 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function RegisterComp() {
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
   const [comName, setUsercomName] = useState("");
   const [password, setPassword] = useState("");
   const [comEmail, setcomEmail] = useState("");

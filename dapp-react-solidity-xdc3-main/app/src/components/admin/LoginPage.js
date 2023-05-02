@@ -18,7 +18,7 @@ import "./reg.css";
 
 import Loginheader12 from "../header/comploginheader";
 
-const API_URL = "http://65.2.3.121:8800";
+const API_URL = "http://localhost:8800";
 
 export default function SignInPage() {
   const [comName, setname] = useState("");

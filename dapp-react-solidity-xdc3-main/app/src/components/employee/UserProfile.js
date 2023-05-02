@@ -30,9 +30,10 @@ const ProfilePage = (props) => {
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [award, setaward] = useState([]);
+  const [awardHistoryVisible, setAwardHistoryVisible] = useState(false);
 
-  const [boxVisible, setBoxVisible] = useState(false);
-  const API_URL = "http://65.2.3.121:8800";
+  const [tokenHistoryVisible, setTokenHistoryVisible] = useState(false);
+  const API_URL = "http://localhost:8800";
   const [submitting, setSubmitting] = useState(false);
   const [hashh, setHash] = useState("");
 
@@ -63,6 +64,25 @@ const ProfilePage = (props) => {
     };
   };
 
+  const getAwardCertificate = async (token, hashh) => {
+    let taskId = (token._id).slice(-5);
+    console.log(taskId);
+    setSubmitting(true);
+    
+    // Call the API to get the hash
+    let responseee = await queryData(erc, provider, 'getAwardHash', [toke.name]);
+    log("Returned hash", "hash", responseee);
+    setHash(responseee);
+  
+    // Call the listFiles API to download the file
+    const url = `http://localhost:8800/listAwards?employeeName=${toke.name}&hash=${responseee}`;
+    const newWindow = window.open(url, '_blank');
+    
+    // Wait for the new window to load before setting submitting to false
+    newWindow.onload = () => {
+      setSubmitting(false);
+    };
+  };
    const [showButton, setShowButton] = useState(false);
  const [delay, setDelay] = useState(200);
  const [avatarUrl, setAvatarUrl] = useState("");
@@ -72,9 +92,15 @@ const ProfilePage = (props) => {
   const handleLogout = () => {
     removeCookie("employee_token");
   };
-  const handleBoxClick = () => {
-    setBoxVisible(!boxVisible);
+  const handleTokenHistoryClick = () => {
+    setTokenHistoryVisible(!tokenHistoryVisible);
+    setAwardHistoryVisible(false);
   };
+
+  const handleAwardHistoryClick = () => {
+    setAwardHistoryVisible(!awardHistoryVisible);
+    setTokenHistoryVisible(false);
+  };;
  const setemployees=(data)=>{
   setEmployees(data)
   console.log('function',employees)
@@ -347,7 +373,7 @@ axios
         </div>
         <div>
           <div
-            onClick={handleBoxClick}
+            onClick={handleTokenHistoryClick}
             style={{
               position: "absolute",
               bottom: "10px",
@@ -372,7 +398,7 @@ axios
         </div>
         
       </div>
-      {boxVisible && (
+      {tokenHistoryVisible && (
         <div
           className="Acheivements"
           style={{
@@ -445,7 +471,106 @@ axios
           </Table>
         </div>
       )}
+      <div
+            onClick={handleAwardHistoryClick}
+            style={{
+              position: "absolute",
+              bottom: "10px",
+              right: "-10px",
+              height: "20%",
+              width: "20%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+              ":hover": {
+                transform: "scale(1.2)",
+                background: "#FFFFFF",
+                fontFamily: "Secular One" 
+              },
+            }}
+          >
+            <b style={{ fontFamily: "Secular One",position:"relative",bottom:"325px",right:"250px" }}>Award History{" "} </b>
+            <IoIosArrowDropdownCircle style={{ fontSize: "30px",position:"relative",bottom:"304px",right:"320px" }} />
+          </div>
+        
       
+        {awardHistoryVisible && (
+        <div
+          className="Acheivements"
+          style={{
+            marginLeft: "238px",
+            position: "relative",
+            top: "55px",
+            borderRadius: "20px" 
+          }}
+        >
+          <div style={{ textAlign: "center", height: "40px" }}>
+            <h6>
+              <p
+                style={{
+                  fontSize: "1.4rem",
+                  textAlign: "center",
+                  position: "relative",
+                  top: "10px",
+                  left: "15px",
+                }}
+              >
+                {" "}
+                <b style={{ color: "#537FE7", padding: "40px",fontFamily: "Secular One"}}>
+                  Award History
+                </b>{" "}
+              </p>
+            </h6>
+          </div>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>
+                  Company Name
+                </th>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>
+                  Award Name
+                </th>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>Award Date</th>
+                {/* <th style={{ color: "#537FE7", textAlign: "center" }}>
+                  Deadline
+                </th> */}
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>
+                  Tokens Earned
+                </th>
+                <th style={{ color: "#537FE7", textAlign: "center" ,fontFamily: "Secular One" }}>
+                  Certificates
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+            {award.map((token, index) => (
+                <tr key={index}>
+                  <td style={{ fontFamily: "Secular One" }}>{token.compname}</td>
+                  <td style={{ fontFamily: "Secular One" }}>{token.awardname}</td>
+                  <td align="center" style={{ fontFamily: "Secular One" }}>{token.awarddate}</td>
+                  {/* <td align="center">{token.rating}</td> */}
+                  <td align="center" style={{ fontFamily: "Secular One" }}>{token.tokens}</td>
+                  <td align="center" ><button style={{ 
+                marginRight: '10px', 
+                padding: '8px 16px', 
+                background: 'blue', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '4px', 
+                cursor: 'pointer',
+                fontFamily: "Secular One" 
+              }}              onClick={() => getAwardCertificate(token)}
+              > View</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+        
+      )}
       <div
         className="card1"
         style={{

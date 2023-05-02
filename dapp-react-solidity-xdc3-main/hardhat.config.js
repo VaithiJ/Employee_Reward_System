@@ -22,7 +22,7 @@ module.exports = {
   },
   networks: {
     local: {
-      url: 'http://65.2.3.121:8545'
+      url: 'http://localhost:8545'
     },
     apothem: {
       url: 'https://erpc.apothem.network',

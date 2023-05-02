@@ -134,6 +134,9 @@ function isEmployeeRegistered(address employeeaddress) public view returns (bool
 function getFileHash(string memory taskId) public view returns (string memory) {
     return taskFileMapping[taskId];
 }
+function getAwardHash(string memory employeeName) public view returns (string memory) {
+    return employeeFileMapping[employeeName];
+}
 
 function registerFileAndSendReward(string memory fileHash, string memory employeeName, uint256 rewardAmount, address employeeAddress) public onlyAdmin {
     // Register the file hash for the employee

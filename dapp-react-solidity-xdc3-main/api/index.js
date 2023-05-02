@@ -96,7 +96,8 @@ const uploadd = multer({
         s3: s3,
         bucket: process.env.BUCKET_NAME,
         key: function (req, file, cb) {
-            cb(null, 'EmployeeRewards/PerformanceCertificates/' + file.originalname); // use EmployeeRewards folder + original filename as the key in S3
+          const employeeName = req.body.employeeName;
+            cb(null, `EmployeeRewards/PerformanceCertificates/${employeeName}/` + file.originalname); // use EmployeeRewards folder + original filename as the key in S3
         }
     })
 });
@@ -117,7 +118,7 @@ mongoose.connection.on("disconnected", ()=>{
 mongoose.connection.on("connected", ()=>{
     console.log("Mongodb connected")
 })
-app.use(cors({ origin: "http://65.2.3.121:3000", credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(cookieParser());
 app.use(express.json())
 app.use("/", userRoute)
@@ -149,7 +150,7 @@ app.use("/", allAward)
 
 app.use((req, res, next) => {
     // res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Origin", "http://65.2.3.121:3000"); 
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
     
     res.header("Access-Control-Allow-Credentials", true);
     res.header(
@@ -319,7 +320,60 @@ app.post('/uploadingCertificate', upload.single('certificates'), async function 
   });
   
   
+  app.get('/listAwards', (req, res) => {
+    const employeeName = req.query.employeeName;
+    const hash = req.query.hash;
+    const params = {
+      Bucket: process.env.BUCKET_NAME,
+      Prefix: `EmployeeRewards/PerformanceCertificates/${employeeName}`
+    };
   
+    s3.listObjectsV2(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send('Error reading bucket');
+        return;
+      }
+  
+      const matchingFiles = data.Contents.filter((obj) => {
+        return !obj.Key.endsWith('/');
+      });
+  
+      if (matchingFiles.length > 0) {
+        let matchingFile = null;
+        let promises = [];
+  
+        for (let i = 0; i < matchingFiles.length; i++) {
+          const getObjectParams = {
+            Bucket: process.env.BUCKET_NAME,
+            Key: matchingFiles[i].Key
+          };
+  
+          let promise = s3.getObject(getObjectParams).promise().then((data) => {
+            const fileContentHash = crypto.createHash('sha256').update(data.Body).digest('hex');
+            if (fileContentHash === hash) {
+              matchingFile = matchingFiles[i];
+              res.setHeader('Content-disposition', `attachment; filename=${matchingFile.Key}`);
+              res.setHeader('Content-type', 'application/pdf');
+              res.send(data.Body);
+            }
+          }).catch((err) => {
+            console.log(err);
+          });
+  
+          promises.push(promise);
+        }
+  
+        Promise.all(promises).then(() => {
+          if (!matchingFile) {
+            res.status(404).send('Your file has been changed!!!');
+          }
+        });
+      } else {
+        res.status(404).send('No matching files found');
+      }
+    });
+  });
   
   
   

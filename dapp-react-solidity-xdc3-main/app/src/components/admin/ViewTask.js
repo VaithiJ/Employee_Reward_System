@@ -17,7 +17,7 @@ const CreateModal = (props) => {
   ]);
   const tokenn = jwt_decode(cookies.access_token);
 
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
   const empName = props.match.params.empName;
   const taskk = props.match.params.id;
   console.log(empName);

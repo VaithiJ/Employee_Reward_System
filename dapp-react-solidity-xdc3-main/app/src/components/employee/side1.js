@@ -25,7 +25,7 @@
 //   const [avatarUrl, setAvatarUrl] = useState("");
 //   const [red, setred] = useState([]);
 //   const toke = jwt_decode(cookies.employee_token);
-//   const API_URL = "http://65.2.3.121:8800";
+//   const API_URL = "http://localhost:8800";
 //   const toggleSidebar = () => {
 //     setIsOpen(!isOpen);
 //   };
@@ -201,7 +201,7 @@ const SidebarMenu12 = () => {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [red, setred] = useState([]);
   const toke = jwt_decode(cookies.employee_token);
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };

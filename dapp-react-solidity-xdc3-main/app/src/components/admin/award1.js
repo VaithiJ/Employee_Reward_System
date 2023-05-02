@@ -80,6 +80,8 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
     setSubmitting(true);
 console.log("FIles",fileUpload)
     const formData =  new FormData();
+    formData.append('employeeName', employeeName); 
+
      formData.append('PerformanceCertificates', fileUpload);
 console.log("Formdata", formData.entries())
     const response = await axios.post(`${API_URL}/uploadCertificate`, formData, {
@@ -217,7 +219,7 @@ const responsee = await axios.get(`${API_URL}/downloadCertificate?employeeName=$
       const date = new Date().toLocaleDateString("en-GB");; // Get the deadline in the dd/mm/yy format
   
       const response = await axios.post(
-        `${API_URL}/awardemp/${employeeName}/${compName}/${empAddress}`,
+        `${API_URL}/awardemp/${employeeName}/${compName}/${employeeAddress}`,
         { awardname: awardName , tokens, awarddate:date},
         { withCredentials: true }
       );

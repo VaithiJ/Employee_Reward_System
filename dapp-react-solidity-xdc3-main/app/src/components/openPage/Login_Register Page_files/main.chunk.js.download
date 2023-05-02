@@ -781,7 +781,7 @@ var _jsxFileName = "D:\\ers\\Employee-rewards-system\\Employee-redemption-and-re
 
 
 const AddEmployee = props => {
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
 
   const _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
         _useState2 = Object(D_ers_Employee_rewards_system_Employee_redemption_and_rewards_system_node_modules_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
@@ -1218,7 +1218,7 @@ function AdminDashBoard() {
   };
 
   const tokenn = Object(jwt_decode__WEBPACK_IMPORTED_MODULE_5__["default"])(cookies.access_token);
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
 
   const handleLogout = () => {
     removeCookie("access_token");
@@ -2322,7 +2322,7 @@ const ProfilePage = props => {
         employee = _useState4[0],
         setEmployee = _useState4[1];
 
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
   const employeeId = props.match.params._id;
   const employeeName = employee.name;
   const employeeAddress = employee.address;
@@ -3031,7 +3031,7 @@ var _jsxFileName = "D:\\ers\\Employee-rewards-system\\Employee-redemption-and-re
 
 
 
-const API_URL = "http://65.2.3.121:8800";
+const API_URL = "http://localhost:8800";
 function SignInPage() {
   const _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
         _useState2 = Object(D_ers_Employee_rewards_system_Employee_redemption_and_rewards_system_node_modules_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
@@ -3369,7 +3369,7 @@ function AdminDashBoard() {
   };
 
   const tokenn = Object(jwt_decode__WEBPACK_IMPORTED_MODULE_5__["default"])(cookies.access_token);
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
 
   const handleLogout = () => {
     removeCookie("access_token");
@@ -4169,7 +4169,7 @@ var _jsxFileName = "D:\\ers\\Employee-rewards-system\\Employee-redemption-and-re
 
 
 function RegisterComp() {
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
 
   const _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
         _useState2 = Object(D_ers_Employee_rewards_system_Employee_redemption_and_rewards_system_node_modules_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
@@ -5819,7 +5819,7 @@ var _jsxFileName = "D:\\ers\\Employee-rewards-system\\Employee-redemption-and-re
 
 
 
-const API_URL = "http://65.2.3.121:8800";
+const API_URL = "http://localhost:8800";
 function SignInPage() {
   const _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
         _useState2 = Object(D_ers_Employee_rewards_system_Employee_redemption_and_rewards_system_node_modules_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
@@ -6154,7 +6154,7 @@ var _jsxFileName = "D:\\ers\\Employee-rewards-system\\Employee-redemption-and-re
 
 
 function Register() {
-  const API_URL = "http://65.2.3.121:8800";
+  const API_URL = "http://localhost:8800";
 
   const _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
         _useState2 = Object(D_ers_Employee_rewards_system_Employee_redemption_and_rewards_system_node_modules_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
