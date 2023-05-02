@@ -36,7 +36,7 @@ function AdminDashBoard() {
   };
 
   const tokenn = jwt_decode(cookies.access_token);
-  const API_URL = "http://192.168.26.107:8800";
+  const API_URL = "http://65.2.3.121:8800";
 
   useEffect(() => {
     axios

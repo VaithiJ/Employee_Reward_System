@@ -21,7 +21,7 @@ const PlatformAdmin = () => {
   //     setData((prevData) => prevData.filter((_, i) => i !== index));
   //   };
 
-  const API_URL = "http://192.168.26.107:8800";
+  const API_URL = "http://65.2.3.121:8800";
   const [tokenMap, setTokenMap] = useState({});
   
   const [companies, setCompanies] = useState([]);

@@ -1,5 +1,5 @@
 {
-  "name": "dapp-react-solidity-xdc3",
+  "name": "employee-rewards-system",
   "version": "1.0.0",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -72,7 +72,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts  build",
+    "build": "react-scripts --max-old-space-size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
