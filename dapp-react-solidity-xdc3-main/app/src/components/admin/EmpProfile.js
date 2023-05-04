@@ -108,17 +108,6 @@ const ProfilePage = (props) => {
   const regEmployee = async () => {
     sameAdd()
     if(same == true){
-    try {
-      const response = await axios.post(
-        `${API_URL}/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
-        {
-          comName,
-          comId,
-        },
-        { withCredentials: true }
-      );
-      setSubmitting(true);
-  
       const respo = await axios.get(`${API_URL}/onboard/${employeeId}`, {
         withCredentials: true,
       });
@@ -133,6 +122,18 @@ const ProfilePage = (props) => {
       ]);
       log("Registered Employee", "hash", resp.txHash);
       setSubmitting(false);
+    try {
+      const response = await axios.post(
+        `${API_URL}/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
+        {
+          comName,
+          comId,
+        },
+        { withCredentials: true }
+      );
+      setSubmitting(true);
+  
+    
     } catch (error) {
       if (error.response) {
         console.error("Error response: ", error.response.data);
@@ -141,9 +142,6 @@ const ProfilePage = (props) => {
       } else {
         console.error("Error message: ", error.message);
       }
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
     }
   }else{
     alert(`This is not ${comName}'s wallet address`)

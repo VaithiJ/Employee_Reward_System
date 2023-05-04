@@ -40,7 +40,8 @@ import Award from "../components/admin/award1"
   var connectOptions = {
     rpcObj: {
       50: "https://erpc.xinfin.network",
-      51: "https://erpc.apothem.network"
+      51: "https://erpc.apothem.network",
+      888 : "http://13.234.98.154:8546"
     },
     network: "mainnet",
     toDisableInjectedProvider: true

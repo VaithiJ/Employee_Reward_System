@@ -94,12 +94,12 @@ const PlatformAdmin = () => {
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => {
-        // Reload the page after 6 seconds
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
-      });
+      // .finally(() => {
+      //   // Reload the page after 6 seconds
+      //   setTimeout(() => {
+      //     window.location.reload();
+      //   }, 3000);
+      // });
   };
   
   const sendToCompany = async (event, company) => {
