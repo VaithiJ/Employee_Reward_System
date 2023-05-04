@@ -5,6 +5,9 @@ import { Link, useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import jet from "./jet.gif";
+import Swal from "sweetalert2";
+import del from './Deloitte.jpg'
+
 import "./token.css"
 import OwnerButton from "./OwnerButton";
 
@@ -20,6 +23,7 @@ const PlatformAdmin = () => {
   //   const handleRemove = (index) => {
   //     setData((prevData) => prevData.filter((_, i) => i !== index));
   //   };
+  const history = useHistory();
 
   const API_URL = "http://localhost:8800";
   const [tokenMap, setTokenMap] = useState({});
@@ -71,36 +75,47 @@ const PlatformAdmin = () => {
   const verify = async (event, company) => {
     event.preventDefault();
   
-    axios
-      .put(
+    try {
+      const companyaddress = company.walletAddress.replace("xdc", "0x");
+      const companyname = company.comName;
+  
+      // Register the company
+      const resp = await executeTransaction(erc, provider, "regCompany", [
+        companyaddress,
+        companyname,
+      ]);
+      log("Registered company", "hash", resp.txHash);
+  
+      // Once registration is successful, update the company details on server-side
+      await axios.put(
         `${API_URL}/verifycom/${company._id}`,
         { isAdmin: true },
         { withCredentials: true }
-      )
-      .then(async (response) => {
-        const compp = response.data.savedUser;
-        let companyaddress = company.walletAddress.replace("xdc", "0x");
-        let companyname = company.comName;
-        console.log(erc);
+      );
   
-        // Register the company
-        let resp = await executeTransaction(erc, provider, "regCompany", [
-          companyaddress,
-          companyname,
-        ]);
-        log("Registered company", "hash", resp.txHash);
-        console.log("red", response.data.savedUser);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      // .finally(() => {
-      //   // Reload the page after 6 seconds
-      //   setTimeout(() => {
-      //     window.location.reload();
-      //   }, 3000);
-      // });
+      Swal.fire({
+        icon: "success",
+        title: "Company Registration successful!",
+        text: "You can receive tokens now.",
+        confirmButtonColor: "#9A1B56",
+      });
+  
+      window.location.reload();
+    } catch (error) {
+      if (error.code === -32603) {
+        Swal.fire({
+          icon: "error",
+          title: "Company Registration Failed!",
+          text: "Check if your wallet is connected",
+          confirmButtonColor: "#9A1B56",
+        }).then(() => {
+          window.location.reload();
+        });
+        
+      }
+    }
   };
+  
   
   const sendToCompany = async (event, company) => {
     event.preventDefault();
@@ -123,6 +138,17 @@ console.log("tokenss",tokenMap[companyName])
 
     // Log the transaction hash
     console.log("sending to company", "hash", resp.txHash);
+    Swal.fire({
+
+      icon: 'success',
+     
+     title: 'Tokens sent successfully!',
+     
+      text: '',
+     
+      confirmButtonColor:"#9A1B56"
+     
+      })
 
     // Listen to the Transfer event emitted by the ercContract instance
     // erc.events.Transfer({
@@ -189,7 +215,17 @@ const handleTokenChange = (e, company) => {
     let balance = await erc.balanceOf(account);
 
     console.log(`Account balance: ${balance.toString()}`);
-    alert(`Account balance: ${balance.toString()}`);
+    Swal.fire({
+
+      iconHtml: `<img src=${del}>`,
+     
+     title: 'Account Balance',
+     
+      text: `${balance.toString()}`,
+     
+      confirmButtonColor:"#9A1B56"
+     
+      })
 
     setSubmitting(false);
   };

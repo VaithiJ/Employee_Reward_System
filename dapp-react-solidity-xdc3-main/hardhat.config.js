@@ -31,6 +31,10 @@ module.exports = {
     mainnet: {
       url: 'https://erpc.xinfin.network',
       accounts: [process.env.PRIVATE_KEY],
+    },
+    private : {
+      url: 'http://13.234.98.154:8546',
+      accounts:[process.env.PRIVATE_KEY]
     }
   },
   paths: {
