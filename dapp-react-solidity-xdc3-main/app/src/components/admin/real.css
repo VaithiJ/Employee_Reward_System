@@ -143,8 +143,8 @@ margin-left: 650px;
   margin-left: -400px;
   position: relative;
   height:590px;
-  left: 1250px;
-  bottom: 450px;
+  left: 1220px;
+  bottom: 470px;
   /* background-color: white; */
 }  
 .date{
@@ -171,6 +171,7 @@ margin-left: 650px;
 }
 
 .my-calendar .react-calendar__tile {
+margin-bottom: 30px;
   color: rgb(13, 20, 14);
 }
 .my-calendar .react-calendar__navigation {
@@ -190,4 +191,38 @@ margin-left: 650px;
   display: inline-block;
   position: relative;
   bottom: 14px;
+}
+.modal-container {
+  position: relative;
+}
+.card222 {
+  box-sizing: border-box;
+  width: 250px;
+  height: 250px;
+  background: rgba(217, 217, 217, 0.58);
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-weight: bolder;
+  color: black;
+  position: absolute;
+  right: 840px;
+  top: 100px;
+
+}
+.card222:hover {
+  border: 1px solid black;
+  transform: scale(1.05);
+}
+
+.card222:active {
+  transform: scale(0.95) rotateZ(1.7deg);
 }

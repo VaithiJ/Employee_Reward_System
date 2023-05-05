@@ -19,7 +19,8 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 import "./real.css"
 import Footercr from "../footer/footercr";
 import LogoutHeader from "../header/logoutheader";
@@ -43,6 +44,8 @@ const ProfilePage = (props) => {
         pass: process.env.GMAIL_PASSWORD
     }
 });
+const history = useHistory();
+
   const [avatarUrl, setAvatarUrl] = useState("");
   const [red, setred] = useState([]);
   const[m,setm]=useState("")
@@ -108,11 +111,8 @@ const ProfilePage = (props) => {
   const regEmployee = async () => {
     sameAdd()
     if(same == true){
-      const respo = await axios.get(`${API_URL}/onboard/${employeeId}`, {
-        withCredentials: true,
-      });
-      console.log("asasdasdasdasdsaasdasssssssssssss", respo);
-      
+    
+      try{
       let employeeaddress = employee.wallet.replace("xdc", "0x");
       let employeename = employee.name;
       console.log("name", employeename);
@@ -122,7 +122,11 @@ const ProfilePage = (props) => {
       ]);
       log("Registered Employee", "hash", resp.txHash);
       setSubmitting(false);
-    try {
+      const respo = await axios.get(`${API_URL}/onboard/${employeeId}`, {
+        withCredentials: true,
+      });
+      console.log("asasdasdasdasdsaasdasssssssssssss", respo);
+    
       const response = await axios.post(
         `${API_URL}/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
         {
@@ -133,7 +137,13 @@ const ProfilePage = (props) => {
       );
       setSubmitting(true);
   
-    
+      Swal.fire({
+        icon: "success",
+        title:"Employee Added Successfully" ,
+        text: `${employeeName} has been added`,
+        confirmButtonColor: "#9A1B56",
+      })
+      history.push("/real")
     } catch (error) {
       if (error.response) {
         console.error("Error response: ", error.response.data);
@@ -145,8 +155,7 @@ const ProfilePage = (props) => {
     }
   }else{
     alert(`This is not ${comName}'s wallet address`)
-
-  }
+}
 }
   
   

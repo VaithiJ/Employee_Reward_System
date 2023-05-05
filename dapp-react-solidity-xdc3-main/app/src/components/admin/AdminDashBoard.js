@@ -103,7 +103,7 @@ margin:"auto",
                     color: "white",
                     height: "150px",
                     marginBottom: "20px",
-                    boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+                    boxShadow: "0px 0px 2px 3px rgba(0,0,0,0.3) inset",
                     border: "0px",
                     backgroundColor: "#FFC107",
                     margin: "auto" /* centers horizontally */,
@@ -141,91 +141,7 @@ margin:"auto",
                 </div>
               </div>
             </div>
-            {/* <div className="col-md-5" style={{width:"475px",marginLeft:"930px", marginTop:"-150px"}}> 
-            <div
-                className="card"
-                style={{
-                  color: "white",
-                  border: "0px",
-                  backgroundColor: "#DC3545",
-                  height: "150px",
-                  marginLeft: "",
-                  marginBottom: "20px",
-                  boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3)",
-                  margin:"auto"
-                }}
-              >
-                <div className={styles.txt} style={{ marginTop: "20px" }}>
-                  <h3>
-                    <b
-                      style={{
-                        marginLeft: "0px",
-                        marginTop: "30px",
-                        marginBottom: "-100px",
-                        fontSize: "70px",
-                      }}
-                    >
-                      20
-                    </b>
-                  </h3>
-                  <FaHome
-                    style={{
-                      marginLeft: "200px",
-                      marginTop: "-120px",
-                      height: "70px",
-                      width: "80px",
-                      opacity: "0.5",
-                    }}
-                  />
-                  <br />
-                  <div style={{ marginTop: "-20px", marginLeft: "10px" }}>
-                    DELETED
-                  </div>
-                </div>
-              </div> 
-             </div> */}
-             {/* <div className="col-md-5" style={{width:"400px",height:"500px",marginLeft:"1220px", marginTop:"-170px"}}> 
-            <div
-                className="card"
-                style={{
-                  color: "white",
-                  border: "0px",
-                  backgroundColor: "#0ED6CA",
-                  height: "575px",
-                  marginLeft: "",
-                  marginBottom: "20px",
-                  boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3)",
-                }}
-              >
-                <div className={styles.txt} style={{ marginTop: "20px" }}>
-                  {/* <h3>
-                    <b
-                      style={{
-                        marginLeft: "0px",
-                        marginTop: "30px",
-                        marginBottom: "-100px",
-                        fontSize: "70px",
-                      }}
-                    >
-                      20
-                    </b>
-                  </h3> */}
-                  {/* <FaHome
-                    style={{
-                      marginLeft: "200px",
-                      marginTop: "-120px",
-                      height: "70px",
-                      width: "80px",
-                      opacity: "0.5",
-                    }}
-                  /> */}
-                  {/* <br />
-                  <div style={{ fontWeight:"2000",marginTop: "20px", marginLeft: "10px" , fontFamily:"Montserrat", fontSize:"30px"}}>
-                    RECENTLY ADDED
-                  </div>
-                </div>
-              </div> 
-             </div> */}
+           
           </div> 
           
           <div className="rowww">
@@ -236,7 +152,7 @@ margin:"auto",
               <div
                 className="card"
                 style={{
-                  boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+                  boxShadow: "0px 0px 2px 3px rgba(0,0,0,0.3) inset",
                   backgroundColor: "#fff",
                 }}
               >
@@ -248,7 +164,8 @@ margin:"auto",
                     fontFamily: "Secular One",
                     padding: "20px",
                     fontWeight:"1000",
-                    fontSize:"30px"
+                    fontSize:"20px",
+                    padding:"12px"
                   }}
                 >
                   EMPLOYEE ONBOARDING

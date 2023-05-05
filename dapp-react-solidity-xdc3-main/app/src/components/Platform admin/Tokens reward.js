@@ -6,9 +6,9 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 import jet from "./jet.gif";
 import Swal from "sweetalert2";
-import del from './Deloitte.jpg'
+import del from "./tokkk.png";
 
-import "./token.css"
+import "./token.css";
 import OwnerButton from "./OwnerButton";
 
 const {
@@ -27,12 +27,11 @@ const PlatformAdmin = () => {
 
   const API_URL = "http://localhost:8800";
   const [tokenMap, setTokenMap] = useState({});
-  
+
   const [companies, setCompanies] = useState([]);
- const[companyName,setcompanyName] = useState("");
+  const [companyName, setcompanyName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const { provider, erc } = useContext(EthereumContext);
-
 
   console.log("sample", erc);
   console.log(provider);
@@ -74,32 +73,32 @@ const PlatformAdmin = () => {
 
   const verify = async (event, company) => {
     event.preventDefault();
-  
+
     try {
       const companyaddress = company.walletAddress.replace("xdc", "0x");
       const companyname = company.comName;
-  
+
       // Register the company
       const resp = await executeTransaction(erc, provider, "regCompany", [
         companyaddress,
         companyname,
       ]);
       log("Registered company", "hash", resp.txHash);
-  
+
       // Once registration is successful, update the company details on server-side
       await axios.put(
         `${API_URL}/verifycom/${company._id}`,
         { isAdmin: true },
         { withCredentials: true }
       );
-  
+
       Swal.fire({
         icon: "success",
         title: "Company Registration successful!",
         text: "You can receive tokens now.",
         confirmButtonColor: "#9A1B56",
       });
-  
+
       window.location.reload();
     } catch (error) {
       if (error.code === -32603) {
@@ -111,85 +110,94 @@ const PlatformAdmin = () => {
         }).then(() => {
           window.location.reload();
         });
-        
       }
     }
   };
-  
-  
+
   const sendToCompany = async (event, company) => {
-    event.preventDefault();
-    setSubmitting(true);
+    try {
+      event.preventDefault();
+      setSubmitting(true);
 
-    // Replace the "xdc" with "0x" in the company's wallet address
-    let companyAddress = company.walletAddress.replace("xdc", "0x");
-    console.log("kasdlkaskdajsld", companyAddress);
-console.log("tokenss",tokenMap[companyName])
-    // Define the amount to be sent
-    // let amount = "200";
-    // console.log(amount);
+      // Replace the "xdc" with "0x" in the company's wallet address
+      let companyAddress = company.walletAddress.replace("xdc", "0x");
+      console.log("kasdlkaskdajsld", companyAddress);
+      console.log("tokenss", tokenMap[companyName]);
+      // Define the amount to be sent
+      // let amount = "200";
+      // console.log(amount);
 
-    // try {
-    // Execute the transaction
-    let resp = await executeTransaction(erc, provider, "sendToCompany", [
-      tokenMap[companyName],
-      companyAddress,
-    ]);
+      // try {
+      // Execute the transaction
+      let resp = await executeTransaction(erc, provider, "sendToCompany", [
+        tokenMap[companyName],
+        companyAddress,
+      ]);
 
-    // Log the transaction hash
-    console.log("sending to company", "hash", resp.txHash);
-    Swal.fire({
+      // Log the transaction hash
+      console.log("sending to company", "hash", resp.txHash);
+      Swal.fire({
+        icon: "success",
 
-      icon: 'success',
-     
-     title: 'Tokens sent successfully!',
-     
-      text: '',
-     
-      confirmButtonColor:"#9A1B56"
-     
-      })
+        title: "Tokens sent successfully!",
 
-    // Listen to the Transfer event emitted by the ercContract instance
-    // erc.events.Transfer({
-    //   filter: { from: myAddress, to: companyAddress },
-    //   fromBlock: 0
-    // })
-    // .on('data', function(event) {
-    //   console.log(`Token sent to ${company.name} with transaction hash: ${resp.txHash}`);
-    // })
-    // .on('error', function(error) {
-    //   console.error(error);
-    // });
-    // erc.events.Transfer({}, (error, event) => {
-    //   if (!error) {
-    //     console.log(event.returnValues);
-    //   } else {
-    //     console.error(error);
-    //   }
-    // });
-    // } catch(error) {
-    //    console.error(error);
-    // }
-    //   erc.events.Transfer({
-    //   // filter: { from: myAddress, to: companyAddress },
-    //   fromBlock: 0
-    // })
-    // .on('data', function(event) {
-    //   console.log(`Token sent to ${company.name} with transaction hash: `);
-    // })
-    // .on('error', function(error) {
-    //   console.error(error);
-    // });
-    // erc.events.Transfer({}, (error, event) => {
-    //   if (!error) {
-    //     console.log(event.returnValues);
-    //   } else {
-    //     console.error(error);
-    //   }
-    // });
+        text: "",
 
-    setSubmitting(false);
+        confirmButtonColor: "#9A1B56",
+      });
+
+      // Listen to the Transfer event emitted by the ercContract instance
+      // erc.events.Transfer({
+      //   filter: { from: myAddress, to: companyAddress },
+      //   fromBlock: 0
+      // })
+      // .on('data', function(event) {
+      //   console.log(`Token sent to ${company.name} with transaction hash: ${resp.txHash}`);
+      // })
+      // .on('error', function(error) {
+      //   console.error(error);
+      // });
+      // erc.events.Transfer({}, (error, event) => {
+      //   if (!error) {
+      //     console.log(event.returnValues);
+      //   } else {
+      //     console.error(error);
+      //   }
+      // });
+      // } catch(error) {
+      //    console.error(error);
+      // }
+      //   erc.events.Transfer({
+      //   // filter: { from: myAddress, to: companyAddress },
+      //   fromBlock: 0
+      // })
+      // .on('data', function(event) {
+      //   console.log(`Token sent to ${company.name} with transaction hash: `);
+      // })
+      // .on('error', function(error) {
+      //   console.error(error);
+      // });
+      // erc.events.Transfer({}, (error, event) => {
+      //   if (!error) {
+      //     console.log(event.returnValues);
+      //   } else {
+      //     console.error(error);
+      //   }
+      // });
+
+      setSubmitting(false);
+    } catch (error) {
+      if (error.code === -32603) {
+        Swal.fire({
+          icon: "error",
+          title: "Balance Retrieval Failed!",
+          text: "Check if your wallet is connected",
+          confirmButtonColor: "#9A1B56",
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    }
   };
 
   const transfer = async () => {
@@ -197,14 +205,13 @@ console.log("tokenss",tokenMap[companyName])
     console.log(events);
     console.log("asassadas");
   };
-const handleTokenChange = (e, company) => {
-  const newTokenMap = {...tokenMap};
-  newTokenMap[company.comName] = e.target.value;
-  setcompanyName(company.comName)
-  console.log("company Name", company.comName)
-  setTokenMap(newTokenMap);
-};
-
+  const handleTokenChange = (e, company) => {
+    const newTokenMap = { ...tokenMap };
+    newTokenMap[company.comName] = e.target.value;
+    setcompanyName(company.comName);
+    console.log("company Name", company.comName);
+    setTokenMap(newTokenMap);
+  };
 
   const balanceOf = async (event, company) => {
     event.preventDefault();
@@ -216,26 +223,27 @@ const handleTokenChange = (e, company) => {
 
     console.log(`Account balance: ${balance.toString()}`);
     Swal.fire({
+      iconHtml: `<img src=${del} style="height: 100px; width: 100px;">`,
 
-      iconHtml: `<img src=${del}>`,
-     
-     title: 'Account Balance',
-     
+      title: "Account Balance",
+
       text: `${balance.toString()}`,
-     
-      confirmButtonColor:"#9A1B56"
-     
-      })
+
+      confirmButtonColor: "#9A1B56",
+    });
 
     setSubmitting(false);
   };
 
-  window.onload = function() {
-    alert("Connect the wallet address of only the owner and check it before using");
-  }
-  
+  window.onload = function () {
+    alert(
+      "Connect the wallet address of only the owner and check it before using"
+    );
+  };
+
   return (
-    <div className="first"
+    <div
+      className="first"
       style={{
         backgroundColor: "#2051E9",
         textAlign: "center",
@@ -257,7 +265,8 @@ const handleTokenChange = (e, company) => {
         EMPLOYEE REWARD SYSTEM
       </h1>
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <div className="yt"
+        <div
+          className="yt"
           style={{
             fontSize: "40px",
             fontFamily: "Montserrat",
@@ -276,7 +285,6 @@ const handleTokenChange = (e, company) => {
             <b style={{ fontFamily: "Secular One" }}>EASE!</b>
           </div>
           <ul
-         
             style={{
               marginTop: "40px",
               fontFamily: "Montserrat",
@@ -296,8 +304,7 @@ const handleTokenChange = (e, company) => {
         </div>
       </div>
       <div
-                     className="tableh"
-
+        className="tableh"
         style={{
           margin: "0 auto",
           width: "1000px",
@@ -310,7 +317,6 @@ const handleTokenChange = (e, company) => {
         }}
       >
         <table
-
           style={{
             minWidth: "100%",
             height: "auto",
@@ -318,7 +324,7 @@ const handleTokenChange = (e, company) => {
             backgroundColor: "transparent",
           }}
         >
-          <thead >
+          <thead>
             <tr
               style={{
                 backgroundColor: "#2051E9",
@@ -327,14 +333,12 @@ const handleTokenChange = (e, company) => {
               }}
             ></tr>
             <tr
-              
               style={{
                 backgroundColor: "#2051E9",
                 border: "1px solid white",
                 color: "white",
               }}
             >
-             
               <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
                 Company Name
               </th>
@@ -381,67 +385,72 @@ const handleTokenChange = (e, company) => {
                   >
                     xdc....{company.walletAddress.slice(-10)}
                   </td>
-                 
-                   <td  style={{ padding: "1rem", color: "white" }}>
-      <div style={{ display: "flex", alignItems: "center" }}>
-      <input className="inputbox"
-      key={index}
-      placeholder="TOKENS" 
-  type="number"
-  min="0"
-  inputMode="numeric"
-  // placeholder="Enter number of tokens"
-  style={{ marginRight: "1rem", width:"80px", height:"40px" }}
-  onChange={(e) => handleTokenChange(e, company)}
-  value={tokenMap[company.comName] || ""}
-/>
 
-        <button
-          className="button1"
-          style={{
-            backgroundColor: "#00FA57",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            padding: "0.5rem 1rem",
-            fontSize: "1rem",
-            position: "relative",
-            overflow: "hidden",
-            zIndex: "1",
-            fontFamily: "Secular One",
-            
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.background = "#330078";
-            e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-            e.target.style.boxShadow = " 1px 0px 19px 5px #ffffff";
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.background = "#00FA57";
-            e.target.style.border = "none";
-            e.target.style.boxShadow = "none";
-          }}
-          onClick={(e) => sendToCompany(e, company)}
-        >
-          <span
-            style={{
-              content: "''",
-              position: "absolute",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "#1e9bff",
-              zIndex: "-1",
-              transform: "scale(0)",
-              transition: "0.5s",
-            }}
-          ></span>
-          GIVE TOKENS
-        </button>
-      </div>
-    </td>
-            
+                  <td style={{ padding: "1rem", color: "white" }}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <input
+                        className="inputbox"
+                        key={index}
+                        placeholder="TOKENS"
+                        type="number"
+                        min="0"
+                        inputMode="numeric"
+                        // placeholder="Enter number of tokens"
+                        style={{
+                          marginRight: "1rem",
+                          width: "80px",
+                          height: "40px",
+                        }}
+                        onChange={(e) => handleTokenChange(e, company)}
+                        value={tokenMap[company.comName] || ""}
+                      />
+
+                      <button
+                        className="button1"
+                        style={{
+                          backgroundColor: "#00FA57",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "5px",
+                          padding: "0.5rem 1rem",
+                          fontSize: "1rem",
+                          position: "relative",
+                          overflow: "hidden",
+                          zIndex: "1",
+                          fontFamily: "Secular One",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = "#330078";
+                          e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+                          e.target.style.boxShadow =
+                            " 1px 0px 19px 5px #ffffff";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = "#00FA57";
+                          e.target.style.border = "none";
+                          e.target.style.boxShadow = "none";
+                        }}
+                        onClick={(e) => sendToCompany(e, company)}
+                      >
+                        <span
+                          style={{
+                            content: "''",
+                            position: "absolute",
+                            top: "0",
+                            left: "0",
+                            width: "100%",
+                            height: "100%",
+                            backgroundColor: "#1e9bff",
+                            zIndex: "-1",
+                            transform: "scale(0)",
+                            transition: "0.5s",
+                          }}
+                        ></span>
+                        GIVE TOKENS
+                      </button>
+                    </div>
+                  </td>
+
                   <td style={{ padding: "1rem" }}>
                     <button
                       onClick={(e) => balanceOf(e, company)}
@@ -512,35 +521,47 @@ const handleTokenChange = (e, company) => {
                       Register
                     </button>
                   </td> */}
-                  {company.isAdmin===false ? (<td style={{ padding: "1rem" }}>
-                    {/* <button onClick={transfer}>Query Data</button> */}
+                  {company.isAdmin === false ? (
+                    <td style={{ padding: "1rem" }}>
+                      {/* <button onClick={transfer}>Query Data</button> */}
 
-                    <button
-                      onClick={(e) => verify(e, company)}
+                      <button
+                        onClick={(e) => verify(e, company)}
+                        style={{
+                          backgroundColor: "#FA0000",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "5px",
+                          padding: "0.5rem 1rem",
+                          fontFamily: "Montserrat",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = "#16FF00";
+                          e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+                          e.target.style.boxShadow = "1px 0px 19px 5px #ffffff";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = "#FA0000";
+                          e.target.style.border = "none";
+                          e.target.style.boxShadow = "none";
+                        }}
+                      >
+                        Register
+                      </button>
+                    </td>
+                  ) : (
+                    <div
                       style={{
-                        backgroundColor: "#FA0000",
+                        fontSize: "18px",
+                        fontWeight: "bold",
                         color: "white",
-                        border: "none",
-                        borderRadius: "5px",
-                        padding: "0.5rem 1rem",
-                        fontFamily: "Montserrat",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.background = "#16FF00";
-                        e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                        e.target.style.boxShadow = "1px 0px 19px 5px #ffffff";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.background = "#FA0000";
-                        e.target.style.border = "none";
-                        e.target.style.boxShadow = "none";
+                        marginTop: "30px",
+                        fontFamily: "Secular One",
                       }}
                     >
-                      Register
-                    </button>
-                  </td>):(<div style={{ fontSize: '18px', fontWeight: 'bold', color:"white", marginTop:"30px", fontFamily:"Secular One" }}>REGISTERED</div>
-)}
-                  
+                      REGISTERED
+                    </div>
+                  )}
                 </tr>
               );
             })}

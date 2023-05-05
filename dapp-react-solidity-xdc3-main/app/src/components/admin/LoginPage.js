@@ -50,17 +50,19 @@ export default function SignInPage() {
       //  console.log(response.data);
 
       // Redirect to admin page on successful login
-      Swal.fire({
 
-         icon: 'success',
+
+      // Swal.fire({
+
+      //    icon: 'success',
         
-        title: 'Login successful!',
+      //   title: 'Login successful!',
         
-         text: 'You are now logged in.',
+      //    text: 'You are now logged in.',
         
-         confirmButtonColor:"#9A1B56"
+      //    confirmButtonColor:"#9A1B56"
         
-         })
+      //    })
       history.push("/real");
     } catch (error) {
       console.error(error);

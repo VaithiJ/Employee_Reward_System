@@ -184,15 +184,16 @@ const SidebarMenu = () => {
               <BiTask className="icon" id="fonnn" /> Assign Tasks
             </a>
           </li> */}
-         <li id="fonnn" style={{marginBottom:"10px"}}>
+         <li id="fonnn" style={{marginBottom:"10px"}} >
     <Link to="/reward" style={{marginLeft:"-180px",fontSize:"14px", fontFamily:"Montserrat", marginBottom:"10px"}}>
-      <FaHome className="fonnn"  /> REWARD
+      <FaHome className="fonnn" onMouseOver={(e) => (e.target.style.color = "rgb(245, 71, 193)")}
+              onMouseOut={(e) => (e.target.style.color = "#FFFFFF")} /> REWARD
     </Link>
   </li>
           <li>
             <a href="/logincomp"
               style={{ color: "#FFFFFF"}}
-              onMouseOver={(e) => (e.target.style.color = "#000000")}
+              onMouseOver={(e) => (e.target.style.color = "rgb(245, 71, 193)")}
               onMouseOut={(e) => (e.target.style.color = "#FFFFFF")}
               onClick={handleLogout}
             >

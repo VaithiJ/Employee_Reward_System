@@ -15,6 +15,7 @@ import "../../App.css";
 import { FaHome } from "react-icons/fa";
 import "./task.css";
 import {AiOutlineEye ,AiOutlineEyeInvisible} from "react-icons/ai"
+import Swal from "sweetalert2";
 
 const API_URL = "http://localhost:8800";
 
@@ -39,6 +40,17 @@ export default function SignInPage() {
         { name, password },
         { withCredentials: true }
       );
+      Swal.fire({
+
+        icon: 'success',
+       
+       title: 'Login Successful!',
+       
+        text: '',
+       
+        confirmButtonColor:"#9A1B56"
+       
+        })      ;
       history.push("/employeehome");
     } catch (error) {
       console.error(error);

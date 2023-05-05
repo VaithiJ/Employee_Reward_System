@@ -14,7 +14,7 @@ import ss from "./ss.svg"
 import { BigNumber } from "ethers";
 import "./reg.css"
 
-
+import Swal from "sweetalert2";
 import {
   ref,
   uploadBytes,
@@ -127,6 +127,17 @@ console.log(taskId,"taskid")
     taskkk.rewards
   ]);
   log("Registered", "hash", resp.txHash);
+  Swal.fire({
+
+    icon: 'success',
+   
+   title: 'Rewarded successfully!',
+   
+    text: '',
+   
+    confirmButtonColor:"#9A1B56"
+   
+    })
     } catch (error) {
       setTimeout(() => {
         window.location.reload();
@@ -135,102 +146,18 @@ console.log(taskId,"taskid")
       console.error('Error uploading file!', error);
       setSubmitting(false);
     }
-      
-  
-        // console.log(taskkk._id.slice(-5));
-        //  setSubmitting(true);
-
         let response = await queryData(erc, provider, "getFileHash", [taskId]);
         log("Returned hash", "hash", response);
-        // const fileListRef = ref(storage, "certificates");
-        // listAll(fileListRef)
-        //   .then((res) => {
-        //     res.items.forEach((itemRef) => {
-        //       if (itemRef.name.slice(-64) === response) {
-        //         console.log(itemRef.fullPath);
-        //         getDownloadURL(itemRef)
-        //           .then((url) => {
-        //             console.log(url);
-        //             window.open(url, "_blank");
-        //           })
-        //           .catch((error) => {
-        //             console.log(error);
-        //           });
-        //       }
-        //     });
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-  
-        // Reload page after 5 seconds
+     
         setTimeout(() => {
           window.location.reload();
         }, 5000);
   
         setSubmitting(false);
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-        // Reload page after 5 seconds
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 2000);
-      // });
+  
   };
 } 
 
-// const handleSubmit = async (e, taskkk) => {
-//   e.preventDefault();
-//   if (!fileUpload) return;
-
-//   try {
-//     setSubmitting(true);
-// console.log("FIles",fileUpload)
-//     const formData =  new FormData();
-//      formData.append('certificates', fileUpload);
-// console.log("Formdata", formData.entries())
-//     const response = await axios.post(`${API_URL}/uploadingCertificate`, formData, {
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//         "req":"Access-Control-Allow-Origin"
-//       }, withCredentials:true
-//     });
-
-//     console.log('File uploaded successfully!', response.data.FileHash);
-//     setSubmitting(false);
-//   } catch (error) {
-//     console.error('Error uploading file!', error);
-//     setSubmitting(false);
-//   }
-// };
-
-  // useEffect(() => {
-  //   window.addEventListener("error", handleWindowError);
-  //   return () => {
-  //     window.removeEventListener("error", handleWindowError);
-  //   };
-  // }, []);
-
-  // const handleWindowError = (event) => {
-  //   if (event.error?.message?.includes("invalid BigNumber string")) {
-  //     window.location.reload();
-  //   }
-  // };
-  // function checkInspectConsoleForBigNumberError() {
-  //   setInterval(() => {
-  //     const errors = Array.from(window.console.errors || []);
-  //     console.log('Errors:', errors);
-  //     const bigNumberError = errors.find(error => error.message.includes("invalid BigNumber string"));
-  //     if (bigNumberError) {
-  //       console.error("BigNumber error occurred:", bigNumberError);
-  //       window.location.href = window.location.href;
-  //       console.log('Page reloaded.');
-  //     }
-  //   }, 1000);
-  // }
-  
-  
 
   useEffect(() => {
     listAll(fileListRef).then((response) => {

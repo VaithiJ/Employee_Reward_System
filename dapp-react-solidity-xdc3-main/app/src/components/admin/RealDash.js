@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FaSignOutAlt, FaSquare } from "react-icons/fa";
 import AdminButton from "./AdminButton.js";
-import {AiFillStar} from "react-icons/ai"
+import { AiFillStar } from "react-icons/ai";
 import {
   PieChart,
   Pie,
@@ -19,7 +19,6 @@ import {
   Legend,
   BarChart,
 } from "recharts";
-
 import { useCookies } from "react-cookie";
 import { Link, useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
@@ -27,11 +26,11 @@ import axios from "axios";
 import styles from "./dash.module.css";
 import bg from "./lay.svg";
 import "./real.css";
-import { momentLocalizer } from 'react-widgets'
-import moment from 'moment';
-import { Calendar } from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'
-
+import { momentLocalizer } from "react-widgets";
+import moment from "moment";
+import { Calendar } from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import Swal from "sweetalert2";
 import {
   FaBars,
   FaUserPlus,
@@ -45,7 +44,8 @@ import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json";
 import { erc as address } from "../../output.json";
 // import {Calendar} from "react-calendar"
 import SidebarMenu from "./side.js";
-import { isSameDay } from 'date-fns';
+import { isSameDay } from "date-fns";
+import del from "../Platform admin/tokkk.png";
 const {
   executeTransaction,
   queryData,
@@ -59,7 +59,6 @@ function RealDash(connect) {
   const [tasks, setTasks] = useState([]);
   const [Alltasks, setAllTasks] = useState([]);
   const [submitting, setSubmitting] = useState(false);
-
   const { provider, erc } = useContext(EthereumContext);
   console.log("sample", erc);
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -85,24 +84,47 @@ function RealDash(connect) {
     return isSameDay(date, currentDate);
   }
   const [dateState, setDateState] = React.useState(new Date());
-  const [markedDates,setMarkedDates]= React.useState([]);
-  // const [markedDates, setMarkedDates] = React.useState([
-  //   '01/01/2023',
-  //   '14/02/2023',
-  //   '17/04/2023'
-  // ]);
+  const [markedDates, setMarkedDates] = React.useState([]);
 
   const changeDate = (date) => setDateState(date);
 
+  const [showModal, setShowModal] = React.useState(false);
+  // const [modalContent, setModalContent] = React.useState("");
+
+  const [selectedTasks, setSelectedTasks] = React.useState(null);
+
+  const handleClick = (tasks) => {
+    setShowModal(true);
+    setSelectedTasks(tasks);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   const tileContent = ({ date, view }) => {
-    if (view === 'month') {
-      const formattedDate = date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
+    if (view === "month") {
+      const formattedDate = date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
       });
-      if (markedDates.includes(formattedDate)) {
-        return <AiFillStar style={{position:"relative",height:'15px',width:"15px",bottom:"13px",color:"#E7B10A"}}/>
+      const tasks = markedDates.filter(
+        (task) => task.deadline === formattedDate
+      );
+      if (tasks.length > 0) {
+        return (
+          <AiFillStar
+            onClick={() => handleClick(tasks)}
+            style={{
+              position: "relative",
+              height: "15px",
+              width: "15px",
+              bottom: "13px",
+              color: "#FF6000",
+            }}
+          />
+        );
       }
     }
   };
@@ -115,13 +137,12 @@ function RealDash(connect) {
   //     );
   //   }
   // }
-  
+
   // function isSameDay(a, b) {
   //   return a.getFullYear() === b.getFullYear() &&
   //     a.getMonth() === b.getMonth() &&
   //     a.getDate() === b.getDate();
   // }
-  
 
   const regCompany = async (event) => {
     event.preventDefault();
@@ -199,20 +220,36 @@ function RealDash(connect) {
     let balance = await erc.balanceOf(account);
 
     console.log(`Account balance: ${balance.toString()}`);
-    alert(`Account balance: ${balance.toString()} tokens`);
+    Swal.fire({
+      iconHtml: `<img src=${del} style="height: 100px; width: 100px;">`,
+
+      title: "Account Balance",
+
+      text: `${balance.toString()}`,
+
+      confirmButtonColor: "#9A1B56",
+    });
 
     setSubmitting(false);
   };
 
   useEffect(() => {
     const token = cookies.access_token;
+    localStorage.setItem("WalletAddress", tokenn.wallet.replace("xdc", "0x"));
 
     if (token) {
       const decoded = jwt_decode(token);
       if (!decoded.isAdmin) {
-        alert("Your account will be verified soon.");
-        window.location.replace("/logincomp");
-        return;
+        Swal.fire({
+          icon: "error",
+
+          title: "Account not verified!",
+
+          text: "Your account will be verified soon",
+
+          confirmButtonColor: "#9A1B56",
+        });
+        history.push("/logincomp");
       }
     } else {
       // Handle case where token is not present
@@ -233,8 +270,17 @@ function RealDash(connect) {
       .get(`${API_URL}/gettasks`, { withCredentials: true })
       .then((response) => {
         setAllTasks(response.data.tasks);
-        const ree= response.data.tasks.filter((tasks)=> tasks.deadline)
-        console.log(ree)
+        console.log("good", response.data.tasks);
+        setMarkedDates(
+          response.data.tasks.filter(
+            (task) =>
+              task.status === "Pending" ||
+              task.status === "Waiting For Approval"
+          )
+        );
+        // console.log("vantiyaa da ",specifictask)
+
+        // console.log("vanthuraa maplaae",filteredDeadlines)
         setTasks(
           response.data.tasks.filter(
             (tasks) =>
@@ -242,16 +288,18 @@ function RealDash(connect) {
               tasks.status === "Waiting For Approval"
           )
         );
+
         console.log(response.data.tasks);
       })
+
       .catch((error) => {
         console.log(error);
       });
   }, []);
   const currentDate = new Date();
-  console.log("Iniki date enanda",currentDate)
-const re= Alltasks.filter((task) => task.companyName === tokenn.name).length
-console.log("ell tasks um ", re)
+  console.log("Iniki date enanda", currentDate);
+  const re = Alltasks.filter((task) => task.companyName === tokenn.name).length;
+  console.log("ell tasks um ", re);
   if (cookies.access_token && jwt_decode(cookies.access_token).isAdmin) {
     const filteredEmployees = employees.filter((employee) => {
       console.log(employee.isOnboarded);
@@ -264,19 +312,25 @@ console.log("ell tasks um ", re)
       );
     });
 
-    const OnboardedEmployees = filteredEmployees.length;
-    const rewardedTasks = Alltasks.filter((task) => task.status === "Rewarded" && task.compName === tokenn.name).length;
+    const OnboardedEmployees = employees.length;
+    const rewardedTasks = Alltasks.filter(
+      (task) => task.status === "Rewarded" && task.compName === tokenn.name
+    ).length;
     const PendingApprovals = tasks.filter(
-      (task) => task.status === "Waiting For Approval" && (task.companyName === tokenn.name)
+      (task) =>
+        task.status === "Waiting For Approval" &&
+        task.companyName === tokenn.name
     ).length;
     const TaskIncentive = Alltasks.filter(
-      (task) => task.status === "Approved" && (task.companyName === tokenn.name)
+      (task) => task.status === "Approved" && task.companyName === tokenn.name
     ).length;
     const Assignedtasks = tasks.filter(
-      (task) => task.status === "Pending" && (task.companyName === tokenn.name)
+      (task) => task.status === "Pending" && task.companyName === tokenn.name
     ).length;
-    const everytasks =tasks.filter(
-      (task) => task.status === "Pending" || task.status === "Approved" && (task.companyName === tokenn.name)
+    const everytasks = tasks.filter(
+      (task) =>
+        task.status === "Pending" ||
+        (task.status === "Approved" && task.companyName === tokenn.name)
     ).length;
     const data = [
       { name: "Waiting for approval", value: PendingApprovals },
@@ -297,7 +351,6 @@ console.log("ell tasks um ", re)
     });
 
     console.log("noice", employees);
-    
 
     return (
       <div>
@@ -312,7 +365,8 @@ console.log("ell tasks um ", re)
 
             <div className="col-md-3"></div>
             <div className="col-md-9">
-              <div className="hea"
+              <div
+                className="hea"
                 style={{
                   height: "100px",
                   display: "flex",
@@ -320,7 +374,6 @@ console.log("ell tasks um ", re)
                   marginTop: "0px",
                   marginLeft: "-350px",
                   backgroundColor: "white",
-                  
                 }}
               >
                 {/* <div
@@ -334,7 +387,10 @@ console.log("ell tasks um ", re)
                     backgroundColor: "#00F1C3",
                   }}
                 > */}
-                <div className="sidee" style={{ marginTop: "10px", marginLeft: "20px" }}>
+                <div
+                  className="sidee"
+                  style={{ marginTop: "10px", marginLeft: "20px" }}
+                >
                   <SidebarMenu />
                 </div>
 
@@ -346,12 +402,13 @@ console.log("ell tasks um ", re)
                     fontSize: "30px",
                   }}
                 >
-                  <b  className="del"
+                  <b
+                    className="del"
                     style={{
                       fontFamily: "Secular One",
                       fontWeight: "1000",
                       fontSize: "40px",
-                      marginLeft:"-40px"
+                      marginLeft: "-40px",
                     }}
                   >
                     {tokenn.name.toUpperCase()}
@@ -359,31 +416,34 @@ console.log("ell tasks um ", re)
                 </div>
                 <button
                   onClick={balanceOf}
-                 className="buy"
+                  className="buy"
                   style={{
                     // margin: "1rem",
-                     marginLeft: "700px",
+                    marginLeft: "700px",
                     marginTop: "30px",
                     borderRadius: "10px",
                     height: "45px",
-                    
-                   
+
                     backgroundColor: "#1196B0",
                     width: "120px",
-                    boxShadow: "3px 6px 14px -1px rgba(0,0,0,0.36) "
-
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.background = "#330078";
                     // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                    ;
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.background = "#1196B0";
                   }}
                 >
-             
-                  <div style={{marginTop:"-5px", fontSize:"18px", fontFamily:"Secular One"}}>Balance</div> 
+                  <div
+                    style={{
+                      marginTop: "-5px",
+                      fontSize: "18px",
+                      fontFamily: "Secular One",
+                    }}
+                  >
+                    Balance
+                  </div>
                 </button>
               </div>
 
@@ -398,7 +458,7 @@ console.log("ell tasks um ", re)
 
               <div
                 className="row"
-                style={{ marginTop: "0px", marginLeft: "-330px" }}
+                style={{ marginTop: "0px", marginLeft: "-340px" }}
               >
                 <div className="col-md-4">
                   <div
@@ -407,11 +467,10 @@ console.log("ell tasks um ", re)
                       color: "white",
                       height: "150px",
                       marginBottom: "20px",
-                      boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+                      boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "#17A2B8",
-                      width:"390px"
-
+                      backgroundColor: "white",
+                      width: "430px",
                     }}
                   >
                     <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -422,7 +481,8 @@ console.log("ell tasks um ", re)
                             marginTop: "680px",
                             fontSize: "70px",
                             marginLeft: "",
-                            fontFamily:"Secular One"
+                            fontFamily: "Secular One",
+                            color: "#1196B0",
                           }}
                         >
                           {OnboardedEmployees}
@@ -435,10 +495,18 @@ console.log("ell tasks um ", re)
                           height: "70px",
                           width: "80px",
                           opacity: "0.5",
+                          color: "#1196B0",
                         }}
                       />
                       <br />
-                      <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily:"Secular One" }}>
+                      <div
+                        style={{
+                          marginTop: "-20px",
+                          color: "#1196B0",
+                          marginLeft: "10px",
+                          fontFamily: "Secular One",
+                        }}
+                      >
                         Total Onboarded Employees
                       </div>
                     </div>
@@ -451,11 +519,10 @@ console.log("ell tasks um ", re)
                       color: "white",
                       height: "150px",
                       marginBottom: "20px",
-                      boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+                      boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "#F3DA06",
-                      width:"390px"
-
+                      backgroundColor: "white",
+                      width: "420px",
                     }}
                   >
                     <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -466,7 +533,8 @@ console.log("ell tasks um ", re)
                             marginBottom: "100px",
                             marginLeft: "",
                             fontSize: "70px",
-                            fontFamily:"Secular One"
+                            fontFamily: "Secular One",
+                            color: "#F3DA06",
                           }}
                         >
                           {Assignedtasks}
@@ -479,26 +547,34 @@ console.log("ell tasks um ", re)
                           height: "70px",
                           width: "80px",
                           opacity: "0.5",
+                          color: "#F3DA06",
                         }}
                       />
                       <br />
-                      <div style={{ marginTop: "-20px", marginLeft: "10px" ,fontFamily:"Secular One"}}>
+                      <div
+                        style={{
+                          color: "#F3DA06",
+                          marginTop: "-20px",
+                          marginLeft: "10px",
+                          fontFamily: "Secular One",
+                        }}
+                      >
                         Assigned Tasks
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-md-4">
-                <div
+                <div className="col-md-4" style={{ marginLeft: "-20px" }}>
+                  <div
                     className="card"
                     style={{
                       color: "white",
                       height: "150px",
                       marginBottom: "20px",
-                      boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+                      boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
                       border: "0px",
-                      backgroundColor: "red",
-                      width:"390px"
+                      backgroundColor: "white",
+                      width: "410px",
                     }}
                   >
                     <div className={styles.txt} style={{ marginTop: "20px" }}>
@@ -509,7 +585,8 @@ console.log("ell tasks um ", re)
                             marginBottom: "100px",
                             marginLeft: "-0px",
                             fontSize: "70px",
-                            fontFamily:"Secular One"
+                            fontFamily: "Secular One",
+                            color: "red",
                           }}
                         >
                           {PendingApprovals}
@@ -522,50 +599,85 @@ console.log("ell tasks um ", re)
                           height: "70px",
                           width: "80px",
                           opacity: "0.5",
+                          color: "red",
                         }}
                       />
                       <br />
-                      <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily:"Secular One" }}>
+                      <div
+                        style={{
+                          color: "red",
+                          marginTop: "-20px",
+                          marginLeft: "10px",
+                          fontFamily: "Secular One",
+                        }}
+                      >
                         Pending for Approval
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="piee" style={{ display: "flex", alignItems: "center" }}>
+              <div
+                className="piee"
+                style={{ display: "flex", alignItems: "center" }}
+              >
                 <ul
                   style={{
                     marginTop: "-300px",
-                    fontSize: "30px",
+                    fontSize: "20px",
                     marginLeft: "-170px",
                     fontFamily: "Montserrat",
                     fontWeight: "1000",
-                    fontFamily:"Secular One"
+                    fontFamily: "Secular One",
                   }}
                 >
                   TASKS
                 </ul>
-                <div className="piee" style={{ marginRight: "-70px" }}>
-                  <p  style={{ marginLeft: "-10px", fontFamily: "Algeria", fontWeight:"1000" }}>
+                <div className="piee" style={{ marginRight: "-50px" }}>
+                  <p
+                    style={{
+                      marginLeft: "-10px",
+                      fontFamily: "Algeria",
+                      fontWeight: "1000",
+                    }}
+                  >
                     TOTAL :{" "}
                     <FaSquare
                       style={{ backgroundColor: "green", color: "green" }}
                     />
                   </p>
-                  <p style={{ marginLeft: "-10px", fontFamily: "Algeria",fontWeight:"1000" }}>
+                  <p
+                    style={{
+                      marginLeft: "-10px",
+                      fontFamily: "Algeria",
+                      fontWeight: "1000",
+                    }}
+                  >
                     ASSIGNED :{" "}
                     <FaSquare
                       style={{ color: "#F3DA06", backgroundColor: "#F3DA06" }}
                     />
                   </p>
-                  <p style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                  <p
+                    style={{
+                      marginLeft: "-10px",
+                      fontWeight: "1000",
+                      fontFamily: "Algeria",
+                    }}
+                  >
                     APPROVAL :{" "}
                     <FaSquare
                       style={{ backgroundColor: "red", color: "red" }}
                     />
                   </p>
 
-                  <p  style={{ marginLeft: "-10px", fontWeight:"1000",fontFamily: "Algeria" }}>
+                  <p
+                    style={{
+                      marginLeft: "-10px",
+                      fontWeight: "1000",
+                      fontFamily: "Algeria",
+                    }}
+                  >
                     REWARDED :{" "}
                     <FaSquare
                       style={{ backgroundColor: "black", color: "black" }}
@@ -574,10 +686,10 @@ console.log("ell tasks um ", re)
                 </div>
 
                 <PieChart
-                className="pie"
+                  className="pie"
                   style={{
                     width: "430px",
-                    boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+                    boxShadow: "0px 0px 3px 2px rgba(0,0,0,0.3) inset",
                     marginLeft: "-310px",
                   }}
                   width={800}
@@ -603,30 +715,6 @@ console.log("ell tasks um ", re)
                   </Pie>
                   <Tooltip />
                 </PieChart>
-
-                {/* <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          width={500}
-          height={300}
-          data={dataa}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="pv" fill="#8884d8" />
-          <Bar dataKey="uv" fill="#82ca9d" />
-        </BarChart>
-      </ResponsiveContainer>
-     
-    */}
               </div>
 
               <div className="roww">
@@ -641,7 +729,7 @@ console.log("ell tasks um ", re)
                   <div
                     className="card"
                     style={{
-                      boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+                      boxShadow: "0px 0px 3px 2px rgba(0,0,0,0.3) inset",
                       // backgroundColor: "#CAFFF5",
                       marginBottom: "40px",
                       height: "400px",
@@ -652,12 +740,12 @@ console.log("ell tasks um ", re)
                       style={{
                         textAlign: "center",
                         fontFamily: "Algeria",
-                        padding: "20px",
+                        padding: "10px",
                         // backgroundColor: "#CAFFF5",
                         color: "black",
                         fontWeight: "1000",
-                        fontSize: "30px",
-                        fontFamily:"Secular One"
+                        fontSize: "20px",
+                        fontFamily: "Secular One",
                       }}
                     >
                       EMPLOYEES
@@ -681,15 +769,20 @@ console.log("ell tasks um ", re)
                       >
                         <div
                           className="list-group"
-                          style={{ maxHeight: "220px", overflowY: "auto" }}
+                          style={{
+                            padding: "5px",
+                            maxHeight: "220px",
+                            overflowY: "auto",
+                          }}
                         >
                           {filteredEmployees.map((employee) => (
                             <div
                               key={employee.comId}
                               className="list-group-item"
                               style={{
+                                padding: "2px",
                                 backgroundColor: "#0000",
-                                border: "0.1px solid black",
+                                border: "0.1px dotted black",
                               }}
                             >
                               <div className="d-flex justify-content"></div>
@@ -704,13 +797,19 @@ console.log("ell tasks um ", re)
                                       position: "relative",
                                       right: "25px",
                                       marginLeft: "0px",
-                                      fontSize: "18px",
+                                      fontSize: "16px",
                                       height: "10px",
-                                      fontFamily:"Secular One"
+                                      fontFamily: "Secular One",
                                     }}
                                   >
                                     {employee.Name.toUpperCase()}
-                                    <b style={{ fontSize: "16px",fontFamily:"Secular One" }}>
+                                    <b
+                                      style={{
+                                        fontWeight: "800",
+                                        fontSize: "14px",
+                                        fontFamily: "Secular One",
+                                      }}
+                                    >
                                       ({employee.comId})
                                     </b>
                                   </h6>
@@ -751,26 +850,35 @@ console.log("ell tasks um ", re)
                                     </small>
                                   </div>
                                 </div>
-                                <Link 
+                                <Link
                                   to={`/awardpage/${employee.Name}/${tokenn.name}/${employee.Wallet}`}
                                 >
-                                <button
-                                    className="btn btn-primary" 
+                                  <button
+                                    className="btn btn-primary"
                                     onClick={togglePopup}
                                     style={{
                                       fontFamily: "Algeria",
                                       marginTop: "-10px",
-                                      fontWeight: "1000",
-                                      fontFamily:"Secular One",
-                                      position:"relative",
-                                      left:"110px"
-
+                                      fontWeight: "000",
+                                      fontFamily: "Secular One",
+                                      position: "relative",
+                                      left: "110px",
+                                      color: "blue",
+                                      backgroundColor: "white",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.target.style.background = "blue";
+                                      e.target.style.color = "white";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.target.style.background = "white";
+                                      e.target.style.color = "blue";
                                     }}
                                   >
                                     Award
                                   </button>
-                                  </Link>
-                                <Link 
+                                </Link>
+                                <Link
                                   to={`/assigntask/${employee.Name}/${tokenn.name}/${employee.Wallet}`}
                                 >
                                   <button
@@ -779,8 +887,17 @@ console.log("ell tasks um ", re)
                                     style={{
                                       fontFamily: "Algeria",
                                       marginTop: "-10px",
-                                      fontWeight: "1000",
-                                      fontFamily:"Secular One"
+                                      fontFamily: "Secular One",
+                                      color: "blue",
+                                      backgroundColor: "white",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.target.style.background = "blue";
+                                      e.target.style.color = "white";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.target.style.background = "white";
+                                      e.target.style.color = "blue";
                                     }}
                                   >
                                     Assign Tasks
@@ -804,14 +921,56 @@ console.log("ell tasks um ", re)
                     height: "560px",
                   }}
                 >
+                  {" "}
+                  <div className="modal-container">
+                    {showModal && selectedTasks && (
+                      <div className="card222">
+                        <b
+                          style={{
+                            position: "relative",
+                            bottom: "100px",
+                            left: "150px",
+                            fontSize: "1.4rem",
+                          }}
+                          onClick={handleClose}
+                        >
+                          X
+                        </b>
+                        {selectedTasks.map((task) => (
+                          <div
+                            key={task.task}
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              border: "1px solid black",
+                              padding: "5px",
+                              margin: "5px 0",
+                            }}
+                          >
+                            <p style={{ margin: "0 10px" }}>{task.empName}</p>
+
+                            <p style={{ margin: "0 10px" }}>{task.task}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <Calendar
+                      className="my-calendar"
+                      value={dateState}
+                      onChange={changeDate}
+                      tileContent={tileContent}
+                    />
+                  </div>
                   <div
                     className="cardd"
                     style={{
-                      boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+                      boxShadow: "0px 0px 3px 2px rgba(0,0,0,0.3) inset",
                       // backgroundColor: "#17A2B8",
                       marginBottom: "40px",
                       width: "845px",
-                      height:"400px"
+                      height: "400px",
+                      marginLeft: "450px",
+                      marginTop: "-430px",
                     }}
                   >
                     <h5
@@ -823,8 +982,9 @@ console.log("ell tasks um ", re)
                         // backgroundColor: "#17A2B8",
                         color: "black",
                         fontWeight: "1000",
-                        fontSize: "30px",
-                        fontFamily:"Secular One"
+                        fontSize: "20px",
+                        fontFamily: "Secular One",
+                        paddingBottom: "1px",
                       }}
                     >
                       ASSIGNED TASKS
@@ -848,7 +1008,11 @@ console.log("ell tasks um ", re)
                       >
                         <div
                           className="list-group"
-                          style={{ maxHeight: "220px", overflowY: "auto" }}
+                          style={{
+                            padding: "2px",
+                            maxHeight: "220px",
+                            overflowY: "auto",
+                          }}
                         >
                           {filteredTasks.map((task) => (
                             <div
@@ -856,11 +1020,11 @@ console.log("ell tasks um ", re)
                               className="list-group-item"
                               style={{
                                 // backgroundColor: "#DDDDD2",
-                                border: "0.1px solid black",
+                                border: "0.1px dotted black",
+                                padding: "2px",
                               }}
                             >
-                              <div className="d-flex justify-content"></div>
-                              <div className="d-flex justify-content-between align-items-center">
+                              <div className="d-flex justify-content-between align-items-left">
                                 <div>
                                   <h6
                                     className="font-weight-bold mb-0"
@@ -868,8 +1032,8 @@ console.log("ell tasks um ", re)
                                       fontFamily: "Algeria",
                                       marginTop: "20px",
                                       fontWeight: "1000",
-                                      fontSize: "18px",
-                                      fontFamily:"Secular One"
+                                      fontSize: "16px",
+                                      fontFamily: "Secular One",
                                     }}
                                   >
                                     {task.empName.toUpperCase()}
@@ -877,8 +1041,9 @@ console.log("ell tasks um ", re)
                                   <small
                                     style={{
                                       fontWeight: "1000",
-                                      marginLeft: "20px",
-                                      fontFamily:"Secular One"
+                                      // marginLeft: "20px",
+                                      fontFamily: "Secular One",
+                                      fontSize: "14px",
                                     }}
                                   >
                                     {task.task}
@@ -912,9 +1077,19 @@ console.log("ell tasks um ", re)
                                     fontFamily: "Algeria",
                                     marginTop: "20px",
                                     fontWeight: "1000",
+                                    color: "blue",
+                                    backgroundColor: "white",
                                   }}
                                   onClick={() => {
                                     history.push(`/viewtask/${task._id}`);
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.target.style.background = "blue";
+                                    e.target.style.color = "white";
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.target.style.background = "white";
+                                    e.target.style.color = "blue";
                                   }}
                                 >
                                   View Tasks
@@ -926,19 +1101,22 @@ console.log("ell tasks um ", re)
                       </div>
                     </div>
                   </div>
-                <div className="calender-employee">
-  <div style={{position:"relative", top:'20px',width:"500px",paddingRight:"50px",position:"relative",left:"50px",top:"60px"}}>
-
-    <>
-    <Calendar
-      className="my-calendar"
-      value={dateState}
-      onChange={changeDate}
-      tileContent={tileContent}
-    />
-    {/* <p>Current selected date is <b>{moment(dateState).format('MMMM Do YYYY')}</b></p> */}
-    </>
-    {/* <Calendar
+                  <div className="calender-employee">
+                    <div
+                      style={{
+                        position: "relative",
+                        top: "20px",
+                        width: "500px",
+                        paddingRight: "50px",
+                        position: "relative",
+                        left: "50px",
+                        top: "60px",
+                      }}
+                    >
+                      <>
+                        {/* <p>Current selected date is <b>{moment(dateState).format('MMMM Do YYYY')}</b></p> */}
+                      </>
+                      {/* <Calendar
         style={{
           height: '400px',
           backgroundColor: 'white',
@@ -956,15 +1134,11 @@ console.log("ell tasks um ", re)
         }
         tileContent={tileContent}
       /> */}
-
-  </div>
-</div>
-</div>
-
+                    </div>
+                  </div>
+                </div>
               </div>
-              
             </div>
-        
           </div>
         </div>
       </div>
@@ -972,7 +1146,5 @@ console.log("ell tasks um ", re)
   } else {
     return null;
   }
-
-
 }
 export default RealDash;
