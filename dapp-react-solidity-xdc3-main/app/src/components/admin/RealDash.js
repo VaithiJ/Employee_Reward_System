@@ -84,12 +84,7 @@ function RealDash(connect) {
     return isSameDay(date, currentDate);
   }
   const [dateState, setDateState] = React.useState(new Date());
-  const [markedDates,setMarkedDates]= React.useState([]);
-  // const [markedDates, setMarkedDates] = React.useState([
-  //   '01/01/2023',
-  //   '14/02/2023',
-  //   '17/04/2023'
-  // ]);
+  const [markedDates, setMarkedDates] = React.useState([]);
 
   const changeDate = (date) => setDateState(date);
 
@@ -275,8 +270,17 @@ function RealDash(connect) {
       .get(`${API_URL}/gettasks`, { withCredentials: true })
       .then((response) => {
         setAllTasks(response.data.tasks);
-        const ree= response.data.tasks.filter((tasks)=> tasks.deadline)
-        console.log(ree)
+        console.log("good", response.data.tasks);
+        setMarkedDates(
+          response.data.tasks.filter(
+            (task) =>
+              task.status === "Pending" ||
+              task.status === "Waiting For Approval"
+          )
+        );
+        // console.log("vantiyaa da ",specifictask)
+
+        // console.log("vanthuraa maplaae",filteredDeadlines)
         setTasks(
           response.data.tasks.filter(
             (tasks) =>
@@ -284,6 +288,7 @@ function RealDash(connect) {
               tasks.status === "Waiting For Approval"
           )
         );
+
         console.log(response.data.tasks);
       })
 
@@ -346,7 +351,6 @@ function RealDash(connect) {
     });
 
     console.log("noice", employees);
-    
 
     return (
       <div>
