@@ -3,7 +3,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { useCookies } from "react-cookie";
 import { Link, useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+import axios from "../url.js"
 import jet from "./jet.gif";
 import Swal from "sweetalert2";
 import del from "./tokkk.png";
@@ -25,7 +25,6 @@ const PlatformAdmin = () => {
   //   };
   const history = useHistory();
 
-  const API_URL = "http://localhost:8800";
   const [tokenMap, setTokenMap] = useState({});
 
   const [companies, setCompanies] = useState([]);
@@ -37,7 +36,7 @@ const PlatformAdmin = () => {
   console.log(provider);
   useEffect(() => {
     axios
-      .get(`${API_URL}/admin`, { withCredentials: true })
+      .get(`/admin`, { withCredentials: true })
       .then((response) => {
         setCompanies(response.data.comp12);
         console.log(response.data.comp12);
@@ -87,7 +86,7 @@ const PlatformAdmin = () => {
 
       // Once registration is successful, update the company details on server-side
       await axios.put(
-        `${API_URL}/verifycom/${company._id}`,
+        `/verifycom/${company._id}`,
         { isAdmin: true },
         { withCredentials: true }
       );

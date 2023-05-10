@@ -22,7 +22,7 @@ import {
 import { useCookies } from "react-cookie";
 import { Link, useHistory } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+import axios from "../url.js"
 import styles from "./dash.module.css";
 import bg from "./lay.svg";
 import "./real.css";
@@ -70,7 +70,6 @@ function RealDash(connect) {
   // const [open, setOpen] = useState(false);
   const tokenn = jwt_decode(cookies.access_token);
   console.log(tokenn);
-  const API_URL = "http://localhost:8800";
   // const [showPopup, setShowPopup] = useState(false);
   const [open, setOpen] = useState(false);
   const togglePopup = () => {
@@ -256,7 +255,7 @@ function RealDash(connect) {
     }
 
     axios
-      .get(`${API_URL}/comemps`, { withCredentials: true })
+      .get(`/comemps`, { withCredentials: true })
       .then((response) => {
         setEmployees(response.data.details);
         console.log(response.data.details);
@@ -267,7 +266,7 @@ function RealDash(connect) {
     // }, []);
 
     axios
-      .get(`${API_URL}/gettasks`, { withCredentials: true })
+      .get(`/gettasks`, { withCredentials: true })
       .then((response) => {
         setAllTasks(response.data.tasks);
         console.log("good", response.data.tasks);
@@ -970,7 +969,7 @@ function RealDash(connect) {
                       width: "845px",
                       height: "400px",
                       marginLeft: "450px",
-                      marginTop: "-430px",
+                      marginTop: "-390px",
                     }}
                   >
                     <h5

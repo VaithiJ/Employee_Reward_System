@@ -3,7 +3,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+import axios from "../url.js"
 import styles from "./dash.module.css";
 // import { FaBars,FaUserPlus, FaTasks, FaGift } from "react-icons/fa";
 import SidebarMenu from "./side.js";
@@ -36,11 +36,11 @@ function AdminDashBoard() {
   };
 
   const tokenn = jwt_decode(cookies.access_token);
-  const API_URL = "http://localhost:8800";
+  // const API_URL = "http://65.2.3.121:8800";
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/empdetails`, { withCredentials: true })
+      .get(`/empdetails`, { withCredentials: true })
       .then((response) => {
         setEmployees(response.data.user);
         setusers(

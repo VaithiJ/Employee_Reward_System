@@ -10,7 +10,7 @@ import {storage} from "../../firebase.js"
 import {v4 as uuidv4} from "uuid";
 import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+import axios from "../url.js"
 import { useCookies } from "react-cookie";
 import { Link, useHistory } from 'react-router-dom';
 
@@ -26,7 +26,6 @@ const SidebarMenu = () => {
     "name",
   ]);
   const toke = jwt_decode(cookies.access_token);
-  const API_URL = "http://localhost:8800";
   const [avatarUrl, setAvatarUrl] = useState("");
   const [red, setred] = useState([]);
   const [fileList, setFileList] = useState([]);
@@ -64,7 +63,7 @@ const SidebarMenu = () => {
         
         axios
           .put(
-            `${API_URL}/updateprofileee/${toke.name}`,
+            `/updateprofileee/${toke.name}`,
             { profile: fileName },
             { withCredentials: true }
           )
@@ -78,7 +77,7 @@ const SidebarMenu = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.put(`${API_URL}/updateprofileee/${toke.name}`);
+        const response = await axios.put(`/updateprofileee/${toke.name}`);
         const red = response.data.updatedprofileC;
         console.log("mpp",red)
         setred(red);

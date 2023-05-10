@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./task.css";
-import axios from "axios";
+import axios from "../url.js"
 import jwt_decode from "jwt-decode";
 import { FaSignOutAlt , FaSquare} from "react-icons/fa";
 
@@ -35,7 +35,6 @@ const {
 
 const RewardTasks = (props) => {
   const [tasks, setTasks] = useState([]);
-  const API_URL = "http://localhost:8800";
 
   const [rewardedemp, setrewardedemp] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -64,7 +63,7 @@ const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proce
 
 if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
       let updatedTask = await axios.put(
-      `${API_URL}/updatetask/${taskkk._id}`,
+      `/updatetask/${taskkk._id}`,
       { status: "Rewarded" },
       { withCredentials: true }
     ).then(response => response.data.updatedTask);
@@ -73,7 +72,7 @@ if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
 
   axios
       .put(
-        `${API_URL}/updateetask/${taskkk._id}`,
+        `/updateetask/${taskkk._id}`,
         { certificates: "Certified" },
         { withCredentials: true }
       )
@@ -94,7 +93,7 @@ console.log("FIles",fileUpload)
 
      formData.append('certificates', fileUpload);
 console.log("Formdata", formData.entries())
-    const response = await axios.post(`${API_URL}/uploadingCertificate`, formData, {
+    const response = await axios.post(`/uploadingCertificate`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         "req":"Access-Control-Allow-Origin"
@@ -191,7 +190,7 @@ console.log(taskId,"taskid")
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/gettasks`, { withCredentials: true })
+      .get(`/gettasks`, { withCredentials: true })
       .then((response) => {
         const re=  response.data.tasks.filter((tasks) => tasks.status === "Approved" || tasks.status === "Rewarded")
        setTasks(re.filter((task) => task.companyName===tokenn.name ))

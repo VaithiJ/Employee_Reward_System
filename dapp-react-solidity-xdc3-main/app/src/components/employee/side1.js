@@ -25,7 +25,7 @@
 //   const [avatarUrl, setAvatarUrl] = useState("");
 //   const [red, setred] = useState([]);
 //   const toke = jwt_decode(cookies.employee_token);
-//   const API_URL = "http://localhost:8800";
+//   const API_URL = "http://65.2.3.121:8800";
 //   const toggleSidebar = () => {
 //     setIsOpen(!isOpen);
 //   };
@@ -183,7 +183,7 @@ import { BiTask } from "react-icons/bi";
 import { FiGift } from "react-icons/fi";
 import "./sidemenu1.css";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+import axios from "../url.js"
 import { useCookies } from "react-cookie";
 import { Link, useHistory } from 'react-router-dom'
 import {storage} from "../../firebase.js"
@@ -201,7 +201,6 @@ const SidebarMenu12 = () => {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [red, setred] = useState([]);
   const toke = jwt_decode(cookies.employee_token);
-  const API_URL = "http://localhost:8800";
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -209,7 +208,7 @@ const SidebarMenu12 = () => {
     removeCookie("employee_token");
     axios
       .put(
-        `${API_URL}/condition/${toke.name}`,
+        `/condition/${toke.name}`,
         { condition: "offline" },
         { withCredentials: true }
       )
@@ -221,7 +220,7 @@ const SidebarMenu12 = () => {
 
   useEffect(() => {
     axios
-    .get(`${API_URL}/comemps`, { withCredentials: true })
+    .get(`/comemps`, { withCredentials: true })
     .then((response) => {
       setEmployees(response.data.details.filter((details) => details.Name === toke.name));
      
@@ -234,7 +233,7 @@ const SidebarMenu12 = () => {
     useEffect(() => {
       const fetchProfile = async () => {
         try {
-          const response = await axios.put(`${API_URL}/updateprofile/${toke.name}`);
+          const response = await axios.put(`/updateprofile/${toke.name}`);
           const red = response.data.updatedprofile;
           setred(red);
     

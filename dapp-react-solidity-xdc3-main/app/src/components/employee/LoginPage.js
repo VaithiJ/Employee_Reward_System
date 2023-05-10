@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../url.js"
 import { Link } from "react-router-dom";
 import RegisterHeader from "../header/registerheader";
 import Footer from "../footer/Footer";
@@ -17,7 +17,6 @@ import "./task.css";
 import {AiOutlineEye ,AiOutlineEyeInvisible} from "react-icons/ai"
 import Swal from "sweetalert2";
 
-const API_URL = "http://localhost:8800";
 
 export default function SignInPage() {
   const [name, setname] = useState("");
@@ -36,7 +35,7 @@ export default function SignInPage() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        `${API_URL}/login`,
+        `/login`,
         { name, password },
         { withCredentials: true }
       );

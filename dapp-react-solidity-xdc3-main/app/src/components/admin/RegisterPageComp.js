@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../url.js"
 import { Link } from "react-router-dom";
 import Loginheader12 from "../header/compReg";
 import Footer from "../footer/Footer";
@@ -19,7 +19,6 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function RegisterComp() {
-  const API_URL = "http://localhost:8800";
   const [comName, setUsercomName] = useState("");
   const [password, setPassword] = useState("");
   const [comEmail, setcomEmail] = useState("");
@@ -38,7 +37,7 @@ export default function RegisterComp() {
       // const phoneNumber = parsePhoneNumberFromString(mobile, 'zz);
       // const formattedMobile = phoneNumber.format('INTERNATIONAL');
       // console.log('formatted mobile:', formattedMobile);
-      const response = await axios.post(`${API_URL}/registercompany`, {
+      const response = await axios.post(`/registercompany`, {
         comName,
         comAddress,
         comEmail,

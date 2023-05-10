@@ -8,7 +8,7 @@ import styles from "../admin/dash.module.css";
 import { Dialog, DialogTitle, DialogContent } from "@material-ui/core";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios from "../url.js"
 import "../admin/real.css";
 import Footercr from "../footer/footercr.js"
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart,
@@ -92,14 +92,14 @@ const EmployeeDashboard = (props) => {
       const date = new Date().toLocaleDateString("en-GB"); // get current date in dd/mm/yy format
       axios
         .put(
-          `${API_URL}/updatetask/${taskk._id}`,
+          `/updatetask/${taskk._id}`,
           { status: "Waiting For Approval" },
           { withCredentials: true }
         )
         .then(() => {
           axios
             .put(
-              `${API_URL}/completion/${taskk._id}`,
+              `/completion/${taskk._id}`,
               { completion: date },
               { withCredentials: true }
             )
@@ -148,10 +148,9 @@ const EmployeeDashboard = (props) => {
 console.log("rowwwww",Alltasks)
   const toke = jwt_decode(cookies.employee_token);
   // console.log(toke)
-  const API_URL = "http://localhost:8800";
   useEffect(() => {
     axios
-      .get(`${API_URL}/viewtask`, { withCredentials: true })
+      .get(`/viewtask`, { withCredentials: true })
       .then((response) => {
         setTasks(
           response.data.tasks.filter((tasks) => tasks.empName == toke.name)
@@ -163,7 +162,7 @@ console.log("rowwwww",Alltasks)
       });
 
     axios
-      .get(`${API_URL}/empdetails`, { withCredentials: true })
+      .get(`/empdetails`, { withCredentials: true })
       .then((response) => {
         const userData = response.data.user.filter(
           (user) => user.name === toke.name
@@ -176,7 +175,7 @@ console.log("rowwwww",Alltasks)
       });
 
     axios
-      .get(`${API_URL}/comemps`, { withCredentials: true })
+      .get(`/comemps`, { withCredentials: true })
       .then((response) => {
         const empdata = response.data.details.filter(
           (details) => details.Name === toke.name
@@ -191,7 +190,7 @@ console.log("rowwwww",Alltasks)
     // here is the online profile update
     axios
       .put(
-        `${API_URL}/condition/${toke.name}`,
+        `/condition/${toke.name}`,
         { condition: "online" },
         { withCredentials: true }
       )
@@ -433,9 +432,9 @@ console.log("rowwwww",Alltasks)
             color: "white",
             height: "150px",
             marginBottom: "20px",
-            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
             border: "0px",
-            backgroundColor: "red",
+            backgroundColor: "white",
             flex: "1",
             width: "100%",
             position:'relative',
@@ -450,6 +449,7 @@ console.log("rowwwww",Alltasks)
                   marginBottom: "100px",
                   marginLeft: "",
                   fontSize: "70px",
+                  color:"red"
                 }}
               >
                 {pendingTasks}
@@ -462,10 +462,11 @@ console.log("rowwwww",Alltasks)
                 height: "70px",
                 width: "80px",
                 opacity: "0.5",
+                color:"red"
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily: "Secular One",fontSize:"1.2rem",fontWeight:"bolder"}}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily: "Secular One",fontSize:"1.2rem",fontWeight:"bolder",color:"red"}}>
               Pending
             </div>
           </div>
@@ -478,9 +479,9 @@ console.log("rowwwww",Alltasks)
             color: "white",
             height: "150px",
             marginBottom: "20px",
-            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
             border: "0px",
-            backgroundColor: "#32CD32",
+            backgroundColor: "white",
             flex: "1",
             width: "100%",
             position:'relative',
@@ -495,6 +496,8 @@ console.log("rowwwww",Alltasks)
                   marginBottom: "100px",
                   marginLeft: "-0px",
                   fontSize: "70px",
+                  color:"#32CD32"
+
                 }}
               >
                 {Approved}
@@ -507,10 +510,11 @@ console.log("rowwwww",Alltasks)
                 height: "70px",
                 width: "80px",
                 opacity: "0.5",
+                color:"#32CD32"
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Secular One" ,fontSize:"1.2rem",fontWeight:"bolder"}}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Secular One" ,fontSize:"1.2rem",fontWeight:"bolder",color:"#32CD32"}}>
               Approved
             </div>
           </div>
@@ -524,9 +528,9 @@ console.log("rowwwww",Alltasks)
             color: "white",
             height: "150px",
             marginBottom: "20px",
-            boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",
+            boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
             border: "0px",
-            backgroundColor: "#27E1C1",
+            backgroundColor: "white",
             flex: "1",
             width: "100%",
             position:'relative',
@@ -541,6 +545,7 @@ console.log("rowwwww",Alltasks)
                   marginBottom: "100px",
                   marginLeft: "",
                   fontSize: "70px",
+                  color:'#27E1C1'
                 }}
               >
                 {Alltasks}
@@ -553,10 +558,11 @@ console.log("rowwwww",Alltasks)
                 height: "70px",
                 width: "80px",
                 opacity: "0.5",
+                color:"#27E1C1"
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Secular One",fontSize:"1.2rem",fontWeight:"bolder" }}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Secular One",fontSize:"1.2rem",fontWeight:"bolder",color:"#27E1C1" }}>
               All Tasks
             </div>
           </div>
@@ -565,8 +571,8 @@ console.log("rowwwww",Alltasks)
     </div>
   </div>
   {onboarded ? (
-  <div style={{ display: 'flex', alignItems: 'center' ,position:"relative",left:"700px",top:"100px",width:"350px"}}>
-                <ul style={{marginTop:"-300px", fontSize:"30px", marginLeft:"-180px", fontFamily: "Secular One", fontWeight:"1000"}}>
+  <div style={{ display: 'flex', alignItems: 'center' ,position:"relative",left:"750px",top:"100px",width:"350px"}}>
+                <ul style={{marginTop:"-300px",fontSize:"16px", marginLeft:"-180px", fontFamily: "Secular One", fontWeight:"1000",position:"relative",right:"30px",bottom:"10px"}}>
                 TASKS</ul>
   <div style={{ marginRight: '-70px' }}>
     
@@ -580,7 +586,7 @@ console.log("rowwwww",Alltasks)
 
   </div>
  
-  <PieChart style={{width:"430px",boxShadow: "0px 0px 10px 10px rgba(0,0,0,0.3) inset",marginLeft:"-310px"}} width={800} height={400} >
+  <PieChart style={{width:"430px",boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",marginLeft:"-310px"}} width={800} height={400} >
         <Pie
           data={data}
           cx={120}
@@ -726,7 +732,7 @@ console.log("rowwwww",Alltasks)
         <div
           className="card"
           style={{
-              boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.3) inset",
+            boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
               // backgroundColor: "#17A2B8",
               marginBottom: "40px",
               width: "800px",
@@ -744,7 +750,10 @@ console.log("rowwwww",Alltasks)
                // backgroundColor: "#17A2B8",
                color: "black",
                fontWeight: "1000",
-               fontSize: "30px",
+               fontSize:"16px",
+               height:"12px",
+               position:"relative",
+               bottom:"5px"
             }}
           >
             PENDING TASKS
@@ -763,37 +772,39 @@ console.log("rowwwww",Alltasks)
                     key={task.task}
                     className="list-group-item"
                     style={{
-                      border: "0.1px solid black",
+                      border: "0.1px dotted black",
+                      
                     }}
                   >
                     <div className="d-flex justify-content-between align-items-center">
-                      <div style={{ textAlign: "left" }}>
+                      <div style={{ textAlign: "left" , fontSize:"10px"}}>
                         <h6
                           className="font-weight-bold mb-0"
                           style={{
                             fontFamily: "Secular One",
-                            marginTop: "20px",
+                            marginTop: "20px",  
+                            fontSize:'10px !important' 
                           }}
                         >
-                          <b>
+                          <b style={{fontSize:"16px",fontFamily:"Algeria"}}> 
                             {task.task.toUpperCase()}{" "}
                             {/* Convert task.task to uppercase */}
                           </b>
                         </h6>
 
-                        <small style={{fontFamily: "Montserrat"}}>Deadline: {task.deadline}</small>
+                        <small style={{fontFamily: "Montserrat", fontSize:"13px"}}>Deadline: {task.deadline}</small>
                       </div>
                       <div
                         style={{
                           display: "flex",
                           justifyContent: "center",
                           borderRadius: "4px",
-                          boxShadow: "0 3px 8px rgba(0,0,0,0.3)", // updated boxShadow with rgba for a more realistic effect
+                          // boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.1) inset", // updated boxShadow with rgba for a more realistic effect
                           width: "auto",
                           height: "40px",
                           alignItems: "center",
                           textAlign: "center",
-                          background: "#FEFBE9",
+                          // background: "#FEFBE9",
                           position: "relative",
                           top: "10px",
                         }}
@@ -806,7 +817,7 @@ console.log("rowwwww",Alltasks)
                             top: "7px",
                             color: "#000000",
                             fontFamily: "Secular One",
-                            fontSize:'1.2rem' // updated text color
+                            fontSize:'16px' // updated text color
                           }}
                         >
                           Status:
@@ -817,8 +828,8 @@ console.log("rowwwww",Alltasks)
                             color: getTextColor(task.status),
                             textAlign: "center",
                             fontFamily: "Montserrat",
-                            fontWeight: "bold", // updated font weight for better readability
-                            textTransform: "uppercase", // updated text transform to uppercase for a more stylish look
+                            fontWeight: "bold",
+                            fontSize:"16px" // updated font weight for better readability // updated text transform to uppercase for a more stylish look
                           }}
                         >
                           {task.status}
@@ -827,17 +838,30 @@ console.log("rowwwww",Alltasks)
 
                       {task.status === "Pending" ? (
                         <button
-                          onClick={() => {
-                            togglePopup(task);
-                          }}
-                          className="btn btn-primary"
-                          style={{
-                            fontFamily: "Montserrat",
-                            marginTop: "20px",
-                          }}
-                        >
-                          View Tasks
-                        </button>
+                        className="btn btn-primary"
+                        style={{
+                          fontFamily: "Algeria",
+                          marginTop: "20px",
+                          fontWeight: "1000",
+                          color: "blue",
+                          backgroundColor: "white",
+                        }}
+                        onClick={() => {
+                          togglePopup(task);
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = "blue";
+                          e.target.style.color = "white";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = "white";
+                          e.target.style.color = "blue";
+                        }}
+                      >
+                        View Tasks
+                      </button>
+
+
                       ) : null}
                     </div>
                   </div>

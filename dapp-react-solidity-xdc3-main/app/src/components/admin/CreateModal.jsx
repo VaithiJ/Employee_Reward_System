@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "./CreateModal.css";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios from "../url.js"
 import { Link } from "react-router-dom";
 import SidebarMenu from "./side";
 import { useHistory } from "react-router-dom";
@@ -20,7 +20,6 @@ const CreateModal = (props) => {
   const tokenn = jwt_decode(cookies.access_token);
   const history = useHistory();
 
-  const API_URL = "http://192.168.26.107:8800";
 
   const employeeName = props.match.params.Name;
   const empAddress = props.match.params.Wallet;
@@ -66,7 +65,7 @@ const CreateModal = (props) => {
     const formattedDeadline = deadlineDate.toLocaleDateString("en-GB"); // Get the deadline in the dd/mm/yy format
 
     const response = await axios.post(
-      `${API_URL}/assigntask/${employeeName}/${compName}/${empAddress}`,
+      `/assigntask/${employeeName}/${compName}/${empAddress}`,
       { task, taskName, taskDescription, deadline: formattedDeadline, rewards },
       { withCredentials: true }
     );

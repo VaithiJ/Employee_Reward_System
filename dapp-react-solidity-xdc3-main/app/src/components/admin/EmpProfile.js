@@ -18,7 +18,7 @@ import { AccountCircle, GitHub, Language, Twitter } from "@material-ui/icons";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios from "../url.js"
 import { Link, useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import "./real.css"
@@ -52,7 +52,7 @@ const history = useHistory();
   // const [comName, setComName] = useState(" ");
   // const [comId, setComId] = useState(" ");
   const [employee, setEmployee] = useState([]);
-  const API_URL = "http://localhost:8800";
+  // const API_URL = "http://65.2.3.121:8800";
   const employeeId = props.match.params._id;
   const employeeName = employee.name;
   const employeeAddress = employee.address;
@@ -122,13 +122,13 @@ const history = useHistory();
       ]);
       log("Registered Employee", "hash", resp.txHash);
       setSubmitting(false);
-      const respo = await axios.get(`${API_URL}/onboard/${employeeId}`, {
+      const respo = await axios.get(`/onboard/${employeeId}`, {
         withCredentials: true,
       });
       console.log("asasdasdasdasdsaasdasssssssssssss", respo);
     
       const response = await axios.post(
-        `${API_URL}/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
+        `/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
         {
           comName,
           comId,
@@ -164,7 +164,7 @@ const history = useHistory();
     const fetchProfile = async () => {
       try {
         console.log(employeeName)
-        const response = await axios.put(`${API_URL}/updateprofile/${employeeName}`);
+        const response = await axios.put(`/updateprofile/${employeeName}`);
         const red = response.data.updatedprofile;
         setred(red);
   
@@ -186,7 +186,7 @@ const history = useHistory();
   
   useEffect(() => {
     axios
-      .get(`${API_URL}/empprofile/${employeeId}`, { withCredentials: true })
+      .get(`/empprofile/${employeeId}`, { withCredentials: true })
 
       // make a GET request to the server
       .then((response) => {

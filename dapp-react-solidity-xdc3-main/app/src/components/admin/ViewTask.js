@@ -3,7 +3,7 @@ import "./CreateModal.css";
 import jwt_decode from "jwt-decode";
 import "./css.css";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios from "../url.js"
 import { Link } from "react-router-dom";
 import SidebarMenu from "./side";
 import bg from "./grid3.png";
@@ -17,7 +17,6 @@ const CreateModal = (props) => {
   ]);
   const tokenn = jwt_decode(cookies.access_token);
 
-  const API_URL = "http://localhost:8800";
   const empName = props.match.params.empName;
   const taskk = props.match.params.id;
   console.log(empName);
@@ -30,7 +29,7 @@ const CreateModal = (props) => {
   const [rewards, setRewards] = useState(0);
   const reward = async () => {
     const response = await axios.post(
-      `${API_URL}/reward/${empName}/${task.task}/${task.deadline}/${task.rewards}`,
+      `/reward/${empName}/${task.task}/${task.deadline}/${task.rewards}`,
       {},
       { withCredentials: true }
     );
@@ -44,7 +43,7 @@ const CreateModal = (props) => {
     if (confirmed) {
       axios
         .put(
-          `${API_URL}/updatetask/${taskk._id}`,
+          `/updatetask/${taskk._id}`,
           { status: "Approved" },
           { withCredentials: true }
         )
@@ -74,7 +73,7 @@ const CreateModal = (props) => {
     // if (confirmed) {
       axios
         .put(
-          `${API_URL}/updatetaskkk/${taskk._id}`,
+          `/updatetaskkk/${taskk._id}`,
           { status: "Pending"},
           { withCredentials: true }
         )
@@ -100,7 +99,7 @@ const CreateModal = (props) => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/gettask/${taskk}`, { withCredentials: true })
+      .get(`/gettask/${taskk}`, { withCredentials: true })
       // make a GET request to the server
       .then((response) => {
         //console.log(response.data.user);

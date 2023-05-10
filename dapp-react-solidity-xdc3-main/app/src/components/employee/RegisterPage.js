@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "../url.js"
 import { Link } from "react-router-dom";
 import RegisterHeader from "../header/registerheader";
 import Footer from "../footer/Footer";
@@ -18,7 +18,6 @@ import PhoneInput from "react-phone-input-2";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function Register() {
-  const API_URL = "http://localhost:8800";
   const [name, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(" ");
@@ -34,7 +33,7 @@ export default function Register() {
     event.preventDefault();
 
     try {
-      const response = await axios.post(`${API_URL}/register`, {
+      const response = await axios.post(`/register`, {
         name,
         mobile,
         address,

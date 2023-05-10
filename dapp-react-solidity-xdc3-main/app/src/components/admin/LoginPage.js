@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../url.js"
 import reg from "../../components/openPage/r5.svg";
 import companyImage from "../openPage/comp1.png";
 import g from "./lay.svg";
@@ -18,7 +18,7 @@ import "./reg.css";
 
 import Loginheader12 from "../header/comploginheader";
 
-const API_URL = "http://localhost:8800";
+// const API_URL = "http://65.2.3.121:8800";
 
 export default function SignInPage() {
   const [comName, setname] = useState("");
@@ -38,7 +38,7 @@ export default function SignInPage() {
 
     try {
       const response = await axios.post(
-        `${API_URL}/logincomp`,
+        `/logincomp`,
         {
           comName,
           password,
@@ -162,14 +162,14 @@ export default function SignInPage() {
             <p>
               <label style={{fontFamily:"Secular One", fontWeight:"bolder"}}>COMPANY NAME</label>
               <br />
-              <input
-                type="text"
-                title="name"
-                value={comName}
-                style={{fontFamily:"Montserrat", fontWeight:"bold"}}
-                onChange={(e) => setname(e.target.value)}
-                required
-              />
+                <input
+                  type="text"
+                  title="name"
+                  value={comName}
+                  style={{fontFamily:"Montserrat", fontWeight:"bold"}}
+                  onChange={(e) => setname(e.target.value)}
+                  required
+                />
             </p>
             <p>
               <label style={{fontFamily:"Secular One", fontWeight:"bolder"}}>PASSWORD</label>

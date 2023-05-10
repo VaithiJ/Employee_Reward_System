@@ -37,6 +37,7 @@ import AWS from "aws-sdk";
 import multer from "multer";
 import multerS3 from "multer-s3";
 import allAward from "./routes/company/getaward.js";
+import customAward from "./routes/company/customAward.js";
 
 const app = express()
 dotenv.config();
@@ -118,7 +119,7 @@ mongoose.connection.on("disconnected", ()=>{
 mongoose.connection.on("connected", ()=>{
     console.log("Mongodb connected")
 })
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: "http://65.2.3.121:3000", credentials: true }));
 app.use(cookieParser());
 app.use(express.json())
 app.use("/", userRoute)
@@ -147,10 +148,11 @@ app.use("/", award)
 app.use("/", updateprofileee)
 app.use("/", awardedemployee)
 app.use("/", allAward)
+app.use("/", customAward);
 
 app.use((req, res, next) => {
     // res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); 
+    res.header("Access-Control-Allow-Origin", "http://65.2.3.121:3000"); 
     
     res.header("Access-Control-Allow-Credentials", true);
     res.header(

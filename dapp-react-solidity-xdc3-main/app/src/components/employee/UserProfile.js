@@ -9,7 +9,7 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { Table } from "react-bootstrap";
 import SidebarMenu12 from "./side1";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+import axios from "../url.js"
 import {storage} from "../../firebase.js"
 import {v4 as uuidv4} from "uuid";
 import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
@@ -33,7 +33,6 @@ const ProfilePage = (props) => {
   const [awardHistoryVisible, setAwardHistoryVisible] = useState(false);
 
   const [tokenHistoryVisible, setTokenHistoryVisible] = useState(false);
-  const API_URL = "http://localhost:8800";
   const [submitting, setSubmitting] = useState(false);
   const [hashh, setHash] = useState("");
 
@@ -55,7 +54,7 @@ const ProfilePage = (props) => {
     setHash(response);
   
     // Call the listFiles API to download the file
-    const url = `http://localhost:8800/listFiles?employeeName=${toke.name}&hash=${response}`;
+    const url = `http://65.2.3.121:8800/listFiles?employeeName=${toke.name}&hash=${response}`;
     const newWindow = window.open(url, '_blank');
     
     // Wait for the new window to load before setting submitting to false
@@ -75,7 +74,7 @@ const ProfilePage = (props) => {
     setHash(responseee);
   
     // Call the listFiles API to download the file
-    const url = `http://localhost:8800/listAwards?employeeName=${toke.name}&hash=${responseee}`;
+    const url = `http://65.2.3.121:8800/listAwards?employeeName=${toke.name}&hash=${responseee}`;
     const newWindow = window.open(url, '_blank');
     
     // Wait for the new window to load before setting submitting to false
@@ -118,7 +117,7 @@ const ProfilePage = (props) => {
       
       axios
         .put(
-          `${API_URL}/updateprofile/${toke.name}`,
+          `/updateprofile/${toke.name}`,
           { profile: fileName },
           { withCredentials: true }
         )
@@ -190,7 +189,7 @@ const toke = jwt_decode(cookies.employee_token);
 console.log(toke)
 useEffect(() => {
 axios
-    .get(`${API_URL}/getawards`, { withCredentials: true })
+    .get(`/getawards`, { withCredentials: true })
     .then((response) => {
       setaward(
         response.data.reee.filter((reee) => reee.emp === (toke.name)  )
@@ -210,7 +209,7 @@ axios
   console.log(toke)
   useEffect(() => {
   axios
-      .get(`${API_URL}/viewtask`, { withCredentials: true })
+      .get(`/viewtask`, { withCredentials: true })
       .then((response) => {
         setTasks(
           response.data.tasks.filter((tasks) => tasks.empName === (tokee.name) && tasks.status === "Rewarded" )
@@ -228,7 +227,7 @@ axios
   console.log(tasks);
   useEffect(() => {
     axios
-      .get(`${API_URL}/comemps`, { withCredentials: true })
+      .get(`/comemps`, { withCredentials: true })
       .then((response) => {
         setemployees(response.data.details.filter((details) => details.Name === toke.name));
        

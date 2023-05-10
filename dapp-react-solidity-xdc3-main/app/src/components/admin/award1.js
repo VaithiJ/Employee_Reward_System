@@ -3,13 +3,13 @@ import React, { useState, useEffect , useContext} from "react";
 import "./CreateModal.css";
 import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+import axios from "../url.js"
 import { Link } from "react-router-dom";
 import SidebarMenu from "./side";
 import { useHistory } from "react-router-dom";
 import bg from "./ss.svg"
 import "./real.css"
-import awarddd from "./ad3.png"
+import awarddd from "./awd.png"
 import "./reg.css"
 import Swal from "sweetalert2";
 
@@ -34,7 +34,6 @@ const Award = (props) => {
   const tokenn = jwt_decode(cookies.access_token);
   const history = useHistory();
 
-  const API_URL = "http://localhost:8800";
 
   const employeeName = props.match.params.Name;
   const employeeAddress = props.match.params.Wallet.replace("xdc","0x");
@@ -68,7 +67,7 @@ console.log("FIles",fileUpload)
 
      formData.append('PerformanceCertificates', fileUpload);
 console.log("Formdata", formData.entries())
-    const response = await axios.post(`${API_URL}/uploadCertificate`, formData, {
+    const response = await axios.post(`/uploadCertificate`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         "req":"Access-Control-Allow-Origin"
@@ -87,7 +86,7 @@ console.log(rewardAmount)
     const date = new Date().toLocaleDateString("en-GB");; // Get the deadline in the dd/mm/yy format
 
     const responsee = await axios.post(
-      `${API_URL}/awardemp/${employeeName}/${compName}/${employeeAddress}`,
+      `/awardemp/${employeeName}/${compName}/${employeeAddress}`,
       { awardname: awardName , tokens, awarddate:date},
       { withCredentials: true }
     );
@@ -121,24 +120,31 @@ console.log(rewardAmount)
         text: "Check if your wallet is connected & your balance",
         confirmButtonColor: "#9A1B56",
       })
-  }
+      setTimeout(function() {
+        window.location.reload();
+      }, 2000);
+        }
+  // history.push("/real");
+
 }
 
 
 
 
   
-        setSubmitting(false);
+        // setSubmitting(false);
      
   };
 } 
+
+
 const [award, setAward] = useState([]);
 const [awardName, setAwardName] = useState("");
 const [tokens, setTokens] = useState("");
 
 useEffect(() => {
   axios
-    .get(`${API_URL}/award`, { withCredentials: true })
+    .get(`/award`, { withCredentials: true })
     .then((response) => {
       setAward(response.data.award);
       console.log(response.data.award)
@@ -164,8 +170,8 @@ const handleSelectChange = (event) => {
   }
 };
   return (
-    <div className="modal-container"  style={{backgroundColor:"#F9F8F8"}} >
-      <header style={{ backgroundColor: '#F9F8F8', padding: '1.5rem 0',height:"100px" }}>
+    <div className="modal-container"  style={{backgroundColor:"fff"}} >
+      <header style={{ backgroundColor: '#fff', padding: '1.5rem 0',height:"100px" }}>
       <div style={{position:"relative",bottom:"20px",left:"20px", marginLeft:"-1200px"}}>
       <SidebarMenu /> </div>
   <h2
@@ -182,16 +188,18 @@ const handleSelectChange = (event) => {
       color:"black"
 
     }}>
-    {employeeName}
-  </h2>
+AWARDS  </h2>
 </header>
 <div style={{display:"flex", flexDirection:"row"}}>
-<img className="awardd" style={{ marginLeft: "-50px" , height:"600px"}}  />
+<img className="awardd"  src={awarddd}  style={{ marginLeft: "50px",marginTop:"100px" ,width:"550px", height:"400px"}}  />
 
         
-        <form className="modal-form" style={{
-backgroundColor:"#F9F8F8",width:"600px",marginRight:"100px", borderRadius:"10px", fontFamily:"Secular One",height:"600px"}} >
-          <label className="modlabel" htmlFor="text" style={{marginTop:"-200px"}} >
+        <form  style={{
+backgroundColor:"transparent",width:"600px",marginTop:"100px",marginLeft:"100px", borderRadius:"10px", fontFamily:"Secular One",height:"350px"}} >
+  <label className="modlabel" htmlFor="text" style={{color:"black",marginLeft:"220px",color:"black", fontWeight:"2000", fontSize:"30px"}}  >
+           <b style={{color:"black", fontFamily:"Algeria"}}>{employeeName.toUpperCase()}</b> 
+          </label>
+          <label className="modlabel" htmlFor="text" style={{marginLeft:"220px", color:"#000"}}  >
             Select Awards
           </label>
           <>
@@ -210,13 +218,14 @@ backgroundColor:"#F9F8F8",width:"600px",marginRight:"100px", borderRadius:"10px"
     <option key={awardObj._id} value={awardObj.AwardName}>{awardObj.AwardName}</option>
   ))}
 </select>
-<p style={{fontFamily:"Secular One"}}>Total token rewards : {tokens} </p>
+
+<p style={{fontFamily:"Secular One",backgroundColor:"#EEEEEE",marginTop:"10px",borderRadius:"10px", marginLeft:"400px",padding:"6px", width:"150px", height:"40px"}}>Tokens : {tokens} </p>
 
           </>
          
-          <div style={{position:"relative", top:"10px"}}>
+          <div style={{position:"relative", top:"10px", marginTop:"-60px", marginLeft:"-400px"}}>
                 <input
-                  style={{ opacity: submitting ? 0.5 : 1, marginRight:"-80px" }}
+                  style={{ opacity: submitting ? 0.5 : 1, marginRight:"-80px", marginTop:"-800px", color:"white" }}
                   disabled={submitting}
                   type="file"
                   accept=".pdf"
@@ -233,24 +242,23 @@ backgroundColor:"#F9F8F8",width:"600px",marginRight:"100px", borderRadius:"10px"
             name="singlebutton"
             className="btM"
             onClick={uploadFile}
-            style={{fontFamily:"Secular One",position:"relative",top:"40px"}}
+            style={{fontFamily:"Secular One",position:"relative",top:"40px", width:"100px"}}
           >
-            Award Employee
+            Award
           </button>
           </Link>
         </form>
-     </div>
+     {/* </div> */}
       
-    <div style={{ marginTop: "0px", marginLeft: "-800px",marginTop:"-120px", fontFamily: "Secular One", fontSize: "30px" }}>
+    {/* <div style={{ marginTop: "0px", marginLeft: "-800px",marginTop:"100px", fontFamily: "Secular One", fontSize: "30px" }}>
   <ul >
     <li style={{fontFamily:"Secular One"}}>Select an award for your employee</li>
     <li style={{fontFamily:"Secular One"}}>Reward them with the chosen award</li>
     <li style={{fontFamily:"Secular One"}}>Watch your employees feel appreciated <br/> and  motivated!</li>
   </ul>
-</div>
-
+</div> */}
     </div>
-  
+  </div>
   );
 };
 
