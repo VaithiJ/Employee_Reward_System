@@ -296,9 +296,9 @@ function RealDash(connect) {
       });
   }, []);
   const currentDate = new Date();
-  console.log("Iniki date enanda", currentDate);
+  console.log( currentDate);
   const re = Alltasks.filter((task) => task.companyName === tokenn.name).length;
-  console.log("ell tasks um ", re);
+  console.log( re);
   if (cookies.access_token && jwt_decode(cookies.access_token).isAdmin) {
     const filteredEmployees = employees.filter((employee) => {
       console.log(employee.isOnboarded);

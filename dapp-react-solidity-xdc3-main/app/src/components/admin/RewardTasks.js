@@ -3,6 +3,7 @@ import "./task.css";
 import axios from "../url.js"
 import jwt_decode from "jwt-decode";
 import { FaSignOutAlt , FaSquare} from "react-icons/fa";
+import Loader from "../pages/Loader.js";
 
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
@@ -41,6 +42,8 @@ const RewardTasks = (props) => {
     "access_token",
     "name",
   ]);
+  const [showLoader, setShowLoader] = useState(false);
+
   const [fileUpload, setFileUpload] = useState(null);
   const [fileList, setFileList] = useState([]);
   const [taskId, setTaskId] = useState(null);
@@ -66,12 +69,12 @@ const RewardTasks = (props) => {
 
   const uploadFile = async (taskkk) => {
     sameAdd()
-
     const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
 const confirmUniqueName = window.confirm("Does the certificate have a unique name?");
 const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proceed?");
 if (same==true && confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
-  
+  setShowLoader(true)
+
       let updatedTask = await axios.put(
       `/updatetask/${taskkk._id}`,
       { status: "Rewarded" },
@@ -136,6 +139,7 @@ console.log(taskId,"taskid")
     taskkk.rewards
   ]);
   log("Registered", "hash", resp.txHash);
+  setShowLoader(false)
   Swal.fire({
 
     icon: 'success',
@@ -151,6 +155,7 @@ console.log(taskId,"taskid")
       window.location.reload();
     }, 2000);
     } catch (error) {
+      setShowLoader(false)
       axios
       .put(
         `/updateetask/${taskkk._id}`,
@@ -481,7 +486,29 @@ useEffect(() => {
                 ))}
                 </div>
                 </div>
-                
+                {showLoader && (<div style={{
+
+position: "fixed",
+
+top: 0,
+
+left: 0,
+
+width: "100vw",
+
+height: "100vh",
+
+background: "rgba(255, 255, 255, 0.4)",
+
+display: "flex",
+
+justifyContent: "center",
+
+alignItems: "center",
+
+zIndex: 9999,
+
+}} ><Loader  /></div>)}
                   </div>
                 </div>
 

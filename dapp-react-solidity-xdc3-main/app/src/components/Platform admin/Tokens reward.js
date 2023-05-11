@@ -7,9 +7,11 @@ import axios from "../url.js"
 import jet from "./jet.gif";
 import Swal from "sweetalert2";
 import del from "./tokkk.png";
+import "../pages/Loader.js"
 
 import "./token.css";
 import OwnerButton from "./OwnerButton";
+import Loader from "../pages/Loader.js";
 
 const {
   executeTransaction,
@@ -31,6 +33,9 @@ const PlatformAdmin = () => {
   const [companyName, setcompanyName] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const { provider, erc } = useContext(EthereumContext);
+  const [showLoader, setShowLoader] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(null);
+  
 
   console.log("sample", erc);
   console.log(provider);
@@ -74,6 +79,7 @@ const PlatformAdmin = () => {
     event.preventDefault();
 
     try {
+      setShowLoader(true)
       const companyaddress = company.walletAddress.replace("xdc", "0x");
       const companyname = company.comName;
 
@@ -90,7 +96,7 @@ const PlatformAdmin = () => {
         { isAdmin: true },
         { withCredentials: true }
       );
-
+      setShowLoader(false)
       Swal.fire({
         icon: "success",
         title: "Company Registration successful!",
@@ -115,6 +121,7 @@ const PlatformAdmin = () => {
 
   const sendToCompany = async (event, company) => {
     try {
+      setShowLoader(true);
       event.preventDefault();
       setSubmitting(true);
 
@@ -135,6 +142,9 @@ const PlatformAdmin = () => {
 
       // Log the transaction hash
       console.log("sending to company", "hash", resp.txHash);
+      if(resp.txHash){
+      setShowLoader(false);
+      }
       Swal.fire({
         icon: "success",
 
@@ -186,10 +196,11 @@ const PlatformAdmin = () => {
 
       setSubmitting(false);
     } catch (error) {
+      setShowLoader(false)
       if (error.code === -32603) {
         Swal.fire({
           icon: "error",
-          title: "Balance Retrieval Failed!",
+          title: "Sending Token Failed!",
           text: "Check if your wallet is connected",
           confirmButtonColor: "#9A1B56",
         }).then(() => {
@@ -213,6 +224,7 @@ const PlatformAdmin = () => {
   };
 
   const balanceOf = async (event, company) => {
+    try{
     event.preventDefault();
     setSubmitting(true);
     console.log(company);
@@ -232,13 +244,28 @@ const PlatformAdmin = () => {
     });
 
     setSubmitting(false);
-  };
-
+  }catch(error){
+    if (error.code === -32603) {
+      Swal.fire({
+        icon: "error",
+        title: "Balance Retrieval Failed!",
+        text: "Check if your wallet is connected",
+        confirmButtonColor: "#9A1B56",
+      }).then(() => {
+        window.location.reload();
+      });
+    }
+  }
+  }
   window.onload = function () {
     alert(
       "Connect the wallet address of only the owner and check it before using"
     );
   };
+
+ 
+
+
 
   return (
     <div
@@ -302,6 +329,7 @@ const PlatformAdmin = () => {
           <img style={{ marginLeft: "30px" }} src={jet} />
         </div>
       </div>
+      <div >
       <div
         className="tableh"
         style={{
@@ -430,7 +458,12 @@ const PlatformAdmin = () => {
                           e.target.style.boxShadow = "none";
                         }}
                         onClick={(e) => sendToCompany(e, company)}
+                        
+
                       >
+
+                        
+
                         <span
                           style={{
                             content: "''",
@@ -447,9 +480,34 @@ const PlatformAdmin = () => {
                         ></span>
                         GIVE TOKENS
                       </button>
+                      
                     </div>
-                  </td>
 
+                  </td>
+                  
+                  {/* {showLoader && (
+          <div style={{
+
+            position: "fixed",
+            
+             top: 0,
+            
+            left: 0,
+            
+             width: "100vw",
+ height: "100vh",
+            
+            background: "rgba(255, 255, 255, 0.8)",
+            
+             display: "flex",
+            
+          justifyContent: "center",
+        alignItems: "center",
+            
+            zIndex: 9999,
+            
+             }}><Loader/></div>
+        )} */}
                   <td style={{ padding: "1rem" }}>
                     <button
                       onClick={(e) => balanceOf(e, company)}
@@ -566,7 +624,34 @@ const PlatformAdmin = () => {
             })}
           </tbody>
         </table>
+
+        </div>
+        {showLoader && (<div style={{
+
+position: "fixed",
+
+top: 0,
+
+left: 0,
+
+width: "100vw",
+
+height: "100vh",
+
+background: "rgba(255, 255, 255, 0.4)",
+
+display: "flex",
+
+justifyContent: "center",
+
+alignItems: "center",
+
+zIndex: 9999,
+
+}} ><Loader  /></div>)}
+
       </div>
+      
     </div>
   );
 };

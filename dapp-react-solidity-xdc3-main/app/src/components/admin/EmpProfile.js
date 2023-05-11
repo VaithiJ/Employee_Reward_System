@@ -20,6 +20,8 @@ import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import axios from "../url.js"
 import { Link, useHistory } from "react-router-dom";
+import Loader from "../pages/Loader.js";
+
 import Swal from "sweetalert2";
 import "./real.css"
 import Footercr from "../footer/footercr";
@@ -33,6 +35,8 @@ const nodemailer = require('nodemailer');
  const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
 const ProfilePage = (props) => {
   const [progressWidth, setProgressWidth] = useState(0);
+  const [showLoader, setShowLoader] = useState(false);
+
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
     "name",
@@ -113,6 +117,7 @@ const history = useHistory();
     if(same == true){
     
       try{
+        setShowLoader(true)
       let employeeaddress = employee.wallet.replace("xdc", "0x");
       let employeename = employee.name;
       console.log("name", employeename);
@@ -121,6 +126,7 @@ const history = useHistory();
         
       ]);
       log("Registered Employee", "hash", resp.txHash);
+      setShowLoader(false)
       setSubmitting(false);
       const respo = await axios.get(`/onboard/${employeeId}`, {
         withCredentials: true,
@@ -145,6 +151,8 @@ const history = useHistory();
       })
       history.push("/real")
     } catch (error) {
+      setShowLoader(false)
+      alert("Cannot add employee")
       if (error.response) {
         console.error("Error response: ", error.response.data);
       } else if (error.request) {
@@ -536,6 +544,30 @@ const history = useHistory();
 
             )}
           </div>
+          {showLoader && (<div style={{
+
+position: "fixed",
+
+top: 0,
+
+left: 0,
+
+width: "100vw",
+
+height: "100vh",
+
+background: "rgba(255, 255, 255, 0.4)",
+
+display: "flex",
+
+justifyContent: "center",
+
+alignItems: "center",
+
+zIndex: 9999,
+
+}} ><Loader  /></div>)}
+
         </div>
         
       </div>
