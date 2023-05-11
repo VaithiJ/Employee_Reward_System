@@ -109,7 +109,7 @@ function RealDash(connect) {
         year: "numeric",
       });
       const tasks = markedDates.filter(
-        (task) => task.deadline === formattedDate
+        (task) => task.deadline === formattedDate && tokenn.name === task.companyName
       );
       if (tasks.length > 0) {
         return (
@@ -311,7 +311,7 @@ function RealDash(connect) {
       );
     });
 
-    const OnboardedEmployees = employees.length;
+    const OnboardedEmployees = employees.filter((emp) => emp.comName === tokenn.name).length;
     const rewardedTasks = Alltasks.filter(
       (task) => task.status === "Rewarded" && task.compName === tokenn.name
     ).length;

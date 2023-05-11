@@ -163,9 +163,9 @@ console.log(taskId,"taskid")
         setSubmitting(true);
         
 })
-      setTimeout(() => {
-        window.location.reload();
-      }, 15000);
+       setTimeout(() => {
+      window.location.reload();
+       }, 15000);
       Swal.fire({
 
         icon: 'error',
