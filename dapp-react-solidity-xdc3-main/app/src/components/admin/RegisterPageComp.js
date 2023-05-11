@@ -214,8 +214,12 @@ export default function RegisterComp() {
                         //   //   phoneNumber?.formatInternational();
                         //   // setMobile(formattedPhoneNumber || "");
                         // }}
+                        country="in"
                         countryCodeEditable={false}
                         required
+                        dropdownStyle={{
+                          textAlign: 'left'
+                        }}
                       />
                     </div>
 

@@ -199,7 +199,11 @@ export default function Register() {
                         //   // setMobile(formattedPhoneNumber || "");
                         // }}
                         countryCodeEditable={false}
+                        country="in"
                         required
+                        dropdownStyle={{
+                          textAlign: 'left'
+                        }}
                       />
                     </div>
 
