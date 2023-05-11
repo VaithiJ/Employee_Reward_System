@@ -373,13 +373,13 @@ const PlatformAdmin = () => {
                 Wallet Address
               </th>
               <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
-                Reward
-              </th>
-              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
-                Balance Tokens
-              </th>
-              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
                 Register
+              </th>
+              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
+                Tokens 
+              </th>
+              <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
+                Balance
               </th>
               {/* <th style={{ padding: "1rem", fontFamily: "Montserrat" }}>
                 Verify
@@ -412,13 +412,58 @@ const PlatformAdmin = () => {
                   >
                     xdc....{company.walletAddress.slice(-10)}
                   </td>
+                  {company.isAdmin === false ? (
+                    <td style={{ padding: "1rem" }}>
+                      {/* <button onClick={transfer}>Query Data</button> */}
 
+                      <button
+                        onClick={(e) => verify(e, company)}
+                        style={{
+                          backgroundColor: "#330078",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "5px",
+                          padding: "0.5rem 1rem",
+                          fontFamily: "Secular One",
+                          transition: "0.8s",
+
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = "white";
+                          // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+                          e.target.style.boxShadow =
+                          " 1px 0px 19px 5px #ffffff";                          e.target.style.color="#330078"
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = "#330078";
+                          e.target.style.border = "none";
+                          e.target.style.boxShadow = "none";
+                          e.target.style.color = "white"
+                        }}
+                      >
+                        REGISTER
+                      </button>
+                    </td>
+                  ) : (
+                    <div
+                      style={{
+                        fontSize: "16px",
+                        fontWeight: "bold",
+                        color: "white",
+                        marginTop: "30px",
+                        fontFamily: "Secular One",
+                      }}
+                    >
+                      REGISTERED
+                    </div>
+                  )}
                   <td style={{ padding: "1rem", color: "white" }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <input
-                        className="inputbox"
+                      
+                        // className="inputbox"
                         key={index}
-                        placeholder="TOKENS"
+                        placeholder="Tokens"
                         type="number"
                         min="0"
                         inputMode="numeric"
@@ -426,7 +471,9 @@ const PlatformAdmin = () => {
                         style={{
                           marginRight: "1rem",
                           width: "80px",
-                          height: "40px",
+                          height: "30px",
+                          backgroundColor: "#330078",
+                          color : "white"
                         }}
                         onChange={(e) => handleTokenChange(e, company)}
                         value={tokenMap[company.comName] || ""}
@@ -435,7 +482,7 @@ const PlatformAdmin = () => {
                       <button
                         className="button1"
                         style={{
-                          backgroundColor: "#00FA57",
+                          backgroundColor: "#330078",
                           color: "white",
                           border: "none",
                           borderRadius: "5px",
@@ -445,17 +492,23 @@ const PlatformAdmin = () => {
                           overflow: "hidden",
                           zIndex: "1",
                           fontFamily: "Secular One",
+                          transition: "0.5s",
+
                         }}
                         onMouseEnter={(e) => {
-                          e.target.style.background = "#330078";
-                          e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+                          e.target.style.background = "white";
+                          // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
                           e.target.style.boxShadow =
                             " 1px 0px 19px 5px #ffffff";
+                          e.target.style.color = "#330078"
+                          e.target.style.transition= "0.5s"
+
                         }}
                         onMouseLeave={(e) => {
-                          e.target.style.background = "#00FA57";
+                          e.target.style.background = "#330078";
                           e.target.style.border = "none";
-                          e.target.style.boxShadow = "none";
+                          e.target.style.boxShadow = "none";                          e.target.style.color = "white"
+
                         }}
                         onClick={(e) => sendToCompany(e, company)}
                         
@@ -473,12 +526,12 @@ const PlatformAdmin = () => {
                             width: "100%",
                             height: "100%",
                             backgroundColor: "#1e9bff",
-                            zIndex: "-1",
+                            zIndex: "-8",
                             transform: "scale(0)",
-                            transition: "0.5s",
+                            transition: "0.8s",
                           }}
                         ></span>
-                        GIVE TOKENS
+                        Reward
                       </button>
                       
                     </div>
@@ -512,22 +565,27 @@ const PlatformAdmin = () => {
                     <button
                       onClick={(e) => balanceOf(e, company)}
                       style={{
-                        backgroundColor: "#FAC900",
+                        backgroundColor: "#330078",
                         color: "white",
                         border: "none",
                         borderRadius: "5px",
                         padding: "0.5rem 1rem",
                         fontFamily: "Secular One",
+                        transition: "0.8s",
+
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.background = "#CC00FF";
-                        e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
+                        e.target.style.background = "white";
+                        // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
                         e.target.style.boxShadow = "1px 0px 19px 5px #ffffff";
+                        e.target.style.color = "#330078"
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.background = "#FAC900";
+                        e.target.style.background = "#330078";
                         e.target.style.border = "none";
-                        e.target.style.boxShadow = "none";
+                        e.target.style.boxShadow = "none";  
+                        e.target.style.color = "white"
+
                       }}
                     >
                       BALANCE
@@ -578,47 +636,7 @@ const PlatformAdmin = () => {
                       Register
                     </button>
                   </td> */}
-                  {company.isAdmin === false ? (
-                    <td style={{ padding: "1rem" }}>
-                      {/* <button onClick={transfer}>Query Data</button> */}
-
-                      <button
-                        onClick={(e) => verify(e, company)}
-                        style={{
-                          backgroundColor: "#FA0000",
-                          color: "white",
-                          border: "none",
-                          borderRadius: "5px",
-                          padding: "0.5rem 1rem",
-                          fontFamily: "Montserrat",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.background = "#16FF00";
-                          e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                          e.target.style.boxShadow = "1px 0px 19px 5px #ffffff";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.background = "#FA0000";
-                          e.target.style.border = "none";
-                          e.target.style.boxShadow = "none";
-                        }}
-                      >
-                        Register
-                      </button>
-                    </td>
-                  ) : (
-                    <div
-                      style={{
-                        fontSize: "18px",
-                        fontWeight: "bold",
-                        color: "white",
-                        marginTop: "30px",
-                        fontFamily: "Secular One",
-                      }}
-                    >
-                      REGISTERED
-                    </div>
-                  )}
+               
                 </tr>
               );
             })}
@@ -638,7 +656,7 @@ width: "100vw",
 
 height: "100vh",
 
-background: "rgba(255, 255, 255, 0.4)",
+background: "rgba(0, 0, 0, 0.4)",
 
 display: "flex",
 

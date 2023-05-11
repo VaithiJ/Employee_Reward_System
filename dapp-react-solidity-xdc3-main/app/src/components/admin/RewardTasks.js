@@ -83,18 +83,7 @@ if (same==true && confirmAdminWallet && confirmUniqueName && confirmNoChanges ) 
   
     console.log(updatedTask);
 
-  axios
-      .put(
-        `/updateetask/${taskkk._id}`,
-        { certificates: "Certified" },
-        { withCredentials: true }
-      )
-      .then(async (responsee) => {
-        const updateFile = responsee.data.updatedTask;
-        console.log(responsee.data.updateFile);
-        setSubmitting(true);
-        
-})
+
 
   if (!fileUpload) return;
 
@@ -139,6 +128,18 @@ console.log(taskId,"taskid")
     taskkk.rewards
   ]);
   log("Registered", "hash", resp.txHash);
+  axios
+  .put(
+    `/updateetask/${taskkk._id}`,
+    { certificates: "Certified" },
+    { withCredentials: true }
+  )
+  .then(async (responsee) => {
+    const updateFile = responsee.data.updatedTask;
+    console.log(responsee.data.updateFile);
+    setSubmitting(true);
+    
+})
   setShowLoader(false)
   Swal.fire({
 
@@ -168,9 +169,7 @@ console.log(taskId,"taskid")
         setSubmitting(true);
         
 })
-       setTimeout(() => {
-      window.location.reload();
-       }, 15000);
+       
       Swal.fire({
 
         icon: 'error',
@@ -498,7 +497,7 @@ width: "100vw",
 
 height: "100vh",
 
-background: "rgba(255, 255, 255, 0.4)",
+background: "rgba(0, 0, 0, 0.4)",
 
 display: "flex",
 
