@@ -109,7 +109,7 @@ function RealDash(connect) {
         year: "numeric",
       });
       const tasks = markedDates.filter(
-        (task) => task.deadline === formattedDate
+        (task) => task.deadline === formattedDate && tokenn.name === task.companyName
       );
       if (tasks.length > 0) {
         return (
@@ -296,9 +296,9 @@ function RealDash(connect) {
       });
   }, []);
   const currentDate = new Date();
-  console.log("Iniki date enanda", currentDate);
+  console.log( currentDate);
   const re = Alltasks.filter((task) => task.companyName === tokenn.name).length;
-  console.log("ell tasks um ", re);
+  console.log( re);
   if (cookies.access_token && jwt_decode(cookies.access_token).isAdmin) {
     const filteredEmployees = employees.filter((employee) => {
       console.log(employee.isOnboarded);
@@ -311,7 +311,7 @@ function RealDash(connect) {
       );
     });
 
-    const OnboardedEmployees = employees.length;
+    const OnboardedEmployees = employees.filter((emp) => emp.comName === tokenn.name).length;
     const rewardedTasks = Alltasks.filter(
       (task) => task.status === "Rewarded" && task.compName === tokenn.name
     ).length;

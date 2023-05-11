@@ -12,6 +12,7 @@ import "./real.css"
 import awarddd from "./awd.png"
 import "./reg.css"
 import Swal from "sweetalert2";
+import Loader from "../pages/Loader.js";
 
 
 
@@ -43,11 +44,12 @@ const Award = (props) => {
   const [submitting, setSubmitting] = useState(false);
   const [hash, setHash] = useState("");
 
- 
+  const [showLoader, setShowLoader] = useState(false);
+
   
   const [fileUpload, setFileUpload] = useState(null);
   const uploadFile = async () => {
-    
+
     const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
 const confirmUniqueName = window.confirm("Does the certificate have a unique name?");
 const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proceed?");
@@ -55,7 +57,7 @@ const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proce
 
 if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
 
-
+  setShowLoader(true)
 
   if (!fileUpload) return;
 
@@ -101,6 +103,7 @@ console.log(rewardAmount)
       employeeAddress
     ]);
     log("Registered", "hash", resp.txHash);
+    setShowLoader(false)
     setHash(resp.txHash)
     Swal.fire({
       icon: "success",
@@ -113,6 +116,7 @@ console.log(rewardAmount)
 
     history.push("/real");
   } catch (error) {
+    setShowLoader(false)
     if (error.code === -32603) {
       Swal.fire({
         icon: "error",
@@ -248,6 +252,29 @@ backgroundColor:"transparent",width:"600px",marginTop:"100px",marginLeft:"100px"
           </button>
           </Link>
         </form>
+        {showLoader && (<div style={{
+
+position: "fixed",
+
+top: 0,
+
+left: 0,
+
+width: "100vw",
+
+height: "100vh",
+
+background: "rgba(255, 255, 255, 0.4)",
+
+display: "flex",
+
+justifyContent: "center",
+
+alignItems: "center",
+
+zIndex: 9999,
+
+}} ><Loader  /></div>)}
      {/* </div> */}
       
     {/* <div style={{ marginTop: "0px", marginLeft: "-800px",marginTop:"100px", fontFamily: "Secular One", fontSize: "30px" }}>
