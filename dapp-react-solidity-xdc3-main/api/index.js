@@ -41,6 +41,15 @@ import customAward from "./routes/company/customAward.js";
 
 const app = express()
 dotenv.config();
+app.use(cors({ origin: "http://65.2.3.121:3000", credentials: true }));
+
+ 
+
+app.use(function(req, res, next) {
+res.header("Access-Control-Allow-Origin", ["http://65.2.3.121:3000"]);
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
 // const upload = multer({ dest: 'EmployeeRewardSystem/certificates/' })
 // const s3 = new AWS.S3({
 //     accessKeyId: process.env.ACCESS_KEY,
@@ -119,7 +128,7 @@ mongoose.connection.on("disconnected", ()=>{
 mongoose.connection.on("connected", ()=>{
     console.log("Mongodb connected")
 })
-app.use(cors({ origin: "http://65.2.3.121:3000", credentials: true }));
+
 app.use(cookieParser());
 app.use(express.json())
 app.use("/", userRoute)
@@ -150,21 +159,7 @@ app.use("/", awardedemployee)
 app.use("/", allAward)
 app.use("/", customAward);
 
-app.use((req, res, next) => {
-    // res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Origin", "http://65.2.3.121:3000"); 
-    
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    res.header(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-    );
-    next();
-});
+
 app.use("/" , loginComp)
 
 app.use((err,req,res,next)=>{

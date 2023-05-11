@@ -85,7 +85,7 @@ const history = useHistory();
     const ls = localStorage.getItem("WalletAddress");
     const sl = ls.toLowerCase();
     console.log(sl);
-    if (tokenn.wallet.replace("xdc","0x") === sl) {
+    if (tokenn.wallet.replace("xdc","0x") === ls) {
       setSame(true);
     }
   }

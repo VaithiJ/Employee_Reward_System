@@ -50,15 +50,19 @@ export default function SignInPage() {
         confirmButtonColor:"#9A1B56"
        
         })      ;
-      history.push("/employeehome");
-    } catch (error) {
+window.location.href='/employeehome'    } catch (error) {
       console.error(error);
       if (error.response && error.response.status === 404) {
         setErrorMessage("User not found");
+        alert(errorMessage)
       } else if (error.response && error.response.status === 400) {
         setErrorMessage("Incorrect password");
+        alert(errorMessage)
+
       } else {
-        setErrorMessage("An error occurred");
+        setErrorMessage("Invalid name or password");
+        alert(errorMessage)
+
       }
     }
   };

@@ -33,20 +33,21 @@ const CreateModal = (props) => {
       {},
       { withCredentials: true }
     );
-
     console.log(response.data);
-    alert("You have approved the task. Now you can reward the employee");
   };
   const status = task.status;
   const Approval = (taskk) => {
     const confirmed = window.confirm("Do you want to approve this task?");
     if (confirmed) {
+      alert("You have approved the task. Now you can reward the employee");
+
       axios
         .put(
           `/updatetask/${taskk._id}`,
           { status: "Approved" },
           { withCredentials: true }
         )
+        
         .then((response) => {
           const updatedTask = response.data.updatedTask;
           console.log(response.data.updatedTask);
@@ -60,7 +61,9 @@ const CreateModal = (props) => {
               }
             })
           );
+
         })
+        
         .catch((error) => {
           console.log(error);
         });
@@ -79,7 +82,7 @@ const CreateModal = (props) => {
         )
         .then((response) => {
           const updatedTask = response.data.updatedTask;
-          console.log("vanakam da ",response.data.updatedTask);
+          console.log(response.data.updatedTask);
           // update tasks state
           setTask(
             task.map((t) => {

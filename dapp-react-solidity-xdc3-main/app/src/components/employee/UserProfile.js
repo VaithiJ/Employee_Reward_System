@@ -362,7 +362,7 @@ axios
           }}
         >
           <p style={{ display: "inline-block" }}>
-            <b style={{ color: "#537FE7", display: "inline",position:"relative",right:"197px",fontFamily: "Secular One" }}>Name :<b style={{color:"#000000",position:"relative",left:"10px",fontFamily: "Secular One" }}>{toke.name} </b> </b> 
+            <b style={{ color: "#537FE7", display: "inline",position:"relative",right:"167px",fontFamily: "Secular One" }}>Name :<b style={{color:"#000000",position:"relative",left:"10px",fontFamily: "Secular One" }}>{toke.name} </b> </b> 
           </p>
 
           <p>
@@ -490,8 +490,8 @@ axios
               },
             }}
           >
-            <b style={{ fontFamily: "Secular One",position:"relative",bottom:"325px",right:"250px" }}>Award History{" "} </b>
-            <IoIosArrowDropdownCircle style={{ fontSize: "30px",position:"relative",bottom:"304px",right:"320px" }} />
+            <b style={{ fontFamily: "Secular One",position:"relative",bottom:"325px",right:"250px", marginTop:"90px", marginLeft:"-120px"}}>Award History{" "} </b>
+            <IoIosArrowDropdownCircle style={{ fontSize: "30px",position:"relative",bottom:"304px",right:"250px", marginTop:"50px"}} />
           </div>
         
       

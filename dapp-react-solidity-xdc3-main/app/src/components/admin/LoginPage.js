@@ -63,8 +63,7 @@ export default function SignInPage() {
       //    confirmButtonColor:"#9A1B56"
         
       //    })
-      history.push("/real");
-    } catch (error) {
+window.location.href='/real'    } catch (error) {
       console.error(error);
 
       if (error.response && error.response.status === 404) {

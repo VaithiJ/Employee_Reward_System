@@ -44,7 +44,15 @@ const RewardTasks = (props) => {
   const [fileUpload, setFileUpload] = useState(null);
   const [fileList, setFileList] = useState([]);
   const [taskId, setTaskId] = useState(null);
-
+  const [same, setSame] = useState(false);
+  const sameAdd = () => {
+    // console.log(tokenn.wallet.replace("xdc", "0x"));
+    const ls = localStorage.getItem("WalletAddress");
+    const sl = ls.toLowerCase();
+    if (tokenn.wallet.replace("xdc","0x") === ls) {
+      setSame(true);
+    }
+  }
   const fileListRef = ref(storage,'certificates');
   function generateHash(data) {
     const hash = crypto.createHash('sha256');
@@ -57,11 +65,13 @@ const RewardTasks = (props) => {
   
 
   const uploadFile = async (taskkk) => {
+    sameAdd()
+
     const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
 const confirmUniqueName = window.confirm("Does the certificate have a unique name?");
 const confirmNoChanges = window.confirm("Once uploaded, cannot be changed. Proceed?");
-
-if (confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
+if (same==true && confirmAdminWallet && confirmUniqueName && confirmNoChanges ) {
+  
       let updatedTask = await axios.put(
       `/updatetask/${taskkk._id}`,
       { status: "Rewarded" },
@@ -137,12 +147,39 @@ console.log(taskId,"taskid")
     confirmButtonColor:"#9A1B56"
    
     })
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
     } catch (error) {
+      axios
+      .put(
+        `/updateetask/${taskkk._id}`,
+        { certificates: "false" },
+        { withCredentials: true }
+      )
+      .then(async (responsee) => {
+        const updateFile = responsee.data.updatedTask;
+        console.log(responsee.data.updateFile);
+        setSubmitting(true);
+        
+})
       setTimeout(() => {
         window.location.reload();
       }, 15000);
+      Swal.fire({
 
-      console.error('Error uploading file!', error);
+        icon: 'error',
+       
+       title: 'Rewarding failed!',
+       
+        text: 'Check if you have a unique file name',
+       
+        confirmButtonColor:"#9A1B56"
+       
+        })
+        setTimeout(() => {
+          window.location.reload();
+        }, 2500);      console.error('Error uploading file!', error);
       setSubmitting(false);
     }
         let response = await queryData(erc, provider, "getFileHash", [taskId]);
@@ -150,13 +187,20 @@ console.log(taskId,"taskid")
      
         setTimeout(() => {
           window.location.reload();
-        }, 5000);
+        }, 3000);
   
         setSubmitting(false);
   
-  };
+  }else{
+    alert(`This is not ${tokenn.name}'s address`)
+  }
 } 
-
+useEffect(() => {
+  const intervalId = setInterval(() => {
+    sameAdd();
+  }, 1000);
+  return () => clearInterval(intervalId);
+}, []);
 
   useEffect(() => {
     listAll(fileListRef).then((response) => {
