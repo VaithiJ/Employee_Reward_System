@@ -83,18 +83,7 @@ if (same==true && confirmAdminWallet && confirmUniqueName && confirmNoChanges ) 
   
     console.log(updatedTask);
 
-  axios
-      .put(
-        `/updateetask/${taskkk._id}`,
-        { certificates: "Certified" },
-        { withCredentials: true }
-      )
-      .then(async (responsee) => {
-        const updateFile = responsee.data.updatedTask;
-        console.log(responsee.data.updateFile);
-        setSubmitting(true);
-        
-})
+
 
   if (!fileUpload) return;
 
@@ -139,6 +128,18 @@ console.log(taskId,"taskid")
     taskkk.rewards
   ]);
   log("Registered", "hash", resp.txHash);
+  axios
+  .put(
+    `/updateetask/${taskkk._id}`,
+    { certificates: "Certified" },
+    { withCredentials: true }
+  )
+  .then(async (responsee) => {
+    const updateFile = responsee.data.updatedTask;
+    console.log(responsee.data.updateFile);
+    setSubmitting(true);
+    
+})
   setShowLoader(false)
   Swal.fire({
 
