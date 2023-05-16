@@ -7,8 +7,6 @@ import axios from "../url.js"
 import jet from "./jet.gif";
 import Swal from "sweetalert2";
 import del from "./tokkk.png";
-import "../pages/Loader.js"
-
 import "./token.css";
 import OwnerButton from "./OwnerButton";
 import Loader from "../pages/Loader.js";

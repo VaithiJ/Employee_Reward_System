@@ -87,7 +87,6 @@ export default function RegisterComp() {
                   width: "70px",
                   height: "40px",
                   color: "black",
-                  border: "1px solid red",
                 }}
               />
             </Link>

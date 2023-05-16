@@ -65,7 +65,6 @@ export default function Register() {
             <Link to="/">
               <FaHome
                 style={{
-                  border: "1px solid red",
                   marginLeft: "200px",
                   marginTop: "30px",
                   marginLeft: "-1300px",

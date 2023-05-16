@@ -115,7 +115,7 @@ const CreateModal = (props) => {
   }, [empName]);
 
   return (
-    <div style={{ backgroundImage: `url(${stack})`, height: "800px" }}>
+    <div style={{  height: "800px" , backgroundColor:"#F9F8F8"}}>
       <div className="me">
         <div
           className="modal-container"
@@ -127,7 +127,7 @@ const CreateModal = (props) => {
         >
           <header
             style={{
-              backgroundColor: "#69C5FA",
+              backgroundColor: "#fff",
               padding: "1.5rem 0",
               height: "100px",
               color: "#F2F2F2",
@@ -136,7 +136,7 @@ const CreateModal = (props) => {
           >
             <div
               className="sidejs"
-              style={{ position: "relative", bottom: "20px", right: "600px" }}
+              style={{ position: "relative", bottom: "20px", right: "620px", top:"-15px" }}
             >
               <SidebarMenu />
             </div>
@@ -147,7 +147,8 @@ const CreateModal = (props) => {
                 fontSize: "2.5rem",
                 marginBottom: "1.5rem",
                 color: "black",
-                textAlign: "center",
+                textAlign: "left",
+                marginLeft:"-900px",
                 textTransform: "uppercase",
                 position: "relative",
                 bottom: "60px",
@@ -156,13 +157,12 @@ const CreateModal = (props) => {
               VIEW TASK
             </h2>
           </header>
-
+<div style={{backgroundColor:"#F9F8F8"}}>
           <div
             className="mer5"
             style={{
-              backgroundImage: `url(${bg})`,
               height: "900px",
-              boxShadow: "-3px 5px 28px 1px rgba(0,0,0,0.74) inset",
+              boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
               backgroundColor: "#BFF1EE",
               display: "flex",
               flexDirection: "column",
@@ -298,6 +298,7 @@ const CreateModal = (props) => {
               </div>
             ) : null}
           </div>
+        </div>
         </div>
         {/* <br />
     <br />

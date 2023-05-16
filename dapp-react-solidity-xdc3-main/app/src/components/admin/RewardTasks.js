@@ -342,11 +342,12 @@ useEffect(() => {
   ];
   const COLORS = ['red', '#F3DA06'];
   return (
-    <div style={{backgroundColor:"#E3E3E3", height:"800px"}}>
+    <div style={{backgroundColor:"#F9F8F8", height:"800px"}}>
     <div className="containerr" >
-      <div className="main" >
-        <h1 className="headerrr" style={{fontFamily:"Secular One", fontSize:"40px", marginTop:"10px", marginLeft:"00px"}}>REWARD EMPLOYEES</h1>
-        <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-120px", marginTop:"-10px"}}>
+      <div className="main"  >
+        <header style={{backgroundColor:"#F9F8F8", marginTop:"-20px"}}>
+        <h1 className="headerrr" style={{fontFamily:"Secular One", fontSize:"40px", marginTop:"30px", marginLeft:"-950px"}}>REWARD </h1>
+        <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-120px", marginTop:"-0px"}}>
           {" "}
           <SidebarMenu />{" "}
           <button
@@ -355,7 +356,7 @@ useEffect(() => {
                   style={{
                     margin: "1rem",
                     marginLeft: "1950px",
-                    marginTop: "-40px",
+                    marginTop: "-50px",
                     borderRadius: "10px",
                     height: "45px",
                     backgroundColor: "#1196B0",
@@ -376,7 +377,7 @@ useEffect(() => {
                   <FaSignOutAlt /> Balance
                 </button>
 </div>
-
+</header>
 <div className="container" style={{ 
   
   background: "white", 

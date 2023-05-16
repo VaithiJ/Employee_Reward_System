@@ -197,7 +197,7 @@ const CalendarView = () => {
               marginLeft: "100px",
             }}
           >
-            Mark As Complete
+            Mark As Completed
           </button>
         </div>
       )}

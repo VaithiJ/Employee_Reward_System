@@ -169,9 +169,9 @@ const SidebarMenu = () => {
 
       <li style={{color:"white", marginLeft:"-20px", fontFamily:"Secular One", fontSize:"30px"}}>{toke.name}</li>
       <li id="fonnn" style={{marginTop:"40px"}} >
-    <Link to="/real"style={{marginLeft:"-200px", fontSize:"14px", fontFamily:"Montserrat"}}>
+    <a href="/real"style={{marginLeft:"-200px", fontSize:"14px", fontFamily:"Montserrat"}}>
       <FaHome className="fonnn" /> HOME
-    </Link>
+    </a>
     </li>
   <li id="fonnn" style={{marginTop:"10px", marginBottom:"10px"}}>
     <Link to="/admindash" style={{marginLeft:"-80px",fontSize:"14px",fontFamily:"Montserrat"}}>
@@ -184,10 +184,10 @@ const SidebarMenu = () => {
             </a>
           </li> */}
          <li id="fonnn" style={{marginBottom:"10px"}} >
-    <Link to="/reward" style={{marginLeft:"-180px",fontSize:"14px", fontFamily:"Montserrat", marginBottom:"10px"}}>
+    <a href="/reward" style={{marginLeft:"-180px",fontSize:"14px", fontFamily:"Montserrat", marginBottom:"10px"}}>
       <FaHome className="fonnn" onMouseOver={(e) => (e.target.style.color = "rgb(245, 71, 193)")}
               onMouseOut={(e) => (e.target.style.color = "#FFFFFF")} /> REWARD
-    </Link>
+    </a>
   </li>
           <li>
             <a href="/logincomp"

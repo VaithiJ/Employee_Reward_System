@@ -545,7 +545,8 @@ console.log("rowwwww",Alltasks)
                   marginBottom: "100px",
                   marginLeft: "",
                   fontSize: "70px",
-                  color:'#27E1C1'
+                  color:'#27E1C1',
+                  fontFamily:"Secular One"
                 }}
               >
                 {Alltasks}
@@ -619,11 +620,11 @@ console.log("rowwwww",Alltasks)
       >
         <div
           style={{
-            padding: "20px",
+            padding: "2px",
             position: "relative",
-            backgroundColor: "#fff",
-            borderRadius: "10px",
             boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
+            height:"600px",
+            border:"10px solid #789BF1"
           }}
         >
           <div
@@ -637,36 +638,127 @@ console.log("rowwwww",Alltasks)
             <span
               onClick={() => setOpen(false)}
               style={{
-                fontSize: "20px",
-                color: "#aaa",
+                fontSize: "30px",
+                color: "red",
                 cursor: "pointer",
+                fontWeight:"1000"
               }}
             >
-              X
+              <FaTimes/>
             </span>
           </div>
           {selectedTasks && (
-            <div style={{ padding: "20px", textAlign: "center" }}>
+            <div style={{ padding: "20px", textAlign: "center" , backgroundColor:"#F9F8F8"}}>
+              
               <div
                 style={{
                   fontSize: "24px",
                   fontWeight: "bold",
                   marginBottom: "20px",
                   color: "#333",
+                  fontFamily:"Secular One",
+                  marginTop:"50px"
                 }}
               >
                 {selectedTasks.task.toUpperCase()}
               </div>
               <div
+                  style={{
+                    fontSize: "16px",
+                    marginRight: "165px",
+                    fontWeight: "bolder",
+                    color: "#777",
+
+                  }}
+                >
+                  Task Name:
+                </div>
+                <div
                 style={{
                   fontSize: "16px",
                   marginBottom: "20px",
                   color: "#555",
-                  fontFamily: "Montserrat",
+                  fontFamily: "Secular One",
                   fontWeight: "bolder",
+                  marginRight:"-10px",
+                  marginTop:"-24px"
+                }}
+              >
+                {selectedTasks.taskName}
+              </div>
+              <div
+                  style={{
+                    fontSize: "16px",
+                    marginRight: "125px",
+                    fontWeight: "bolder",
+                    color: "#777",
+
+                  }}
+                >
+                  Task Description:
+                </div>
+              <div
+                style={{
+                  fontSize: "16px",
+                  marginBottom: "20px",
+                  color: "#555",
+                  fontFamily: "Secular One",
+                  fontWeight: "bolder",
+                  marginTop:"5px",
+                  marginLeft:"60px"
                 }}
               >
                 {selectedTasks.taskDescription}
+              </div>
+         
+            
+              <div
+                  style={{
+                    fontSize: "16px",
+                    marginRight: "195px",
+                    fontWeight: "bolder",
+                    color: "#777",
+
+                  }}
+                >
+                  Status:
+                </div>
+              <div
+                style={{
+                  fontSize: "16px",
+                  marginBottom: "20px",
+                  color: "#555",
+                  fontFamily: "Secular One",
+                  fontWeight: "bolder",
+                  marginTop:"-24px"
+                }}
+              >
+                {selectedTasks.status}
+              </div>
+              <div
+                  style={{
+                    fontSize: "16px",
+                    marginRight: "180px",
+                    fontWeight: "bolder",
+                    color: "#777",
+
+                    
+                  }}
+                >
+                  Rewards:
+                </div>
+              <div
+                style={{
+                  fontSize: "16px",
+                  marginBottom: "20px",
+                  color: "#555",
+                  fontFamily: "Secular One",
+                  fontWeight: "bolder",
+                  marginTop:"-24px"
+
+                }}
+              >
+                {selectedTasks.rewards}
               </div>
               <div
                 style={{
@@ -675,12 +767,13 @@ console.log("rowwwww",Alltasks)
                   alignItems: "center",
                   marginBottom: "20px",
                   color: "#777",
+                  marginLeft:"68px"
                 }}
               >
                 <div
                   style={{
                     fontSize: "16px",
-                    marginRight: "10px",
+                    marginRight: "20px",
                     fontWeight: "bolder",
                   }}
                 >
@@ -695,10 +788,12 @@ console.log("rowwwww",Alltasks)
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  marginTop:"50px"
                 }}
               >
                 <button
                   style={{
+                    marginTop:"200px",
                     background:
                       "linear-gradient(to left, #52c234 20%, #061700  0%, #52c234  0%)",
                     margin: "10px",
@@ -717,8 +812,17 @@ console.log("rowwwww",Alltasks)
                     fontWeight: "bold",
                     letterSpacing: "1px",
                     outline: "none",
+                    fontFamily:"Secular One"
                   }}
                   onClick={() => MarkasCompleted(selectedTasks)}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = "#16FF00";
+                    e.target.style.boxShadow = "1px 0px 19px 5px #ffffff";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = "linear-gradient(to left, #52c234 20%, #061700  0%, #52c234  0%)";
+                    e.target.style.boxShadow = "none";
+                  }}
                 >
                   Mark as Completed
                 </button>
@@ -786,13 +890,13 @@ console.log("rowwwww",Alltasks)
                             fontSize:'10px !important' 
                           }}
                         >
-                          <b style={{fontSize:"16px",fontFamily:"Algeria"}}> 
+                          <b style={{fontSize:"16px",fontFamily:"Secular One"}}> 
                             {task.task.toUpperCase()}{" "}
                             {/* Convert task.task to uppercase */}
                           </b>
                         </h6>
 
-                        <small style={{fontFamily: "Montserrat", fontSize:"13px"}}>Deadline: {task.deadline}</small>
+                        <small style={{fontFamily: "Secular One", fontSize:"13px"}}>Deadline: {task.deadline}</small>
                       </div>
                       <div
                         style={{
@@ -812,7 +916,7 @@ console.log("rowwwww",Alltasks)
                         <p
                           style={{
                             marginRight: "10px",
-                            fontFamily: "Montserrat",
+                            fontFamily: "Secular One",
                             position: "relative",
                             top: "7px",
                             color: "#000000",
@@ -827,7 +931,7 @@ console.log("rowwwww",Alltasks)
                             marginBottom: "0",
                             color: getTextColor(task.status),
                             textAlign: "center",
-                            fontFamily: "Montserrat",
+                            fontFamily: "Secular One",
                             fontWeight: "bold",
                             fontSize:"16px" // updated font weight for better readability // updated text transform to uppercase for a more stylish look
                           }}

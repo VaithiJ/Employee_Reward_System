@@ -842,6 +842,7 @@ function RealDash(connect) {
                                         bottom: "39px",
                                         fontWeight: "bolder",
                                         fontSize: "1rem",
+                                        fontFamily:"SecularOne"
                                       }}
                                     >
                                       {" "}
@@ -1024,15 +1025,15 @@ function RealDash(connect) {
                               }}
                             >
                               <div className="d-flex justify-content-between align-items-left">
-                                <div>
+                                <div style={{marginLeft:"-20px"}}>
                                   <h6
                                     className="font-weight-bold mb-0"
                                     style={{
-                                      fontFamily: "Algeria",
                                       marginTop: "20px",
                                       fontWeight: "1000",
                                       fontSize: "16px",
                                       fontFamily: "Secular One",
+                                      marginLeft:"-0px"
                                     }}
                                   >
                                     {task.empName.toUpperCase()}
@@ -1043,6 +1044,7 @@ function RealDash(connect) {
                                       // marginLeft: "20px",
                                       fontFamily: "Secular One",
                                       fontSize: "14px",
+                                      marginLeft:"30px"
                                     }}
                                   >
                                     {task.task}
@@ -1056,6 +1058,8 @@ function RealDash(connect) {
                                       fontWeight: "1000",
                                       marginLeft: "200px",
                                       marginTop: "30px",
+                                      fontFamily:"SecularOne"
+
                                     }}
                                   >
                                     Status:
@@ -1065,9 +1069,11 @@ function RealDash(connect) {
                                       display: "inline-block",
                                       color: "#ff0000",
                                       fontWeight: "1000",
+                                      fontFamily:"SecularOne"
+
                                     }}
                                   >
-                                    <b>{task.status}</b>{" "}
+                                    <b style={{fontFamily:"SecularOne"}}>{task.status}</b>{" "}
                                   </p>
                                 </div>
                                 <button

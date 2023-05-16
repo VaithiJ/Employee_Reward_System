@@ -22,6 +22,7 @@ const Openpage = () => {
 
   return (
     <div className="all" >
+
       <div
         className={styles.open}
         style={{
@@ -30,7 +31,11 @@ const Openpage = () => {
           backgroundImage: `url(${bg})`,
         }}
       >
+
         <Onavbar />
+        {/* <button style={{marginLeft:"1100px", marginTop:"-800px", borderRadius:"20px", width:"150px"}}>Admin</button> */}
+
+
         <div
           style={{
             textAlign: "left",
@@ -38,14 +43,18 @@ const Openpage = () => {
             marginTop: "100px",
           }}
         >
+
           <span
             className={styles.span}
             style={{ paddingTop: "200px", textShadow: "0px 0px 2px", fontFamily:"Secular One" }}
           >
             Employee Reward System{" "}
           </span>
+
         </div>
+
         <div>
+
           <img className="ac"
             src={ac}
             style={{
@@ -56,6 +65,7 @@ const Openpage = () => {
               marginRight: "20px",
             }}
           />
+
         </div>
         <h1 className="home-title">
           <p
@@ -71,6 +81,7 @@ const Openpage = () => {
           </p>
         </h1>
         <div>
+
           <Link to="/login">
             <button className={styles.btn} style={{ marginLeft: "-20px" }}>
               Employee

@@ -100,7 +100,6 @@ window.location.href='/real'    } catch (error) {
               width: "70px",
               height: "40px",
               color: "black",
-              border:"1px solid red"
             }}
           />
         </Link>

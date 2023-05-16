@@ -152,7 +152,11 @@ const history = useHistory();
       history.push("/real")
     } catch (error) {
       setShowLoader(false)
-      alert("Cannot add employee")
+      Swal.fire({
+        icon: "error",
+        title:"Check Wallet Address" ,
+        confirmButtonColor: "#9A1B56",
+      })      ;
       if (error.response) {
         console.error("Error response: ", error.response.data);
       } else if (error.request) {
@@ -162,7 +166,12 @@ const history = useHistory();
       }
     }
   }else{
-    alert(`This is not ${comName}'s wallet address`)
+    Swal.fire({
+      icon: "error",
+      title:"Onboarding Failed" ,
+      text: `This is not ${comName}'s wallet address`,
+      confirmButtonColor: "#9A1B56",
+    })
 }
 }
   
