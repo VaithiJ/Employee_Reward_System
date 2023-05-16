@@ -911,8 +911,8 @@ function RealDash(connect) {
                     </div>
                   </div>
                 </div>
-
-                <div
+                  {" "}
+                  <div
                   className="col-md-8"
                   style={{
                     marginTop: "230px",
