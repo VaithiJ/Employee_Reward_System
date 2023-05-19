@@ -133,28 +133,29 @@ const ProfilePage = (props) => {
     });
   };
 
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       const response = await axios.put(`${API_URL}/updateprofile/${toke.name}`);
-  //       const red = response.data.updatedprofile;
-  //       setred(red);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.put(`/updateprofile/${toke.name}`);
+        const red = response.data.updatedprofile;
+        setred(red);
 
-  //       const storageRef = ref(storage, `UserProfile/${toke.name}`);
-  //       const listResult = await listAll(storageRef);
+        const storageRef = ref(storage, `UserProfile/${toke.name}`);
+        const listResult = await listAll(storageRef);
 
-  //       const itemRef = listResult.items.find((ref) => ref.name === red.profile);
-  //       if (itemRef) {
-  //         const url = await getDownloadURL(itemRef);
-  //         setAvatarUrl(url);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+        const itemRef = listResult.items.find((ref) => ref.name === red.profile);
+        if (itemRef) {
+          const url = await getDownloadURL(itemRef);
+          setAvatarUrl(url);
+          console.log("What is the url", url)
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  //   fetchProfile();
-  // }, []);
+    fetchProfile();
+  }, []);
 
 
   const handleMouseEnter = () => {

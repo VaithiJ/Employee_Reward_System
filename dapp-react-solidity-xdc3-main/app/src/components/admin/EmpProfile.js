@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import dotenv from "dotenv";
 import {
   Button,
@@ -26,13 +26,13 @@ import Swal from "sweetalert2";
 import "./real.css"
 import Footercr from "../footer/footercr";
 import LogoutHeader from "../header/logoutheader";
-import {storage} from "../../firebase.js"
-import {v4 as uuidv4} from "uuid";
-import {ref, uploadBytes, getDownloadURL, listAll, list} from "firebase/storage";
+import { storage } from "../../firebase.js"
+import { v4 as uuidv4 } from "uuid";
+import { ref, uploadBytes, getDownloadURL, listAll, list } from "firebase/storage";
 dotenv.config()
 
 const nodemailer = require('nodemailer');
- const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
+const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
 const ProfilePage = (props) => {
   const [progressWidth, setProgressWidth] = useState(0);
   const [showLoader, setShowLoader] = useState(false);
@@ -44,15 +44,15 @@ const ProfilePage = (props) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.GMAIL,
-        pass: process.env.GMAIL_PASSWORD
+      user: process.env.GMAIL,
+      pass: process.env.GMAIL_PASSWORD
     }
-});
-const history = useHistory();
+  });
+  const history = useHistory();
 
   const [avatarUrl, setAvatarUrl] = useState("");
   const [red, setred] = useState([]);
-  const[m,setm]=useState("")
+  const [m, setm] = useState("")
   // const [comName, setComName] = useState(" ");
   // const [comId, setComId] = useState(" ");
   const [employee, setEmployee] = useState([]);
@@ -63,14 +63,14 @@ const history = useHistory();
   const employeeMobile = employee.mobile;
   const employeeEmail = employee.email;
   const employeeWallet = employee.wallet;
-  const profile11= employee.profile;
+  const profile11 = employee.profile;
   console.log("aksjdakjsdkasdjasd", employeeMobile);
-    const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const { provider, erc } = useContext(EthereumContext);
   console.log("sample", erc)
   // console.log("sdfgjhfsdghfdsghd",respo.data);
   // console.log("sdfgjhfsdghfdsghd",respo.data);
-  window.onload = function() {
+  window.onload = function () {
     alert("\n• Please connect your company wallet address ");
   }
   // console.log("comName:",comName);
@@ -89,7 +89,7 @@ const history = useHistory();
     const ls = localStorage.getItem("WalletAddress");
     const sl = ls.toLowerCase();
     console.log(sl);
-    if (tokenn.wallet.replace("xdc","0x") === ls) {
+    if (tokenn.wallet.replace("xdc", "0x") === ls) {
       setSame(true);
     }
   }
@@ -99,83 +99,83 @@ const history = useHistory();
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
-    
+
   const tokenn = jwt_decode(cookies.access_token);
   const comName = tokenn.name;
   const comId = tokenn.name.substr(0, 3).toUpperCase() + employeeId.substr(-6);
-    const getAllEmployees = async (event) => {
+  const getAllEmployees = async (event) => {
     event.preventDefault();
     setSubmitting(true);
-    
+
     let employeeaddress = employee.wallet.replace("xdc", "0x");
-    let response1 = await queryData(erc, provider, 'getAllEmployees',[employeeaddress]);
+    let response1 = await queryData(erc, provider, 'getAllEmployees', [employeeaddress]);
     log("submitClaim", "hash", response1)
     setSubmitting(false);
   }
   const regEmployee = async () => {
     sameAdd()
-    if(same == true){
-    
-      try{
+    if (same == true) {
+
+      try {
         setShowLoader(true)
-      let employeeaddress = employee.wallet.replace("xdc", "0x");
-      let employeename = employee.name;
-      console.log("name", employeename);
-      let resp = await executeTransaction(erc, provider, "regEmployee", [
-        employeeaddress,employeename
-        
-      ]);
-      log("Registered Employee", "hash", resp.txHash);
-      setShowLoader(false)
-      setSubmitting(false);
-      const respo = await axios.get(`/onboard/${employeeId}`, {
-        withCredentials: true,
-      });
-      console.log("asasdasdasdasdsaasdasssssssssssss", respo);
-    
-      const response = await axios.post(
-        `/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
-        {
-          comName,
-          comId,
-        },
-        { withCredentials: true }
-      );
-      setSubmitting(true);
-  
-      Swal.fire({
-        icon: "success",
-        title:"Employee Added Successfully" ,
-        text: `${employeeName} has been added`,
-        confirmButtonColor: "#9A1B56",
-      })
-      history.push("/real")
-    } catch (error) {
-      setShowLoader(false)
+        let employeeaddress = employee.wallet.replace("xdc", "0x");
+        let employeename = employee.name;
+        console.log("name", employeename);
+        let resp = await executeTransaction(erc, provider, "regEmployee", [
+          employeeaddress, employeename
+
+        ]);
+        log("Registered Employee", "hash", resp.txHash);
+        setShowLoader(false)
+        setSubmitting(false);
+        const respo = await axios.get(`/onboard/${employeeId}`, {
+          withCredentials: true,
+        });
+        console.log("asasdasdasdasdsaasdasssssssssssss", respo);
+
+        const response = await axios.post(
+          `/addemployee/${employeeId}/${employeeName}/${employeeAddress}/${employeeMobile}/${employeeEmail}/${employeeWallet}/${profile11}`,
+          {
+            comName,
+            comId,
+          },
+          { withCredentials: true }
+        );
+        setSubmitting(true);
+
+        Swal.fire({
+          icon: "success",
+          title: "Employee Added Successfully",
+          text: `${employeeName} has been added`,
+          confirmButtonColor: "#9A1B56",
+        })
+        history.push("/real")
+      } catch (error) {
+        setShowLoader(false)
+        Swal.fire({
+          icon: "error",
+          title: "Check Wallet Address",
+          confirmButtonColor: "#9A1B56",
+        });
+        if (error.response) {
+          console.error("Error response: ", error.response.data);
+        } else if (error.request) {
+          console.error("Error request: ", error.request);
+        } else {
+          console.error("Error message: ", error.message);
+        }
+      }
+    } else {
       Swal.fire({
         icon: "error",
-        title:"Check Wallet Address" ,
+        title: "Onboarding Failed",
+        text: `This is not ${comName}'s wallet address`,
         confirmButtonColor: "#9A1B56",
-      })      ;
-      if (error.response) {
-        console.error("Error response: ", error.response.data);
-      } else if (error.request) {
-        console.error("Error request: ", error.request);
-      } else {
-        console.error("Error message: ", error.message);
-      }
+      })
     }
-  }else{
-    Swal.fire({
-      icon: "error",
-      title:"Onboarding Failed" ,
-      text: `This is not ${comName}'s wallet address`,
-      confirmButtonColor: "#9A1B56",
-    })
-}
-}
-  
-  
+  }
+
+
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -184,10 +184,10 @@ const history = useHistory();
         const response = await axios.put(`/updateprofile/${employeeName}`);
         const red = response.data.updatedprofile;
         setred(red);
-  
+
         const storageRef = ref(storage, `UserProfile/${employeeName}`);
         const listResult = await listAll(storageRef);
-  
+
         const itemRef = listResult.items.find((ref) => ref.name === red.profile);
         if (itemRef) {
           const url = await getDownloadURL(itemRef);
@@ -197,10 +197,10 @@ const history = useHistory();
         console.error(error);
       }
     };
-  
+
     fetchProfile();
   }, [employeeName]);
-  
+
   useEffect(() => {
     axios
       .get(`/empprofile/${employeeId}`, { withCredentials: true })
@@ -219,7 +219,7 @@ const history = useHistory();
   console.log("vanthura", onboarded);
   // console.log("heyy",employee)
   return (
-    <div  style={{ height: "auto" }}>
+    <div style={{ height: "auto" }}>
       <header
         style={{
           backgroundColor: "white",
@@ -237,7 +237,7 @@ const history = useHistory();
         <h1
           style={{
             margin: "0",
-            marginLeft:"-120px",
+            marginLeft: "-120px",
             fontSize: "35px",
             fontWeight: "bold",
             color: "#0F6292",
@@ -245,7 +245,7 @@ const history = useHistory();
             textAlign: "center",
             position: "relative",
             left: "30px",
-            fontFamily:"Secular One"
+            fontFamily: "Secular One"
           }}
         >
           EMPLOYEE PROFILE
@@ -260,59 +260,59 @@ const history = useHistory();
             height: "50px",
           }}
         /> */}
-        
-      </header>
-      <div style={{backgroundColor:"#F9F8F8"}}>
-      <div
-        className="card"
-        style={{
-          width: "900px",
-          height: "140px",
-          flexDirection: "row",
-          background: "#FFFFFF",
-          margintop: "100px",
-          position: "relative",
-          top: "30px",
-          left: "240px",
-        }}
-      >
-        <img
-          src={avatarUrl ||"https://img.freepik.com/free-icon/user_318-159711.jpg"}
-          alt="Avatar"
-          style={{
-            border: "3px solid #ccc",
-            boxShadow: "0px 0px 10px #ccc",
-            borderRadius: "50%",
-            marginLeft: "5%",
-            width: "120px",
-            height: "120px",
-            position: "relative",
-            top: "10px",
-          }}
-        />
 
+      </header>
+      <div style={{ backgroundColor: "#F9F8F8" }}>
         <div
-          className="red"
+          className="card"
           style={{
-            flexDirection: "column",
+            width: "900px",
+            height: "140px",
+            flexDirection: "row",
+            background: "#FFFFFF",
+            margintop: "100px",
             position: "relative",
-            top: "35px",
-            left: "30px",
-            flexDirection: "column",
+            top: "30px",
+            left: "240px",
           }}
         >
-          <p style={{ display: "inline-block",fontFamily:"Secular One", marginLeft:"-0px" }}>
-            <b style={{ color: "#537FE7", display: "inline",fontFamily:"Secular One" }}>Name : </b>{" "}
-            {employee.name}
-          </p>
+          <img
+            src={avatarUrl || "https://img.freepik.com/free-icon/user_318-159711.jpg"}
+            alt="Avatar"
+            style={{
+              border: "3px solid #ccc",
+              boxShadow: "0px 0px 10px #ccc",
+              borderRadius: "50%",
+              marginLeft: "5%",
+              width: "120px",
+              height: "120px",
+              position: "relative",
+              top: "10px",
+            }}
+          />
 
-          <p style={{fontFamily:"Secular One"}}>
-            {" "}
-            <b style={{ color: "#537FE7",fontFamily:"Secular One" }}> Wallet Address: </b>{" "}
-            {employee.wallet}
-          </p>
-        </div>
-        {/* <div className="butad">
+          <div
+            className="red"
+            style={{
+              flexDirection: "column",
+              position: "relative",
+              top: "35px",
+              left: "30px",
+              flexDirection: "column",
+              display:"flex"
+            }}
+          >
+            <p style={{ display: "inline-block", fontFamily: "Secular One", marginLeft: "-0px",position:"relative",display:"flex"}}>
+              <b style={{ color: "#537FE7", display: "inline", fontFamily: "Secular One" }}>Name :  </b>{" "}
+              <span style={{ color: "#000000", fontFamily: "Secular One",position:"relative",left:"18px" }}>{employee.name}</span>
+            </p>
+            <p style={{ fontFamily: "Secular One",display:"flex" }}>
+              {" "}
+              <b style={{ color: "#537FE7", fontFamily: "Secular One" }}> Wallet : </b>{" "}
+              <span style={{ color: "#000000", fontFamily: "Secular One",position:"relative",left:'10px' }}>{employee.wallet}</span>
+            </p>
+          </div>
+          {/* <div className="butad">
           <div
           
             style={{
@@ -381,72 +381,72 @@ const history = useHistory();
             )}
           </div>
         </div> */}
-      </div>
-      <div
-        className="card1"
-        style={{
-          marginLeft: "238px",
-          position: "relative",
-          top: "50px",
-          textAlign: "center",
-          borderRadius: "20px",
-          height:"300px"
-        }}
-      >
-        <div style={{ textAlign: "center" }}>
-          <h6>
-            <b style={{ fontSize: "1.4rem", color: "#537FE7",fontFamily:"Secular One"    }}>INFORMATION</b>
-          </h6>{" "}
         </div>
-        <hr className="mt-0 mb-4" />
-        <div className="row pt-1">
-          <div
-            className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px" }}
-          >
-            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily:"Secular One" }}>Name:</h6>
-            <p className="text-muted  mb-6" style={{fontFamily:"Secular One"}}>{employee.name}</p>
+        <div
+          className="card1"
+          style={{
+            marginLeft: "238px",
+            position: "relative",
+            top: "50px",
+            textAlign: "center",
+            borderRadius: "20px",
+            height: "300px"
+          }}
+        >
+          <div style={{ textAlign: "center" }}>
+            <h6>
+              <b style={{ fontSize: "1.4rem", color: "#537FE7", fontFamily: "Secular One" }}>INFORMATION</b>
+            </h6>{" "}
           </div>
-          <div
-            className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px" }}
-          >
-            <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily:"Secular One"}}>Email:</h6>
-            <p className="text-muted mb-6" style={{fontFamily:"Secular One" }}>{employee.email}</p>
-          </div>
-          <div
-            className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px",fontFamily:"Secular One" }}
-          >
-            <h6 style={{ color: "#537FE7", marginRight: "20px",fontFamily:"Secular One" }}>Phone:</h6>
-            <p className="text-muted  mb-6" style={{fontFamily:"Secular One"}}>{employee.mobile}</p>
-          </div>
+          <hr className="mt-0 mb-4" />
+          <div className="row pt-1">
+            <div
+              className="col-6 mb-3 d-flex align-items-left"
+              style={{ position: "relative", left: "50px" }}
+            >
+              <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Name:</h6>
+              <p className="text-muted  mb-6" style={{ fontFamily: "Secular One" }}>{employee.name}</p>
+            </div>
+            <div
+              className="col-6 mb-3 d-flex align-items-left"
+              style={{ position: "relative", left: "50px" }}
+            >
+              <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Email:</h6>
+              <p className="text-muted mb-6" style={{ fontFamily: "Secular One" }}>{employee.email}</p>
+            </div>
+            <div
+              className="col-6 mb-3 d-flex align-items-left"
+              style={{ position: "relative", left: "50px", fontFamily: "Secular One" }}
+            >
+              <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Phone:</h6>
+              <p className="text-muted  mb-6" style={{ fontFamily: "Secular One" }}>{employee.mobile}</p>
+            </div>
 
-          <div
-            className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px" }}
-          >
-            <h6 style={{ color: "#537FE7", marginRight: "20px",fontFamily:"Secular One" }}>Address:</h6>
-            <p className="text-muted mb-0" style={{fontFamily:"Secular One"}}>{employee.address}</p>
+            <div
+              className="col-6 mb-3 d-flex align-items-left"
+              style={{ position: "relative", left: "50px" }}
+            >
+              <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Address:</h6>
+              <p className="text-muted mb-0" style={{ fontFamily: "Secular One" }}>{employee.address}</p>
+            </div>
+            <div
+              className="col-6 mb-3 d-flex align-items-left"
+              style={{ position: "relative", left: "50px", marginLeft: "-20px" }}
+            >
+              <h6 className="walad" style={{ color: "#537FE7", position: "relative", fontFamily: "Secular One", left: "18px" }}>
+                Wallet :
+              </h6>
+              <p className="walad" style={{ color: "#6C7592", fontFamily: "Secular One", position: "relative", left: "30px" }}>{employee.wallet}</p>
+            </div>
+            <div
+              className="col-6 mb-3 d-flex align-items-left"
+              style={{ position: "relative", left: "50px", marginLeft: "20px" }}
+            >
+              <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>ID:</h6>
+              <p className="text-muted  mb-6" style={{ fontFamily: "Secular One" }}>{employee._id}</p>
+            </div>
           </div>
-          <div
-            className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px" , marginLeft:"-20px"}}
-          >
-            <h6  className="walad" style={{ color: "#537FE7", marginRight: "100px",fontFamily:"Secular One" }}>
-              Wallet Address:
-            </h6>
-            <p className="walad" style={{color:"#6C7592",fontFamily:"Secular One", marginLeft:"-100px"}}>{employee.wallet}</p>
-          </div>
-          <div
-            className="col-6 mb-3 d-flex align-items-left"
-            style={{ position: "relative", left: "50px", marginLeft:"20px" }}
-          >
-            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily:"Secular One" }}>ID:</h6>
-            <p className="text-muted  mb-6" style={{fontFamily:"Secular One"}}>{employee._id}</p>
-          </div>
-        </div>
-        {/* <div style={{ marginTop: "80px" }}>
+          {/* <div style={{ marginTop: "80px" }}>
           <div style={{ textAlign: "center" }}>
             <h6>
               <b
@@ -483,15 +483,16 @@ const history = useHistory();
             </div>
           </div>
         </div> */}
-        
+
         </div>
         <div className="butad">
           <div
-          
+
             style={{
-              position: "absolute",
+              position: "relative",
               bottom: "10px",
-              right: "-10px",
+              left: "1090px",
+              bottom:"100px",
               height: "20%",
               width: "20%",
               display: "flex",
@@ -502,41 +503,43 @@ const history = useHistory();
               ":hover": {
                 transform: "scale(10)",
                 background: "#330078",
+                display:"flex"
               },
             }}
           >
             {onboarded ? null : (
               <CardActions>
                 {/* <Link to={"/real"}> */}
-                  <Button
-                  
-                    onClick={regEmployee}
-                    variant="contained"
-                    color="primary"
+                <Button
+
+                  onClick={regEmployee}
+                  variant="contained"
+                  color="primary"
+                  style={{
+                    margin: "1rem",
+                    position: "relative",
+                    bottom: "50px",
+                    width: "240px",
+                    right: "30px",
+                    height: "60px",
+                    marginTop: "150px",
+                    marginLeft: "-630px",
+                    display:"flex"
+                  }}
+                >
+                  <AiOutlineUserAdd
                     style={{
-                      margin: "1rem",
+                      width: "30px",
+                      height: "30px",
                       position: "relative",
-                      bottom: "50px",
-                      width: "240px",
-                      right: "30px",
-                      height:"60px",
-                      marginTop:"150px",
-                      marginLeft:"-630px",
+                      right: "20px",
                     }}
-                  >
-                    <AiOutlineUserAdd
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        position: "relative",
-                        right: "20px",
-                      }}
-                    />{" "}
-                    <a>
-                      {" "}
-                      <b> Add Employee </b>{" "}
-                    </a>
-                  </Button>
+                  />{" "}
+                  <a>
+                    {" "}
+                    <b> Add Employee </b>{" "}
+                  </a>
+                </Button>
                 {/* </Link> */}
                 {/* <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
                 <Button
@@ -555,30 +558,30 @@ const history = useHistory();
           </div>
           {showLoader && (<div style={{
 
-position: "fixed",
+            position: "fixed",
 
-top: 0,
+            top: 0,
 
-left: 0,
+            left: 0,
 
-width: "100vw",
+            width: "100vw",
 
-height: "100vh",
+            height: "100vh",
 
-background: "rgba(0, 0, 0, 0.4)",
+            background: "rgba(0, 0, 0, 0.4)",
 
-display: "flex",
+            display: "flex",
 
-justifyContent: "center",
+            justifyContent: "center",
 
-alignItems: "center",
+            alignItems: "center",
 
-zIndex: 9999,
+            zIndex: 9999,
 
-}} ><Loader  /></div>)}
+          }} ><Loader /></div>)}
 
         </div>
-        
+
       </div>
 
       <div></div>
