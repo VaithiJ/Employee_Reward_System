@@ -299,17 +299,17 @@ const ProfilePage = (props) => {
               top: "35px",
               left: "30px",
               flexDirection: "column",
-              display:"flex"
+              display: "flex"
             }}
           >
-            <p style={{ display: "inline-block", fontFamily: "Secular One", marginLeft: "-0px",position:"relative",display:"flex"}}>
+            <p style={{ display: "inline-block", fontFamily: "Secular One", marginLeft: "-0px", position: "relative", display: "flex" }}>
               <b style={{ color: "#537FE7", display: "inline", fontFamily: "Secular One" }}>Name :  </b>{" "}
-              <span style={{ color: "#000000", fontFamily: "Secular One",position:"relative",left:"18px" }}>{employee.name}</span>
+              <span style={{ color: "#000000", fontFamily: "Secular One", position: "relative", left: "18px" }}>{employee.name}</span>
             </p>
-            <p style={{ fontFamily: "Secular One",display:"flex" }}>
+            <p style={{ fontFamily: "Secular One", display: "flex" }}>
               {" "}
               <b style={{ color: "#537FE7", fontFamily: "Secular One" }}> Wallet : </b>{" "}
-              <span style={{ color: "#000000", fontFamily: "Secular One",position:"relative",left:'10px' }}>{employee.wallet}</span>
+              <span style={{ color: "#000000", fontFamily: "Secular One", position: "relative", left: '10px' }}>{employee.wallet}</span>
             </p>
           </div>
           {/* <div className="butad">
@@ -483,65 +483,64 @@ const ProfilePage = (props) => {
             </div>
           </div>
         </div> */}
+          <div className="butad">
+            <div
 
-        </div>
-        <div className="butad">
-          <div
-
-            style={{
-              position: "relative",
-              bottom: "10px",
-              left: "1090px",
-              bottom:"100px",
-              height: "20%",
-              width: "20%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-              ":hover": {
-                transform: "scale(10)",
-                background: "#330078",
-                display:"flex"
-              },
-            }}
-          >
-            {onboarded ? null : (
-              <CardActions>
-                {/* <Link to={"/real"}> */}
-                <Button
-
-                  onClick={regEmployee}
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    margin: "1rem",
-                    position: "relative",
-                    bottom: "50px",
-                    width: "240px",
-                    right: "30px",
-                    height: "60px",
-                    marginTop: "150px",
-                    marginLeft: "-630px",
-                    display:"flex"
-                  }}
-                >
-                  <AiOutlineUserAdd
+              style={{
+                position: "relative",
+                bottom: "10px",
+                left: "930px",
+                bottom: "100px",
+                height: "20%",
+                width: "20%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                ":hover": {
+                  transform: "scale(10)",
+                  background: "#330078",
+                  display: "flex"
+                },
+              }}
+            >
+              {onboarded ? null : (
+                <CardActions>
+                  {/* <Link to={"/real"}> */}
+                  <Button
+                  
+                    onClick={regEmployee}
+                    variant="contained"
+                    color="primary"
                     style={{
-                      width: "30px",
-                      height: "30px",
+                      margin: "1rem",
                       position: "relative",
-                      right: "20px",
+                      bottom: "48px",
+                      width: "170px",
+                      right: "30px",
+                      height: "50px",
+                      marginTop: "150px",
+                      marginLeft: "-630px",
+                      display: "flex"
                     }}
-                  />{" "}
-                  <a>
-                    {" "}
-                    <b> Add Employee </b>{" "}
-                  </a>
-                </Button>
-                {/* </Link> */}
-                {/* <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
+                  >
+                    <AiOutlineUserAdd
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        position: "relative",
+                        left: "0px",
+                        bottom:'2px'
+                      }}
+                    />{" "}
+                    <a>
+                      {" "}
+                      <b> Add Employee </b>{" "}
+                    </a>
+                  </Button>
+                  {/* </Link> */}
+                  {/* <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
                 <Button
                   onClick={getAllEmployees}
                     variant="contained"
@@ -551,11 +550,16 @@ const ProfilePage = (props) => {
                      <AiOutlineUserAdd style={{width:"30px",height:"30px",position:"relative",right:"20px"}}/> <a> <b> Get </b>  </a>
                   </Button>
                   </div> */}
-              </CardActions>
+                </CardActions>
 
 
-            )}
+              )}
+            </div>
           </div>
+
+        </div>
+        <div className="butad">
+          
           {showLoader && (<div style={{
 
             position: "fixed",
