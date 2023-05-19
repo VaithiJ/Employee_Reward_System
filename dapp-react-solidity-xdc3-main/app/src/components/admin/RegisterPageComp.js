@@ -144,7 +144,7 @@ export default function RegisterComp() {
                       style={{
                         marginTop: "-40px",
                         fontWeight: "bold",
-                        fontFamily: "Montserrat",
+                        fontFamily: "Secular One",
                       }}
                     >
                       CREATE YOUR COMPANY ACCOUNT
@@ -160,7 +160,7 @@ export default function RegisterComp() {
                         className="form-control"
                         value={comName}
                         title="UsercomName"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setUsercomName(e.target.value)}
                         required
                       />
@@ -176,7 +176,7 @@ export default function RegisterComp() {
                         placeholder="Company Email"
                         value={comEmail}
                         title="comEmail"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setcomEmail(e.target.value)}
                         required
                       />
@@ -196,7 +196,7 @@ export default function RegisterComp() {
                         onChange={setMobile}
                         inputClass="form-control"
                         className="red"
-                        style={{ fontFamily: "Montserrat" }}
+                        style={{ fontFamily: "Secular One" }}
                         // dropdownClass="form-control"
                         // style={{height:}}
                         inputStyle={{
@@ -223,44 +223,44 @@ export default function RegisterComp() {
                     </div>
 
                     <div className="col-md-6 form-group" style={{ position: "relative" }}>
-  <input
-    type={showPassword ? "text" : "password"}
-    className="form-control"
-    placeholder="Password"
-    value={password}
-    title="password"
-    style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
-    onChange={(e) => setPassword(e.target.value)}
-    required
-  />
-  {showPassword ? (
-    <AiOutlineEyeInvisible
-      style={{
-        position: "absolute",
-        right: "10px",
-        top: "50%",
-        transform: "translateY(-83%) translateX(24%)",
-        cursor: "pointer",
-        height: "40%",
-        width: "40%",
-      }}
-      onClick={togglePasswordVisibility}
-    />
-  ) : (
-    <AiOutlineEye
-      style={{
-        position: "absolute",
-        right: "30px",
-        top: "50%",
-        transform: "translateY(-83%) translateX(40%)",
-        cursor: "pointer",
-        height: "40%",
-        width: "40%",
-      }}
-      onClick={togglePasswordVisibility}
-    />
-  )}
-</div>
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        className="form-control"
+                        placeholder="Password"
+                        value={password}
+                        title="password"
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                      {showPassword ? (
+                        <AiOutlineEyeInvisible
+                          style={{
+                            position: "absolute",
+                            right: "10px",
+                            top: "50%",
+                            transform: "translateY(-83%) translateX(24%)",
+                            cursor: "pointer",
+                            height: "40%",
+                            width: "40%",
+                          }}
+                          onClick={togglePasswordVisibility}
+                        />
+                      ) : (
+                        <AiOutlineEye
+                          style={{
+                            position: "absolute",
+                            right: "30px",
+                            top: "50%",
+                            transform: "translateY(-83%) translateX(40%)",
+                            cursor: "pointer",
+                            height: "40%",
+                            width: "40%",
+                          }}
+                          onClick={togglePasswordVisibility}
+                        />
+                      )}
+                    </div>
 
 
                     <div className="col-md-12 form-group">
@@ -270,7 +270,7 @@ export default function RegisterComp() {
                         className="form-control"
                         value={comAddress}
                         title="comAddress"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setcomAddress(e.target.value)}
                         required
                       />
@@ -282,7 +282,7 @@ export default function RegisterComp() {
                         className="form-control"
                         value={walletAddress}
                         title="wallet"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setWallet(e.target.value)}
                         required
                       />
@@ -296,7 +296,7 @@ export default function RegisterComp() {
                           style={{
                             color: "black",
                             marginLeft: "-30px",
-                            fontFamily: "Montserrat",
+                            fontFamily: "Secular One",
                             fontWeight: "bold",
                           }}
                         >
@@ -328,9 +328,15 @@ export default function RegisterComp() {
                   >
                     <p
                       className="forgot-password text-right"
-                      style={{ fontFamily: "Secular One" }}
+                      style={{ fontFamily: "Secular One", fontWeight: "bolder" }}
                     >
-                      Already registered <Link to="/logincomp">log in?</Link>
+                      Already registered.  <Link to="/logincomp" style={{
+                        color: "#FF7163",
+                        // textDecoration: "underline",
+                        // textDecorationColor: "red",
+                        fontFamily: "Secular One",
+                        fontWeight: "bolder",
+                      }}>Log In</Link>
                     </p>
                   </div>
                 </div>

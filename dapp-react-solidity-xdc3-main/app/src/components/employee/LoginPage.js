@@ -14,7 +14,7 @@ import empImg from "../../image/employee.jpg";
 import "../../App.css";
 import { FaHome } from "react-icons/fa";
 import "./task.css";
-import {AiOutlineEye ,AiOutlineEyeInvisible} from "react-icons/ai"
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import Swal from "sweetalert2";
 
 
@@ -42,15 +42,16 @@ export default function SignInPage() {
       Swal.fire({
 
         icon: 'success',
-       
-       title: 'Login Successful!',
-       
+
+        title: 'Login Successful!',
+
         text: '',
-       
-        confirmButtonColor:"#9A1B56"
-       
-        })      ;
-window.location.href='/employeehome'    } catch (error) {
+
+        confirmButtonColor: "#9A1B56"
+
+      });
+      window.location.href = '/employeehome'
+    } catch (error) {
       console.error(error);
       if (error.response && error.response.status === 404) {
         setErrorMessage("User not found");
@@ -93,19 +94,19 @@ window.location.href='/employeehome'    } catch (error) {
               }}
             />
           </Link>
-          <div  style={{ display: "flex", flexDirection: "row", marginTop:"-20px" }}>
+          <div style={{ display: "flex", flexDirection: "row", marginTop: "-20px" }}>
             <img
               className="loginnclass"
               // style={{height:"20px", width:"10px"}}
               src={employeeImage}
-              
+
             />
             <p
               className="ftnn"
-              style={{ fontSize: "18px", paddingTop: "30px", marginTop:"350px", marginLeft:"-300px" }}
+              style={{ fontSize: "18px", paddingTop: "30px", marginTop: "350px", marginLeft: "-300px" }}
             >
-              <b className="ftnn" style={{ fontFamily: "Secular One", marginTop:"-390px" }}>
-                Unlock Your Potential <br/> Login to Your <b style={{fontFamily:"Secular One", color: "red"}}>Employee</b> Portal
+              <b className="ftnn" style={{ fontFamily: "Secular One", marginTop: "-390px" }}>
+                Unlock Your Potential <br /> Login to Your <b style={{ fontFamily: "Secular One", color: "red" }}>Employee</b> Portal
                 <br /> TODAY!!!
               </b>
             </p>
@@ -134,22 +135,22 @@ window.location.href='/employeehome'    } catch (error) {
                 Login
               </h2>
               <p>
-                <label style={{fontFamily:"Secular One",fontWeight:"bolder"}}>USERNAME</label>
+                <label style={{ fontFamily: "Secular One", fontWeight: "bolder" }}>USERNAME</label>
                 <br />
                 <input
                   className="ftn"
                   type="text"
                   title="name"
                   value={name}
-                  style={{fontFamily:"Montserrat",fontWeight:"bold"}}
+                  style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                   onChange={(e) => setname(e.target.value)}
                   required
                 />
               </p>
               <p>
-                <label style={{fontFamily:"Secular One", fontWeight:"bolder"}}>PASSWORD</label>
+                <label style={{ fontFamily: "Secular One", fontWeight: "bolder" }}>PASSWORD</label>
                 <Link to="/forget-password">
-                  <label className="right-label" style={{fontFamily:"Secular One",fontWeight:"bold"}}>Forget password?</label>
+                  <label className="right-label" style={{ fontFamily: "Secular One", fontWeight: "bold" }}>Forget password?</label>
                 </Link>
                 <br />
                 <input
@@ -157,37 +158,37 @@ window.location.href='/employeehome'    } catch (error) {
                   type={showPassword ? 'text' : 'password'}
                   title="Password"
                   value={password}
-                  style={{fontFamily:"Montserrat",fontWeight:"bold"}}
+                  style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
                 {showPassword ? (
-    <AiOutlineEyeInvisible
-      style={{
-        position: "relative",
-        left: "100px",
-        top: "5px",
-        transform: "translateY(-250%)",
-        cursor: "pointer",
-        height: "10%",
-        width: "10%"
-      }}
-      onClick={togglePasswordVisibility}
-    />
-  ) : (
-    <AiOutlineEye
-      style={{
-        position: "relative",
-        left: "100px",
-        top: "5px",
-        transform: "translateY(-250%)",
-        cursor: "pointer",
-        height: "10%",
-        width: "10%"
-      }}
-      onClick={togglePasswordVisibility}
-    />
-  )}
+                  <AiOutlineEyeInvisible
+                    style={{
+                      position: "relative",
+                      left: "100px",
+                      top: "5px",
+                      transform: "translateY(-250%)",
+                      cursor: "pointer",
+                      height: "10%",
+                      width: "10%"
+                    }}
+                    onClick={togglePasswordVisibility}
+                  />
+                ) : (
+                  <AiOutlineEye
+                    style={{
+                      position: "relative",
+                      left: "100px",
+                      top: "5px",
+                      transform: "translateY(-250%)",
+                      cursor: "pointer",
+                      height: "10%",
+                      width: "10%"
+                    }}
+                    onClick={togglePasswordVisibility}
+                  />
+                )}
               </p>
               <p>
                 <button
@@ -201,11 +202,23 @@ window.location.href='/employeehome'    } catch (error) {
 
               {message && <p>{message}</p>}
               <footer>
-                <p style={{ textAlign: "center"}}>
-                  <Link to="/register" style={{fontFamily:"Secular One",fontWeight:"bold"}}> First time? Create an account</Link>.
+                <p style={{ textAlign: "center" }}>
+                  <Link to="/register" style={{
+                    color: "black",
+                    textDecoration: "underline",
+                    textDecorationColor: "red",
+                    fontFamily: "Secular One",
+                    fontWeight: "bolder",
+                  }}>Create an account</Link>.
                 </p>
                 <p style={{ textAlign: "center" }}>
-                  <Link to="/" style={{fontFamily:"Secular One",fontWeight:"bold"}}>Back to Homepage</Link>.
+                  <Link to="/" style={{
+                    color: "black",
+                    textDecoration: "underline",
+                    textDecorationColor: "red",
+                    fontFamily: "Secular One",
+                    fontWeight: "bolder",
+                  }}>Back to Homepage</Link>.
                 </p>
               </footer>
             </form>

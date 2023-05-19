@@ -16,13 +16,16 @@ import "./task.css";
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 export default function Register() {
   const [name, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(" ");
   const [mobile, setMobile] = useState("");
-  const [address, setAddress] = useState(" ");
+  const [address, setAddress] = useState("");
   const [DOJ, setDOJ] = useState(0);
   const [checkbox, setCheckbox] = useState(false);
   const [wallet, setWallet] = useState("");
@@ -50,7 +53,33 @@ export default function Register() {
       console.error(error);
     }
   };
+  // const customInputStyle = {
+  //   fontFamily: "Secular One",
+  //   fontWeight: "bold",
+  // };
+  // const CustomDatePickerInput = React.forwardRef(({ value, onClick, onKeyDown }, ref) => {
+  //   const handleKeyDown = (e) => {
+  //     if (e.key === "Enter") {
+  //       const typedDate = new Date(e.target.value);
+  //       if (!isNaN(typedDate)) {
+  //         setDOJ(typedDate);
+  //       }
+  //     }
+  //   };
 
+  //   return (
+  //     <input
+  //       type="text"
+  //       value={value}
+  //       onClick={onClick}
+  //       onKeyDown={handleKeyDown}
+  //       placeholder="Date Of Birth"
+  //       className="form-control"
+  //       style={customInputStyle}
+  //       ref={ref}
+  //     />
+  //   );
+  // });
   return (
     <div style={{ height: "680px" }}>
       <div style={{ backgroundImage: `url(${g})` }}>
@@ -149,7 +178,7 @@ export default function Register() {
                         className="form-control"
                         value={name}
                         title="User Name"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                       />
@@ -161,7 +190,7 @@ export default function Register() {
                         placeholder="Email"
                         value={email}
                         title="comEmail"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                       />
@@ -181,7 +210,7 @@ export default function Register() {
                         onChange={setMobile}
                         inputClass="form-control"
                         className="red"
-                        style={{ fontFamily: "Montserrat" }}
+                        style={{ fontFamily: "Secular One" }}
                         // dropdownClass="form-control"
                         // style={{height:}}
                         inputStyle={{
@@ -213,63 +242,64 @@ export default function Register() {
                         placeholder="Password"
                         value={password}
                         title="password"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                       />
                       {showPassword ? (
-    <AiOutlineEyeInvisible
-      style={{
-        position: "absolute",
-        right: "10px",
-        top: "50%",
-        transform: "translateY(-80%) translateX(24%)",
-        cursor: "pointer",
-        height: "40%",
-        width: "40%",
-      }}
-      onClick={togglePasswordVisibility}
-    />
-  ) : (
-    <AiOutlineEye
-      style={{
-        position: "absolute",
-        right: "30px",
-        top: "50%",
-        transform: "translateY(-80%) translateX(40%)",
-        cursor: "pointer",
-        height: "40%",
-        width: "40%",
-      }}
-      onClick={togglePasswordVisibility}
-    />
-  )}
+                        <AiOutlineEyeInvisible
+                          style={{
+                            position: "absolute",
+                            right: "10px",
+                            top: "50%",
+                            transform: "translateY(-80%) translateX(24%)",
+                            cursor: "pointer",
+                            height: "40%",
+                            width: "40%",
+                          }}
+                          onClick={togglePasswordVisibility}
+                        />
+                      ) : (
+                        <AiOutlineEye
+                          style={{
+                            position: "absolute",
+                            right: "30px",
+                            top: "50%",
+                            transform: "translateY(-80%) translateX(40%)",
+                            cursor: "pointer",
+                            height: "40%",
+                            width: "40%",
+                          }}
+                          onClick={togglePasswordVisibility}
+                        />
+                      )}
                     </div>
-                    <div className="col-md-6 form-group">
-                      <input
-                        type="date"
-                        title="Date of Joining"
-                        placeholder="DOJ"
+                    <div className="col-md-6 form-group" style={{ fontFamily: "Secular One" }}>
+                      <DatePicker
+                        selected={DOJ}
+                        onChange={(date) => setDOJ(date)}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Date of Birth"
                         className="form-control"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
-                        value={DOJ}
-                        onChange={(e) => setDOJ(e.target.value)}
+                        // customInput={<CustomDatePickerInput />}
                         required
+                        // calendarClassName="custom-calendar"
+                        // wrapperClassName="custom-datepicker-wrapper"
                       />
                     </div>
-
                     <div className="col-md-6 form-group">
                       <input
                         type="text"
-                        title="Address"
-                        placeholder="address"
+                        placeholder="Address"
                         className="form-control"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
                         value={address}
+                        title="Address"
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setAddress(e.target.value)}
                         required
                       />
                     </div>
+
                     <div className="col-md-12 form-group">
                       <input
                         type="wallet address"
@@ -277,7 +307,7 @@ export default function Register() {
                         placeholder="Wallet Address"
                         value={wallet}
                         title="wallet"
-                        style={{ fontFamily: "Montserrat", fontWeight: "bold" }}
+                        style={{ fontFamily: "Secular One", fontWeight: "bold" }}
                         onChange={(e) => setWallet(e.target.value)}
                         required
                       />
@@ -292,17 +322,20 @@ export default function Register() {
                             color: "black",
                             marginLeft: "30px",
                             fontFamily: "Secular One",
+                            position: "relative",
+                            left: "40px",
+                            fontWeight: "bolder"
                           }}
                         >
                           <input
                             type="checkbox"
                             className="form-check-input"
+                            // style={{position:"relative",left:"45px"}}
                             checked={checkbox}
                             onChange={(e) => setCheckbox(e.target.checked)}
                             required
-                            style={{ marginLeft: "-20px" }}
                           />
-                          I_agree_to_the_terms_and_conditions
+                          &nbsp;I_agree_to_the_terms_and_conditions
                         </label>
                       </div>
                     </div>
@@ -310,16 +343,28 @@ export default function Register() {
                   <button
                     type="submit"
                     className="btn btn-primary"
-                    style={{ marginLeft: "0px", fontFamily: "Secular One" }}
+                    style={{ marginLeft: "0px", fontFamily: "Secular One", fontWeight: "bolder" }}
                   >
                     Register
                   </button>
                   <div style={{ marginTop: "30px", marginRight: "0px" }}>
                     <p
                       className="forgot-password text-right"
-                      style={{ fontFamily: "Secular One" }}
+                      style={{ fontFamily: "Secular One", fontWeight: "bolder" }}
                     >
-                      Already registered <Link to="/login">log in?</Link>
+                      Already registered.<Link
+                        to="/login"
+                        style={{
+                          color: "black",
+                          textDecoration: "underline",
+                          textDecorationColor: "red",
+                          fontFamily: "Secular One",
+                          fontWeight: "bolder",
+                        }}
+                      >
+                        Log In
+                      </Link>
+
                     </p>
                   </div>
                 </div>
