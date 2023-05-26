@@ -53,33 +53,33 @@ export default function Register() {
       console.error(error);
     }
   };
-  // const customInputStyle = {
-  //   fontFamily: "Secular One",
-  //   fontWeight: "bold",
-  // };
-  // const CustomDatePickerInput = React.forwardRef(({ value, onClick, onKeyDown }, ref) => {
-  //   const handleKeyDown = (e) => {
-  //     if (e.key === "Enter") {
-  //       const typedDate = new Date(e.target.value);
-  //       if (!isNaN(typedDate)) {
-  //         setDOJ(typedDate);
-  //       }
-  //     }
-  //   };
+  const customInputStyle = {
+    fontFamily: "Secular One",
+    fontWeight: "bold",
+  };
+  const CustomDatePickerInput = React.forwardRef(({ value, onClick, onKeyDown }, ref) => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        const typedDate = new Date(e.target.value);
+        if (!isNaN(typedDate)) {
+          setDOJ(typedDate);
+        }
+      }
+    };
 
-  //   return (
-  //     <input
-  //       type="text"
-  //       value={value}
-  //       onClick={onClick}
-  //       onKeyDown={handleKeyDown}
-  //       placeholder="Date Of Birth"
-  //       className="form-control"
-  //       style={customInputStyle}
-  //       ref={ref}
-  //     />
-  //   );
-  // });
+    return (
+      <input
+        type="text"
+        value={value}
+        onClick={onClick}
+        onKeyDown={handleKeyDown}
+        placeholder="Date Of Birth"
+        className="form-control"
+        style={customInputStyle}
+        ref={ref}
+      />
+    );
+  });
   return (
     <div style={{ height: "680px" }}>
       <div style={{ backgroundImage: `url(${g})` }}>
@@ -280,11 +280,14 @@ export default function Register() {
                         onChange={(date) => setDOJ(date)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Date of Birth"
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
                         className="form-control"
-                        // customInput={<CustomDatePickerInput />}
+                        customInput={<CustomDatePickerInput />}
                         required
-                        // calendarClassName="custom-calendar"
-                        // wrapperClassName="custom-datepicker-wrapper"
+                      calendarClassName="custom-calendar"
+                      wrapperClassName="custom-datepicker-wrapper"
                       />
                     </div>
                     <div className="col-md-6 form-group">
@@ -355,9 +358,9 @@ export default function Register() {
                       Already registered.<Link
                         to="/login"
                         style={{
-                          color: "black",
-                          textDecoration: "underline",
-                          textDecorationColor: "red",
+                          color: "#146C94",
+                          // textDecoration: "underline",
+                          // textDecorationColor: "red",
                           fontFamily: "Secular One",
                           fontWeight: "bolder",
                         }}

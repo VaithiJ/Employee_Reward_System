@@ -241,7 +241,7 @@ export default function SignInPage() {
                 </p>
                 <p style={{ fontFamily: "Secular One" }}>
                   <Link to="/" style={{
-                    color: "black",
+                    color: "#4649EE",
                     // textDecoration: "underline",
                     // textDecorationColor: "red",
                     fontFamily: "Secular One",

@@ -204,18 +204,18 @@ export default function SignInPage() {
               <footer>
                 <p style={{ textAlign: "center" }}>
                   <Link to="/register" style={{
-                    color: "black",
-                    textDecoration: "underline",
-                    textDecorationColor: "red",
+                    color: "#146C94",
+                    // textDecoration: "underline",
+                    // textDecorationColor: "red",
                     fontFamily: "Secular One",
                     fontWeight: "bolder",
                   }}>Create an account</Link>.
                 </p>
                 <p style={{ textAlign: "center" }}>
                   <Link to="/" style={{
-                    color: "black",
-                    textDecoration: "underline",
-                    textDecorationColor: "red",
+                    color: "#146C94",
+                    // textDecoration: "underline",
+                    // textDecorationColor: "red",
                     fontFamily: "Secular One",
                     fontWeight: "bolder",
                   }}>Back to Homepage</Link>.
