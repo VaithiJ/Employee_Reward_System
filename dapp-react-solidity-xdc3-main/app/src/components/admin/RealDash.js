@@ -54,7 +54,8 @@ const {
 } = require("react-solidity-xdc3");
 
 function RealDash(connect) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
+  const [search1, setSearch1] = useState("");
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [Alltasks, setAllTasks] = useState([]);
@@ -296,9 +297,9 @@ function RealDash(connect) {
       });
   }, []);
   const currentDate = new Date();
-  console.log( currentDate);
+  console.log(currentDate);
   const re = Alltasks.filter((task) => task.companyName === tokenn.name).length;
-  console.log( re);
+  console.log(re);
   if (cookies.access_token && jwt_decode(cookies.access_token).isAdmin) {
     const filteredEmployees = employees.filter((employee) => {
       console.log(employee.isOnboarded);
@@ -344,13 +345,12 @@ function RealDash(connect) {
         task.companyName === tokenn.name &&
         task.isPending === true &&
         // Check if employee's company name matches tokenn's company name
-        (task.task.toLowerCase().includes(search.toLowerCase()) || // Check if employee's name includes the search term
-          task.empName.toString().includes(search)) // Check if employee's company name includes the search term
+        (task.task.toLowerCase().includes(search1.toLowerCase()) || // Check if employee's name includes the search term
+          task.empName.toString().includes(search1)) // Check if employee's company name includes the search term
       );
     });
 
-    console.log("noice", employees);
-
+    console.log("noice", filteredTasks);
     return (
       <div>
         <div style={{ backgroundColor: "#F9F8F8" }}>
@@ -842,7 +842,7 @@ function RealDash(connect) {
                                         bottom: "39px",
                                         fontWeight: "bolder",
                                         fontSize: "1rem",
-                                        fontFamily:"SecularOne"
+                                        fontFamily: "SecularOne"
                                       }}
                                     >
                                       {" "}
@@ -911,8 +911,8 @@ function RealDash(connect) {
                     </div>
                   </div>
                 </div>
-                  {" "}
-                  <div
+                {" "}
+                <div
                   className="col-md-8"
                   style={{
                     marginTop: "230px",
@@ -949,7 +949,7 @@ function RealDash(connect) {
                           >
                             <p style={{ margin: "0 10px" }}>{task.empName}</p>
 
-                            <p style={{ margin: "0 10px" }}>{task.task}</p>
+                            <p style={{ margin: "0 30px", textAlign: "left" }}>{task.task}</p>
                           </div>
                         ))}
                       </div>
@@ -989,21 +989,23 @@ function RealDash(connect) {
                     >
                       ASSIGNED TASKS
                     </h5>
-                    <div className={`${styles.cardBody}`}>
-                      <div className={`${styles.inputGroup} mb-3`}>
+                    <div className={`${styles.cardBody1}`}>
+                      <div className={`${styles.inputGroup1} mb-3`}>
                         <input
                           type="text"
                           className={`${styles.formControl} form-control`}
                           placeholder="Search by Name"
-                          value={search}
-                          onChange={(e) => setSearch(e.target.value)}
+                          value={search1}
+                          onChange={(e) => setSearch1(e.target.value)}
                         />
+
+
                         <div
-                          className={`${styles.inputGroupAppend} input-group-append`}
+                          className={`${styles.inputGroupAppend1} input-group-append`}
                         ></div>
                       </div>
                       <div
-                        className={`${styles.listGroup} list-group`}
+                        className={`${styles.listGroup1} list-group`}
                         id="employee-list"
                       >
                         <div
@@ -1014,94 +1016,100 @@ function RealDash(connect) {
                             overflowY: "auto",
                           }}
                         >
-                          {filteredTasks.map((task) => (
-                            <div
-                              key={task.task}
-                              className="list-group-item"
-                              style={{
-                                // backgroundColor: "#DDDDD2",
-                                border: "0.1px dotted black",
-                                padding: "2px",
-                              }}
-                            >
-                              <div className="d-flex justify-content-between align-items-left">
-                                <div style={{marginLeft:"-20px"}}>
-                                  <h6
-                                    className="font-weight-bold mb-0"
+                          {filteredTasks
+                            .filter((task) =>
+                              task.empName.toLowerCase().includes(search1.toLowerCase())
+                            )
+                            .map((task) => (
+                              <div
+                                key={task.task}
+                                className="list-group-item"
+                                style={{
+                                  // backgroundColor: "#DDDDD2",
+                                  border: "0.1px dotted black",
+                                  padding: "2px",
+                                }}
+                              >
+                                <div className="d-flex justify-content-between align-items-left">
+                                  <div style={{ marginLeft: "-20px" }}>
+                                    <h6
+                                      className="font-weight-bold mb-0"
+                                      style={{
+                                        marginTop: "20px",
+                                        fontWeight: "1000",
+                                        fontSize: "16px",
+                                        fontFamily: "Secular One",
+                                        marginLeft: "-0px",
+                                        textAlign:"center"
+                                      }}
+                                    >
+                                      {task.empName.toUpperCase()}
+                                    </h6>
+                                    <small
+                                      style={{
+                                        fontWeight: "1000",
+                                        // marginLeft: "20px",
+                                        fontFamily: "Secular One",
+                                        fontSize: "14px",
+                                        marginLeft: "30px",
+                                        textAlign:"left"
+                                      }}
+                                    >
+                                      {task.task}
+                                    </small>
+                                  </div>
+                                  <div style={{ textAlign: "center" }}>
+                                    <p
+                                      style={{
+                                        display: "inline-block",
+                                        marginRight: "10px",
+                                        fontWeight: "1000",
+                                        marginLeft: "200px",
+                                        marginTop: "30px",
+                                        fontFamily: "SecularOne"
+
+                                      }}
+                                    >
+                                      Status:
+                                    </p>
+                                    <p
+                                      style={{
+                                        display: "inline-block",
+                                        color: "#ff0000",
+                                        fontWeight: "1000",
+                                        fontFamily: "SecularOne"
+
+                                      }}
+                                    >
+                                      <b style={{ fontFamily: "SecularOne" }}>{task.status}</b>{" "}
+                                    </p>
+                                  </div>
+                                  <button
+                                    className="btn btn-primary"
                                     style={{
+                                      fontFamily: "Algeria",
                                       marginTop: "20px",
                                       fontWeight: "1000",
-                                      fontSize: "16px",
-                                      fontFamily: "Secular One",
-                                      marginLeft:"-0px"
+                                      color: "blue",
+                                      backgroundColor: "white",
+                                    }}
+                                    onClick={() => {
+                                      history.push(`/viewtask/${task._id}`);
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.target.style.background = "blue";
+                                      e.target.style.color = "white";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.target.style.background = "white";
+                                      e.target.style.color = "blue";
                                     }}
                                   >
-                                    {task.empName.toUpperCase()}
-                                  </h6>
-                                  <small
-                                    style={{
-                                      fontWeight: "1000",
-                                      // marginLeft: "20px",
-                                      fontFamily: "Secular One",
-                                      fontSize: "14px",
-                                      marginLeft:"30px"
-                                    }}
-                                  >
-                                    {task.task}
-                                  </small>
+                                    View Tasks
+                                  </button>
                                 </div>
-                                <div style={{ textAlign: "center" }}>
-                                  <p
-                                    style={{
-                                      display: "inline-block",
-                                      marginRight: "10px",
-                                      fontWeight: "1000",
-                                      marginLeft: "200px",
-                                      marginTop: "30px",
-                                      fontFamily:"SecularOne"
-
-                                    }}
-                                  >
-                                    Status:
-                                  </p>
-                                  <p
-                                    style={{
-                                      display: "inline-block",
-                                      color: "#ff0000",
-                                      fontWeight: "1000",
-                                      fontFamily:"SecularOne"
-
-                                    }}
-                                  >
-                                    <b style={{fontFamily:"SecularOne"}}>{task.status}</b>{" "}
-                                  </p>
-                                </div>
-                                <button
-                                  className="btn btn-primary"
-                                  style={{
-                                    fontFamily: "Algeria",
-                                    marginTop: "20px",
-                                    fontWeight: "1000",
-                                    color: "blue",
-                                    backgroundColor: "white",
-                                  }}
-                                  onClick={() => {
-                                    history.push(`/viewtask/${task._id}`);
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.target.style.background = "blue";
-                                    e.target.style.color = "white";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.target.style.background = "white";
-                                    e.target.style.color = "blue";
-                                  }}
-                                >
-                                  View Tasks
-                                </button>
                               </div>
-                            </div>
-                          ))}
+                            ))}
                         </div>
                       </div>
                     </div>

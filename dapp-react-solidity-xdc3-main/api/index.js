@@ -41,48 +41,15 @@ import customAward from "./routes/company/customAward.js";
 
 const app = express()
 dotenv.config();
-app.use(cors({ origin: "http://65.2.3.121:3000", credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
- 
+
 
 app.use(function(req, res, next) {
-res.header("Access-Control-Allow-Origin", ["http://65.2.3.121:3000"]);
+res.header("Access-Control-Allow-Origin", ["http://localhost:3000"]);
 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 next();
 });
-// const upload = multer({ dest: 'EmployeeRewardSystem/certificates/' })
-// const s3 = new AWS.S3({
-//     accessKeyId: process.env.ACCESS_KEY,
-//     secretAccessKey: process.env.SECRET_ACCESS_KEY,
-//     region: 'ap-south-1'
-//   });
-//   const certUpload = upload.fields([{ name: 'certificates', maxCount: 1 }])
-//   app.post('/uploadingCertificate', certUpload, function (req, res, next) {
-//     const file = req.files['certificates'][0];
-  
-//     // set S3 key (filename) to a unique value based on timestamp
-//     const s3Key = Date.now().toString() + '-' + file.originalname;
-  
-//     // create parameters object for S3 upload
-//     const params = {
-//       Bucket: '',
-//       Key: s3Key,
-//       Body: file.buffer,
-//       ContentType: file.mimetype,
-//       ACL: 'public-read' // set ACL to public-read to allow public access to the file
-//     };
-  
-//     // upload file to S3
-//     s3.upload(params, function (err, data) {
-//       if (err) {
-//         console.log('Error uploading to S3:', err);
-//         return res.status(500).json({ message: 'Error uploading to S3' });
-//       }
-  
-//       console.log('Successfully uploaded to S3:', data.Location);
-//       return res.status(200).json({ message: 'File uploaded successfully' });
-//     });
-//   });
   
 const s3 = new AWS.S3({
     accessKeyId: process.env.ACCESS_KEY,

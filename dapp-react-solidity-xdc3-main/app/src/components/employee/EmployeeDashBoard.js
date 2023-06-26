@@ -716,7 +716,8 @@ console.log("rowwwww",Alltasks)
                   style={{
                     fontSize: "16px",
                     marginRight: "195px",
-                    fontWeight: "bolder",
+                    fontFamily:"Secular One",
+                    fontWeight:"bolder",
                     color: "#777",
 
                   }}

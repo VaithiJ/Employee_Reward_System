@@ -225,12 +225,21 @@
 .cardBody {
   padding: 1rem;
 }
+  .cardBody1 {
+    padding: 1rem;
+  }
 
 .inputGroup {
   margin-bottom: 1rem;
 }
+.inputGroup1 {
+  margin-bottom: 1rem;
+}
 
 .inputGroupAppend {
+  display: flex;
+}
+.inputGroupAppend1 {
   display: flex;
 }
 
@@ -239,6 +248,12 @@
   max-height: 250px;
   overflow-y: auto;
 }
+.listGroup1 {
+  margin-top: 1rem;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
 
 .list_group_item {
   display: flex;
