@@ -41,12 +41,12 @@ import customAward from "./routes/company/customAward.js";
 
 const app = express()
 dotenv.config();
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(cors({ origin: "http://localhost:3001", credentials: true }));
 
 
 
 app.use(function(req, res, next) {
-res.header("Access-Control-Allow-Origin", ["http://localhost:3000"]);
+res.header("Access-Control-Allow-Origin", ["http://localhost:3001"]);
 res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 next();
 });

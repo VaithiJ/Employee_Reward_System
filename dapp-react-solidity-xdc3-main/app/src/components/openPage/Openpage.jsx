@@ -15,7 +15,11 @@ import road from "./dia.gif"
 import "./ap.css";
 import sds from "./sds.png"
 
+
 const Openpage = () => {
+  const handleAdminClick = () => {
+    window.location.href="/admin";
+  };
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -33,8 +37,8 @@ const Openpage = () => {
       >
 
         <Onavbar />
-        {/* <button style={{marginLeft:"1100px", marginTop:"-800px", borderRadius:"20px", width:"150px"}}>Admin</button> */}
-
+        <button onClick={handleAdminClick} style={{marginLeft:"1100px", position:"relative",top:"-80px", borderRadius:"20px", width:"150px", padding:"10px"}}>Admin  
+</button>
 
         <div
           style={{
