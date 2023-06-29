@@ -68,16 +68,31 @@ const PlatformAdmin = () => {
   console.log("sample", erc);
   console.log(provider);
   useEffect(() => {
-    axios
-      .get(`/admin`, { withCredentials: true })
-      .then((response) => {
-        setCompanies(response.data.comp12);
-        console.log(response.data.comp12);
-      })
-      .catch((error) => {
-        console.log(error);
+    const walletAddress = localStorage.getItem("Wallet Address");
+    if (walletAddress === "0x570AC970E766A6E16A36799913fb7C4d4D083fBc") {
+      axios
+        .get(`/admin`, { withCredentials: true })
+        .then((response) => {
+          setCompanies(response.data.comp12);
+          console.log(response.data.comp12);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Access Denied",
+        text: "Please log in as an admin.",
+        confirmButtonText: "Go to Admin Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          history.push("/ownerlogin");
+        }
       });
+    }
   }, []);
+  
   // const regCompany = async (event, company) => {
   //   event.preventDefault();
 
@@ -251,6 +266,10 @@ const PlatformAdmin = () => {
     setTokenMap(newTokenMap);
   };
 
+  const logggout = () => {
+    localStorage.removeItem("Wallet Address")
+    history.push("/ownerlogin")
+  }
   const balanceOf = async (event, company) => {
     try{
     event.preventDefault();
@@ -322,7 +341,7 @@ const PlatformAdmin = () => {
       >
         EMPLOYEE REWARD SYSTEM
       </h1>
-
+<button style={{height:"60px", position:"relative",left:"100px", top:"20px", borderRadius:"20px"}} onClick={logggout}>Log out</button>
       <button
   style={{
     position: "relative",
