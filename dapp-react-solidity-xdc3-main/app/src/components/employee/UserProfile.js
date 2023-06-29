@@ -11,10 +11,23 @@ import SidebarMenu12 from "./side1";
 import jwt_decode from "jwt-decode";
 import axios from "../url.js"
 import { storage } from "../../firebase.js"
+import Swal from "sweetalert2"
 import { v4 as uuidv4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL, listAll, list } from "firebase/storage";
+import { erc as address } from '../../output.json';
+import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json"
 dotenv.config();
 const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
+const { getWeb3Modal, createWeb3Provider, connectWallet, createContractInstance } = require('react-solidity-xdc3');
+var connectOptions = {
+  rpcObj: {
+    50: "https://erpc.xinfin.network",
+    51: "https://erpc.apothem.network",
+    888 : "http://13.234.98.154:8546"
+  },
+  network: "mainnet",
+  toDisableInjectedProvider: true
+}
 const AWS = require('aws-sdk');
 const crypto = require('crypto');
 const s3 = new AWS.S3({
@@ -24,6 +37,27 @@ const s3 = new AWS.S3({
 });
 
 const ProfilePage = (props) => {
+  const [connecting, setconnecting] = useState(false);
+
+   
+  const [ethereumContext, setethereumContext] = useState({});
+  const web3Modal = getWeb3Modal(connectOptions);
+
+  const connect = async (event) => {
+    console.log("Clicked")
+    event.preventDefault();
+    const instance = await web3Modal.connect();
+    const { provider, signer } = await createWeb3Provider(instance);
+    const erc = await createContractInstance(address, abi, provider);
+    const account = await signer.getAddress();
+    localStorage.setItem("WalletAddress", account);
+
+    setethereumContext({ provider, erc, account})
+    log("Connect", "Get Address", await signer.getAddress());
+    setconnecting(true);
+    setConnectClicked(true);
+
+  }
   const [progressWidth, setProgressWidth] = useState(0);
   const [cookies, setCookie, removeCookie] = useCookies(["employee_token",
     "name",]);
@@ -35,13 +69,14 @@ const ProfilePage = (props) => {
   const [tokenHistoryVisible, setTokenHistoryVisible] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [hashh, setHash] = useState("");
+  const[connectClicked, setConnectClicked] = useState(false);
 
   const handleTokenHistoryClick = () => {
     setTokenHistoryVisible(!tokenHistoryVisible);
     setAwardHistoryVisible(false);
   };
 
-  const { provider, erc } = useContext(EthereumContext);
+  const { provider, erc } = ethereumContext;
   console.log("sample", erc)
   const handlePursuingClick = () => {
     if (progressWidth < 100) {
@@ -59,13 +94,65 @@ const ProfilePage = (props) => {
     setHash(response);
 
     // Call the listFiles API to download the file
-    const url = `http://65.2.3.121:8800/listFiles?employeeName=${toke.name}&hash=${response}`;
+    const url = `http://localhost:8800/listFiles?employeeName=${toke.name}&hash=${response}`;
     const newWindow = window.open(url, '_blank');
 
     // Wait for the new window to load before setting submitting to false
     newWindow.onload = () => {
       setSubmitting(false);
     };
+  };
+  const ShareCertificate = async (token, hashh) => {
+    let taskId = (token._id).slice(-5);
+    console.log(taskId);
+    setSubmitting(true);
+
+    // Call the API to get the hash
+    let response = await queryData(erc, provider, 'getFileHash', [taskId]);
+    log("Returned hash", "hash", response);
+    setHash(response);
+console.log(toke)
+    // Call the listFiles API to download the file
+    const url = `http://localhost:3001/listFiles?employeeName=${toke.name}&hash=${response}&tokencomp=${token.companyName}&tokentask=${token.task}&tokendead=${token.rewards}`;
+console.log(url)
+Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-primary',
+    cancelButton: 'btn btn-secondary',
+  },
+  buttonsStyling: false,
+  input: 'text',
+  inputAttributes: {
+    readonly: true,
+  },
+  inputValue: url,
+  confirmButtonText: 'Copy',
+  showCancelButton: true,
+}).fire({
+  icon: 'success',
+  title: 'Copy the link to share!',
+  inputValidator: (value) => {
+    // Validate the input value if needed
+    if (!value) {
+      return 'You need to enter a value';
+    }
+  },
+}).then((result) => {
+  if (result.isConfirmed) {
+    const inputField = Swal.getInput();
+    inputField.select();
+    document.execCommand('copy');
+    Swal.fire({
+      icon: 'success',
+      title: 'Copied!',
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+});
+
+    // Wait for the new window to load before setting submitting to false
+    
   };
 
   const getAwardCertificate = async (token, hashh) => {
@@ -79,7 +166,7 @@ const ProfilePage = (props) => {
     setHash(responseee);
 
     // Call the listFiles API to download the file
-    const url = `http://65.2.3.121:8800/listAwards?employeeName=${toke.name}&hash=${responseee}`;
+    const url = `http://localhost:8800/listAwards?employeeName=${toke.name}&hash=${responseee}`;
     const newWindow = window.open(url, '_blank');
 
     // Wait for the new window to load before setting submitting to false
@@ -265,24 +352,38 @@ const ProfilePage = (props) => {
           color: '#000000',
           position: "relative",
           left: "40px",
-          fontFamily: "Secular One"
+          fontFamily: "Segoe UI"
 
         }}>{toke.name}</p>
-        <h1 style={{
-          margin: '0',
-          fontSize: '35px',
-          fontWeight: 'bold',
-          color: '#0F6292',
-          flex: 4,
-          textAlign: "center",
-          position: "relative",
-          right: "80px",
-          color: "#000000",
-          fontFamily: "Secular One"
-        }}>
+       <h1 style={{
+  margin: '0',
+  fontSize: '35px',
+  fontWeight: 'bold',
+  color: '#0F6292',
+  flex: 4,
+  textAlign: "center",
+  position: "relative",
+  right: "80px",
+  color: "#000000",
+  fontFamily: "Segoe UI" // Changed font family to "sans-serif"
+}}>
+
           USER PROFILE</h1>
-
-
+          <button
+  style={{
+    position: "relative",
+    marginLeft: "150px",
+    height: "60px",
+    marginTop: "20px",
+    borderRadius: "20px",
+    background: connectClicked ? "blue" : "",
+    cursor: connectClicked ? "not-allowed" : "pointer"
+  }}
+  onClick={connect}
+  disabled={connectClicked}
+>
+  {connectClicked ? "Connected" : "Connect"}
+</button> 
       </header>
 
       <div
@@ -367,17 +468,17 @@ const ProfilePage = (props) => {
           }}
         >
           <p style={{ display: "flex", alignItems: "center" }}>
-            <b style={{ color: "#537FE7", marginRight: "10px", fontFamily: "Secular One" }}>
+            <b style={{ color: "#212354", marginRight: "10px", fontFamily: "Segoe UI" }}>
               Name:
             </b>
-            <span style={{ color: "#000000", fontFamily: "Secular One" }}>{toke.name}</span>
+            <span style={{ color: "#000000", fontFamily: "Segoe UI" }}>{toke.name}</span>
           </p>
 
           <p style={{ display: "flex", alignItems: "center" }}>
-            <b style={{ color: "#537FE7", marginRight: "10px", fontFamily: "Secular One" }}>
+            <b style={{ color: "#212354", marginRight: "10px", fontFamily: "Segoe UI" }}>
               Wallet:
             </b>
-            <span style={{ color: "#000000", fontFamily: "Secular One" }}>{toke.wallet}</span>
+            <span style={{ color: "#000000", fontFamily: "Segoe UI" }}>{toke.wallet}</span>
           </p>
         </div>
       </div>
@@ -399,12 +500,12 @@ const ProfilePage = (props) => {
               ":hover": {
                 transform: "scale(1.2)",
                 background: "#FFFFFF",
-                fontFamily: "Secular One"
+                fontFamily: "Segoe UI"
               },
             }}
           >
-            <b style={{ fontFamily: "Secular One", color: "#537FE7" }}>Token History{" "} </b>
-            <IoIosArrowDropdownCircle style={{ fontSize: "30px", color: "#537FE7" }} />
+            <b style={{ fontFamily: "Segoe UI", color: "#212354" }}>Token History{" "} </b>
+            <IoIosArrowDropdownCircle style={{ fontSize: "30px", color: "#212354" }} />
           </div>
           {tokenHistoryVisible && (
           <div
@@ -431,7 +532,7 @@ const ProfilePage = (props) => {
                   }}
                 >
                   {" "}
-                  <b style={{ color: "#537FE7", padding: "40px", fontFamily: "Secular One" }}>
+                  <b style={{ color: "#212354", padding: "40px", fontFamily: "Segoe UI" }}>
                     Token History
                   </b>{" "}
                 </p>
@@ -440,45 +541,89 @@ const ProfilePage = (props) => {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>
+                  <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>
                     Company Name
                   </th>
-                  <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>
+                  <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>
                     Rewarded Tasks
                   </th>
-                  <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>Completion Date</th>
-                  {/* <th style={{ color: "#537FE7", textAlign: "center" }}>
+                  <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>Completion Date</th>
+                  {/* <th style={{ color: "#212354", textAlign: "center" }}>
                   Deadline
                 </th> */}
-                  <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>
-                    Tokens Earned
-                  </th>
-                  <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>
+                 
+                  <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>
                     Certificates
+                  </th>
+                  <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>
+                    Share Certificates
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {tasks.map((token, index) => (
-                  <tr key={index}>
-                    <td style={{ fontFamily: "Secular One" }}>{token.companyName}</td>
-                    <td style={{ fontFamily: "Secular One" }}>{token.task}</td>
-                    <td align="center" style={{ fontFamily: "Secular One" }}>{token.deadline}</td>
-                    {/* <td align="center">{token.rating}</td> */}
-                    <td align="center" style={{ fontFamily: "Secular One" }}>{token.rewards}</td>
-                    <td align="center" ><button style={{
-                      marginRight: '10px',
-                      padding: '8px 16px',
-                      background: 'blue',
-                      color: 'white',
-                      border: 'none',
-                      borderRadius: '4px',
-                      cursor: 'pointer',
-                      fontFamily: "Secular One"
-                    }} onClick={() => getCertificate(token)}> View</button></td>
-                  </tr>
-                ))}
-              </tbody>
+  {tasks.map((token, index) => (
+    <tr key={index}>
+      <td style={{ fontFamily: "Segoe UI" }}>{token.companyName}</td>
+      <td style={{ fontFamily: "Segoe UI" }}>{token.task}</td>
+      <td align="center" style={{ fontFamily: "Segoe UI" }}>{token.deadline}</td>
+      <td align="center">
+        {connectClicked ? (
+          <button style={{
+            marginRight: '10px',
+            padding: '8px 16px',
+            background: 'blue',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontFamily: "Segoe UI"
+          }} onClick={() => getCertificate(token)}
+          > View</button>
+        ) : (
+          <button style={{
+            marginRight: '10px',
+            padding: '8px 16px',
+            background: 'lightgrey',
+            color: 'grey',
+            border: 'none',
+            borderRadius: 'n',
+            cursor: 'not-allowed',
+            fontFamily: "Segoe UI"
+          }} disabled={true}
+          > View</button>
+        )}
+      </td>
+      <td align="center">
+        {connectClicked ? (
+          <button style={{
+            marginRight: '10px',
+            padding: '8px 16px',
+            background: 'blue',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontFamily: "Segoe UI"
+          }} onClick={() => ShareCertificate(token)}
+          > Share</button>
+        ) : (
+          <button style={{
+            marginRight: '10px',
+            padding: '8px 16px',
+            background: 'lightgrey',
+            color: 'grey',
+            border: 'none',
+            borderRadius: 'n',
+            cursor: 'not-allowed',
+            fontFamily: "Segoe UI"
+          }} disabled={true}
+          > Share</button>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
+
             </Table>
           </div>
         )}
@@ -500,13 +645,13 @@ const ProfilePage = (props) => {
           ":hover": {
             transform: "scale(1.2)",
             background: "#FFFFFF",
-            fontFamily: "Secular One",
+            fontFamily: "Segoe UI",
 
           },
         }}
       >
-        <b style={{ fontFamily: "Secular One", position: "relative", bottom: "325px", right: "250px", marginTop: "90px", marginLeft: "-120px", color: "#537FE7" }}>Award History{" "} </b>
-        <IoIosArrowDropdownCircle style={{ fontSize: "30px", position: "relative", bottom: "304px", right: "250px", marginTop: "50px", color: "#537FE7" }} />
+        <b style={{ fontFamily: "Segoe UI", position: "relative", bottom: "325px", right: "250px", marginTop: "90px", marginLeft: "-120px", color: "#212354" }}>Award History{" "} </b>
+        <IoIosArrowDropdownCircle style={{ fontSize: "30px", position: "relative", bottom: "304px", right: "250px", marginTop: "50px", color: "#212354" }} />
       </div>
 
 
@@ -534,7 +679,7 @@ const ProfilePage = (props) => {
                 }}
               >
                 {" "}
-                <b style={{ color: "#537FE7", padding: "40px", fontFamily: "Secular One", position: "relative", bottom: "40px" }}>
+                <b style={{ color: "#212354", padding: "40px", fontFamily: "Segoe UI", position: "relative", bottom: "40px" }}>
                   Award History
                 </b>{" "}
               </p>
@@ -543,46 +688,90 @@ const ProfilePage = (props) => {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>
+                <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>
                   Company Name
                 </th>
-                <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>
+                <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>
                   Award Name
                 </th>
-                <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>Award Date</th>
-                {/* <th style={{ color: "#537FE7", textAlign: "center" }}>
+                <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>Award Date</th>
+                {/* <th style={{ color: "#212354", textAlign: "center" }}>
                   Deadline
                 </th> */}
-                <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>
-                  Tokens Earned
-                </th>
-                <th style={{ color: "#537FE7", textAlign: "center", fontFamily: "Secular One" }}>
+                
+                <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>
                   Certificates
+                </th>
+                <th style={{ color: "#212354", textAlign: "center", fontFamily: "Segoe UI" }}>
+                  Share Certificate
                 </th>
               </tr>
             </thead>
             <tbody>
-              {award.map((token, index) => (
-                <tr key={index}>
-                  <td style={{ fontFamily: "Secular One" }}>{token.compname}</td>
-                  <td style={{ fontFamily: "Secular One" }}>{token.awardname}</td>
-                  <td align="center" style={{ fontFamily: "Secular One" }}>{token.awarddate}</td>
-                  {/* <td align="center">{token.rating}</td> */}
-                  <td align="center" style={{ fontFamily: "Secular One" }}>{token.tokens}</td>
-                  <td align="center" ><button style={{
-                    marginRight: '10px',
-                    padding: '8px 16px',
-                    background: 'blue',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: 'n',
-                    cursor: 'pointer',
-                    fontFamily: "Secular One"
-                  }} onClick={() => getAwardCertificate(token)}
-                  > View</button></td>
-                </tr>
-              ))}
-            </tbody>
+  {award.map((token, index) => (
+    <tr key={index}>
+      <td style={{ fontFamily: "Segoe UI" }}>{token.compname}</td>
+      <td style={{ fontFamily: "Segoe UI" }}>{token.awardname}</td>
+      <td align="center" style={{ fontFamily: "Segoe UI" }}>{token.awarddate}</td>
+      {/* <td align="center">{token.rating}</td> */}
+      <td align="center">
+        {connectClicked ? (
+          <button style={{
+            marginRight: '10px',
+            padding: '8px 16px',
+            background: 'blue',
+            color: 'white',
+            border: 'none',
+            borderRadius: 'n',
+            cursor: 'pointer',
+            fontFamily: "Segoe UI"
+          }} onClick={() => getAwardCertificate(token)}
+          > View</button>
+        ) : (
+          <button style={{
+            marginRight: '10px',
+            padding: '8px 16px',
+            background: 'lightgrey',
+            color: 'grey',
+            border: 'none',
+            borderRadius: 'n',
+            cursor: 'not-allowed',
+            fontFamily: "Segoe UI"
+          }} disabled={true}
+          > View</button>
+        )}
+      </td>
+      <td align="center">
+        {connectClicked ? (
+          <button style={{
+            marginRight: '10px',
+            padding: '8px 16px',
+            background: 'blue',
+            color: 'white',
+            border: 'none',
+            borderRadius: 'n',
+            cursor: 'pointer',
+            fontFamily: "Segoe UI"
+          }} onClick={() => getAwardCertificate(token)}
+          > Share</button>
+        ) : (
+          <button style={{
+            marginRight: '10px',
+            padding: '8px 16px',
+            background: 'lightgrey',
+            color: 'grey',
+            border: 'none',
+            borderRadius: 'n',
+            cursor: 'not-allowed',
+            fontFamily: "Segoe UI"
+          }} disabled={true}
+          > Share</button>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
+
           </Table>
         </div>
 
@@ -600,35 +789,35 @@ const ProfilePage = (props) => {
       >
         <div style={{ textAlign: "center" }}>
           <h6>
-            <b style={{ fontSize: "1.4rem", color: "#537FE7", fontFamily: "Secular One" }}>INFORMATION</b>
+            <b style={{ fontSize: "1.4rem", color: "#212354", fontFamily: "Segoe UI" }}>INFORMATION</b>
           </h6>{" "}
         </div>
         <hr className="mt-0 mb-4" />
         <div className="row pt-1">
           <div className="col-6 mb-3 d-flex align-items-left" style={{ position: "relative", left: "50px" }} >
-            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Name:</h6>
-            <p className="text-muted  mb-6" style={{ fontFamily: "Secular One" }}>{toke.name}</p>
+            <h6 style={{ color: "#212354", marginRight: "20px", fontFamily: "Segoe UI" }}>Name:</h6>
+            <p className="text-muted  mb-6" style={{ fontFamily: "Segoe UI" }}>{toke.name}</p>
           </div>
           <div className="col-6 mb-3 d-flex align-items-left" style={{ position: "relative", left: "50px" }}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Email:</h6>
-            <p className="text-muted mb-6" style={{ fontFamily: "Secular One" }}>{toke.email}</p>
+            <h6 style={{ color: "#212354", marginRight: "20px", fontFamily: "Segoe UI" }}>Email:</h6>
+            <p className="text-muted mb-6" style={{ fontFamily: "Segoe UI" }}>{toke.email}</p>
           </div>
           <div className="col-6 mb-3 d-flex align-items-left" style={{ position: "relative", left: "50px" }}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Phone:</h6>
-            <p className="text-muted  mb-6" style={{ fontFamily: "Secular One" }}>{toke.mobile}</p>
+            <h6 style={{ color: "#212354", marginRight: "20px", fontFamily: "Segoe UI" }}>Phone:</h6>
+            <p className="text-muted  mb-6" style={{ fontFamily: "Segoe UI" }}>{toke.mobile}</p>
           </div>
 
           <div className="col-6 mb-3 d-flex align-items-left" style={{ position: "relative", left: "50px" }}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Address:</h6>
-            <p className="text-muted mb-0" style={{ fontFamily: "Secular One" }}>{toke.address}</p>
+            <h6 style={{ color: "#212354", marginRight: "20px", fontFamily: "Segoe UI" }}>Address:</h6>
+            <p className="text-muted mb-0" style={{ fontFamily: "Segoe UI" }}>{toke.address}</p>
           </div>
           <div className="col-6 mb-3 d-flex align-items-left" style={{ position: "relative", left: "50px" }}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Wallet:</h6>
-            <p className="text-muted  mb-6" style={{ fontFamily: "Secular One", position: "relative", right: "7px" }}>{toke.wallet}</p>
+            <h6 style={{ color: "#212354", marginRight: "20px", fontFamily: "Segoe UI" }}>Wallet:</h6>
+            <p className="text-muted  mb-6" style={{ fontFamily: "Segoe UI", position: "relative", right: "7px" }}>{toke.wallet}</p>
           </div>
           <div className="col-6 mb-3 d-flex align-items-left" style={{ position: "relative", left: "50px" }}>
-            <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>ID:</h6>
-            <p className="text-muted  mb-6" style={{ fontFamily: "Secular One" }}>{toke.id}</p>
+            <h6 style={{ color: "#212354", marginRight: "20px", fontFamily: "Segoe UI" }}>ID:</h6>
+            <p className="text-muted  mb-6" style={{ fontFamily: "Segoe UI" }}>{toke.id}</p>
           </div>
         </div>
         <div style={{ marginTop: "80px" }}>
@@ -637,9 +826,9 @@ const ProfilePage = (props) => {
               <b
                 style={{
                   fontSize: "1.4rem",
-                  color: "#537FE7",
+                  color: "#212354",
                   textAlign: "center"
-                  , fontFamily: "Secular One"
+                  , fontFamily: "Segoe UI"
                 }}
               >
                 COMPANY
@@ -649,12 +838,12 @@ const ProfilePage = (props) => {
           <hr className="mt-0 mb-4" />
           {employees.map((emp) => (<div className="row pt-1">
             <div className="col-6 mb-3 d-flex align-items-left" style={{ position: "relative", left: "50px" }}>
-              <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>Company Name:</h6>
-              <p className="text-muted mb-0" style={{ fontFamily: "Secular One" }}>{emp.comName}</p>
+              <h6 style={{ color: "#212354", marginRight: "20px", fontFamily: "Segoe UI" }}>Company Name:</h6>
+              <p className="text-muted mb-0" style={{ fontFamily: "Segoe UI" }}>{emp.comName}</p>
             </div>
             <div className="col-6 mb-3 d-flex align-items-left" style={{ position: "relative", left: "50px" }}>
-              <h6 style={{ color: "#537FE7", marginRight: "20px", fontFamily: "Secular One" }}>EmployeeId:</h6>
-              <p className="text-muted mb-0" style={{ fontFamily: "Secular One" }}>{emp.comId}</p>
+              <h6 style={{ color: "#212354", marginRight: "20px", fontFamily: "Segoe UI" }}>EmployeeId:</h6>
+              <p className="text-muted mb-0" style={{ fontFamily: "Segoe UI" }}>{emp.comId}</p>
             </div>
           </div>))}
 

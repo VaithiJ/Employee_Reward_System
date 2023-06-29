@@ -93,17 +93,7 @@ const AboutPage = () => {
               utilized within the organization and also send tokens as rewards
               to the respective employees.
             </h4>
-            {/* <h4 id="about" style={{ color: '#ff4b1f' }}>
-                <u>About</u>
-              </h4>
-              <h5 style={{ color: '#FFFFFF', wordSpacing:'0.6em'}}>
-                Maintaining accurate records of employee data and certifications is essential for many companies,
-                but such records can often be difficult to manage and access. This lack of proper record-keeping can
-                create challenges for retrieving and utilizing employee data, leading to inefficiencies and errors.
-                However, by utilizing blockchain technology, such data can be securely stored in a tamper-proof,
-                permanent manner. This makes it easier for employees to access and utilize their information whenever
-                necessary
-                </h5> */}
+        
             <h2
               id="benefits"
               style={{
@@ -243,7 +233,6 @@ const AboutPage = () => {
           </div>
         </Col>
       </Row>
-      {/* <footer style={{position:"relative", top:"40px"}}> <Footercr/> </footer> */}
     </div>
   );
 };

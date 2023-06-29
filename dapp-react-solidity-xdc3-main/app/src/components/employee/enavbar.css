@@ -54,21 +54,7 @@
     cursor: pointer;
 }
 
-.gpt3__navbar-sign button,
-.gpt3__navbar-menu_container button {
-    padding: 0.5rem 1rem;
-    color: #ff0000;
-    background: #2116fc;
-    font-family: var(--font-family);
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 25px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    border-radius: 5px;
 
-}
 
 .gpt3__navbar-menu {
     margin-left: 1rem;

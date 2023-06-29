@@ -1,7 +1,6 @@
   import { ethers } from 'ethers';
   import './App.css';
   import Sample from './Sample/Sample';
-  import Header from './s/Header';
   import { abi } from '../artifacts/contracts/ERSC/erc.sol/ERC.json'; 
   import { erc as address } from '../output.json';
   import { useState } from 'react';
@@ -30,9 +29,11 @@
   import ViewTask from '../components/admin/ViewTask'
   // import Sample from "./Sample/Sample.js"
   import PlatformAdmin from "../components/Platform admin/Tokens reward"
-  // import Tes from "../components/Platform admin/Tes";
+import Product from "../components/ViewCertificate/Product"  // import Tes from "../components/Platform admin/Tes";
   import "./App.css"
 import Award from "../components/admin/award1"
+import ViewCertificate from './ViewCertificate/ViewCertificate';
+import OwnerLogin from './Platform admin/OwnerLogin';
 
 
   const { getWeb3Modal, createWeb3Provider, connectWallet, EthereumContext, createContractInstance, log } = require('react-solidity-xdc3');
@@ -76,7 +77,7 @@ import Award from "../components/admin/award1"
     const awarddpage = matchPath(location.pathname, {path : "/awardpage/:Name/:name/:Wallet"})
 
 
-    const links = (location.pathname === "/real"|| !!awarddpage || location.pathname === "/reward" || !!match || location.pathname === "/employeehome" || location.pathname === "/userprofile" || location.pathname === "/admin");
+    const links = ( location.pathname === "/adminnnn");
 
     // const emplinks = (location.pathname === "/employeehome" || location.pathname === "/userprofile");
 
@@ -112,6 +113,7 @@ import Award from "../components/admin/award1"
       fontFamily: "Secular One",
       padding: "8px",
       width: "120px",
+      zIndex:"-3"
     }}
     
     onMouseEnter={(e) => {
@@ -141,14 +143,7 @@ import Award from "../components/admin/award1"
                       <Route path="/assigntask/:Name/:name/:Wallet" component={AssignTask}/>
                       <Route path="/viewtask/:id" component={ViewTask}/>
                       <Route path="/awardpage/:Name/:name/:Wallet" component={Award}/>
-
-
-
-
-                      
-                      
-                      {/* <Route exact path="/logsign" component={ LandingPage } /> */}
-                      
+                      <Route path="/ownerLogin" component={OwnerLogin}/>                      
                       <Route path="/employeetokens" component={EmployeeDashboard} />
                     
                       {/* <Route path="/addemployee" component={AddEmployee}/> */}
@@ -168,6 +163,8 @@ import Award from "../components/admin/award1"
                       {/* <Route path="/emptask" component={CalendarView}/> */}
                       <Route path="/reward" component={RewardTasks}/>
                       <Route path="/admin" component={PlatformAdmin}/>
+                      <Route path="/listFiles" component={Product}/>
+
                       
                       {/* <Route path="/addd" component={Tes}/> */}
 

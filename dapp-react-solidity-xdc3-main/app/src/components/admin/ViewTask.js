@@ -9,8 +9,44 @@ import SidebarMenu from "./side";
 import bg from "./grid3.png";
 import stack from "./lay.svg";
 import "./real.css";
+import { erc as address } from '../../output.json';
+import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json"
+
+
+const { getWeb3Modal, createWeb3Provider, connectWallet, EthereumContext, createContractInstance, log } = require('react-solidity-xdc3');
+
+var connectOptions = {
+  rpcObj: {
+    50: "https://erpc.xinfin.network",
+    51: "https://erpc.apothem.network",
+    888 : "http://13.234.98.154:8546"
+  },
+  network: "mainnet",
+  toDisableInjectedProvider: true
+}
+
 
 const CreateModal = (props) => {
+  const [connecting, setconnecting] = useState(false);
+
+   
+  const [ethereumContext, setethereumContext] = useState({});
+  const web3Modal = getWeb3Modal(connectOptions);
+
+  const connect = async (event) => {
+    console.log("Clicked")
+    event.preventDefault();
+    const instance = await web3Modal.connect();
+    const { provider, signer } = await createWeb3Provider(instance);
+    const erc = await createContractInstance(address, abi, provider);
+    const account = await signer.getAddress();
+    localStorage.setItem("WalletAddress", account);
+
+    setethereumContext({ provider, erc, account})
+    log("Connect", "Get Address", await signer.getAddress());
+    setconnecting(true);
+
+  }
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
     "name",
@@ -163,7 +199,7 @@ const CreateModal = (props) => {
             style={{
               height: "900px",
               boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
-              backgroundColor: "#BFF1EE",
+              backgroundColor: "grey",
               display: "flex",
               flexDirection: "column",
               marginTop: "60px",
@@ -179,6 +215,7 @@ const CreateModal = (props) => {
               <div style={{ fontWeight: "1000", fontFamily: "Secular One" }}>
                 {task.empName}
               </div>
+
 
               <div style={{ fontFamily: "Secular One" }}>Category : </div>
               <div style={{ fontWeight: "1000", fontFamily: "Secular One" }}>

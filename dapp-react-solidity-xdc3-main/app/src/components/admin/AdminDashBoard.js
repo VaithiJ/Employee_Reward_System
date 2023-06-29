@@ -69,7 +69,7 @@ function AdminDashBoard() {
         <div className="col-md-2">
           
           <div
-            style={{ marginTop: "20px", marginLeft: "20px", display: "flex" }}
+            style={{ marginTop: "20px", marginLeft: "20px", display: "flex", width:"10px" }}
           >
             <SidebarMenu />
           </div>
@@ -78,7 +78,7 @@ function AdminDashBoard() {
             className={styles.span}
             style={{
               fontSize: "40px",
-              fontFamily: "Secular One",
+              fontFamily: "Roboto, sans-serif",
               marginLeft: "-900px",
               marginTop:"-50px",
 
@@ -103,7 +103,7 @@ margin:"auto",
                     color: "white",
                     height: "150px",
                     marginBottom: "20px",
-                    boxShadow: "0px 0px 2px 3px rgba(0,0,0,0.3) inset",
+                    boxShadow: "0px 0px 2px 1px rgba(0,0,0,0.3) inset",
                     border: "0px",
                     backgroundColor: "#FFC107",
                     margin: "auto" /* centers horizontally */,
@@ -130,11 +130,11 @@ margin:"auto",
                         height: "70px",
                         width: "80px",
                         opacity: "0.5",
-                        fontFamily:"Secular One"
+                        fontFamily:"Roboto, sans-serif"
                       }}
                     />
                     <br />
-                    <div style={{ marginTop: "-20px", marginLeft: "10px" ,fontFamily: "Secular One"}}>
+                    <div style={{ marginTop: "-20px", marginLeft: "10px" ,fontFamily: "Roboto, sans-serif"}}>
                       TOTAL USERS AVAILABLE
                     </div>
                   </div>
@@ -152,7 +152,6 @@ margin:"auto",
               <div
                 className="card"
                 style={{
-                  boxShadow: "0px 0px 2px 3px rgba(0,0,0,0.3) inset",
                   backgroundColor: "#fff",
                 }}
               >
@@ -161,7 +160,7 @@ margin:"auto",
                   style={{
                     textAlign: "center",
                     color: "black",
-                    fontFamily: "Secular One",
+                    fontFamily: "Roboto, sans-serif",
                     padding: "20px",
                     fontWeight:"1000",
                     fontSize:"20px",
@@ -204,7 +203,7 @@ margin:"auto",
                           className="list-group-item"
                           style={{
                             backgroundColor: "#fff",
-                            border: "0.1px solid black",
+                            border: "0.1px dotted black",
                           }}
                         >
                           <div className="d-flex justify-content"></div>
@@ -213,22 +212,24 @@ margin:"auto",
                               <h6
                                 className="font-weight-bold mb-0"
                                 style={{
-                                  fontFamily: "Secular One",
+                                  fontFamily: "Roboto, sans-serif",
                                   marginTop: "15px",
                                   fontWeight:"1000",
                                   marginLeft:"-0px",
                                   
                                 }}
                               >
-                                <b style={{fontSize:"24px", fontFamily:"Secular One"}}>{employee.name.toUpperCase()}</b>  ({employee._id.slice(-8)})
+                                <b style={{fontSize:"18px",fontWeight:"100", fontFamily:"Roboto, sans-serif"}}>{employee.name.toUpperCase()}</b>  ({employee._id.slice(-8)})
                               </h6>
-                              {/* <small style={{fontWeight:"1000"}}>{employee._id}</small> */}
                             </div>
-                            <Link to={`/empprofile/${employee._id}`}>
-                              <button className="btn btn-primary" style={{fontWeight:"1000"}}>
-                                View Profile
-                              </button>
-                            </Link>
+                            <button
+  className="btn btn-primary"
+  style={{ fontWeight: "1000" }}
+  onClick={() => (window.location.href = `/empprofile/${employee._id}`)}
+>
+  View Profile
+</button>
+
                           </div>
                         </div>
                       ))}

@@ -23,7 +23,7 @@ const NavBar = () => {
   // const tokenn = jwt_decode(cookies.user_token);
 
   const handleAdminClick = () => {
-    window.location.href="/ownerLogin";
+    window.location.href="/admin";
   };
 
   
@@ -54,15 +54,16 @@ const NavBar = () => {
     <nav className={`nav-container ${visible ? "visible" : "hidden"}`}>
       <div className="logo">
         <Link to="/">
-        <img  src={ersl} alt="Your Logo" className="logo-image" style={{width:"200px"}} />
+          <img  src={ersl} alt="Your Logo" className="logo-image" style={{width:"200px"}} />
         </Link>
       </div>
       <div className="sub-nav">
-        <Link to="/">Home</Link>
-        <Link to="/login"> Employee</Link>
+        <div style={{fontSize:"30px", position:"relative", left:"-500px", fontFamily:"Segoe UI"}}>Employee Reward System</div>
+        {/* <Link to="/">Home</Link> */}
+        {/* <Link to="/login"> Employee</Link>
         <Link to="/logincomp" > Company</Link>
-        <Link onClick={handleAdminClick}>Admin</Link>
-        <Link to="/contact">Contact</Link>
+        <Link onClick={handleAdminClick}>Admin</Link> */}
+        {/* <Link to="/contact">Contact</Link> */}
       </div>
    
    

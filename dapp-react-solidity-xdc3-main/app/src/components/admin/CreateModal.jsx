@@ -83,7 +83,7 @@ const CreateModal = (props) => {
 
 
   return (
-    <div className="modal-container"  >
+    <div className="modal-container" style={{backgroundColor:"#F9F9FA"}} >
       <header style={{ backgroundColor: 'transparent', padding: '1.5rem 0',height:"100px" }}>
       <div style={{position:"relative",bottom:"20px",left:"20px", marginLeft:"-1200px"}}>
       <SidebarMenu /> </div>
@@ -106,7 +106,7 @@ const CreateModal = (props) => {
 <div
     className="Add-list"
     style={{
-      backgroundColor: 'transparent',
+      backgroundColor: '#F1F1F4',
      fontFamily:"Secular One",
       
       width: '1000px',
@@ -151,6 +151,7 @@ const CreateModal = (props) => {
             type="text"
             onChange={handleTaskName}
             style={{
+              color:"black",
               backgroundColor: '#eee',
               borderRadius: '10px',
               padding: '1rem',
@@ -175,7 +176,7 @@ const CreateModal = (props) => {
               padding: '1rem',
               border: 'none',
               marginBottom: '1rem',
-              width: '100%'
+              width: '100%',
             }}
           />
           <label className="modlabel" htmlFor="text">

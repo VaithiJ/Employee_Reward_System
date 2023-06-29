@@ -31,6 +31,7 @@ import moment from "moment";
 import { Calendar } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import Swal from "sweetalert2";
+import NavBar from "../Headerr/AdminHeader.js"
 import {
   FaBars,
   FaUserPlus,
@@ -54,13 +55,15 @@ const {
 } = require("react-solidity-xdc3");
 
 function RealDash(connect) {
+  const [ethereumContext, setethereumContext] = useState({});
+
   const [search, setSearch] = useState('');
   const [search1, setSearch1] = useState("");
   const [employees, setEmployees] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [Alltasks, setAllTasks] = useState([]);
   const [submitting, setSubmitting] = useState(false);
-  const { provider, erc } = useContext(EthereumContext);
+  const { provider, erc } = ethereumContext;
   console.log("sample", erc);
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
@@ -77,9 +80,7 @@ function RealDash(connect) {
     setOpen(true);
   };
   const [task, setTask] = useState([]);
-  const handleLogout = () => {
-    removeCookie("access_token");
-  };
+
   function isCurrentDate(date, currentDate) {
     return isSameDay(date, currentDate);
   }
@@ -212,26 +213,7 @@ function RealDash(connect) {
     setSubmitting(false);
   };
 
-  const balanceOf = async (event) => {
-    event.preventDefault();
-    setSubmitting(true);
 
-    let account = tokenn.wallet.replace("xdc", "0x");
-    let balance = await erc.balanceOf(account);
-
-    console.log(`Account balance: ${balance.toString()}`);
-    Swal.fire({
-      iconHtml: `<img src=${del} style="height: 100px; width: 100px;">`,
-
-      title: "Account Balance",
-
-      text: `${balance.toString()}`,
-
-      confirmButtonColor: "#9A1B56",
-    });
-
-    setSubmitting(false);
-  };
 
   useEffect(() => {
     const token = cookies.access_token;
@@ -353,6 +335,7 @@ function RealDash(connect) {
     console.log("noice", filteredTasks);
     return (
       <div>
+        <NavBar/>
         <div style={{ backgroundColor: "#F9F8F8" }}>
           <div className="row">
             {/* <div
@@ -370,7 +353,7 @@ function RealDash(connect) {
                   height: "100px",
                   display: "flex",
                   flexDirection: "row",
-                  marginTop: "0px",
+                  marginTop: "-20px",
                   marginLeft: "-350px",
                   backgroundColor: "white",
                 }}
@@ -386,7 +369,7 @@ function RealDash(connect) {
                     backgroundColor: "#00F1C3",
                   }}
                 > */}
-                <div
+                {/* <div
                   className="sidee"
                   style={{ marginTop: "10px", marginLeft: "20px" }}
                 >
@@ -404,7 +387,8 @@ function RealDash(connect) {
                   <b
                     className="del"
                     style={{
-                      fontFamily: "Secular One",
+                          fontFamily: "Roboto, sans-serif",
+,
                       fontWeight: "1000",
                       fontSize: "40px",
                       marginLeft: "-40px",
@@ -412,38 +396,8 @@ function RealDash(connect) {
                   >
                     {tokenn.name.toUpperCase()}
                   </b>
-                </div>
-                <button
-                  onClick={balanceOf}
-                  className="buy"
-                  style={{
-                    // margin: "1rem",
-                    marginLeft: "700px",
-                    marginTop: "30px",
-                    borderRadius: "10px",
-                    height: "45px",
-
-                    backgroundColor: "#1196B0",
-                    width: "120px",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.background = "#330078";
-                    // e.target.style.border = "5px solid rgba(0, 0, 0, 0)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.background = "#1196B0";
-                  }}
-                >
-                  <div
-                    style={{
-                      marginTop: "-5px",
-                      fontSize: "18px",
-                      fontFamily: "Secular One",
-                    }}
-                  >
-                    Balance
-                  </div>
-                </button>
+                </div> */}
+            
               </div>
 
               <div
@@ -466,7 +420,6 @@ function RealDash(connect) {
                       color: "white",
                       height: "150px",
                       marginBottom: "20px",
-                      boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
                       border: "0px",
                       backgroundColor: "white",
                       width: "430px",
@@ -480,7 +433,8 @@ function RealDash(connect) {
                             marginTop: "680px",
                             fontSize: "70px",
                             marginLeft: "",
-                            fontFamily: "Secular One",
+                                fontFamily: "Roboto, sans-serif",
+
                             color: "#1196B0",
                           }}
                         >
@@ -503,7 +457,7 @@ function RealDash(connect) {
                           marginTop: "-20px",
                           color: "#1196B0",
                           marginLeft: "10px",
-                          fontFamily: "Secular One",
+                          fontFamily: "Algeria",
                         }}
                       >
                         Total Onboarded Employees
@@ -518,7 +472,6 @@ function RealDash(connect) {
                       color: "white",
                       height: "150px",
                       marginBottom: "20px",
-                      boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
                       border: "0px",
                       backgroundColor: "white",
                       width: "420px",
@@ -532,7 +485,8 @@ function RealDash(connect) {
                             marginBottom: "100px",
                             marginLeft: "",
                             fontSize: "70px",
-                            fontFamily: "Secular One",
+                                fontFamily: "Roboto, sans-serif",
+
                             color: "#F3DA06",
                           }}
                         >
@@ -555,7 +509,8 @@ function RealDash(connect) {
                           color: "#F3DA06",
                           marginTop: "-20px",
                           marginLeft: "10px",
-                          fontFamily: "Secular One",
+                              fontFamily: "Roboto, sans-serif",
+
                         }}
                       >
                         Assigned Tasks
@@ -570,7 +525,6 @@ function RealDash(connect) {
                       color: "white",
                       height: "150px",
                       marginBottom: "20px",
-                      boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",
                       border: "0px",
                       backgroundColor: "white",
                       width: "410px",
@@ -584,7 +538,8 @@ function RealDash(connect) {
                             marginBottom: "100px",
                             marginLeft: "-0px",
                             fontSize: "70px",
-                            fontFamily: "Secular One",
+                                fontFamily: "Roboto, sans-serif",
+
                             color: "red",
                           }}
                         >
@@ -607,7 +562,8 @@ function RealDash(connect) {
                           color: "red",
                           marginTop: "-20px",
                           marginLeft: "10px",
-                          fontFamily: "Secular One",
+                              fontFamily: "Roboto, sans-serif",
+
                         }}
                       >
                         Pending for Approval
@@ -627,12 +583,13 @@ function RealDash(connect) {
                     marginLeft: "-170px",
                     fontFamily: "Montserrat",
                     fontWeight: "1000",
-                    fontFamily: "Secular One",
+                        fontFamily: "Roboto, sans-serif",
+
                   }}
                 >
                   TASKS
                 </ul>
-                <div className="piee" style={{ marginRight: "-50px" }}>
+                {/* <div className="piee" style={{ marginRight: "-50px" }}>
                   <p
                     style={{
                       marginLeft: "-10px",
@@ -682,28 +639,28 @@ function RealDash(connect) {
                       style={{ backgroundColor: "black", color: "black" }}
                     />
                   </p>
-                </div>
+                </div> */}
 
                 <PieChart
                   className="pie"
                   style={{
-                    width: "430px",
-                    boxShadow: "0px 0px 3px 2px rgba(0,0,0,0.3) inset",
-                    marginLeft: "-310px",
+                    width: "420px",
+                    boxShadow: "0px 0px 1px 1px rgba(0,0,0,0.3) inset",
+                    marginLeft: "-240px",
                   }}
-                  width={800}
+                  width={400}
                   height={400}
                 >
                   <Pie
                     data={data}
-                    cx={120}
+                    cx={200}
                     cy={200}
                     innerRadius={60}
                     outerRadius={80}
                     fill="#8884d8"
-                    paddingAngle={5}
+                    paddingAngle={2}
                     dataKey="value"
-                    style={{ color: "black" }}
+                    style={{ color: "black", position:"relative", left:"100px"}}
                   >
                     {data.map((entry, index) => (
                       <Cell
@@ -728,7 +685,6 @@ function RealDash(connect) {
                   <div
                     className="card"
                     style={{
-                      boxShadow: "0px 0px 3px 2px rgba(0,0,0,0.3) inset",
                       // backgroundColor: "#CAFFF5",
                       marginBottom: "40px",
                       height: "400px",
@@ -744,7 +700,8 @@ function RealDash(connect) {
                         color: "black",
                         fontWeight: "1000",
                         fontSize: "20px",
-                        fontFamily: "Secular One",
+                            fontFamily: "Roboto, sans-serif",
+
                       }}
                     >
                       EMPLOYEES
@@ -792,21 +749,23 @@ function RealDash(connect) {
                                     style={{
                                       fontFamily: "Algeria",
                                       marginTop: "20px",
-                                      fontWeight: "1000",
+                                      fontWeight: "100",
                                       position: "relative",
                                       right: "25px",
                                       marginLeft: "0px",
                                       fontSize: "16px",
                                       height: "10px",
-                                      fontFamily: "Secular One",
+                                          fontFamily: "Roboto, sans-serif",
+
                                     }}
                                   >
                                     {employee.Name.toUpperCase()}
                                     <b
                                       style={{
-                                        fontWeight: "800",
+                                        fontWeight: "100",
                                         fontSize: "14px",
-                                        fontFamily: "Secular One",
+                                            fontFamily: "Roboto, sans-serif",
+
                                       }}
                                     >
                                       ({employee.comId})
@@ -851,8 +810,10 @@ function RealDash(connect) {
                                   </div>
                                 </div>
                                 <Link
-                                  to={`/awardpage/${employee.Name}/${tokenn.name}/${employee.Wallet}`}
-                                >
+
+onClick={() =>
+  window.location.href = `/awardpage/${employee.Name}/${tokenn.name}/${employee.Wallet}`
+}                             >
                                   <button
                                     className="btn btn-primary"
                                     onClick={togglePopup}
@@ -860,7 +821,8 @@ function RealDash(connect) {
                                       fontFamily: "Algeria",
                                       marginTop: "-10px",
                                       fontWeight: "000",
-                                      fontFamily: "Secular One",
+                                          fontFamily: "Roboto, sans-serif",
+
                                       position: "relative",
                                       left: "110px",
                                       color: "blue",
@@ -879,7 +841,9 @@ function RealDash(connect) {
                                   </button>
                                 </Link>
                                 <Link
-                                  to={`/assigntask/${employee.Name}/${tokenn.name}/${employee.Wallet}`}
+                                onClick={() =>
+                                  window.location.href = `/assigntask/${employee.Name}/${tokenn.name}/${employee.Wallet}`
+                                }  
                                 >
                                   <button
                                     className="btn btn-primary"
@@ -887,7 +851,8 @@ function RealDash(connect) {
                                     style={{
                                       fontFamily: "Algeria",
                                       marginTop: "-10px",
-                                      fontFamily: "Secular One",
+                                          fontFamily: "Roboto, sans-serif",
+
                                       color: "blue",
                                       backgroundColor: "white",
                                     }}
@@ -915,8 +880,10 @@ function RealDash(connect) {
                 <div
                   className="col-md-8"
                   style={{
+                    position:"relative",
+                    left:"-300px",
                     marginTop: "230px",
-                    marginLeft: "-320px",
+                    marginLeft: "-20px",
                     width: "1290px",
                     height: "560px",
                   }}
@@ -983,7 +950,8 @@ function RealDash(connect) {
                         color: "black",
                         fontWeight: "1000",
                         fontSize: "20px",
-                        fontFamily: "Secular One",
+                            fontFamily: "Roboto, sans-serif",
+
                         paddingBottom: "1px",
                       }}
                     >
@@ -1036,9 +1004,10 @@ function RealDash(connect) {
                                       className="font-weight-bold mb-0"
                                       style={{
                                         marginTop: "20px",
-                                        fontWeight: "1000",
+                                        fontWeight: "100",
                                         fontSize: "16px",
-                                        fontFamily: "Secular One",
+                                            fontFamily: "Roboto, sans-serif",
+
                                         marginLeft: "-0px",
                                         textAlign:"center"
                                       }}
@@ -1047,9 +1016,10 @@ function RealDash(connect) {
                                     </h6>
                                     <small
                                       style={{
-                                        fontWeight: "1000",
+                                        fontWeight: "100",
                                         // marginLeft: "20px",
-                                        fontFamily: "Secular One",
+                                            fontFamily: "Roboto, sans-serif",
+
                                         fontSize: "14px",
                                         marginLeft: "30px",
                                         textAlign:"left"
@@ -1114,6 +1084,7 @@ function RealDash(connect) {
                       </div>
                     </div>
                   </div>
+                  
                   <div className="calender-employee">
                     <div
                       style={{

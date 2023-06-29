@@ -11,6 +11,8 @@ import { useCookies } from "react-cookie";
 import axios from "../url.js"
 import "../admin/real.css";
 import Footercr from "../footer/footercr.js"
+import { erc as address } from '../../output.json';
+import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json"
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip,ComposedChart,
   Line,
   Area,
@@ -28,6 +30,16 @@ const {
   log,
   queryData,
 } = require("react-solidity-xdc3");
+const { getWeb3Modal, createWeb3Provider, connectWallet, createContractInstance } = require('react-solidity-xdc3');
+var connectOptions = {
+  rpcObj: {
+    50: "https://erpc.xinfin.network",
+    51: "https://erpc.apothem.network",
+    888 : "http://13.234.98.154:8546"
+  },
+  network: "mainnet",
+  toDisableInjectedProvider: true
+}
 
 const Card = (props) => {
   return (
@@ -63,6 +75,28 @@ const Card = (props) => {
 };
 
 const EmployeeDashboard = (props) => {
+
+  const [connecting, setconnecting] = useState(false);
+
+  const [ethereumContext, setethereumContext] = useState({});
+  const web3Modal = getWeb3Modal(connectOptions);
+  const connect = async (event) => {
+    console.log("Clicked")
+    event.preventDefault();
+    const instance = await web3Modal.connect();
+    const { provider, signer } = await createWeb3Provider(instance);
+    const erc = await createContractInstance(address, abi, provider);
+    const account = await signer.getAddress();
+    localStorage.setItem("WalletAddress", account);
+
+    setethereumContext({ provider, erc, account})
+    log("Connect", "Get Address", await signer.getAddress());
+    setconnecting(true);
+    setConnectClicked(true)
+
+  }
+  const { provider, erc } = ethereumContext;
+
   const [balanceToken, setBalanceToken] = useState();
   const [open, setOpen] = useState(false);
   const togglePopup = (task) => {
@@ -135,6 +169,7 @@ const EmployeeDashboard = (props) => {
   const [employees, setEmployees] = useState([]);
   const [selectedTasks, setSelectedTasks] = useState(null);
   const [compemployees, setcompemployees] = useState([]);
+  const[connectClicked, setConnectClicked] = useState(false);
 
   const [cookies, setCookie, removeCookie] = useCookies([
     "access_token",
@@ -203,7 +238,6 @@ console.log("rowwwww",Alltasks)
   console.log("name stored in token", toke.name);
 
   const [submitting, setSubmitting] = useState(false);
-  const { provider, erc } = useContext(EthereumContext);
   console.log("sample", erc);
 
   const [showBox, setShowBox] = useState(false);
@@ -277,7 +311,7 @@ console.log("rowwwww",Alltasks)
             position:"relative",
             left:"250px",
             bottom:"30px",
-            fontFamily: "Secular One"
+            fontFamily: "secular one"
 
           }}
           onMouseEnter={(e) => {
@@ -294,7 +328,21 @@ console.log("rowwwww",Alltasks)
           {/* <MdAccountBalanceWallet style={{position:"relative", right:"15px",height:"30px",width:"30px"}}/> */}
           Balance
         </button>
-        <div>
+        <button
+  style={{
+    position: "relative",
+    marginLeft: "150px",
+    height: "60px",
+    marginTop: "20px",
+    borderRadius: "20px",
+    background: connectClicked ? "blue" : "",
+    cursor: connectClicked ? "not-allowed" : "pointer"
+  }}
+  onClick={connect}
+  disabled={connectClicked}
+>
+  {connectClicked ? "Connected" : "Connect"}
+</button>        {/* <div>
             <FaBell
               onClick={handleClick}
               style={{
@@ -355,7 +403,7 @@ console.log("rowwwww",Alltasks)
                           borderRadius: "10px",
                           boxShadow: "2px 2px 5px grey",
                           background: "#f2f2f2",
-                          fontFamily: "Secular One"
+                          fontFamily: "Segoe UI"
                         }}
                       >
                         You have been Onboarded by {comp.comName}
@@ -369,7 +417,7 @@ console.log("rowwwww",Alltasks)
                           borderRadius: "10px",
                           boxShadow: "2px 2px 5px grey",
                           background: "#f2f2f2",
-                          fontFamily: "Secular One"
+                          fontFamily: "Segoe UI"
                         }}
                       >
                         You have been assigned with {pendingTasks} tasks
@@ -379,11 +427,11 @@ console.log("rowwwww",Alltasks)
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
         <h1
           style={{
             color: "white",
-            fontFamily: "Secular One",
+            fontFamily: "Segoe UI",
             textAlign: "center",
             position: "relative",
             right: "900px",
@@ -466,7 +514,7 @@ console.log("rowwwww",Alltasks)
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily: "Secular One",fontSize:"1.2rem",fontWeight:"bolder",color:"red"}}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px", fontFamily: "Segoe UI",fontSize:"1.2rem",fontWeight:"bolder",color:"red"}}>
               Pending
             </div>
           </div>
@@ -514,7 +562,7 @@ console.log("rowwwww",Alltasks)
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Secular One" ,fontSize:"1.2rem",fontWeight:"bolder",color:"#32CD32"}}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Segoe UI" ,fontSize:"1.2rem",fontWeight:"bolder",color:"#32CD32"}}>
               Approved
             </div>
           </div>
@@ -546,7 +594,7 @@ console.log("rowwwww",Alltasks)
                   marginLeft: "",
                   fontSize: "70px",
                   color:'#27E1C1',
-                  fontFamily:"Secular One"
+                  fontFamily:"Segoe UI"
                 }}
               >
                 {Alltasks}
@@ -563,7 +611,7 @@ console.log("rowwwww",Alltasks)
               }}
             />
             <br />
-            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Secular One",fontSize:"1.2rem",fontWeight:"bolder",color:"#27E1C1" }}>
+            <div style={{ marginTop: "-20px", marginLeft: "10px",fontFamily: "Segoe UI",fontSize:"1.2rem",fontWeight:"bolder",color:"#27E1C1" }}>
               All Tasks
             </div>
           </div>
@@ -573,9 +621,9 @@ console.log("rowwwww",Alltasks)
   </div>
   {onboarded ? (
   <div style={{ display: 'flex', alignItems: 'center' ,position:"relative",left:"750px",top:"100px",width:"350px"}}>
-                <ul style={{marginTop:"-300px",fontSize:"16px", marginLeft:"-180px", fontFamily: "Secular One", fontWeight:"1000",position:"relative",right:"30px",bottom:"10px"}}>
+                <ul style={{marginTop:"-300px",fontSize:"24px", marginLeft:"-180px", fontFamily: "Segoe UI", fontWeight:"1000",position:"relative",right:"30px",bottom:"10px"}}>
                 TASKS</ul>
-  <div style={{ marginRight: '-70px' }}>
+  {/* <div style={{ marginRight: '-70px' }}>
     
     <p style={{marginLeft:"-10px", fontFamily:"Montserrat"}}>TOTAL : <FaSquare style={{backgroundColor:"#27E1C1 ", color:"#27E1C1 "}}/></p>
     <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>PENDING : <FaSquare style={{color:"red", backgroundColor:"red"}}/></p>
@@ -585,12 +633,12 @@ console.log("rowwwww",Alltasks)
     <p style={{marginLeft:"-10px",fontFamily:"Montserrat"}}>REWARDED :<FaSquare style={{backgroundColor:"#4F200D", color:"#4F200D"}}/></p>
 
 
-  </div>
+  </div> */}
  
-  <PieChart style={{width:"430px",boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",marginLeft:"-310px"}} width={800} height={400} >
+  <PieChart style={{width:"430px",boxShadow: "0px 0px 2px 2px rgba(0,0,0,0.3) inset",marginLeft:"-260px"}} width={800} height={400} >
         <Pie
           data={data}
-          cx={120}
+          cx={200}
           cy={200}
           innerRadius={60}
           outerRadius={80}
@@ -656,7 +704,7 @@ console.log("rowwwww",Alltasks)
                   fontWeight: "bold",
                   marginBottom: "20px",
                   color: "#333",
-                  fontFamily:"Secular One",
+                  fontFamily:"Segoe UI",
                   marginTop:"50px"
                 }}
               >
@@ -678,7 +726,7 @@ console.log("rowwwww",Alltasks)
                   fontSize: "16px",
                   marginBottom: "20px",
                   color: "#555",
-                  fontFamily: "Secular One",
+                  fontFamily: "Segoe UI",
                   fontWeight: "bolder",
                   marginRight:"-10px",
                   marginTop:"-24px"
@@ -702,7 +750,7 @@ console.log("rowwwww",Alltasks)
                   fontSize: "16px",
                   marginBottom: "20px",
                   color: "#555",
-                  fontFamily: "Secular One",
+                  fontFamily: "Segoe UI",
                   fontWeight: "bolder",
                   marginTop:"5px",
                   marginLeft:"60px"
@@ -716,7 +764,7 @@ console.log("rowwwww",Alltasks)
                   style={{
                     fontSize: "16px",
                     marginRight: "195px",
-                    fontFamily:"Secular One",
+                    fontFamily:"Segoe UI",
                     fontWeight:"bolder",
                     color: "#777",
 
@@ -729,7 +777,7 @@ console.log("rowwwww",Alltasks)
                   fontSize: "16px",
                   marginBottom: "20px",
                   color: "#555",
-                  fontFamily: "Secular One",
+                  fontFamily: "Segoe UI",
                   fontWeight: "bolder",
                   marginTop:"-24px"
                 }}
@@ -753,7 +801,7 @@ console.log("rowwwww",Alltasks)
                   fontSize: "16px",
                   marginBottom: "20px",
                   color: "#555",
-                  fontFamily: "Secular One",
+                  fontFamily: "Segoe UI",
                   fontWeight: "bolder",
                   marginTop:"-24px"
 
@@ -813,7 +861,7 @@ console.log("rowwwww",Alltasks)
                     fontWeight: "bold",
                     letterSpacing: "1px",
                     outline: "none",
-                    fontFamily:"Secular One"
+                    fontFamily:"Segoe UI"
                   }}
                   onClick={() => MarkasCompleted(selectedTasks)}
                   onMouseEnter={(e) => {
@@ -850,7 +898,7 @@ console.log("rowwwww",Alltasks)
              className="card-header font-weight-bold"
              style={{
                textAlign: "center",
-               fontFamily: "Secular One",
+               fontFamily: "Segoe UI",
                padding: "20px",
                // backgroundColor: "#17A2B8",
                color: "black",
@@ -886,18 +934,18 @@ console.log("rowwwww",Alltasks)
                         <h6
                           className="font-weight-bold mb-0"
                           style={{
-                            fontFamily: "Secular One",
+                            fontFamily: "Segoe UI",
                             marginTop: "20px",  
                             fontSize:'10px !important' 
                           }}
                         >
-                          <b style={{fontSize:"16px",fontFamily:"Secular One"}}> 
+                          <b style={{fontSize:"16px",fontFamily:"Segoe UI"}}> 
                             {task.task.toUpperCase()}{" "}
                             {/* Convert task.task to uppercase */}
                           </b>
                         </h6>
 
-                        <small style={{fontFamily: "Secular One", fontSize:"13px"}}>Deadline: {task.deadline}</small>
+                        <small style={{fontFamily: "Segoe UI", fontSize:"13px"}}>Deadline: {task.deadline}</small>
                       </div>
                       <div
                         style={{
@@ -917,11 +965,11 @@ console.log("rowwwww",Alltasks)
                         <p
                           style={{
                             marginRight: "10px",
-                            fontFamily: "Secular One",
+                            fontFamily: "Segoe UI",
                             position: "relative",
                             top: "7px",
                             color: "#000000",
-                            fontFamily: "Secular One",
+                            fontFamily: "Segoe UI",
                             fontSize:'16px' // updated text color
                           }}
                         >
@@ -932,7 +980,7 @@ console.log("rowwwww",Alltasks)
                             marginBottom: "0",
                             color: getTextColor(task.status),
                             textAlign: "center",
-                            fontFamily: "Secular One",
+                            fontFamily: "Segoe UI",
                             fontWeight: "bold",
                             fontSize:"16px" // updated font weight for better readability // updated text transform to uppercase for a more stylish look
                           }}

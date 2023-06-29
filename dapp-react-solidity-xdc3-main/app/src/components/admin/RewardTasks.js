@@ -14,7 +14,8 @@ import bg from "./grid3.png"
 import ss from "./ss.svg"
 import { BigNumber } from "ethers";
 import "./reg.css"
-
+import { erc as address } from '../../output.json';
+import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json"
 import Swal from "sweetalert2";
 import {
   ref,
@@ -26,16 +27,43 @@ import {
 import { storage } from "../../firebase.js";
 import { v4 as uuidv4 } from "uuid";
 import { getDatabase, ref as dbRef, set } from "firebase/database";
-
-const {
-  executeTransaction,
-  EthereumContext,
-  log,
-  queryData,
-} = require("react-solidity-xdc3");
+const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
+const { getWeb3Modal, createWeb3Provider, connectWallet, createContractInstance } = require('react-solidity-xdc3');
+var connectOptions = {
+  rpcObj: {
+    50: "https://erpc.xinfin.network",
+    51: "https://erpc.apothem.network",
+    888 : "http://13.234.98.154:8546"
+  },
+  network: "mainnet",
+  toDisableInjectedProvider: true
+}
 
 const RewardTasks = (props) => {
+  const [connecting, setconnecting] = useState(false);
+
+   
+  const [ethereumContext, setethereumContext] = useState({});
+  const web3Modal = getWeb3Modal(connectOptions);
+  const[connectClicked, setConnectClicked] = useState(false);
+
+  const connect = async (event) => {
+    console.log("Clicked")
+    event.preventDefault();
+    const instance = await web3Modal.connect();
+    const { provider, signer } = await createWeb3Provider(instance);
+    const erc = await createContractInstance(address, abi, provider);
+    const account = await signer.getAddress();
+    localStorage.setItem("WalletAddress", account.toLowerCase());
+    setethereumContext({ provider, erc, account})
+
+    log("Connect", "Get Address", await signer.getAddress());
+    setconnecting(true);
+    setConnectClicked(true);
+
+  }
   const [tasks, setTasks] = useState([]);
+  const { provider, erc } = ethereumContext;
 
   const [rewardedemp, setrewardedemp] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -52,7 +80,8 @@ const RewardTasks = (props) => {
     // console.log(tokenn.wallet.replace("xdc", "0x"));
     const ls = localStorage.getItem("WalletAddress");
     const sl = ls.toLowerCase();
-    if (tokenn.wallet.replace("xdc","0x") === ls) {
+
+    if (tokenn.wallet.replace("xdc","0x") == ls) {
       setSame(true);
     }
   }
@@ -216,7 +245,6 @@ useEffect(() => {
     });
   }, []);
   const [submitting, setSubmitting] = useState(false);
-  const { provider, erc } = useContext(EthereumContext);
   console.log("sample", erc);
 
 
@@ -263,78 +291,6 @@ useEffect(() => {
 
     setSubmitting(false);
   };
-  // const Rewarded = async (taskk) => {
-  //   const confirmed = window.confirm("Reward this Employee?");
-
-  //   const confirmAdminWallet = window.confirm("Is the admin wallet connected?");
-  //   const confirmUniqueName = window.confirm("Do you have enough balance to reward?");
-  //   const confirmNoChanges = window.confirm("Once rewarded, cannot be changed. Proceed?");
-  //   let updatedTask = await axios.put(
-  //     `${API_URL}/updatetask/${taskk._id}`,
-  //     { status: "Rewarded" },
-  //     { withCredentials: true }
-  //   ).then(response => response.data.updatedTask);
-  
-  //   console.log(updatedTask);
-  //   if (confirmAdminWallet && confirmNoChanges && confirmUniqueName) {
-  //     try {
-  //       // Call the executeTransaction function first
-  //       let resp = await executeTransaction(erc, provider, "sendReward", [
-  //         taskk.empWalletAddress.replace("xdc", "0x"),
-  //         taskk.rewards
-  //       ]);
-    
-  //       // Wait for the transactionHash event to be emitted before proceeding
-  //       await new Promise(resolve => {
-  //         provider.once(resp.txHash, resolve);
-  //       });
-    
-  //       // Force reload the page after 5 seconds
-  //       setTimeout(() => {
-  //         window.location.reload();
-  //       }, 5000);
-    
-  //     } catch (error) {
-  //       console.log("Failed successfully");
-  //       setTimeout(() => {
-  //         window.location.reload();
-  //       }, 2000);
-  //       // handle the error here, e.g. show an error message to the user
-  //     } finally {
-  //       setSubmitting(false);
-  //     }
-    
-  //     // Update tasks state
-  //     if (updatedTask) {
-  //       setTask(
-  //         task.map((t) => {
-  //           if (t._id === updatedTask._id) {
-  //             setTaskId(updatedTask._id);
-  //             return updatedTask;
-  //           } else {
-  //             return t;
-  //           }
-  //         })
-  //       );
-  //     }
-  //   }
-  // }
-  
-  
-  // const handleApproveTask = async (index) => {
-  //   const updatedTasks = [...tasks];
-  //   updatedTasks[index] = { ...updatedTasks[index], approved: true };
-  //   setTasks(updatedTasks);
-  //   alert("Task has been approved");
-  //   console.log(tasks);
-  //   const respo = await axios.get(`${API_URL}/status/${tasks.EmpName}`, {
-  //     withCredentials: true,
-  //   });
-  //   console.log(respo.data);
-
-  //   //  const delete = await axios.get()
-  // };
-
   const data = [
     { name: 'Approved Employees', value: tasks.length },
     { name: 'Rewarded Employees', value: rewardedemp.length },
@@ -356,7 +312,7 @@ useEffect(() => {
                   style={{
                     margin: "1rem",
                     marginLeft: "1950px",
-                    marginTop: "-50px",
+                    marginTop: "-20px",
                     borderRadius: "10px",
                     height: "45px",
                     backgroundColor: "#1196B0",
@@ -376,8 +332,23 @@ useEffect(() => {
                 >
                   <FaSignOutAlt /> Balance
                 </button>
-</div>
+                <button
+  style={{
+    position: "relative",
+    marginLeft: "150px",
+    height: "60px",
+    marginTop: "20px",
+    borderRadius: "20px",
+    background: connectClicked ? "blue" : "",
+    cursor: connectClicked ? "not-allowed" : "pointer"
+  }}
+  onClick={connect}
+  disabled={connectClicked}
+>
+  {connectClicked ? "Connected" : "Connect"}
+</button></div>
 </header>
+
 <div className="container" style={{ 
   
   background: "white", 
@@ -386,6 +357,8 @@ useEffect(() => {
   boxShadow: "0px 0px 10px 2px rgba(0,0,0,0.3) inset",
   border: '1px solid #ccc',
   marginBottom: '20px',
+  marginLeft:"700px",
+  marginTop:"300px",
   width:"1400px"}}>
   <h2 className="containerrr" style={{fontFamily:"Secular One",marginTop:"20px"}}>TASKS</h2>
   <div className="task-list-container" style={{ height: '500px', overflowY: 'auto',marginTop:"-100px",  }}>
@@ -421,67 +394,38 @@ useEffect(() => {
             <div className="task-due-date" style={{fontFamily:"Secular One",}}>{task.deadline}</div>
             <div className="task-progress" style={{fontFamily:"Secular One",marginRight:"80px"}}>{task.rewards}</div>
             {task.certificates==="false" ? (
-              <div>
-                <input
-                  style={{ opacity: submitting ? 0.5 : 1, marginRight:"-80px" }}
-                  disabled={submitting}
-                  type="file"
-                  accept=".pdf"
-                  onChange={(e) => setFileUpload(e.target.files[0])}
-                  name="certificates"
-                />
-                <button
-                  style={{ 
-                    marginRight: '-90px', 
-                    padding: '8px 16px', 
-                    background: submitting ?'red' : "green", 
-                    color: 'white', 
-                    border: 'none', 
-                    borderRadius: '4px', 
-                    cursor: 'pointer',
-                    opacity: submitting ? 0.5 : 1,
-                    fontFamily:"Secular One",
-                    marginLeft:"30px"
-                  }}
-                  onClick={() => uploadFile(task)}
-                  >
-                  Upload Certificates
-                </button> 
-                </div>
+             <div>
+             <input
+               style={{ opacity: submitting || !connectClicked ? 0.5 : 1, marginRight: "-80px" }}
+               disabled={submitting || !connectClicked}
+               type="file"
+               accept=".pdf"
+               onChange={(e) => setFileUpload(e.target.files[0])}
+               name="certificates"
+             />
+             <button
+               style={{
+                 marginRight: "-90px",
+                 padding: "8px 16px",
+                 background: submitting || !connectClicked ? "grey" : "green",
+                 color: "white",
+                 border: "none",
+                 borderRadius: "4px",
+                 cursor: submitting || !connectClicked ? "not-allowed" : "pointer",
+                 opacity: submitting || !connectClicked ? 0.5 : 1,
+                 fontFamily: "Secular One",
+                 marginLeft: "30px"
+               }}
+               onClick={() => uploadFile(task)}
+             >
+               Upload Certificates
+             </button>
+           </div>
+           
             ) : (
               <div style={{ fontSize: '20px', fontWeight: 'bold', fontFamily:"Secular One",marginRight:"60px" }}>Uploaded</div>
             )}
-            {/* <div
-              className="task-status"
-              style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center',
-                paddingLeft: '30px',
-                }}
-                >
-                {task.status === "Rewarded" ? (
-                <div style={{ color: 'green', fontWeight: 'bold', fontFamily:"Secular One",  fontSize:"20px"}}>Rewarded</div>
-                ) : (
-                <button
-                style={{
-                padding: '8px 16px',
-                background: 'green',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                opacity: submitting ? 0.5 : 1,
-                fontFamily:"Secular One",
-                marginRight:"-40px"
-                }}
-                disabled={submitting}
-                onClick={() => Rewarded(task)}
-                >
-                Reward
-                </button>
-                )}
-                </div> */}
+           
                 </div>
                 ))}
                 </div>

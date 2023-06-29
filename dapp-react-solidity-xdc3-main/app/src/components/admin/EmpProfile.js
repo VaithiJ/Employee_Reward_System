@@ -29,11 +29,44 @@ import LogoutHeader from "../header/logoutheader";
 import { storage } from "../../firebase.js"
 import { v4 as uuidv4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL, listAll, list } from "firebase/storage";
+import { erc as address } from '../../output.json';
+import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json"
 dotenv.config()
-
+const { getWeb3Modal, createWeb3Provider, connectWallet, createContractInstance } = require('react-solidity-xdc3');
+var connectOptions = {
+  rpcObj: {
+    50: "https://erpc.xinfin.network",
+    51: "https://erpc.apothem.network",
+    888 : "http://13.234.98.154:8546"
+  },
+  network: "mainnet",
+  toDisableInjectedProvider: true
+}
 const nodemailer = require('nodemailer');
 const { executeTransaction, EthereumContext, log, queryData } = require('react-solidity-xdc3');
 const ProfilePage = (props) => {
+  const [connecting, setconnecting] = useState(false);
+  const[connectClicked, setConnectClicked] = useState(false);
+
+   
+  const [ethereumContext, setethereumContext] = useState({});
+  const web3Modal = getWeb3Modal(connectOptions);
+
+  const connect = async (event) => {
+    console.log("Clicked")
+    event.preventDefault();
+    const instance = await web3Modal.connect();
+    const { provider, signer } = await createWeb3Provider(instance);
+    const erc = await createContractInstance(address, abi, provider);
+    const account = await signer.getAddress();
+    localStorage.setItem("WalletAddress", account);
+
+    setethereumContext({ provider, erc, account})
+    log("Connect", "Get Address", await signer.getAddress());
+    setconnecting(true);
+    setConnectClicked(true);
+
+  }
   const [progressWidth, setProgressWidth] = useState(0);
   const [showLoader, setShowLoader] = useState(false);
 
@@ -66,7 +99,7 @@ const ProfilePage = (props) => {
   const profile11 = employee.profile;
   console.log("aksjdakjsdkasdjasd", employeeMobile);
   const [submitting, setSubmitting] = useState(false);
-  const { provider, erc } = useContext(EthereumContext);
+  const { provider, erc } = ethereumContext;
   console.log("sample", erc)
   // console.log("sdfgjhfsdghfdsghd",respo.data);
   // console.log("sdfgjhfsdghfdsghd",respo.data);
@@ -178,6 +211,7 @@ const ProfilePage = (props) => {
 
 
   useEffect(() => {
+   
     const fetchProfile = async () => {
       try {
         console.log(employeeName)
@@ -202,6 +236,7 @@ const ProfilePage = (props) => {
   }, [employeeName]);
 
   useEffect(() => {
+  
     axios
       .get(`/empprofile/${employeeId}`, { withCredentials: true })
 
@@ -219,7 +254,7 @@ const ProfilePage = (props) => {
   console.log("vanthura", onboarded);
   // console.log("heyy",employee)
   return (
-    <div style={{ height: "auto" }}>
+    <div className="topp" style={{ height: "auto" }}>
       <header
         style={{
           backgroundColor: "white",
@@ -250,17 +285,22 @@ const ProfilePage = (props) => {
         >
           EMPLOYEE PROFILE
         </h1>
-        {/* <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRCD2IRkg5xxZTdaHZrj4MXtcwuvo2xSPOACVOPvQ&s"
-          alt="User Avatar"
-          style={{
-            borderRadius: "50%",
-            marginRight: "20px",
-            width: "50px",
-            height: "50px",
-          }}
-        /> */}
 
+        <button
+  style={{
+    position: "relative",
+    marginLeft: "150px",
+    height: "60px",
+    marginTop: "20px",
+    borderRadius: "20px",
+    background: connectClicked ? "blue" : "",
+    cursor: connectClicked ? "not-allowed" : "pointer"
+  }}
+  onClick={connect}
+  disabled={connectClicked}
+>
+  {connectClicked ? "Connected" : "Connect"}
+</button>       
       </header>
       <div style={{ backgroundColor: "#F9F8F8" }}>
         <div
@@ -312,75 +352,6 @@ const ProfilePage = (props) => {
               <span style={{ color: "#000000", fontFamily: "Secular One", position: "relative", left: '10px' }}>{employee.wallet}</span>
             </p>
           </div>
-          {/* <div className="butad">
-          <div
-          
-            style={{
-              position: "absolute",
-              bottom: "10px",
-              right: "-10px",
-              height: "20%",
-              width: "20%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-              ":hover": {
-                transform: "scale(1.2)",
-                background: "#FFFFFF",
-              },
-            }}
-          >
-            {onboarded ? null : (
-              <CardActions>
-                <Link to={"/real"}>
-                  <Button
-                  
-                    onClick={regEmployee}
-                    variant="contained"
-                    color="primary"
-                    style={{
-                      margin: "1rem",
-                      position: "relative",
-                      bottom: "50px",
-                      width: "150px",
-                      right: "30px",
-                      marginTop:"-40px",
-                      marginLeft:"00px",
-                     
-                    }}
-                  >
-                    <AiOutlineUserAdd
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        position: "relative",
-                        right: "20px",
-                      }}
-                    />{" "}
-                    <a>
-                      {" "}
-                      <b> Add </b>{" "}
-                    </a>
-                  </Button>
-                </Link>
-                <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
-                <Button
-                  onClick={getAllEmployees}
-                    variant="contained"
-                    color="primary"
-                    style={{marginTop:"10px",marginBottom:"0px", margin: "1rem",position:"relative",bottom:"50px",width:"150px",right:"30px", marginLeft:"-170px"}}
-                  >
-                     <AiOutlineUserAdd style={{width:"30px",height:"30px",position:"relative",right:"20px"}}/> <a> <b> Get </b>  </a>
-                  </Button>
-                  </div>
-              </CardActions>
-
-
-            )}
-          </div>
-        </div> */}
         </div>
         <div
           className="card1"
@@ -446,43 +417,6 @@ const ProfilePage = (props) => {
               <p className="text-muted  mb-6" style={{ fontFamily: "Secular One" }}>{employee._id}</p>
             </div>
           </div>
-          {/* <div style={{ marginTop: "80px" }}>
-          <div style={{ textAlign: "center" }}>
-            <h6>
-              <b
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#537FE7",
-                  textAlign: "center",
-                  fontFamily:"Secular One"
-                }}
-              >
-                COMPANY
-              </b>
-            </h6>
-          </div>
-          <hr className="mt-0 mb-4" />
-          <div className="row pt-1">
-            <div
-              className="col-6 mb-3 d-flex align-items-left"
-              style={{ position: "relative", left: "50px" }}
-            >
-              <h6 style={{ color: "#537FE7", marginRight: "20px",fontFamily:"Secular One" }}>
-                Company Name:
-              </h6>
-              <p className="text-muted mb-0"> </p>
-            </div>
-            <div
-              className="col-6 mb-3 d-flex align-items-left"
-              style={{ position: "relative", left: "50px" }}
-            >
-              <h6 style={{ color: "#537FE7", marginRight: "20px" ,fontFamily:"Secular One"}}>
-                EmployeeId:
-              </h6>
-              <p className="text-muted mb-0"></p>
-            </div>
-          </div>
-        </div> */}
           <div className="butad">
             <div
 
@@ -539,17 +473,7 @@ const ProfilePage = (props) => {
                       <b> Add Employee </b>{" "}
                     </a>
                   </Button>
-                  {/* </Link> */}
-                  {/* <div style={{marginBottom:"-40px", marginLeft:"-10px"}}>
-                <Button
-                  onClick={getAllEmployees}
-                    variant="contained"
-                    color="primary"
-                    style={{marginTop:"10px",marginBottom:"0px", margin: "1rem",position:"relative",bottom:"50px",width:"150px",right:"30px", marginLeft:"-170px"}}
-                  >
-                     <AiOutlineUserAdd style={{width:"30px",height:"30px",position:"relative",right:"20px"}}/> <a> <b> Get </b>  </a>
-                  </Button>
-                  </div> */}
+                  
                 </CardActions>
 
 

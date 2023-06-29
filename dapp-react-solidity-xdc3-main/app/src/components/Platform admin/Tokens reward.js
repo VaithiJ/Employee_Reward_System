@@ -9,31 +9,61 @@ import Swal from "sweetalert2";
 import del from "./tokkk.png";
 import "./token.css";
 import OwnerButton from "./OwnerButton";
-import Loader from "../pages/Loader.js";
+import ersl from "../../image/erslll.png";
 
-const {
-  executeTransaction,
-  EthereumContext,
-  log,
-  queryData,
-  queryEvents,
-} = require("react-solidity-xdc3");
+import Loader from "../pages/Loader.js";
+import { erc as address } from '../../output.json';
+import { abi } from "../../artifacts/contracts/ERSC/erc.sol/ERC.json"
+const { executeTransaction, EthereumContext, log, queryData ,queryEvents} = require('react-solidity-xdc3');
+const { getWeb3Modal, createWeb3Provider, connectWallet, createContractInstance } = require('react-solidity-xdc3');
+var connectOptions = {
+  rpcObj: {
+    50: "https://erpc.xinfin.network",
+    51: "https://erpc.apothem.network",
+    888 : "http://13.234.98.154:8546"
+  },
+  network: "mainnet",
+  toDisableInjectedProvider: true
+}
 
 const PlatformAdmin = () => {
   //   const handleRemove = (index) => {
   //     setData((prevData) => prevData.filter((_, i) => i !== index));
   //   };
+  const [connecting, setconnecting] = useState(false);
+
+   
+  const [ethereumContext, setethereumContext] = useState({});
+  const web3Modal = getWeb3Modal(connectOptions);
+
+  const connect = async (event) => {
+    console.log("Clicked")
+    event.preventDefault();
+    const instance = await web3Modal.connect();
+    const { provider, signer } = await createWeb3Provider(instance);
+    const erc = await createContractInstance(address, abi, provider);
+    const account = await signer.getAddress();
+    localStorage.setItem("WalletAddress", account);
+
+    log("Connect", "Get Address", await signer.getAddress());
+    setethereumContext({ provider, erc, account})
+
+    setconnecting(true);
+    setConnectClicked(true);
+
+  }
   const history = useHistory();
 
   const [tokenMap, setTokenMap] = useState({});
+  const[connectClicked, setConnectClicked] = useState(false);
 
   const [companies, setCompanies] = useState([]);
   const [companyName, setcompanyName] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const { provider, erc } = useContext(EthereumContext);
   const [showLoader, setShowLoader] = useState(false);
   const [loadingButton, setLoadingButton] = useState(null);
-  
+  const { provider, erc } = ethereumContext;
+
 
   console.log("sample", erc);
   console.log(provider);
@@ -274,6 +304,10 @@ const PlatformAdmin = () => {
         overflowX: "auto",
       }}
     >
+      <header style={{display:"flex", flexDirection:"row"}}>
+        <Link to="/">
+      <img  src={ersl} style={{width:"200px", height:"50px", marginTop:"20px", marginLeft:"10px"}}/>
+      </Link>
       <h1
         style={{
           color: "white",
@@ -282,12 +316,29 @@ const PlatformAdmin = () => {
           fontWeight: "bold",
           marginBottom: "2rem",
           marginTop: "30px",
-          marginLeft: "-100px",
+          marginLeft: "150px",
           fontFamily: "Secular One",
         }}
       >
         EMPLOYEE REWARD SYSTEM
       </h1>
+
+      <button
+  style={{
+    position: "relative",
+    marginLeft: "150px",
+    height: "60px",
+    marginTop: "20px",
+    borderRadius: "20px",
+    background: connectClicked ? "blue" : "",
+    cursor: connectClicked ? "not-allowed" : "pointer"
+  }}
+  onClick={connect}
+  disabled={connectClicked}
+>
+  {connectClicked ? "Connected" : "Connect"}
+</button>
+      </header>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div
           className="yt"

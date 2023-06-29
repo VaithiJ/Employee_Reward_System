@@ -47,7 +47,8 @@ export default function SignInPage() {
 
         text: '',
 
-        confirmButtonColor: "#9A1B56"
+        confirmButtonColor: "#9A1B56",
+        showConfirmationButton: false
 
       });
       window.location.href = '/employeehome'

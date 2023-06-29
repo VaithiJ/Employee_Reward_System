@@ -21,6 +21,7 @@
   border-radius: 10px;
   /* border-color: #ff0101; */
   background-color: #d3d3d3;
+  color: black;
 }
 .heading {
   display: flex;
@@ -50,7 +51,7 @@
 }
 .modlabel {
   font-family: "Montserrat", sans-serif;
-  color: #4d4c4c;
+  color: #000000;
   font-size: medium;
 }
 .proform {

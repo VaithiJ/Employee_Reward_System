@@ -3,7 +3,7 @@ import styles from "./openpage.module.css";
 import companyImage from "./comp1.png";
 import employeeImage from "../../image/employee.jpg"
 import ac from "./acc.png";
-import Onavbar from "./Onavbar";
+import NavBar from "../Headerr/Header.js";
 import Footer from "../footer/Footer";
 import { Link } from "react-router-dom";
 import Slideshow from "./carousel/car";
@@ -17,15 +17,14 @@ import sds from "./sds.png"
 
 
 const Openpage = () => {
-  const handleAdminClick = () => {
-    window.location.href="/admin";
-  };
+ 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="all" >
+        <NavBar />
 
       <div
         className={styles.open}
@@ -33,12 +32,12 @@ const Openpage = () => {
           width: "100%",
           height: "1070px",
           backgroundImage: `url(${bg})`,
+          marginTop:"80px"
         }}
       >
 
-        <Onavbar />
-        <button onClick={handleAdminClick} style={{marginLeft:"1100px", position:"relative",top:"-80px", borderRadius:"20px", width:"150px", padding:"10px"}}>Admin  
-</button>
+        <p style={{marginLeft:"1100px", position:"relative",top:"-80px", borderRadius:"20px", width:"150px", padding:"10px"}}>  
+</p>
 
         <div
           style={{
@@ -65,7 +64,7 @@ const Openpage = () => {
               width: "500px",
               height: "400px",
               float: "right",
-              marginTop: "-200px",
+              marginTop: "-190px",
               marginRight: "20px",
             }}
           />
