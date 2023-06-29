@@ -569,7 +569,8 @@ max-width: 30%;
   font-size: 25px;
   position: relative;
   bottom: 45px;
-  left: 150px
+  left: 150px;
+  z-index: 1;
 }
 
 .right-label {

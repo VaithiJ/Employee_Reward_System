@@ -335,11 +335,12 @@ useEffect(() => {
                 <button
   style={{
     position: "relative",
-    marginLeft: "150px",
+    left: "1200px",
     height: "60px",
-    marginTop: "20px",
+    top: "-60px",
     borderRadius: "20px",
-    background: connectClicked ? "blue" : "",
+    backgroundColor:"#1196B0",
+    background: connectClicked ? "red" : "",
     cursor: connectClicked ? "not-allowed" : "pointer"
   }}
   onClick={connect}
