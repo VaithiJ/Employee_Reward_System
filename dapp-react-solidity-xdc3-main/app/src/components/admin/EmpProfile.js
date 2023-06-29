@@ -59,7 +59,7 @@ const ProfilePage = (props) => {
     const { provider, signer } = await createWeb3Provider(instance);
     const erc = await createContractInstance(address, abi, provider);
     const account = await signer.getAddress();
-    localStorage.setItem("WalletAddress", account);
+    localStorage.setItem("WalletAddress", account.toLowerCase());
 
     setethereumContext({ provider, erc, account})
     log("Connect", "Get Address", await signer.getAddress());
@@ -439,45 +439,42 @@ const ProfilePage = (props) => {
                 },
               }}
             >
-              {onboarded ? null : (
-                <CardActions>
-                  {/* <Link to={"/real"}> */}
-                  <Button
-                  
-                    onClick={regEmployee}
-                    variant="contained"
-                    color="primary"
-                    style={{
-                      margin: "1rem",
-                      position: "relative",
-                      bottom: "48px",
-                      width: "170px",
-                      right: "30px",
-                      height: "50px",
-                      marginTop: "150px",
-                      marginLeft: "-630px",
-                      display: "flex"
-                    }}
-                  >
-                    <AiOutlineUserAdd
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        position: "relative",
-                        left: "0px",
-                        bottom:'2px'
-                      }}
-                    />{" "}
-                    <a>
-                      {" "}
-                      <b> Add Employee </b>{" "}
-                    </a>
-                  </Button>
-                  
-                </CardActions>
+             {!connectClicked && !onboarded && (
+  <CardActions>
+    <Button
+      onClick={regEmployee}
+      variant="contained"
+      color="primary"
+      style={{
+        margin: "1rem",
+        position: "relative",
+        bottom: "48px",
+        width: "170px",
+        right: "30px",
+        height: "50px",
+        marginTop: "150px",
+        marginLeft: "-630px",
+        display: "flex"
+      }}
+      disabled={!connectClicked} // Disable the button when connectClicked is false
+    >
+      <AiOutlineUserAdd
+        style={{
+          width: "30px",
+          height: "30px",
+          position: "relative",
+          left: "0px",
+          bottom:'2px'
+        }}
+      />{" "}
+      <a>
+        {" "}
+        <b> Add Employee </b>{" "}
+      </a>
+    </Button>
+  </CardActions>
+)}
 
-
-              )}
             </div>
           </div>
 

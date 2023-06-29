@@ -68,7 +68,7 @@ const PlatformAdmin = () => {
   console.log("sample", erc);
   console.log(provider);
   useEffect(() => {
-    const walletAddress = localStorage.getItem("Wallet Address");
+    const walletAddress = localStorage.getItem("WalletAddress");
     if (walletAddress === "0x570AC970E766A6E16A36799913fb7C4d4D083fBc") {
       axios
         .get(`/admin`, { withCredentials: true })

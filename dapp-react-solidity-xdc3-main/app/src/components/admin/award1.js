@@ -41,7 +41,7 @@ const Award = (props) => {
     const { provider, signer } = await createWeb3Provider(instance);
     const erc = await createContractInstance(address, abi, provider);
     const account = await signer.getAddress();
-    localStorage.setItem("WalletAddress", account);
+    localStorage.setItem("WalletAddress", account.toLowerCase());
 
     setethereumContext({ provider, erc, account})
     log("Connect", "Get Address", await signer.getAddress());
@@ -236,9 +236,9 @@ const Award = (props) => {
         <button
   style={{
     position: "relative",
-    marginLeft: "150px",
+    left: "500px",
     height: "60px",
-    marginTop: "20px",
+    top: "-150px",
     borderRadius: "20px",
     background: connectClicked ? "blue" : "",
     cursor: connectClicked ? "not-allowed" : "pointer"

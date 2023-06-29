@@ -305,7 +305,7 @@ useEffect(() => {
         <h1 className="headerrr" style={{fontFamily:"Secular One", fontSize:"40px", marginTop:"30px", marginLeft:"-950px"}}>REWARD </h1>
         <div style={{ position: "relative", right: "550px", bottom: "70px" , marginLeft:"-120px", marginTop:"-0px"}}>
           {" "}
-          <SidebarMenu />{" "}
+          <SidebarMenu/>{" "}
           <button
                   onClick={balanceOf}
                   className="btn btn-primary"
